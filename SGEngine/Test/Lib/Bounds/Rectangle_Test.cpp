@@ -1,0 +1,108 @@
+//
+// Rectangle bounds Tests.
+//
+#include <gtest/gtest.h>
+#include "Lib.h"
+
+using sge::FMath;
+using sge::Vector2;
+using sge::Rectangle;
+
+TEST (Rectangle_Test, Area) {
+    Rectangle r = Rectangle(0.0f, 0.0f, 3.0f, 5.0f);
+
+    EXPECT_FLOAT_EQ(15.0f, r.Area());
+
+    r = Rectangle(2.0f, 3.0f, 6.0f, -1.0f);
+
+    EXPECT_FLOAT_EQ(16.0f, r.Area());
+}
+
+TEST (Rectangle_Test, Center) {
+    Rectangle r = Rectangle(0.0f, 0.0f, 3.0f, 5.0f);
+
+    EXPECT_EQ(Vector2(1.5f, 2.5f), r.Center());
+
+    r = Rectangle(2.0f, 3.0f, 6.0f, -1.0f);
+
+    EXPECT_EQ(Vector2(4.0f, 1.0f), r.Center());
+}
+
+TEST (Rectangle_Test, Clear) {
+    Rectangle r = Rectangle(0.0f, 0.0f, 3.0f, 5.0f);
+
+    r.Clear();
+
+    EXPECT_FLOAT_EQ(FMath::INFTY, r.Area());
+    EXPECT_FALSE(r.Contains(Vector2::ZERO));
+}
+
+// Basic Tests
+//     8                        +--------------+
+//                              |              |
+//     7              +----+    |    +----+    |
+//                    |    |    |    |    |    |
+//     6    +----+    F----+----+    H----+    |
+//          |    |         |    |              |
+//     5    E----+         |    G--------------+
+//                         |    |
+//     4         +---------+----+---------+
+//               |         |    |         |
+//     3    +----+----+    |    |    +----+----+
+//          |    |    |    |    |    |    |    |
+//     2    |    B----+----+----+----+----+    |
+//          |         |    |    |    |         |
+//     1    A---------+    C----+    D---------+
+//
+//     0    1    2    3    4    5    6    7    8
+//
+static const Rectangle A = Rectangle(1.0f, 1.0f, 3.0f, 3.0f);
+static const Rectangle B = Rectangle(2.0f, 2.0f, 7.0f, 4.0f);
+static const Rectangle C = Rectangle(4.0f, 1.0f, 5.0f, 6.0f);
+static const Rectangle D = Rectangle(6.0f, 1.0f, 8.0f, 3.0f);
+static const Rectangle E = Rectangle(1.0f, 5.0f, 2.0f, 6.0f);
+static const Rectangle F = Rectangle(3.0f, 6.0f, 4.0f, 7.0f);
+static const Rectangle G = Rectangle(5.0f, 5.0f, 8.0f, 8.0f);
+static const Rectangle H = Rectangle(6.0f, 6.0f, 7.0f, 7.0f);
+
+TEST (Rectangle_Test, Intersects) {
+    EXPECT_TRUE(A.Intersects(A));
+    EXPECT_TRUE(A.Intersects(B));
+    EXPECT_TRUE(B.Intersects(A));
+    EXPECT_TRUE(B.Intersects(C));
+    EXPECT_TRUE(C.Intersects(B));
+    EXPECT_TRUE(B.Intersects(D));
+    EXPECT_TRUE(F.Intersects(C));
+    EXPECT_TRUE(C.Intersects(F));
+    EXPECT_TRUE(C.Intersects(G));
+    EXPECT_TRUE(G.Intersects(H));
+    EXPECT_TRUE(H.Intersects(G));
+    
+    EXPECT_FALSE(E.Intersects(A));
+    EXPECT_FALSE(A.Intersects(E));
+}
+
+TEST (Rectangle_Test, Contains_Point) {
+    EXPECT_TRUE(A.Contains(Vector2(2.0f, 2.0f)));
+    EXPECT_TRUE(C.Contains(Vector2(5.0f, 6.0f)));
+    
+    EXPECT_FALSE(E.Contains(Vector2(0.0f, 0.0f)));
+}
+
+TEST (Rectangle_Test, Contains_Rectangle) {
+    EXPECT_TRUE(G.Contains(H));
+    
+    EXPECT_FALSE(H.Contains(G));
+    EXPECT_FALSE(A.Contains(B));
+}
+
+TEST (Rectangle_Test, expand) {
+    Rectangle r1 = Rectangle(1.0f, 2.0f, 4.0f, 4.0f);
+
+    Rectangle r2 = r1.Expand(1.0f);
+    EXPECT_EQ(Rectangle(0.0f, 1.0f, 5.0f, 5.0f), r2);
+
+    r1.ExpandSelf(2.5f);
+    EXPECT_EQ(Rectangle(-1.5f, -0.5f, 6.5f, 6.5f), r1);
+}
+

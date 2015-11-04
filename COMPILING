@@ -1,0 +1,13 @@
+How to Build
+------------
+
+Use CMake and prefer building out of the source tree. e.g.
+
+    project$ mkdir build
+    project$ cd build
+    project/build$ cmake ..
+    project/build$ make
+
+To run tests after build:
+
+    project/build$ ./SGEngine/Test/SGEngineTest

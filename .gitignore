@@ -43,7 +43,9 @@ Temporary Items
 *.slo
 *.lo
 *.o
-*.obj
+
+# Actually we want to allow Wavefront.obj files in.
+#*.obj
 
 # Precompiled Headers
 *.gch

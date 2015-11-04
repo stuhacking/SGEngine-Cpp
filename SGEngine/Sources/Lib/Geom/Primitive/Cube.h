@@ -1,4 +1,4 @@
-/*---  Cube.h - Primitive Cube Header  ---------------------------*- C++ -*---
+/*---  Cube.h - Primitive Cube Header  -----------------------------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *

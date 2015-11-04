@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a low level Matrix3 type.
  */
 #ifndef __SHLIB_MATRIX3_H_
@@ -36,10 +36,10 @@ public:
 public:
     /** Default Constructor */
     Matrix3 () { }
-    
+
     /** Fill Constructor */
     Matrix3 (const float f);
-    
+
     /** Value Constructor */
     Matrix3 (const float aa, const float ab, const float ac,
              const float ba, const float bb, const float bc,
@@ -47,10 +47,10 @@ public:
 
     /** Vector3 Column Constructor */
     Matrix3 (const Vector3 &col1, const Vector3 &col2, const Vector3 &col3);
-    
+
     /** 1D Array Constructor */
     Matrix3 (const float data[9]);
-    
+
     /** 2D Array Constructor */
     Matrix3 (const float data[3][3]);
 
@@ -230,7 +230,7 @@ inline Matrix3::Matrix3 (const float data[3][3]) {
     std::memcpy(mat, data, 3 * 3 * sizeof(float));
 }
 
-inline void Matrix3::Set (const float aa, const float ab, const float ac, 
+inline void Matrix3::Set (const float aa, const float ab, const float ac,
                           const float ba, const float bb, const float bc,
                           const float ca, const float cb, const float cc) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac;

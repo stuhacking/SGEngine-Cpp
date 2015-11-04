@@ -1,4 +1,4 @@
-/*---  ICOSphere.h - Primitive ICOSphere Header  ---------------------------*- C++ -*---
+/*---  ICOSphere.h - Primitive ICOSphere Header  -------------------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *

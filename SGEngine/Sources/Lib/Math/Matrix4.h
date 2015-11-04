@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a low level Matrix4 type.
  */
 #ifndef __SHLIB_MATRIX4_H_
@@ -40,14 +40,16 @@ public:
 
     /** Fill Constructor */
     Matrix4 (const float f);
-    
+
     /** Value Constructor */
-    Matrix4 (const float aa, const float ab, const float ac, const float ad, const float ba, const float bb,
-             const float bc, const float bd, const float ca, const float cb, const float cc, const float cd,
+    Matrix4 (const float aa, const float ab, const float ac, const float ad,
+             const float ba, const float bb, const float bc, const float bd,
+             const float ca, const float cb, const float cc, const float cd,
              const float da, const float db, const float dc, const float dd);
 
     /** Vector4 Column Constructor */
-    Matrix4 (const Vector4 &col1, const Vector4 &col2, const Vector4 &col3, const Vector4 &col4);
+    Matrix4 (const Vector4 &col1, const Vector4 &col2,
+             const Vector4 &col3, const Vector4 &col4);
 
     /** 1D Array Constructor */
     Matrix4 (const float data[16]);
@@ -59,8 +61,9 @@ public:
      * Set the values of this Matrix4 using float values.
      * Destructive.
      */
-    void Set (const float aa, const float ab, const float ac, const float ad, const float ba, const float bb,
-              const float bc, const float bd, const float ca, const float cb, const float cc, const float cd,
+    void Set (const float aa, const float ab, const float ac, const float ad,
+              const float ba, const float bb, const float bc, const float bd,
+              const float ca, const float cb, const float cc, const float cd,
               const float da, const float db, const float dc, const float dd);
 
     /**
@@ -153,8 +156,9 @@ inline Matrix4::Matrix4 (const float f) {
     mat[3].x = f; mat[3].y = f; mat[3].z = f; mat[3].w = f;
 }
 
-inline Matrix4::Matrix4 (const float aa, const float ab, const float ac, const float ad, const float ba, const float bb,
-                         const float bc, const float bd, const float ca, const float cb, const float cc, const float cd,
+inline Matrix4::Matrix4 (const float aa, const float ab, const float ac, const float ad,
+                         const float ba, const float bb, const float bc, const float bd,
+                         const float ca, const float cb, const float cc, const float cd,
                          const float da, const float db, const float dc, const float dd) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac; mat[0].w = ad;
     mat[1].x = ba; mat[1].y = bb; mat[1].z = bc; mat[1].w = bd;
@@ -162,7 +166,8 @@ inline Matrix4::Matrix4 (const float aa, const float ab, const float ac, const f
     mat[3].x = da; mat[3].y = db; mat[3].z = dc; mat[3].w = dd;
 }
 
-inline Matrix4::Matrix4 (const Vector4 &col1, const Vector4 &col2, const Vector4 &col3, const Vector4 &col4) {
+inline Matrix4::Matrix4 (const Vector4 &col1, const Vector4 &col2,
+                         const Vector4 &col3, const Vector4 &col4) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z; mat[0].w = col1.w;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z; mat[1].w = col2.w;
     mat[2].x = col3.x; mat[2].y = col3.y; mat[2].z = col3.z; mat[2].w = col3.w;
@@ -177,17 +182,18 @@ inline Matrix4::Matrix4 (const float data[4][4]) {
     std::memcpy(mat, data, 4 * 4 * sizeof(float));
 }
 
-inline void Matrix4::Set (const float aa, const float ab, const float ac, const float ad, const float ba,
-                          const float bb, const float bc, const float bd, const float ca, const float cb,
-                          const float cc, const float cd, const float da, const float db, const float dc,
-                          const float dd) {
+inline void Matrix4::Set (const float aa, const float ab, const float ac, const float ad,
+                          const float ba, const float bb, const float bc, const float bd,
+                          const float ca, const float cb, const float cc, const float cd,
+                          const float da, const float db, const float dc, const float dd) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac; mat[0].w = ad;
     mat[1].x = ba; mat[1].y = bb; mat[1].z = bc; mat[1].w = bd;
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc; mat[2].w = cd;
     mat[3].x = da; mat[3].y = db; mat[3].z = dc; mat[3].w = dd;
 }
 
-inline void Matrix4::Set (const Vector4 &col1, const Vector4 &col2, const Vector4 &col3, const Vector4 &col4) {
+inline void Matrix4::Set (const Vector4 &col1, const Vector4 &col2,
+                          const Vector4 &col3, const Vector4 &col4) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z; mat[0].w = col1.w;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z; mat[1].w = col2.w;
     mat[2].x = col3.x; mat[2].y = col3.y; mat[2].z = col3.z; mat[2].w = col3.w;
@@ -347,8 +353,10 @@ inline bool Matrix4::Compare (const Matrix4 &other) const {
 }
 
 inline bool Matrix4::Compare (const Matrix4 &other, const float threshold) const {
-    return mat[0].Compare(other.mat[0], threshold) && mat[1].Compare(other.mat[1], threshold) &&
-           mat[2].Compare(other.mat[2], threshold) && mat[3].Compare(other.mat[3], threshold);
+    return mat[0].Compare(other.mat[0], threshold) &&
+        mat[1].Compare(other.mat[1], threshold) &&
+        mat[2].Compare(other.mat[2], threshold) &&
+        mat[3].Compare(other.mat[3], threshold);
 }
 
 inline bool Matrix4::operator== (const Matrix4 &other) const {

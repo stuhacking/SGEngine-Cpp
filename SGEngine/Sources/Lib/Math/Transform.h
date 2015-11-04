@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Implements 3D translation/rotate/scale transforms.
  */
 #ifndef __SHLIB_TRANSFORM_H_
@@ -17,12 +17,12 @@ namespace sge {
 class Transform {
 public:
     Vector3 position;
-    Quaternion orientation;
+    Vector3 orientation; // Euler Angles
     Vector3 scale;
 
 public:
     Transform (const Vector3 &p_pos = Vector3::ZERO,
-               const Quaternion &p_ori = Quaternion::IDENTITY,
+               const Vector3 &p_ori = Vector3::ZERO,
                const Vector3 &p_scale = Vector3::ONE)
         : position(p_pos), scale(p_scale) { }
 
@@ -36,7 +36,7 @@ public:
 };
 
 // --------------------------------------------------------------------------
-    
+
 inline Matrix4 Transform::GetTranslationMatrix () const {
     return Matrix4(1.0f,       0.0f,       0.0f,       0.0f,
                    0.0f,       1.0f,       0.0f,       0.0f,
@@ -45,7 +45,29 @@ inline Matrix4 Transform::GetTranslationMatrix () const {
 }
 
 inline Matrix4 Transform::GetOrientationMatrix () const {
-    return Matrix4::IDENTITY;
+    float xx = DEG2RAD(orientation.x);
+    float yy = DEG2RAD(orientation.y);
+    float zz = DEG2RAD(orientation.z);
+
+    Matrix3 rot = Matrix3(
+        std::cos(zz), -std::sin(zz), 0.0f,
+        std::sin(zz), std::cos(zz), 0.0f,
+        0.0f, 0.0f, 1.0f);
+    rot = rot * Matrix3(
+        std::cos(yy), 0.0f, -std::sin(yy),
+        0.0f, 1.0f, 0.0f,
+        std::sin(yy), 0.0f, std::cos(yy));
+    rot = rot * Matrix3(
+        1.0f, 0.0f, 0.0f,
+        0.0f, std::cos(xx), std::sin(xx),
+        0.0f, -std::sin(xx), std::cos(xx));
+
+    return Matrix4(
+        rot[0][0], rot[0][1], rot[0][2], 0.0f,
+        rot[1][0], rot[1][1], rot[1][2], 0.0f,
+        rot[2][0], rot[2][1], rot[2][2], 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+        );
 }
 
 inline Matrix4 Transform::GetScaleMatrix () const {
@@ -56,10 +78,7 @@ inline Matrix4 Transform::GetScaleMatrix () const {
 }
 
 inline Matrix4 Transform::GetTransformationMatrix () const {
-    return Matrix4(scale.x,    0.0f,       0.0f,       0.0f,
-                   0.0f,       scale.y,    0.0f,       0.0f,
-                   0.0f,       0.0f,       scale.z,    0.0f,
-                   position.x, position.y, position.z, 1.0f);
+    return GetScaleMatrix() * GetOrientationMatrix() * GetTranslationMatrix();
 }
 
 } /* namespace sge */

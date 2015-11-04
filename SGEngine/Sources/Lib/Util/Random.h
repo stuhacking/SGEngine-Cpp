@@ -1,13 +1,13 @@
-//-*- Mode: C++ -*-
-/**
- * @class Random
- * @brief Pseudo-random number generator.
+/*---  Random.h - Random Number Generator Header  ------------------*- C++ -*---
  *
+ *                           Stuart's Game Engine
  *
- * Created by Stuart Hacking on 16/02/2015.
- * Copyright (c) 2015 Stuart Hacking. All rights reserved.
+ * This file is distributed under the Revised BSD License. See LICENSE.TXT
+ * for details.
  *
- * @author Stuart Hacking <stuhacking@gmail.com>
+ * --------------------------------------------------------------------------
+ * 
+ * @brief Defines a wrapper around stl random generators.
  */
 #ifndef __SHLIB_RANDOM_H_
 #define __SHLIB_RANDOM_H_

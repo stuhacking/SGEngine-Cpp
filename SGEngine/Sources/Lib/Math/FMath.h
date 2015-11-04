@@ -1,12 +1,13 @@
-//-*- Mode: C++ -*-
-/**
- * @class FMath
- * @brief Simple Math functions.
+/*---  FMath.h - Float Math Header  --------------------------------*- C++ -*---
  *
- * Created by Stuart Hacking on 07/02/2015.
- * Copyright (c) 2015 Stuart Hacking. All rights reserved.
+ *                           Stuart's Game Engine
  *
- * @author Stuart Hacking <stuhacking@gmail.com>
+ * This file is distributed under the Revised BSD License. See LICENSE.TXT
+ * for details.
+ *
+ * --------------------------------------------------------------------------
+ * 
+ * @brief Implements simple math functions for floats
  */
 #ifndef __SHLIB_FMath_H_
 #define __SHLIB_FMath_H_
@@ -47,7 +48,7 @@ public:
     /**
      * Return the first power of 2 that is not less than val.
      */
-    static int Nearest2Pow (const unsigned int val);
+    static int Nearest2Pow (const u32 val);
 
     /**
      * Convert a value within a range to a ratio. Resulting value may
@@ -110,8 +111,8 @@ inline int FMath::ClampInt (const int val, const int a, const int b) {
     return val;
 }
 
-inline int FMath::Nearest2Pow (const unsigned int val) {
-    unsigned int result = 2;
+inline int FMath::Nearest2Pow (const u32 val) {
+    u32 result = 2;
     while (result < val) {
         result *= 2;
     }

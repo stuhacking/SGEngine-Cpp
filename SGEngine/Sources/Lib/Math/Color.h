@@ -29,7 +29,7 @@ public:
     explicit Color (const u8 rr, const u8 gg, const u8 bb, const u8 aa = 255)
             : r(rr), g(gg), b(bb), a(aa) { }
 
-    /** Construct a color from a single 32 bit unsigned. */
+    /** Construct a color from a single 32 bit unsigned int. */
     Color (const u32 val);
 
     /**

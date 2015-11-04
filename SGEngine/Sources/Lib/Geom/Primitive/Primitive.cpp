@@ -92,7 +92,7 @@ Mesh ICOSphere::ToMesh () const {
     Mesh m;
     Vector3 points[12];
 
-    constexpr float t = (1.0f + sqrt(5.0f)) * 0.5f;
+    float t = (1.0f + sqrt(5.0f)) * 0.5f;
 
     points[0] = Vector3(-1.0f, t, 0);
     points[1] = Vector3(1.0f, t, 0);

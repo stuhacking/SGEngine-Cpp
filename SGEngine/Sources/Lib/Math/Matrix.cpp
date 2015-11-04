@@ -31,7 +31,7 @@ Matrix3 Matrix3::Inverse () const {
     bool success = inv.InverseSelf();
 
     if (!success) {
-        std::cerr << "ERROR: Matrix3 has no inverse: " << inv << std::endl;
+        std::cerr << "ERROR: Matrix3 has no inverse: " << inv << "\n";
     }
     
     return inv;
@@ -82,7 +82,7 @@ Matrix4 Matrix4::Inverse () const {
     bool success = inv.InverseSelf();
 
     if (!success) {
-        std::cerr << "ERROR: Matrix4 has no inverse: " << inv << std::endl;
+        std::cerr << "ERROR: Matrix4 has no inverse: " << inv << "\n";
     }
     
     return inv;

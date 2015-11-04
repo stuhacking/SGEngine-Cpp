@@ -82,15 +82,15 @@ inline void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
     AddFace(size, size + 1, size + 2);
 }
 
-inline unsigned long Mesh::VertCount () const {
+inline u64 Mesh::VertCount () const {
     return vertices.size();
 }
 
-inline unsigned long Mesh::IndexCount () const {
+inline u64 Mesh::IndexCount () const {
     return indices.size();
 }
 
-inline unsigned long Mesh::FaceCount () const {
+inline u64 Mesh::FaceCount () const {
     return indices.size() / 3;
 }
 

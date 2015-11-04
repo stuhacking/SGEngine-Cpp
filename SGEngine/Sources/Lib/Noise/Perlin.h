@@ -26,7 +26,7 @@ public:
 
 public:
     Perlin(const float p_freq = 1.0f, const float p_amp = 1.0f,
-           const float p_pers = 0.5f,const unsigned int p_oct = 1)
+           const float p_pers = 0.5f, const u32 p_oct = 1)
         : frequency(p_freq), amplitude(p_amp),
           persistence(p_pers), octaves(p_oct) {
         SetSeed(1);

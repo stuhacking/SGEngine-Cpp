@@ -60,6 +60,8 @@ public:
     bool operator!= (const Vertex &other) const;
 };
 
+// --------------------------------------------------------------------------
+
 inline bool Vertex::Compare (const Vertex &other) const {
     return position == other.position &&
         normal == other.normal &&

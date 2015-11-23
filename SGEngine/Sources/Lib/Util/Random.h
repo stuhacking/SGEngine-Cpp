@@ -17,6 +17,8 @@
 #include <random>
 #include <climits>
 
+namespace sge {
+
 class Random {
 public:
     Random();
@@ -82,5 +84,7 @@ inline int Random::NextInt(const int min, const int max) {
     std::uniform_int_distribution<int> vals(min, max);
     return vals(m_generator);
 }
+
+} /* namespace sge */
 
 #endif /* __SHLIB_RANDOM_H_ */

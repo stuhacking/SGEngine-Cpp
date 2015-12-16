@@ -41,10 +41,10 @@ public:
     Vector2 (const float xx, const float yy) : x(xx), y(yy) { }
 
     /** Value access by index. */
-    float operator[] (const int index) const;
+    float operator[] (const s32 index) const;
 
     /** Reference access by index. */
-    float &operator[] (const int index);
+    float &operator[] (const s32 index);
     
     /**
      * Set the values of x and y.
@@ -282,11 +282,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float Vector2::operator[] (const int index) const {
+inline float Vector2::operator[] (const s32 index) const {
     return (&x)[index];
 }
 
-inline float &Vector2::operator[] (const int index) {
+inline float &Vector2::operator[] (const s32 index) {
     return (&x)[index];
 }
 

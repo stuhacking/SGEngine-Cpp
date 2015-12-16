@@ -9,7 +9,7 @@ namespace sge {
 
 Matrix4 GLProjection::GetPerspectiveProjection(const u32 w, const u32 h) const {
     float aspect = static_cast<float>(w) / static_cast<float>(h);
-    float size = near * static_cast<float>(tanf(DEG2RAD(fov)) / 2.0f);
+    float size = near * static_cast<float>(tanf(TO_RADIANS(fov)) / 2.0f);
     float l = -size;
     float r = size;
     float t = size / aspect;

@@ -95,9 +95,9 @@ public:
      */
     bool IsIdentity () const;
 
-    const Vector4 &operator[] (const int index) const;
+    const Vector4 &operator[] (const s32 index) const;
 
-    Vector4 &operator[] (const int index);
+    Vector4 &operator[] (const s32 index);
 
     /** Matrix4 operations. */
     Matrix4 operator* (const float a) const;
@@ -219,11 +219,11 @@ inline bool Matrix4::IsIdentity () const {
     return Compare(Matrix4::IDENTITY);
 }
 
-inline const Vector4 &Matrix4::operator[] (const int index) const {
+inline const Vector4 &Matrix4::operator[] (const s32 index) const {
     return mat[index];
 }
 
-inline Vector4 &Matrix4::operator[] (const int index) {
+inline Vector4 &Matrix4::operator[] (const s32 index) {
     return mat[index];
 }
 

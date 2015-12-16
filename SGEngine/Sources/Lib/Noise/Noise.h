@@ -18,30 +18,30 @@ namespace sge {
 
 class Noise {
 public:
-    static int Hash (const int x, const int y);
+    static s32 Hash (const s32 x, const s32 y);
 
-    static float SimpleNoise (const int x, const int y);
+    static float SimpleNoise (const s32 x, const s32 y);
 
     static float SmoothNoise (const float x, const float y);
 };
 
 // --------------------------------------------------------------------------
 
-inline int Noise::Hash (const int x, const int y) {
-    int n = x + y * 57;
+inline s32 Noise::Hash (const s32 x, const s32 y) {
+    s32 n = x + y * 57;
     n = (n << 13) ^ n;
-    int nn = (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
+    s32 nn = (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
     return nn;
 }
 
-inline float Noise::SimpleNoise (const int x, const int y) {
-    int nn = Noise::Hash(x, y);
+inline float Noise::SimpleNoise (const s32 x, const s32 y) {
+    s32 nn = Noise::Hash(x, y);
     return 1.0f - (static_cast<float>(nn) / 1073741824.0f);
 }
 
 inline float Noise::SmoothNoise (const float x, const float y) {
-    int xf = static_cast<int>(x); // floor of x
-    int yf = static_cast<int>(y); // floor of y
+    s32 xf = static_cast<s32>(x); // floor of x
+    s32 yf = static_cast<s32>(y); // floor of y
     float xFrac = x - xf;
     float yFrac = y - yf;
 

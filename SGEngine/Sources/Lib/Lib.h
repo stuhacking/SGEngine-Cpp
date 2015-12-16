@@ -65,6 +65,6 @@ typedef int64_t s64;
 #include "Geom/Primitive/Cube.h"
 #include "Geom/Primitive/ICOSphere.h"
 
-#include "Util/SHLibIO.h"
+#include "Util/LibIO.h"
 
 #endif /* __SHLIB_H_ */

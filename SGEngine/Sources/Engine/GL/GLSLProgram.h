@@ -102,7 +102,7 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline GLSLProgram &GLSLProgram::AddSource (const string &filename) {
+inline GLSLProgram &GLSLProgram::AddSource (const std::string &filename) {
     m_shaders.emplace_back(filename);
 
     return *this;

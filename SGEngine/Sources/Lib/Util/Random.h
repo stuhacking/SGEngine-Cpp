@@ -23,9 +23,9 @@ class Random {
 public:
     Random();
 
-    Random(const int p_seed);
+    Random (const s32 p_seed);
 
-    void SetSeed(const int p_seed);
+    void SetSeed (const s32 p_seed);
 
     float NextFloat();
 
@@ -33,11 +33,11 @@ public:
 
     float NextFloat(const float min, const float max);
 
-    int NextInt();
+    s32 NextInt();
 
-    int NextInt(const int max);
+    s32 NextInt(const s32 max);
 
-    int NextInt(const int min, const int max);
+    s32 NextInt(const s32 min, const s32 max);
 
 private:
     std::default_random_engine m_generator;
@@ -47,11 +47,11 @@ inline Random::Random() {
     SetSeed(time(nullptr));
 }
 
-inline Random::Random(const int p_seed) {
+inline Random::Random(const s32 p_seed) {
     SetSeed(p_seed);
 }
 
-inline void Random::SetSeed(const int p_seed) {
+inline void Random::SetSeed(const s32 p_seed) {
     m_generator.seed(p_seed);
 }
 
@@ -70,17 +70,17 @@ inline float Random::NextFloat(const float min, const float max) {
     return vals(m_generator);
 }
 
-inline int Random::NextInt() {
+inline s32 Random::NextInt() {
     std::uniform_int_distribution<int> vals(0, INT_MAX);
     return vals(m_generator);
 }
 
-inline int Random::NextInt(const int max) {
+inline s32 Random::NextInt(const s32 max) {
     std::uniform_int_distribution<int> vals(0, max);
     return vals(m_generator);
 }
 
-inline int Random::NextInt(const int min, const int max) {
+inline s32 Random::NextInt(const s32 min, const s32 max) {
     std::uniform_int_distribution<int> vals(min, max);
     return vals(m_generator);
 }

@@ -149,7 +149,7 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
     ObjGroup *currentGroup = &groups.back();
 
     // Convert n-sided faces to tris as we go.
-    for (int k = 3, kMax = tokens.size(); k < kMax; ++k) {
+    for (u32 k = 3, kMax = tokens.size(); k < kMax; ++k) {
         std::vector<std::string> indices[3];
         indices[0] = String::Split(tokens[1], '/');
         indices[1] = String::Split(tokens[k - 1], '/');
@@ -159,7 +159,7 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
         currentGroup->positionIndex.emplace_back(std::stoi(indices[1][0]) - 1);
         currentGroup->positionIndex.emplace_back(std::stoi(indices[2][0]) - 1);
 
-        int idx;
+        u32 idx;
         if (m_hasTexture) {
             idx = indices[0][1].empty() ? 0 : std::stoi(indices[0][1]) - 1;
             currentGroup->textureIndex.emplace_back(idx);
@@ -191,7 +191,7 @@ Mesh meshFromObjDocument (const ObjDocument &doc) {
 
         for (const auto &g : doc.groups) {
 
-            for (int k = 2, kMax = g.Size(); k < kMax; k += 3) {
+            for (u32 k = 2, kMax = g.Size(); k < kMax; k += 3) {
                 Vertex v1 = doc.Position(g.positionIndex[k - 2]);
                 Vertex v2 = doc.Position(g.positionIndex[k - 1]);
                 Vertex v3 = doc.Position(g.positionIndex[k]);

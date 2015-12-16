@@ -14,26 +14,24 @@
 
 #include <string>
 
-using std::string;
-
 namespace sge {
 
 class GLSLShader {
 public:
     friend class GLSLProgram;
 
-    GLSLShader(const string &filename);
+    GLSLShader(const std::string &filename);
 
-    int Compile();
+    GLuint Compile();
 
     bool IsCompiled() const;
 
     void Delete ();
 
 private:
-    GLuint m_id; // May be <0 if error or uninitialized.
+    GLuint m_id; // 0 == error/uninitialized
     GLenum m_type;
-    string m_filename;
+    std::string m_filename;
 };
 
 inline bool GLSLShader::IsCompiled() const {

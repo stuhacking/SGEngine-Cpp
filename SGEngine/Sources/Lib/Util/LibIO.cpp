@@ -1,3 +1,6 @@
+//
+// Printers for core types.
+//
 #include "../Lib.h"
 
 #include <ostream>
@@ -28,10 +31,10 @@ std::ostream &operator<< (std::ostream &os, const Quaternion &quat) {
 // Matrix2 Printer
 std::ostream &operator<< (std::ostream &os, const Matrix2 &mat) {
     os << "<Matrix2 ";
-    for (int i = 0; i < 2; i++) {
+    for (u8 i = 0; i < 2; ++i) {
         auto sep = "";
         os << "[";
-        for (int j = 0; j < 2; j++) {
+        for (u8 j = 0; j < 2; ++j) {
             os << sep << mat[i][j];
             sep = " ";
         }
@@ -44,10 +47,10 @@ std::ostream &operator<< (std::ostream &os, const Matrix2 &mat) {
 // Matrix3 Printer
 std::ostream &operator<< (std::ostream &os, const Matrix3 &mat) {
     os << "<Matrix3 ";
-    for (int i = 0; i < 4; i++) {
+    for (u8 i = 0; i < 4; ++i) {
         auto sep = "";
         os << "[";
-        for (int j = 0; j < 4; j++) {
+        for (u8 j = 0; j < 4; ++j) {
             os << sep << mat[i][j];
             sep = " ";
         }
@@ -60,10 +63,10 @@ std::ostream &operator<< (std::ostream &os, const Matrix3 &mat) {
 // Matrix4 Printer
 std::ostream &operator<< (std::ostream &os, const Matrix4 &mat) {
     os << "<Matrix4 ";
-    for (int i = 0; i < 4; i++) {
+    for (u8 i = 0; i < 4; ++i) {
         auto sep = "";
         os << "[";
-        for (int j = 0; j < 4; j++) {
+        for (u8 j = 0; j < 4; ++j) {
             os << sep << mat[i][j];
             sep = " ";
         }

@@ -48,13 +48,13 @@ public:
      * Read access to this Quaternion's components using 
      *subscript notation.
      */
-    float operator[] (const int index) const;
+    float operator[] (const s32 index) const;
 
     /**
      * Reference/write access to this Quaternion's components using
      * subscript notation.
      */
-    float &operator[] (const int index);
+    float &operator[] (const s32 index);
 
     
     void Zero ();
@@ -127,11 +127,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float Quaternion::operator[] (const int index) const {
+inline float Quaternion::operator[] (const s32 index) const {
     return (&i)[index];
 }
 
-inline float &Quaternion::operator[] (const int index) {
+inline float &Quaternion::operator[] (const s32 index) {
     return (&i)[index];
 }
 

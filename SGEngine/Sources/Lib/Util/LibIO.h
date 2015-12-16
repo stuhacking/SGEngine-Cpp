@@ -1,4 +1,4 @@
-/*---  SHLibIO.h - OStream formatters for SHLib types  -------------*- C++ -*---
+/*---  LibIO.h - OStream formatters for Core Lib types  -----------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *
@@ -9,8 +9,8 @@
  * 
  * @brief Define a bunch of << overloads for SGE types.
  */
-#ifndef __SHLIB_SHLIBIO_H_
-#define __SHLIB_SHLIBIO_H_
+#ifndef __SGECORELIB_LIBIO_H_
+#define __SGECORELIB_LIBIO_H_
 
 class ostream;
 
@@ -32,4 +32,4 @@ std::ostream& operator<< (std::ostream &os, const Vertex &vert);
 
 } /* namespace sge */
 
-#endif /* __SHLIB_SHLIBIO_H_ */
+#endif /* __SGECORELIB_LIBIO_H_ */

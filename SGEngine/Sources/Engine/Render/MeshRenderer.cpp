@@ -4,13 +4,12 @@
 #include "../Engine.h"
 
 #include <iostream>
+#include <algorithm>
 
 namespace sge {
 
-#define BUFFER_OFFSET(a) (GLvoid*)((a) * sizeof(GLfloat))
-
 void MeshRenderer::Compile() {
-    
+
     if (m_glVaoId == 0) {
         glGenVertexArrays(1, &m_glVaoId);
     }

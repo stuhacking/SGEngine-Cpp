@@ -13,8 +13,8 @@
 namespace sge {
 
 // Flags
-static u32 FLIP_VERTICAL = 0x1;
-static u32 FLIP_HORIZONTAL = 0x2;
+static u8 FLIP_VERTICAL = 0x1;
+static u8 FLIP_HORIZONTAL = 0x2;
 
 // Read into the SDL_Surface->format struct and determine the attributes
 // for pixel width and ordering as a printable string.
@@ -86,14 +86,14 @@ void print_SDL_surface_info (const std::string &filename, const SDL_Surface * co
 
 // TODO - These 2 functions need to respect PixelFormat!!
 static
-u32 getPixel32 (const SDL_Surface &surface, const int x, const int y) {
+u32 getPixel32 (const SDL_Surface &surface, const u32 x, const u32 y) {
     const u32 *pixels = reinterpret_cast<const u32*>(surface.pixels);
 
     return pixels[(y * surface.w) + x];
 }
 
 static
-void putPixel32 (SDL_Surface &surface, const int x, const int y, const u32 pixel) {
+void putPixel32 (SDL_Surface &surface, const u32 x, const u32 y, const u32 pixel) {
     u32 *pixels = reinterpret_cast<u32*>(surface.pixels);
 
     pixels[(y * surface.w) + x] = pixel;
@@ -103,7 +103,7 @@ void putPixel32 (SDL_Surface &surface, const int x, const int y, const u32 pixel
 // copy, also allows flipping the image across vertical and
 // horizontal axes.
 static
-bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const int flags = 0) {
+bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const u8 flags = 0) {
 
     if (SDL_MUSTLOCK(src)) {
         DEBUG( std::cout << " Locking input surface\n"; );
@@ -116,24 +116,24 @@ bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const int flags 
 
     if ((flags & FLIP_VERTICAL) && (flags & FLIP_HORIZONTAL)) {
         // Complex pixel level case
-        for (int x = 0, xMax = dest->w, rx = dest->w - 1; x < xMax; x++, rx--) {
-            for (int y = 0, yMax = dest->h, ry = dest->h - 1; y < yMax; y++, ry--) {
+        for (u32 x = 0, xMax = dest->w, rx = dest->w - 1; x < xMax; x++, rx--) {
+            for (u32 y = 0, yMax = dest->h, ry = dest->h - 1; y < yMax; y++, ry--) {
                 putPixel32(*dest, rx, ry, getPixel32(*src, x, y));
             }
         }
     } else if (flags & FLIP_HORIZONTAL) {
         // Complex pixel level case
-        for (int x = 0, xMax = dest->w, rx = dest->w - 1; x < xMax; x++, rx--) {
-            for (int y = 0, yMax = dest->h; y < yMax; y++) {
+        for (u32 x = 0, xMax = dest->w, rx = dest->w - 1; x < xMax; x++, rx--) {
+            for (u32 y = 0, yMax = dest->h; y < yMax; y++) {
                 putPixel32(*dest, rx, y, getPixel32(*src, x, y));
             }
         }
     } else if (flags & FLIP_VERTICAL) {
         // Just do Line level reordering of the pixel buffer
-        int w = dest->pitch;
+        u32 w = dest->pitch;
         u8 *src_buf = reinterpret_cast<u8*>(src->pixels);
         u8 *dst_buf = reinterpret_cast<u8*>(dest->pixels);
-        for (int y = 0, yMax = dest->h, ry = dest->h - 1; y < yMax; y++, ry--) {
+        for (u32 y = 0, yMax = dest->h, ry = dest->h - 1; y < yMax; y++, ry--) {
             std::memcpy(dst_buf + (y * w), src_buf + (ry * w), w);
         }
     } else {
@@ -155,7 +155,7 @@ bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const int flags 
 static
 bool LoadImageSDL(const std::string &filename) {
     SDL_Surface *surface, *flipped;
-    int mode;
+    u32 mode;
 
     DEBUG( std::cout << "Loading Image: " << filename << "\n"; );
     
@@ -173,11 +173,14 @@ bool LoadImageSDL(const std::string &filename) {
         mode = GL_RGB;
     }
 
+    // TODO: I'd like to write the pixel data into a custom struct to
+    //   get away from using SDL more than necessary.
     flipped = SDL_CreateRGBSurface(SDL_SWSURFACE,
                                    surface->w, surface->h,
                                    surface->format->BitsPerPixel,
                                    surface->format->Rmask, surface->format->Gmask,
                                    surface->format->Bmask, surface->format->Amask);
+    
     if (!flipped) {
         std::cerr << " Error creating copy surface! " << IMG_GetError() << "\n";
         return false;
@@ -188,9 +191,9 @@ bool LoadImageSDL(const std::string &filename) {
         std::cerr << "Error while copying surface.\n";
     }
 
-    int w = FMath::Nearest2Pow(flipped->w);
-    int h = FMath::Nearest2Pow(flipped->h);
-    if (w != flipped->w || h != flipped->h) {
+    u32 w = FMath::Nearest2Pow(flipped->w);
+    u32 h = FMath::Nearest2Pow(flipped->h);
+    if (w != static_cast<u32>(flipped->w) || h != static_cast<u32>(flipped->h)) {
         std::cerr << "Warning: Image dimensions are not powers of two which may cause issues.\n";
     }
 

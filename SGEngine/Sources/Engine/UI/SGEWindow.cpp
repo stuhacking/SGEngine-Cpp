@@ -22,14 +22,14 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h, const b
     m_width = w;
     m_height = h;
 
-    std::cout << string(78, '*') << "\n";
+    std::cout << std::string(78, '*') << "\n";
     std::cout << " Initializing SDL...\n";
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Failed to initialize SDL! SDL_Error: " << SDL_GetError() << "\n";
         return;
     }
 
-    int imgFlags = IMG_INIT_PNG & IMG_INIT_JPG;
+    u32 imgFlags = IMG_INIT_PNG & IMG_INIT_JPG;
     if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
         std::cerr << "Failed to initialize SDL_Image! SDL_Error: " << IMG_GetError() << "\n";
         return;
@@ -87,6 +87,10 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h, const b
     
     // Default Cyan Clear color.
     SGEWindow::SetClearColor(0.4f, 0.6f, 0.9f, 1.0f);
+
+    //
+    glEnable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
     
     // Enable Backface Culling.
     glFrontFace(GL_CCW);
@@ -110,7 +114,7 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h, const b
     m_initialized = true;
 
     std::cout << " Done initializing OpenGL.\n";
-    std::cout << string(78, '*') << "\n";
+    std::cout << std::string(78, '*') << "\n";
 }
 
 SGEWindow::~SGEWindow () {

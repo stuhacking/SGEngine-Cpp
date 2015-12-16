@@ -34,7 +34,7 @@ std::string String::Trim (const std::string &str) {
 }
 
 std::string String::PadLeft (const std::string &str, const size_t width, const char c) {
-    int padding = width - str.length();
+    size_t padding = width - str.length();
     
     if (padding <= 0) {
         return str;
@@ -44,7 +44,7 @@ std::string String::PadLeft (const std::string &str, const size_t width, const c
 }
 
 std::string String::PadRight (const std::string &str, const size_t width, const char c) {
-    int padding = width - str.length();
+    size_t padding = width - str.length();
     
     if (padding <= 0) {
         return str;
@@ -54,7 +54,7 @@ std::string String::PadRight (const std::string &str, const size_t width, const 
 }
 
 std::string String::PadCenter (const std::string &str, const size_t width, const char c) {
-    int padding = width - str.length();
+    size_t padding = width - str.length();
     
     if (padding <= 0) {
         return str;

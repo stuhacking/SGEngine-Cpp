@@ -51,9 +51,9 @@ public:
     size_t Size () const { return m_positions.size(); }
     bool IsValid () const { return m_isValid; }
 
-    Vector3 Position (const int index) const { return m_positions[index]; }
-    Vector3 Normal (const int index) const { return m_normals[index]; }
-    Vector2 TexCoord (const int index) const { return m_texCoords[index]; }
+    Vector3 Position (const s32 index) const { return m_positions[index]; }
+    Vector3 Normal (const s32 index) const { return m_normals[index]; }
+    Vector2 TexCoord (const s32 index) const { return m_texCoords[index]; }
 
 private:
     std::vector<Vector3> m_positions;

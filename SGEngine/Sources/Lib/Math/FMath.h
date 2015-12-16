@@ -14,26 +14,26 @@
 
 #include <cmath>
 
-#define DEG2RAD(a) ((a) * FMath::_DEGTORAD)
-#define RAD2DEG(a) ((a) * FMath::_RADTODEG)
+#define TO_RADIANS(a) ((a) * FMath::DEG2RAD)
+#define TO_DEGREES(a) ((a) * FMath::RAD2DEG)
 
 namespace sge {
 
 class FMath {
 public:
     constexpr static const float PI = static_cast<float>(M_PI);
+    constexpr static const float TAU = PI * 2.0f;
     constexpr static const float HALF_PI = PI * 0.5f;
-    constexpr static const float TWO_PI = PI * 2.0f;
 
     constexpr static const float E = static_cast<float>(M_E);
     constexpr static const float INFTY = static_cast<float>(INFINITY);
 
-    constexpr static const float _DEGTORAD = PI / 180.0f;
-    constexpr static const float _RADTODEG = 180.0f / PI;
+    constexpr static const float DEG2RAD = PI / 180.0f;
+    constexpr static const float RAD2DEG = 180.0f / PI;
 
-    constexpr static float Min (const float a, const float b);
+    static float Min (const float a, const float b);
 
-    constexpr static float Max (const float a, const float b);
+    static float Max (const float a, const float b);
 
     /**
      * Clamp float value within min/max boundaries.
@@ -41,14 +41,14 @@ public:
     static float ClampFloat (const float val, const float a, const float b);
 
     /**
-     * Clamp int value within min/max boundaries.
+     * Clamp integer value within min/max boundaries.
      */
-    static int ClampInt (const int val, const int a, const int b);
+    static s32 ClampInt (const s32 val, const s32 a, const s32 b);
 
     /**
      * Return the first power of 2 that is not less than val.
      */
-    static int Nearest2Pow (const u32 val);
+    static u32 Nearest2Pow (const u32 val);
 
     /**
      * Convert a value within a range to a ratio. Resulting value may
@@ -89,11 +89,13 @@ public:
     static void SinCos (const float angle, float &s, float &c);
 };
 
-constexpr inline float FMath::Min (const float a, const float b) {
+// --------------------------------------------------------------------------
+
+inline float FMath::Min (const float a, const float b) {
     return (a < b) ? a : b;
 }
 
-constexpr float FMath::Max (const float a, const float b) {
+inline float FMath::Max (const float a, const float b) {
     return (a > b) ? a : b;
 }
 
@@ -101,7 +103,7 @@ inline float FMath::ClampFloat (const float val, const float a, const float b) {
     return FMath::Max(a, FMath::Min(b, val));
 }
 
-inline int FMath::ClampInt (const int val, const int a, const int b) {
+inline s32 FMath::ClampInt (const s32 val, const s32 a, const s32 b) {
     if (val < a)
         return a;
 
@@ -111,10 +113,10 @@ inline int FMath::ClampInt (const int val, const int a, const int b) {
     return val;
 }
 
-inline int FMath::Nearest2Pow (const u32 val) {
+inline u32 FMath::Nearest2Pow (const u32 val) {
     u32 result = 2;
     while (result < val) {
-        result *= 2;
+        result <<= 1;
     }
     return result;
 }

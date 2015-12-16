@@ -35,7 +35,7 @@ public:
     /**
      * Set a new seed value for this noise generator.
      */
-    void SetSeed(const int seed);
+    void SetSeed(const s32 seed);
 
     /**
      * Get the 1D value of this noise at position x.
@@ -48,15 +48,15 @@ public:
     float Get(const float x, const float y) const;
 
 private:
-    int m_seed;
+    s32 m_seed;
 
     float perlin(const float x, const float y) const;
 };
 
 // --------------------------------------------------------------------------
 
-inline void Perlin::SetSeed(const int seed) {
-    int s = static_cast<int>(seed & 0xFF);
+inline void Perlin::SetSeed(const s32 seed) {
+    s32 s = static_cast<s32>(seed & 0xFF);
     m_seed = 2 + s * s;
 }
 

@@ -115,7 +115,7 @@ std::string ReadShaderFile(const std::string &filename) {
 //======================
 
 bool GLSLProgram::Compile () {
-    int a_id = 0;
+    GLint a_id = 0;
 
     if (IsCompiled()) {
 #ifndef NDEBUG
@@ -197,7 +197,7 @@ GLint GLSLProgram::GetUniform (const std::string &name) {
         return m_uniforms[name];
     }
 
-    int uniformLocation = glGetUniformLocation(m_id, name.c_str());
+    GLint uniformLocation = glGetUniformLocation(m_id, name.c_str());
 
     if (uniformLocation < 0) {
         std::cerr << "Uniform location does not exist: " << name << "\n";
@@ -278,8 +278,8 @@ GLSLShader::GLSLShader(const std::string &filename) {
 // return the shader id if successful, or 0 if errors were encountered.
 //======================================================================
 
-int GLSLShader::Compile() {
-    int a_id = 0;
+GLuint GLSLShader::Compile() {
+    GLuint a_id = 0;
 
     std::string source = ReadShaderFile(m_filename);
     if (source.empty()) {

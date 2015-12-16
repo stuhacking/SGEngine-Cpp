@@ -22,22 +22,29 @@ class Mesh {
 public:
     void AddVertex (const Vertex &v);
 
-    void AddFace (const int a, const int b, const int c);
+    void AddFace (const u32 a, const u32 b, const u32 c);
 
     void AutoTriFace (const Vertex &v1, const Vertex &v2, const Vertex &v3);
 
     void AutoQuadFace (const Vertex &v1, const Vertex &v2, const Vertex &v3,
                        const Vertex &v4);
     
-    u64 VertCount () const;
+    u32 VertCount () const;
 
-    u64 IndexCount () const;
+    u32 IndexCount () const;
 
-    u64 FaceCount () const;
+    u32 FaceCount () const;
+
+    void PrintVertexInfo () const;
+    
+    /**
+     * Identify duplicate vertex data and fix indices to share a single instance.
+     */
+    void Simplify ();
 
 public:
     std::vector<Vertex> vertices;
-    std::vector<int> indices;
+    std::vector<u32> indices;
 };
 
 // --------------------------------------------------------------------------
@@ -46,7 +53,7 @@ inline void Mesh::AddVertex (const Vertex &v) {
     vertices.push_back(v);
 }
 
-inline void Mesh::AddFace (const int a, const int b, const int c) {
+inline void Mesh::AddFace (const u32 a, const u32 b, const u32 c) {
     indices.push_back(a);
     indices.push_back(b);
     indices.push_back(c);
@@ -57,7 +64,7 @@ inline void Mesh::AddFace (const int a, const int b, const int c) {
 //  v1
 inline void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
                                const Vertex &v3) {
-    u64 size = VertCount();
+    u32 size = VertCount();
     
     AddVertex(v1);
     AddVertex(v2);
@@ -71,7 +78,7 @@ inline void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
 //  v1---v2
 inline void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
                                 const Vertex &v3, const Vertex &v4) {
-    u64 size = VertCount();
+    u32 size = VertCount();
     
     AddVertex(v1);
     AddVertex(v2);
@@ -82,15 +89,15 @@ inline void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
     AddFace(size, size + 1, size + 2);
 }
 
-inline u64 Mesh::VertCount () const {
+inline u32 Mesh::VertCount () const {
     return vertices.size();
 }
 
-inline u64 Mesh::IndexCount () const {
+inline u32 Mesh::IndexCount () const {
     return indices.size();
 }
 
-inline u64 Mesh::FaceCount () const {
+inline u32 Mesh::FaceCount () const {
     return indices.size() / 3;
 }
 

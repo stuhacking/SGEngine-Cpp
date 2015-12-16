@@ -30,7 +30,7 @@ Vector3 Vector3::Rotate (const float angle, const Vector3 &axis) const {
 
 void Vector3::RotateSelf (const float angle, const Vector3 &axis) {
     float sinHalfAngle, cosHalfAngle;
-    FMath::SinCos(DEG2RAD(angle / 2.0f), sinHalfAngle, cosHalfAngle);
+    FMath::SinCos(TO_RADIANS(angle / 2.0f), sinHalfAngle, cosHalfAngle);
 
     Quaternion rotation = Quaternion(axis.x * sinHalfAngle, axis.y * sinHalfAngle, axis.z * sinHalfAngle, cosHalfAngle);
     Quaternion w = rotation * (*this) * rotation.Conjugate();

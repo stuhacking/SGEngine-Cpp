@@ -12,7 +12,7 @@
 #ifndef __SHLIB_VECTOR3_H_
 #define __SHLIB_VECTOR3_H_
 
-#include <cmath>
+#include <cmath> // fabs
 
 namespace sge {
 
@@ -46,10 +46,10 @@ public:
         : x(xx), y(yy), z(zz) { }
 
     /** Value access using an index. */
-    float operator[] (const int index) const;
+    float operator[] (const s32 index) const;
 
     /** Reference access using an index. */
-    float &operator[] (const int index);
+    float &operator[] (const s32 index);
     
     /**
      * Set the values of x, y, and z.
@@ -315,11 +315,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float Vector3::operator[] (const int index) const {
+inline float Vector3::operator[] (const s32 index) const {
     return (&x)[index];
 }
 
-inline float &Vector3::operator[] (const int index) {
+inline float &Vector3::operator[] (const s32 index) {
     return (&x)[index];
 }
 

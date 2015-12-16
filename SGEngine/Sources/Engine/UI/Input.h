@@ -1,4 +1,4 @@
-/*---  Input.h - SDL2 Realtime Input Header  -----------------------*- C++ -*---
+/*---  Input.h - SDL2 Realtime Input Header  ----------------------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *
@@ -7,7 +7,7 @@
  *
  * --------------------------------------------------------------------------
  * 
- * @brief Define wrapper for querying keyboard and mouse state.
+ * @brief Define wrapper for querying keyboard and mouse state from SDL2.
  */
 #ifndef __SHENGINE_INPUT_H_
 #define __SHENGINE_INPUT_H_
@@ -45,10 +45,31 @@ public:
     static bool KeyReleased (const SDL_Keycode keyCode);
 
     /**
+     * Capture the mouse pointer.
+     */
+    static void LockMouse ();
+
+    /**
+     * Release the mouse pointer.
+     */
+    static void ReleaseMouse ();
+
+    /**
+     * Check if the mouse is currently locked.
+     */
+    static bool MouseLocked ();
+    
+    /**
      * Get the current position (in top-left origin window coordinates)
      * of the mouse cursor
      */
     static Vector2 GetMousePosition ();
+
+    /**
+     * Get the relative position of the mouse since the last time
+     * Input was updated.
+     */
+    static Vector2 GetMouseDelta ();
 
     /**
      * Test if the given mouse button is currently held. Use for

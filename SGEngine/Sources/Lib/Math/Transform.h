@@ -33,6 +33,8 @@ public:
     Matrix4 GetScaleMatrix () const;
 
     Matrix4 GetTransformationMatrix () const;
+
+    Matrix4 GetViewTransformationMatrix () const;
 };
 
 // --------------------------------------------------------------------------
@@ -45,9 +47,9 @@ inline Matrix4 Transform::GetTranslationMatrix () const {
 }
 
 inline Matrix4 Transform::GetOrientationMatrix () const {
-    float xx = DEG2RAD(orientation.x);
-    float yy = DEG2RAD(orientation.y);
-    float zz = DEG2RAD(orientation.z);
+    float xx = TO_RADIANS(orientation.x);
+    float yy = TO_RADIANS(orientation.y);
+    float zz = TO_RADIANS(orientation.z);
 
     Matrix3 rot = Matrix3(
         std::cos(zz), -std::sin(zz), 0.0f,
@@ -79,6 +81,10 @@ inline Matrix4 Transform::GetScaleMatrix () const {
 
 inline Matrix4 Transform::GetTransformationMatrix () const {
     return GetScaleMatrix() * GetOrientationMatrix() * GetTranslationMatrix();
+}
+
+inline Matrix4 Transform::GetViewTransformationMatrix () const {
+    return (GetTranslationMatrix() * GetOrientationMatrix() * GetScaleMatrix()).Inverse();
 }
 
 } /* namespace sge */

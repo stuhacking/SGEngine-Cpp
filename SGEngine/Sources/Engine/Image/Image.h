@@ -32,12 +32,12 @@ public:
     /**
      * Use nearest pixel filtering when drawing texture.
      */
-    void SetFilterNearest ();
+    void SetFilterNearest () { m_filter = GL_NEAREST; }
 
     /**
      * Use linear filtering when drawing texture.
      */
-    void SetFilterLinear ();
+    void SetFilterLinear () { m_filter = GL_LINEAR; }
 
     /**
      * Set Whether the texture should be repeated and mirrored on both axes.
@@ -67,54 +67,7 @@ private:
     GLuint m_id;
     GLenum m_repeat[2];
     GLenum m_filter;
-    bool m_initialized;
 };
-
-// --------------------------------------------------------------------------
-
-inline void Image::SetFilterNearest () {
-    m_filter = GL_NEAREST;
-}
-
-inline void Image::SetFilterLinear () {
-    m_filter = GL_LINEAR;
-}
-
-inline void Image::SetRepeat (const bool repeat, const bool mirror) {
-    if (repeat) {
-        if (mirror) {
-            m_repeat[0] = m_repeat[1] = GL_MIRRORED_REPEAT;
-        } else {
-            m_repeat[0] = m_repeat[1] = GL_REPEAT;
-        }
-    } else {
-        m_repeat[0] = m_repeat[1] = GL_CLAMP_TO_BORDER;
-    }
-}
-
-inline void Image::SetRepeatX (const bool repeat, const bool mirror) {
-    if (repeat) {
-        if (mirror) {
-            m_repeat[0] = GL_MIRRORED_REPEAT;
-        } else {
-            m_repeat[0] = GL_REPEAT;
-        }
-    } else {
-        m_repeat[0] = GL_CLAMP_TO_BORDER;
-    }
-}
-
-inline void Image::SetRepeatY (const bool repeat, const bool mirror) {
-    if (repeat) {
-        if (mirror) {
-            m_repeat[1] = GL_MIRRORED_REPEAT;
-        } else {
-            m_repeat[1] = GL_REPEAT;
-        }
-    } else {
-        m_repeat[1] = GL_CLAMP_TO_BORDER;
-    }
-}
 
 } /* namespace sge */
 

@@ -22,11 +22,11 @@ namespace sge {
  */
 class Circle {
 public:
-    Circle();
+    Circle()
+        : origin(Vector2::ZERO), radius(-FMath::INFTY) { }
 
-    Circle(const Vector2 &p_origin);
-
-    Circle(const Vector2 &p_origin, const float p_radius);
+    Circle(const Vector2 &p_origin, const float p_radius = -FMath::INFTY)
+        : origin(p_origin), radius(p_radius) { }
 
     /**
      * Clear all points from this Circle.
@@ -78,26 +78,11 @@ public:
     bool operator!= (const Circle &other) const;
 
 private:
-    float radius;
     Vector2 origin;
+    float radius;
 };
 
 // --------------------------------------------------------------------------
-
-inline Circle::Circle() {
-    radius = -FMath::INFTY;
-    origin = Vector2(0.0f, 0.0f);
-}
-
-inline Circle::Circle(const Vector2 &p_origin) {
-    radius = 0.0f;
-    origin = p_origin;
-}
-
-inline Circle::Circle(const Vector2 &p_origin, const float p_radius) {
-    radius = p_radius;
-    origin = p_origin;
-}
 
 inline void Circle::Clear() {
     radius = -FMath::INFTY;

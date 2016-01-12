@@ -29,6 +29,8 @@ public:
 public:
     static const Vector2 ZERO;
     static const Vector2 ONE;
+    static const Vector2 X;
+    static const Vector2 Y;
 
 public:
     /** Construct a default Vector2 at 0,0. */

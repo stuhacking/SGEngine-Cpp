@@ -12,7 +12,7 @@
 #ifndef __SHLIB_QUATERNION_H_
 #define __SHLIB_QUATERNION_H_
 
-#include <cmath>
+#include <cmath> // sqrt, fabsf
 
 namespace sge {
 

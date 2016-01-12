@@ -33,6 +33,10 @@ public:
 public:
     static const Vector4 ZERO;
     static const Vector4 ONE;
+    static const Vector4 X;
+    static const Vector4 Y;
+    static const Vector4 Z;
+    static const Vector4 W;
 
 public:
     /** Construct a default Vector4 at origin. */

@@ -15,10 +15,10 @@ Mesh Plane::ToMesh () const {
     Vector3 v3 = Vector3(center.x + hSize.x, center.y, center.z - hSize.y);
     Vector3 v4 = Vector3(center.x - hSize.x, center.y, center.z - hSize.y);
 
-    m.AutoQuadFace(Vertex(v1, Vector2(0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
-                   Vertex(v2, Vector2(1.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
-                   Vertex(v3, Vector2(1.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)),
-                   Vertex(v4, Vector2(0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)));
+    m.AutoQuadFace(Vertex(v1, Vector2(0.0f, 0.0f), Vector3::Y),
+                   Vertex(v2, Vector2(1.0f, 0.0f), Vector3::Y),
+                   Vertex(v3, Vector2(1.0f, 1.0f), Vector3::Y),
+                   Vertex(v4, Vector2(0.0f, 1.0f), Vector3::Y));
 
     return m;
 }
@@ -28,10 +28,8 @@ Mesh Plane::ToMesh () const {
 Mesh Cube::ToMesh () const {
     Mesh m;
 
-
     //    8    7
     //  5    6
-    //
     //
     //    4    3
     //  1    2
@@ -50,38 +48,38 @@ Mesh Cube::ToMesh () const {
     Vector3 v8 = Vector3(center.x - hSize.x, center.y + hSize.y, center.z - hSize.z);
 
     // Top
-    m.AutoQuadFace(Vertex(v5, Vector2(0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
-                   Vertex(v6, Vector2(1.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f)),
-                   Vertex(v7, Vector2(1.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)),
-                   Vertex(v8, Vector2(0.0f, 1.0f), Vector3(0.0f, 1.0f, 0.0f)));
+    m.AutoQuadFace(Vertex(v5, Vector2(0.0f, 0.0f), Vector3::Y),
+                   Vertex(v6, Vector2(1.0f, 0.0f), Vector3::Y),
+                   Vertex(v7, Vector2(1.0f, 1.0f), Vector3::Y),
+                   Vertex(v8, Vector2(0.0f, 1.0f), Vector3::Y));
     // Bottom
-    m.AutoQuadFace(Vertex(v4, Vector2(0.0f, 0.0f), Vector3(0.0f, -1.0f, 0.0f)),
-                   Vertex(v3, Vector2(1.0f, 0.0f), Vector3(0.0f, -1.0f, 0.0f)),
-                   Vertex(v2, Vector2(1.0f, 1.0f), Vector3(0.0f, -1.0f, 0.0f)),
-                   Vertex(v1, Vector2(0.0f, 1.0f), Vector3(0.0f, -1.0f, 0.0f)));
+    m.AutoQuadFace(Vertex(v4, Vector2(0.0f, 0.0f), -Vector3::Y),
+                   Vertex(v3, Vector2(1.0f, 0.0f), -Vector3::Y),
+                   Vertex(v2, Vector2(1.0f, 1.0f), -Vector3::Y),
+                   Vertex(v1, Vector2(0.0f, 1.0f), -Vector3::Y));
 
 
     // Left
-    m.AutoQuadFace(Vertex(v4, Vector2(0.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
-                   Vertex(v1, Vector2(1.0f, 0.0f), Vector3(-1.0f, 0.0f, 0.0f)),
-                   Vertex(v5, Vector2(1.0f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f)),
-                   Vertex(v8, Vector2(0.0f, 1.0f), Vector3(-1.0f, 0.0f, 0.0f)));
+    m.AutoQuadFace(Vertex(v4, Vector2(0.0f, 0.0f), -Vector3::X),
+                   Vertex(v1, Vector2(1.0f, 0.0f), -Vector3::X),
+                   Vertex(v5, Vector2(1.0f, 1.0f), -Vector3::X),
+                   Vertex(v8, Vector2(0.0f, 1.0f), -Vector3::X));
     // Right
-    m.AutoQuadFace(Vertex(v2, Vector2(0.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
-                   Vertex(v3, Vector2(1.0f, 0.0f), Vector3(1.0f, 0.0f, 0.0f)),
-                   Vertex(v7, Vector2(1.0f, 1.0f), Vector3(1.0f, 0.0f, 0.0f)),
-                   Vertex(v6, Vector2(0.0f, 1.0f), Vector3(1.0f, 0.0f, 0.0f)));
+    m.AutoQuadFace(Vertex(v2, Vector2(0.0f, 0.0f), Vector3::X),
+                   Vertex(v3, Vector2(1.0f, 0.0f), Vector3::X),
+                   Vertex(v7, Vector2(1.0f, 1.0f), Vector3::X),
+                   Vertex(v6, Vector2(0.0f, 1.0f), Vector3::X));
     
     // Front
-    m.AutoQuadFace(Vertex(v1, Vector2(0.0f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)),
-                   Vertex(v2, Vector2(1.0f, 0.0f), Vector3(0.0f, 0.0f, 1.0f)),
-                   Vertex(v6, Vector2(1.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f)),
-                   Vertex(v5, Vector2(0.0f, 1.0f), Vector3(0.0f, 0.0f, 1.0f)));
+    m.AutoQuadFace(Vertex(v1, Vector2(0.0f, 0.0f), Vector3::Z),
+                   Vertex(v2, Vector2(1.0f, 0.0f), Vector3::Z),
+                   Vertex(v6, Vector2(1.0f, 1.0f), Vector3::Z),
+                   Vertex(v5, Vector2(0.0f, 1.0f), Vector3::Z));
     // Back
-    m.AutoQuadFace(Vertex(v3, Vector2(0.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f)),
-                   Vertex(v4, Vector2(1.0f, 0.0f), Vector3(0.0f, 0.0f, -1.0f)),
-                   Vertex(v8, Vector2(1.0f, 1.0f), Vector3(0.0f, 0.0f, -1.0f)),
-                   Vertex(v7, Vector2(0.0f, 1.0f), Vector3(0.0f, 0.0f, -1.0f)));
+    m.AutoQuadFace(Vertex(v3, Vector2(0.0f, 0.0f), -Vector3::Z),
+                   Vertex(v4, Vector2(1.0f, 0.0f), -Vector3::Z),
+                   Vertex(v8, Vector2(1.0f, 1.0f), -Vector3::Z),
+                   Vertex(v7, Vector2(0.0f, 1.0f), -Vector3::Z));
     
     return m;
 }

@@ -33,6 +33,9 @@ public:
 public:
     static const Vector3 ZERO;
     static const Vector3 ONE;
+    static const Vector3 X;
+    static const Vector3 Y;
+    static const Vector3 Z;
 
 public:
     /** Construct a default Vector3 at origin. */

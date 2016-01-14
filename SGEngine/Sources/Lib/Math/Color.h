@@ -68,6 +68,8 @@ public:
      */
     bool IsHidden () const;
 
+    Vector4 ToVector4 (const bool normalize = false) const;
+    
     bool Compare (const Color &other) const;
 
     bool Compare (const Color &other, const u8 threshold) const;

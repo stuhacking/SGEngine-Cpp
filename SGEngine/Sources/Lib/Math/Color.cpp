@@ -7,6 +7,12 @@
 
 namespace sge {
 
+Vector4 Color::ToVector4 (const bool normalize) const {
+    float f = normalize ? (1.0f / 255.0f) : 1.0f;
+
+    return Vector4((float)r * f, (float)g * f, (float)b * f, (float)a * f); 
+}
+
 Color Color::FromHSL (const float p_hue, const float p_sat, const float p_val) {
     float chroma = (1.0f - fabsf(2.0f * p_val - 1.0f)) * p_sat;
     float hSplit = p_hue / HUE_STEP;

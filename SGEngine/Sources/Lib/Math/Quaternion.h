@@ -48,15 +48,14 @@ public:
      * Read access to this Quaternion's components using 
      *subscript notation.
      */
-    float operator[] (const s32 index) const;
+    float operator[] (const u32 index) const;
 
     /**
      * Reference/write access to this Quaternion's components using
      * subscript notation.
      */
-    float &operator[] (const s32 index);
+    float &operator[] (const u32 index);
 
-    
     void Zero ();
 
     float LengthSqr () const;
@@ -77,18 +76,39 @@ public:
 
     Quaternion Cross (const Quaternion &rhs) const;
 
+    /**
+     * Scale quaternion.
+     */
     Quaternion operator* (const float a) const;
 
+    /**
+     * Scale quaternion, reversed operands.
+     */
     friend Quaternion operator* (const float a, const Quaternion &rhs);
 
+    /**
+     * Quaternion multiplication.
+     */
     Quaternion operator* (const Quaternion &rhs) const;
 
+    /**
+     * Quaternion x Vector multiplication.
+     */
     Quaternion operator* (const Vector3 &rhs) const;
 
+    /**
+     * Quaternion Addition.
+     */
     Quaternion operator+ (const Quaternion &rhs) const;
 
+    /**
+     * Quaternion subraction.
+     */
     Quaternion operator- (const Quaternion &rhs) const;
 
+    /**
+     * Quaternion division.
+     */
     Quaternion operator/ (const float a) const;
 
     Quaternion &operator*= (const float a);
@@ -127,11 +147,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float Quaternion::operator[] (const s32 index) const {
+inline float Quaternion::operator[] (const u32 index) const {
     return (&i)[index];
 }
 
-inline float &Quaternion::operator[] (const s32 index) {
+inline float &Quaternion::operator[] (const u32 index) {
     return (&i)[index];
 }
 
@@ -180,7 +200,10 @@ inline float Quaternion::Dot (const Quaternion &rhs) const {
 }
 
 inline Quaternion Quaternion::Cross (const Quaternion &rhs) const {
-    return Quaternion(j * rhs.k - k * rhs.j, k * rhs.i - i * rhs.k, i * rhs.j - j * rhs.i, w);
+    return Quaternion(j * rhs.k - k * rhs.j,
+                      k * rhs.i - i * rhs.k,
+                      i * rhs.j - j * rhs.i,
+                      w);
 }
 
 //======================
@@ -196,13 +219,17 @@ inline Quaternion operator* (const float a, const Quaternion &rhs) {
 }
 
 inline Quaternion Quaternion::operator* (const Quaternion &rhs) const {
-    return Quaternion(i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j, j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k,
-                      k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i, w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k);
+    return Quaternion(i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j,
+                      j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k,
+                      k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i,
+                      w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k);
 }
 
 inline Quaternion Quaternion::operator* (const Vector3 &rhs) const {
-    return Quaternion(w * rhs.x + j * rhs.z - k * rhs.y, w * rhs.y + k * rhs.x - i * rhs.z,
-                      w * rhs.z + i * rhs.y - j * rhs.x, -i * rhs.x - j * rhs.y - k * rhs.z);
+    return Quaternion(w * rhs.x + j * rhs.z - k * rhs.y,
+                      w * rhs.y + k * rhs.x - i * rhs.z,
+                      w * rhs.z + i * rhs.y - j * rhs.x,
+                      -i * rhs.x - j * rhs.y - k * rhs.z);
 }
 
 inline Quaternion Quaternion::operator+ (const Quaternion &rhs) const {

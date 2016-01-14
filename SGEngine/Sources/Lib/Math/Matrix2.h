@@ -96,12 +96,12 @@ public:
     /**
      * Read access to the matrix columns using subscript notation.
      */
-    const Vector2 &operator[] (const s32 index) const;
+    const Vector2 &operator[] (const u32 index) const;
 
     /**
      * Reference/Write access to the matrix columns using subscript notation.
      */
-    Vector2 &operator[] (const s32 index);
+    Vector2 &operator[] (const u32 index);
 
     // Matrix2 operators
 
@@ -257,11 +257,11 @@ inline bool Matrix2::IsIdentity () const {
     return Compare(Matrix2::IDENTITY);
 }
 
-inline const Vector2 &Matrix2::operator[] (const s32 index) const {
+inline const Vector2 &Matrix2::operator[] (const u32 index) const {
     return mat[index];
 }
 
-inline Vector2 &Matrix2::operator[] (const s32 index) {
+inline Vector2 &Matrix2::operator[] (const u32 index) {
     return mat[index];
 }
 

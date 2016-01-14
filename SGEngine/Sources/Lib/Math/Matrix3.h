@@ -88,9 +88,9 @@ public:
 
     bool IsIdentity () const;
 
-    const Vector3 &operator[] (const s32 index) const;
+    const Vector3 &operator[] (const u32 index) const;
 
-    Vector3 &operator[] (const s32 index);
+    Vector3 &operator[] (const u32 index);
 
     /**
      * Matrix3 Scale.
@@ -262,11 +262,11 @@ inline bool Matrix3::IsIdentity () const {
     return Compare(Matrix3::IDENTITY);
 }
 
-inline const Vector3 &Matrix3::operator[] (const s32 index) const {
+inline const Vector3 &Matrix3::operator[] (const u32 index) const {
     return mat[index];
 }
 
-inline Vector3 &Matrix3::operator[] (const s32 index) {
+inline Vector3 &Matrix3::operator[] (const u32 index) {
     return mat[index];
 }
 

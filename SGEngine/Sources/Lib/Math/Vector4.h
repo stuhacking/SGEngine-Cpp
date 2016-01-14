@@ -53,10 +53,10 @@ public:
     Vector4 (const Vector3 &vec, const float ww) : x(vec.x), y(vec.y), z(vec.z), w(ww) { }
 
     /** Value access using an index. */
-    float operator[] (const s32 index) const;
+    float operator[] (const u32 index) const;
 
     /** Reference access using an index. */
-    float &operator[] (const s32 index);
+    float &operator[] (const u32 index);
 
     /**
      * Set the values of x, y, z, and w.
@@ -285,11 +285,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float Vector4::operator[] (const s32 index) const {
+inline float Vector4::operator[] (const u32 index) const {
     return (&x)[index];
 }
 
-inline float &Vector4::operator[] (const s32 index) {
+inline float &Vector4::operator[] (const u32 index) {
     return (&x)[index];
 }
 

@@ -16,8 +16,6 @@
 
 namespace sge {
 
-class Vector3;
-
 /**
  * Quaternion. Implements math operators and Quat->Vect
  * multiplication/rotation
@@ -44,6 +42,13 @@ public:
     Quaternion (const float ii, const float jj, const float kk, const float ww)
         : i(ii), j(jj), k(kk), w(ww) { }
 
+    /**
+     * Create a Quaternion from an Axis/Angle rotation.
+     * @param axis about which to rotate.
+     * @param angle Angle of rotation in radians.
+     */
+    static Quaternion AxisAngle (const Vector3 &axis, const float angle);
+    
     /**
      * Read access to this Quaternion's components using 
      *subscript notation.
@@ -123,6 +128,11 @@ public:
 
     Quaternion &operator/= (const Quaternion &rhs);
 
+    /**
+     * Apply the rotation in this quaternion to a Vector3.
+     */
+    Vector3 Rotate (const Vector3 &vec) const;
+        
     /**
      * Test if two Quaternions are equivalent.
      */
@@ -255,7 +265,11 @@ inline Quaternion &Quaternion::operator*= (const float a) {
 }
 
 inline Quaternion &Quaternion::operator*= (const Quaternion &rhs) {
-
+    i = i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j;
+    j = j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k;
+    k = k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i;
+    w = w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k;
+    
     return *this;
 }
 

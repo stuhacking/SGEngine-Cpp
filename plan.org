@@ -1,0 +1,52 @@
+#+Title: SGEngine Dev Plan
+#+Author: Stuart Hacking <stuhacking@gmail.com>
+
+Some sort of plan.
+
+* Tasks
+
+** Transformations
+
+*** DONE Quaternion Orientation
+
++ Replace internal orientation in transform with
+  quaternion.
+
+*** DONE Get Forward/Up/Right vectors from transform
+
+
+*** TODO Initialize Transform with Euler Angles.
+
+*** TODO LookAt (Vec3 position)
+
+*** TODO SetDirection (Vec3 direction)
+
+** Lighting
+
+*** TODO Ambient Lights
+
+Basic support for Ambient Lighting.
+- Shader calculations.
+
+*** TODO Directional Lights
+
+Basic support for Directional Lights.
+- Shader calculations.
+
+*** TODO Point Lights
+
+Basic support for Point Lights.
+- Shader calculations.
+
+*** TODO Spot Lights
+
+Basic support for Spot Lights.
+- Shader calculations.
+
+*** TODO Unify lighting support in shader/game code.
+
+Store light information in a uniform datatype that can
+be sent to the shader. Cumulative lighting calculation
+in shader.
+
+* Bugs

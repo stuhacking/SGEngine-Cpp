@@ -1,16 +1,14 @@
 How to Build
 ------------
 
-First, run the deps script from the top folder to download 3rd party libraries.
-
-    project$ ./deps.sh
-
 Use CMake and prefer building out of the source tree. i.e:
 
     project$ mkdir build
     project$ cd build
     project/build$ cmake ..
     project/build$ make
+
+The CMake command will automatically download GoogleTest into the External folder at configuration time.
 
 To run tests after build:
 

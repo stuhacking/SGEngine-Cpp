@@ -71,6 +71,7 @@ Temporary Items
 *.app
 
 # Output Directories
+External/
 Debug/
 Release/
 build/
@@ -121,6 +122,7 @@ tramp
 .cask/
 
 ### GNU Global ###
+TAGS
 GTAGS
 GPATH
 GRTAGS

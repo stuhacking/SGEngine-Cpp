@@ -17,6 +17,8 @@ static std::unordered_map<u32, bool> mouseMap;
 static std::unordered_map<u32, bool> mouseReleased;
 static std::unordered_map<u32, bool> mousePressed;
 
+// Cache mouse positions so we can query mouse delta
+// multiple times per update.
 static bool mouseLocked;
 static Vector2 mousePos;
 static Vector2 mouseDelta;
@@ -51,8 +53,8 @@ void Input::Update () {
             keyMap[evt.key.keysym.sym] = false;
             break;
         case SDL_MOUSEMOTION:
-            s32 x, y;
-            s32 dx, dy;
+            s32 x, y, dx, dy;
+
             SDL_GetMouseState(&x, &y);
             SDL_GetRelativeMouseState(&dx, &dy);
 
@@ -97,7 +99,11 @@ bool Input::KeyReleased (const SDL_Keycode keyCode) {
 
 
 void Input::LockMouse () {
+    s32 x, y;
     SDL_SetRelativeMouseMode(SDL_TRUE);
+    // Throw away any current accumulated mouse delta. Avoids sudden
+    // jerk when entering locked mouse state.
+    SDL_GetRelativeMouseState(&x, &y);
     mouseLocked = true;
 }
 

@@ -53,44 +53,50 @@ public:
     GLint GetUniform (const std::string &name);
 
     /**
-     * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * Set the value of a uniform using an unsigned int.
+     * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, float value);
+    void SetUniform (const std::string &name, const u32 value);
 
     /**
-     * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * Set the value of a uniform using a float.
+     * (Might update uniform cache.)
+     */
+    void SetUniform (const std::string &name, const float value);
+
+    /**
+     * Set the value of a uniform using data from a Vector2.
+     * (Might update uniform cache.)
      */
     void SetUniform (const std::string &name, const Vector2 &value);
 
     /**
-     * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * Set the value of a uniform using data from a Vector3.
+     * (Might update uniform cache.)
      */
     void SetUniform (const std::string &name, const Vector3 &value);
 
     /**
-     * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * Set the value of a uniform using data from a Vector4.
+     * (Might update uniform cache.)
      */
     void SetUniform (const std::string &name, const Vector4 &value);
 
     /**
-     * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * Set the value of a uniform using data from a 2x2 Matrix.
+     * (Might update uniform cache.)
      */
     void SetUniform (const std::string &name, const Matrix2 &value);
 
     /**
-     * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * Set the value of a uniform using data from a 3x3 Matrix.
+     * (Might update uniform cache.)
      */
     void SetUniform (const std::string &name, const Matrix3 &value);
 
     /**
      * Set the value of a uniform using data from a 4x4 Matrix.
-     * (Might update a cache.)
+     * (Might update uniform cache.)
      */
     void SetUniform (const std::string &name, const Matrix4 &value);
 

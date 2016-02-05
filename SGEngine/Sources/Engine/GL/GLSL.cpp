@@ -13,11 +13,11 @@ static
 void printShaderInfoLog (const GLuint glslID) {
     GLint maxLength = 0;
     glGetShaderiv(glslID, GL_INFO_LOG_LENGTH, &maxLength);
-    
+
     // The maxLength includes the NULL character
     std::vector<GLchar> errorLog(maxLength);
     glGetShaderInfoLog(glslID, maxLength, &maxLength, &errorLog[0]);
-    
+
     std::copy(std::begin(errorLog), std::end(errorLog), std::ostream_iterator<char>(std::cout, ""));
 }
 
@@ -165,7 +165,7 @@ bool GLSLProgram::Validate () const {
 
     if (!checkValidateStatus(m_id))
     {
-    	std::cerr << "Failed to Validate Shader Program (" << m_id << ")\n";
+      std::cerr << "Failed to Validate Shader Program (" << m_id << ")\n";
         return false;
     }
 
@@ -206,6 +206,14 @@ GLint GLSLProgram::GetUniform (const std::string &name) {
     }
 
     return uniformLocation;
+}
+
+void GLSLProgram::SetUniform (const std::string &name, const u32 value) {
+    GLint u = GetUniform(name);
+
+    if (u >= 0) {
+        glUniform1ui(u, value);
+    }
 }
 
 void GLSLProgram::SetUniform (const std::string &name, const float value) {

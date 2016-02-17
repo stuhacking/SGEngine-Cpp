@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a class for Managing Texture IDs.
  */
 #ifndef __SHENGINE_IMAGE_H_
@@ -21,6 +21,9 @@ namespace sge {
  * file, store the assigned Texture ID and bind textures.
  */
 class Image {
+public:
+    static u32 MaxTextureDimension ();
+
 public:
     Image(const std::string &filename);
 

@@ -12,6 +12,14 @@
 
 namespace sge {
 
+u32 Image::MaxTextureDimension () {
+    s32 result;
+
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &result);
+
+    return static_cast<u32>(result);
+}
+
 // Flags
 static u8 FLIP_VERTICAL = 0x1;
 static u8 FLIP_HORIZONTAL = 0x2;
@@ -43,7 +51,7 @@ std::string SDL_PixelFormat_String (const SDL_PixelFormat * const pf) {
         if (0x000000FF == pf->Rmask) ss << "R";
         if (0x000000FF == pf->Gmask) ss << "G";
         if (0x000000FF == pf->Bmask) ss << "B";
-        
+
         return ss.str();
     }
     case 32: { // RGBA
@@ -64,7 +72,7 @@ std::string SDL_PixelFormat_String (const SDL_PixelFormat * const pf) {
         if (0x000000FF == pf->Gmask) ss << "G";
         if (0x000000FF == pf->Bmask) ss << "B";
         if (0x000000FF == pf->Amask) ss << "A";
-        
+
         return ss.str();
     }
     default:
@@ -158,7 +166,7 @@ bool LoadImageSDL(const std::string &filename) {
     u32 mode;
 
     DEBUG( std::cout << "Loading Image: " << filename << "\n"; );
-    
+
     surface = IMG_Load(filename.c_str());
     if (nullptr == surface) {
         std::cerr << "SDL Error: Unable to load image (" << filename << "): " << IMG_GetError() << "\n";
@@ -166,7 +174,7 @@ bool LoadImageSDL(const std::string &filename) {
     }
 
     DEBUG( print_SDL_surface_info(filename, surface); );
-    
+
     if (surface->format->BytesPerPixel == 4) {
         mode = GL_RGBA;
     } else {
@@ -180,12 +188,12 @@ bool LoadImageSDL(const std::string &filename) {
                                    surface->format->BitsPerPixel,
                                    surface->format->Rmask, surface->format->Gmask,
                                    surface->format->Bmask, surface->format->Amask);
-    
+
     if (!flipped) {
         std::cerr << " Error creating copy surface! " << IMG_GetError() << "\n";
         return false;
     }
-    
+
     bool success = copy_surface(surface, flipped, FLIP_VERTICAL);
     if (!success) {
         std::cerr << "Error while copying surface.\n";
@@ -226,7 +234,7 @@ Image::Image(const std::string &filename) {
 
 void Image::Bind() const {
     glBindTexture(GL_TEXTURE_2D, m_id);
-    
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_repeat[0]);

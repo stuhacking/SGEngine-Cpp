@@ -81,15 +81,27 @@ void Input::Update () {
 // Keyboard Queries
 //--------------------------
 
-bool Input::KeyDown (const SDL_Keycode keyCode) {
+bool Input::KeyDown (const Key keyCode) {
     return keyMap[keyCode];
 }
 
-bool Input::KeyPressed (const SDL_Keycode keyCode) {
+bool Input::KeyDown (const char keyCode) {
+    return keyMap[keyCode];
+}
+
+bool Input::KeyPressed (const Key keyCode) {
     return keysPressed[keyCode];
 }
 
-bool Input::KeyReleased (const SDL_Keycode keyCode) {
+bool Input::KeyPressed (const char keyCode) {
+    return keysPressed[keyCode];
+}
+
+bool Input::KeyReleased (const Key keyCode) {
+    return keysReleased[keyCode];
+}
+
+bool Input::KeyReleased (const char keyCode) {
     return keysReleased[keyCode];
 }
 

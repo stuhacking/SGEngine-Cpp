@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Define wrapper for querying keyboard and mouse state from SDL2.
  */
 #ifndef __SHENGINE_INPUT_H_
@@ -18,6 +18,36 @@ namespace sge {
 
 class Input {
 public:
+    /* Define our own common key codes to avoid exposing
+       SDL specifics. */
+    enum Key : SDL_Keycode {
+        Space = SDLK_SPACE,
+        Escape = SDLK_ESCAPE,
+        Backspace = SDLK_BACKSPACE,
+        Return = SDLK_RETURN,
+        KeypadEnter = SDLK_KP_ENTER,
+        Insert = SDLK_INSERT,
+        Delete = SDLK_DELETE,
+        End = SDLK_END,
+        Home = SDLK_HOME,
+        PageUp = SDLK_PAGEUP,
+        PageDown = SDLK_PAGEDOWN,
+        Pause = SDLK_PAUSE,
+        Print = SDLK_PRINTSCREEN,
+        LCtrl = SDLK_LCTRL,
+        RCtrl = SDLK_RCTRL,
+        Alt = SDLK_LALT,
+        AltGr = SDLK_RALT,
+        LShift = SDLK_LSHIFT,
+        RShift = SDLK_RSHIFT,
+        Tab = SDLK_TAB,
+        Up = SDLK_UP,
+        Down = SDLK_DOWN,
+        Left = SDLK_LEFT,
+        Right = SDLK_RIGHT
+    };
+
+public:
     /**
      * Poll the internal SDL2 Event Queue and update the
      * current mouse and keyboard state.
@@ -27,22 +57,40 @@ public:
     static void Update ();
 
     /**
-     * Test if a keyCode is currently being held. Use for continuous
+     * Test if a key code is currently being held. Use for continuous
      * input.
      */
-    static bool KeyDown (const SDL_Keycode keyCode);
+    static bool KeyDown (const Key keyCode);
 
     /**
-     * Test if a keyCode was pressed in the previous Update. Use for
+     * Test is a character key is currently being held. Test is
+     * case insensitive.
+     */
+    static bool KeyDown (const char keyCode);
+
+    /**
+     * Test if a key code was pressed in the previous Update. Use for
      * single presses.
      */
-    static bool KeyPressed (const SDL_Keycode keyCode);
+    static bool KeyPressed (const Key keyCode);
 
     /**
-     * Test if a keyCode was released in the previous Update.
+     * Test if a character key has been pressed in the previous
+     * update. Case insensitive.
+     */
+    static bool KeyPressed (const char keyCode);
+
+    /**
+     * Test if a key code was released in the previous Update.
      * Use for single presses.
      */
-    static bool KeyReleased (const SDL_Keycode keyCode);
+    static bool KeyReleased (const Key keyCode);
+
+    /**
+     * Test if a character key was released in the previous update.
+     * Case insensitive
+     */
+    static bool KeyReleased (const char keyCode);
 
     /**
      * Capture the mouse pointer.
@@ -58,7 +106,7 @@ public:
      * Check if the mouse is currently locked.
      */
     static bool MouseLocked ();
-    
+
     /**
      * Get the current position (in top-left origin window coordinates)
      * of the mouse cursor

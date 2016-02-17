@@ -73,6 +73,7 @@ Temporary Items
 # Output Directories
 External/
 Debug/
+Docs/
 Release/
 build/
 bin/

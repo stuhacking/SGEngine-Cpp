@@ -9,8 +9,8 @@
  * 
  * @brief Defines a low level Vector2 type.
  */
-#ifndef __SHLIB_VECTOR2_H_
-#define __SHLIB_VECTOR2_H_
+#ifndef __SGENGINE_VECTOR2_H_
+#define __SGENGINE_VECTOR2_H_
 
 #include <cmath>
 
@@ -511,4 +511,4 @@ inline bool Vector2::operator!= (const Vector2 &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_VECTOR2_H_ */
+#endif /* __SGENGINE_VECTOR2_H_ */

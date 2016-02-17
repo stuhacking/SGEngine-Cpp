@@ -9,8 +9,8 @@
  * 
  * @brief Defines a low level Vector3 type.
  */
-#ifndef __SHLIB_VECTOR3_H_
-#define __SHLIB_VECTOR3_H_
+#ifndef __SGENGINE_VECTOR3_H_
+#define __SGENGINE_VECTOR3_H_
 
 #include <cmath> // fabs
 
@@ -568,4 +568,4 @@ inline bool Vector3::operator!= (const Vector3 &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_VECTOR3_H_ */
+#endif /* __SGENGINE_VECTOR3_H_ */

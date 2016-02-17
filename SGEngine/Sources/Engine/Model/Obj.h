@@ -10,8 +10,8 @@
  * @brief Defines functions for converting .obj documents to
  *   internal mesh format.
  */
-#ifndef __SHENGINE_OBJ_H_
-#define __SHENGINE_OBJ_H_
+#ifndef __SGENGINE_OBJ_H_
+#define __SGENGINE_OBJ_H_
 
 #include <string>
 #include <vector>
@@ -105,4 +105,4 @@ Mesh meshFromObjDocument (const std::string &filename);
 
 } /* namespace sge */
 
-#endif /* __SHENGINE_OBJ_H_ */
+#endif /* __SGENGINE_OBJ_H_ */

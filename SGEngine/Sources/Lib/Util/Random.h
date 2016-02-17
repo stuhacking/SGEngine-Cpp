@@ -9,8 +9,8 @@
  * 
  * @brief Defines a wrapper around stl random generators.
  */
-#ifndef __SHLIB_RANDOM_H_
-#define __SHLIB_RANDOM_H_
+#ifndef __SGENGINE_RANDOM_H_
+#define __SGENGINE_RANDOM_H_
 
 #include <cmath>
 #include <ctime>
@@ -87,4 +87,4 @@ inline s32 Random::NextInt(const s32 min, const s32 max) {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_RANDOM_H_ */
+#endif /* __SGENGINE_RANDOM_H_ */

@@ -9,8 +9,8 @@
  * 
  * @brief Defines a low level Quaternion type.
  */
-#ifndef __SHLIB_QUATERNION_H_
-#define __SHLIB_QUATERNION_H_
+#ifndef __SGENGINE_QUATERNION_H_
+#define __SGENGINE_QUATERNION_H_
 
 #include <cmath> // sqrt, fabsf
 
@@ -332,4 +332,4 @@ inline bool Quaternion::operator!= (const Quaternion &rhs) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_QUATERNION_H_ */
+#endif /* __SGENGINE_QUATERNION_H_ */

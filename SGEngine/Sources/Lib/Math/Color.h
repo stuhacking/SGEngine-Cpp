@@ -9,8 +9,8 @@
  * 
  * @brief Defines a 32 bit color class.
  */
-#ifndef __SHLIB_COLOR_H_
-#define __SHLIB_COLOR_H_
+#ifndef __SGENGINE_COLOR_H_
+#define __SGENGINE_COLOR_H_
 
 #include <string>
 #include <cstdlib> // abs
@@ -127,4 +127,4 @@ inline bool Color::operator!= (const Color &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_COLOR_H_  */
+#endif /* __SGENGINE_COLOR_H_  */

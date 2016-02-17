@@ -9,8 +9,8 @@
  * 
  * @brief Define class for sending mesh data to OpenGL.
  */
-#ifndef __SHENGINE_MESHRENDERER_H_
-#define __SHENGINE_MESHRENDERER_H_
+#ifndef __SGENGINE_MESHRENDERER_H_
+#define __SGENGINE_MESHRENDERER_H_
 
 namespace sge {
 
@@ -39,4 +39,4 @@ inline bool MeshRenderer::IsCompiled() const {
 
 } /* namespace sge */
 
-#endif /* __SHENGINE_MESHRENDERER_H_ */
+#endif /* __SGENGINE_MESHRENDERER_H_ */

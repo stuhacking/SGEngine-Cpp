@@ -9,8 +9,8 @@
  * 
  * @brief Convenient utilities for std::strings.
  */
-#ifndef __SHLIB_STRINGUTIL_H_
-#define __SHLIB_STRINGUTIL_H_
+#ifndef __SGENGINE_STRINGUTIL_H_
+#define __SGENGINE_STRINGUTIL_H_
 
 #include <string>
 #include <regex>
@@ -135,4 +135,4 @@ public:
     
 } /* namespace sge */
 
-#endif /* __SHLIB_STRINGUTIL_H_ */
+#endif /* __SGENGINE_STRINGUTIL_H_ */

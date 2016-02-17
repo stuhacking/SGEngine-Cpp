@@ -9,8 +9,8 @@
  * 
  * @brief Defines a 2D bounding circle type.
  */
-#ifndef __SHLIB_CIRCLE_H_
-#define __SHLIB_CIRCLE_H_
+#ifndef __SGENGINE_CIRCLE_H_
+#define __SGENGINE_CIRCLE_H_
 
 #include <cfloat> // fabsf
 
@@ -145,4 +145,4 @@ inline bool Circle::operator!= (const Circle &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_CIRCLE_H_ */
+#endif /* __SGENGINE_CIRCLE_H_ */

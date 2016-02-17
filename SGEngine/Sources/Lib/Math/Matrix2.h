@@ -9,8 +9,8 @@
  * 
  * @brief Defines a low level Matrix2 type.
  */
-#ifndef __SHLIB_MATRIX2_H_
-#define __SHLIB_MATRIX2_H_
+#ifndef __SGENGINE_MATRIX2_H_
+#define __SGENGINE_MATRIX2_H_
 
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
@@ -369,4 +369,4 @@ inline bool Matrix2::operator!= (const Matrix2 &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_MATRIX2_H_ */
+#endif /* __SGENGINE_MATRIX2_H_ */

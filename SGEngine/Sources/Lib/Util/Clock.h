@@ -10,8 +10,8 @@
  * @brief Defines a Clock class and timing functions using 
  *   the system's High Frequency Timer via std::chrono.
  */
-#ifndef __SHLIB_CLOCK_H_
-#define __SHLIB_CLOCK_H_
+#ifndef __SGENGINE_CLOCK_H_
+#define __SGENGINE_CLOCK_H_
 
 namespace sge {
 
@@ -27,4 +27,4 @@ public:
 
 } /* namespace sge */
 
-#endif /* __SHLIB_CLOCK_H_ */
+#endif /* __SGENGINE_CLOCK_H_ */

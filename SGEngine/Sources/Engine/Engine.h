@@ -7,8 +7,8 @@
  *
  * --------------------------------------------------------------------------
  */
-#ifndef __SHENGINE_H_
-#define __SHENGINE_H_
+#ifndef __SGENGINE_ENGINE_H_
+#define __SGENGINE_ENGINE_H_
 
 #ifdef __APPLE__
  #include <OpenGL/gl3.h>
@@ -40,4 +40,4 @@
 #include "UI/SGEWindow.h"
 #include "UI/Input.h"
 
-#endif /* __SHENGINE_H_ */
+#endif /* __SGENGINE_H_ */

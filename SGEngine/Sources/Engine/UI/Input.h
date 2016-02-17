@@ -9,8 +9,8 @@
  *
  * @brief Define wrapper for querying keyboard and mouse state from SDL2.
  */
-#ifndef __SHENGINE_INPUT_H_
-#define __SHENGINE_INPUT_H_
+#ifndef __SGENGINE_INPUT_H_
+#define __SGENGINE_INPUT_H_
 
 #include <SDL2/SDL.h>
 
@@ -146,4 +146,4 @@ public:
 
 } /* namespace sge */
 
-#endif /* __SHENGINE_INPUT_H_ */
+#endif /* __SGENGINE_INPUT_H_ */

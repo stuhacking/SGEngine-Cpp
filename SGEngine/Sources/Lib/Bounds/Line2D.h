@@ -9,8 +9,8 @@
  * 
  * @brief Defines a 2D Line Section for intersection tests.
  */
-#ifndef __SHLIB_LINE2D_H_
-#define __SHLIB_LINE2D_H_
+#ifndef __SGENGINE_LINE2D_H_
+#define __SGENGINE_LINE2D_H_
 
 namespace sge {
 
@@ -55,4 +55,4 @@ inline float Line2D::Length () const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_LINE2D_H_ */
+#endif /* __SGENGINE_LINE2D_H_ */

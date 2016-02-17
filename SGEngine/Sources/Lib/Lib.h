@@ -7,8 +7,8 @@
  *
  * --------------------------------------------------------------------------
  */
-#ifndef __SHLIB_H_
-#define __SHLIB_H_
+#ifndef __SGENGINE_LIB_H_
+#define __SGENGINE_LIB_H_
 
 #include <cstdint>
 
@@ -67,4 +67,4 @@ typedef int64_t s64;
 
 #include "Util/LibIO.h"
 
-#endif /* __SHLIB_H_ */
+#endif /* __SGENGINE_H_ */

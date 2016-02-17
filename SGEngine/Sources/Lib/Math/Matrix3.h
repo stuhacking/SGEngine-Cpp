@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Matrix3 type.
  */
-#ifndef __SHLIB_MATRIX3_H_
-#define __SHLIB_MATRIX3_H_
+#ifndef __SGENGINE_MATRIX3_H_
+#define __SGENGINE_MATRIX3_H_
 
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
@@ -397,4 +397,4 @@ inline bool Matrix3::operator!= (const Matrix3 &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_MATRIX3_H_ */
+#endif /* __SGENGINE_MATRIX3_H_ */

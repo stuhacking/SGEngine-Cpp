@@ -9,8 +9,8 @@
  * 
  * @brief Defines a low level Vector4 type.
  */
-#ifndef __SHLIB_VECTOR4_H_
-#define __SHLIB_VECTOR4_H_
+#ifndef __SGENGINE_VECTOR4_H_
+#define __SGENGINE_VECTOR4_H_
 
 #include <cmath>
 
@@ -538,4 +538,4 @@ inline bool Vector4::operator!= (const Vector4 &other) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_VECTOR4_H_ */
+#endif /* __SGENGINE_VECTOR4_H_ */

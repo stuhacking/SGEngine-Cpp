@@ -9,8 +9,8 @@
  *
  * @brief Defines a class for loading and binding shader resources.
  */
-#ifndef __SHENGINE_GLSLPROGRAM_H_
-#define __SHENGINE_GLSLPROGRAM_H_
+#ifndef __SGENGINE_GLSLPROGRAM_H_
+#define __SGENGINE_GLSLPROGRAM_H_
 
 #include <string>
 #include <vector>
@@ -120,4 +120,4 @@ inline bool GLSLProgram::IsCompiled() const {
 
 } /* namespace sge */
 
-#endif /* __SHENGINE_GLSLPROGRAM_H_ */
+#endif /* __SGENGINE_GLSLPROGRAM_H_ */

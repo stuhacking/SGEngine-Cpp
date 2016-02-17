@@ -9,8 +9,8 @@
  * 
  * @brief Define a Window class to initialize the GL/SDL context.
  */
-#ifndef __SHENGINE_SGEWINDOW_h_
-#define __SHENGINE_SGEWINDOW_h_
+#ifndef __SGENGINE_SGEWINDOW_h_
+#define __SGENGINE_SGEWINDOW_h_
 
 #include <SDL2/SDL.h>
 #include <string>
@@ -85,4 +85,4 @@ inline Vector2 SGEWindow::Center () const {
 
 } /* namespace sge */
 
-#endif /* __SHENGINE_SGEWINDOW_h_  */
+#endif /* __SGENGINE_SGEWINDOW_h_  */

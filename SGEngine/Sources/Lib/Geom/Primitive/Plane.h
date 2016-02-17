@@ -9,8 +9,8 @@
  * 
  * @brief Defines a primitive plane mesh generator.
  */
-#ifndef __SHLIB_PLANE_H_
-#define __SHLIB_PLANE_H_
+#ifndef __SGENGINE_PLANE_H_
+#define __SGENGINE_PLANE_H_
 
 namespace sge {
 
@@ -35,4 +35,4 @@ private:
     
 } /* namespace sge */
 
-#endif /* __SHLIB_PLANE_H_ */
+#endif /* __SGENGINE_PLANE_H_ */

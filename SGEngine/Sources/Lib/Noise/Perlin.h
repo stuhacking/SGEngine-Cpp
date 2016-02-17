@@ -9,8 +9,8 @@
  * 
  * @brief Define a Perlin/Simplex noise generator.
  */
-#ifndef __SHLIB_PERLIN_H_
-#define __SHLIB_PERLIN_H_
+#ifndef __SGENGINE_PERLIN_H_
+#define __SGENGINE_PERLIN_H_
 
 namespace sge {
 
@@ -70,4 +70,4 @@ inline float Perlin::Get(const float x, const float y) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_PERLIN_H_ */
+#endif /* __SGENGINE_PERLIN_H_ */

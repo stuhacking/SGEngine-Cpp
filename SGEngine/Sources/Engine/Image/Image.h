@@ -9,8 +9,8 @@
  *
  * @brief Defines a class for Managing Texture IDs.
  */
-#ifndef __SHENGINE_IMAGE_H_
-#define __SHENGINE_IMAGE_H_
+#ifndef __SGENGINE_IMAGE_H_
+#define __SGENGINE_IMAGE_H_
 
 #include <string>
 
@@ -74,4 +74,4 @@ private:
 
 } /* namespace sge */
 
-#endif /* __SHENGINE_IMAGE_H_  */
+#endif /* __SGENGINE_IMAGE_H_  */

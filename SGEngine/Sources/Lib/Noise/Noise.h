@@ -9,8 +9,8 @@
  * 
  * @brief Utility functions for generating noise.
  */
-#ifndef __SHLIB_NOISE_H_
-#define __SHLIB_NOISE_H_
+#ifndef __SGENGINE_NOISE_H_
+#define __SGENGINE_NOISE_H_
 
 #include "../Lib.h"
 
@@ -58,4 +58,4 @@ inline float Noise::SmoothNoise (const float x, const float y) {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_NOISE_H_ */
+#endif /* __SGENGINE_NOISE_H_ */

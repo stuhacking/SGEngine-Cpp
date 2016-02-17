@@ -9,8 +9,8 @@
  * 
  * @brief Define a Worley/Cellular noise generator.
  */
-#ifndef __SHLIB_WORLEY_H_
-#define __SHLIB_WORLEY_H_
+#ifndef __SGENGINE_WORLEY_H_
+#define __SGENGINE_WORLEY_H_
 
 namespace sge {
 
@@ -57,4 +57,4 @@ inline float Worley::Get(const float x, const float y) const {
 
 } /* namespace sge */
 
-#endif /* __SHLIB_WORLEY_H_ */
+#endif /* __SGENGINE_WORLEY_H_ */

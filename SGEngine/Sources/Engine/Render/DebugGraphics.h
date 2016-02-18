@@ -47,16 +47,19 @@ public:
 
     void AddGrid (const Vector3 &p_center, const u32 size = 10);
     void AddGrid (const Vector3 &p_center, const u32 size, const Color &col);
-    
+
+    void AddBox (const Vector3 &p_min, const Vector3 &p_max);
+    void AddBox (const Vector3 &p_min, const Vector3 &p_max, const Color &col);
+
 private:
     struct DVertex {
         Vector3 v1;
         Color color;
-        
+
         DVertex (const Vector3 &p_v1, const Color &p_col)
         : v1(p_v1), color(p_col) { }
     };
-    
+
 private:
     Color color;
     u32 m_glVaoId;

@@ -14,7 +14,7 @@ void DebugGraphics::Render () {
     if (m_vertices.empty()) {
         return;
     }
-    
+
     if (m_glVaoId == 0) {
         glGenVertexArrays(1, &m_glVaoId);
     }
@@ -31,7 +31,7 @@ void DebugGraphics::Render () {
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(DVertex), BUFFER_OFFSET(3)); // Color
     glEnableVertexAttribArray(0); // Position
     glEnableVertexAttribArray(1); // Color
-    
+
     // Unbind the vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -92,6 +92,27 @@ void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size, const Colo
         AddEdge(Vector3(xMin, p_center.y, zMin + offset), Vector3(xMin + size, p_center.y, zMin + offset), col);
         AddEdge(Vector3(xMin + offset, p_center.y, zMin), Vector3(xMin + offset, p_center.y, zMin + size), col);
     }
+}
+
+void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max) {
+    AddBox(p_min, p_max, color);
+}
+
+void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max, const Color &col) {
+    AddEdge(Vector3(p_min.x, p_min.y, p_min.z), Vector3(p_max.x, p_min.y, p_min.z), col);
+    AddEdge(Vector3(p_min.x, p_min.y, p_max.z), Vector3(p_max.x, p_min.y, p_max.z), col);
+    AddEdge(Vector3(p_min.x, p_min.y, p_min.z), Vector3(p_min.x, p_min.y, p_max.z), col);
+    AddEdge(Vector3(p_max.x, p_min.y, p_min.z), Vector3(p_max.x, p_min.y, p_max.z), col);
+
+    AddEdge(Vector3(p_min.x, p_max.y, p_min.z), Vector3(p_max.x, p_max.y, p_min.z), col);
+    AddEdge(Vector3(p_min.x, p_max.y, p_max.z), Vector3(p_max.x, p_max.y, p_max.z), col);
+    AddEdge(Vector3(p_min.x, p_max.y, p_min.z), Vector3(p_min.x, p_max.y, p_max.z), col);
+    AddEdge(Vector3(p_max.x, p_max.y, p_min.z), Vector3(p_max.x, p_max.y, p_max.z), col);
+
+    AddEdge(Vector3(p_min.x, p_min.y, p_min.z), Vector3(p_min.x, p_max.y, p_min.z), col);
+    AddEdge(Vector3(p_min.x, p_min.y, p_max.z), Vector3(p_min.x, p_max.y, p_max.z), col);
+    AddEdge(Vector3(p_max.x, p_min.y, p_min.z), Vector3(p_max.x, p_max.y, p_min.z), col);
+    AddEdge(Vector3(p_max.x, p_min.y, p_max.z), Vector3(p_max.x, p_max.y, p_max.z), col);
 }
 
 } /* namespace sge */

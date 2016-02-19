@@ -36,17 +36,22 @@ public:
      * Get the Local Up Vector.
      */
     Vector3 Up () const;
-    
+
     /**
      * Get the Local Forward Vector.
      */
     Vector3 Forward () const;
-    
+
     /**
      * Get the Local Right Vector.
      */
     Vector3 Right () const;
 
+    /**
+     * Rotate this transform by angles in radians about
+     * axis.
+     * Destructive.
+     */
     void Rotate (const Vector3 &axis, const float angle);
 
     /**
@@ -102,7 +107,7 @@ inline Vector3 Transform::Right () const {
 }
 
 inline void Transform::Rotate (const Vector3 &axis, const float angle) {
-    orientation *= Quaternion::AxisAngle(axis, TO_RADIANS(angle));
+    orientation *= Quaternion::AxisAngle(axis, angle);
 }
 
 inline Matrix4 Transform::GetTranslationMatrix () const {

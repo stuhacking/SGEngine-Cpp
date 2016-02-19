@@ -36,19 +36,74 @@ public:
 
     void Render ();
 
+    /**
+     * Draw an edge using the default color of this DebugGraphics
+     * object.
+     */
     void AddEdge (const Vector3 &v1, const Vector3 &v2);
+
+    /**
+     * Draw an edge using a custom color.
+     */
     void AddEdge (const Vector3 &v1, const Vector3 &v2, const Color &col);
 
+    /**
+     * Draw a point as an intersection of 3 edges where the intersection
+     * occurs at point p and the edges extends radius units from p. Uses
+     * the default color of the DebugGraphics object.
+     */
     void AddPoint (const Vector3 &p, const float radius = 1.0f);
+
+    /**
+     * Draw a point as an intersection of 3 edges where the intersection
+     * occurs at point p and the edges extends radius units from p using
+     * a custom color.
+     */
     void AddPoint (const Vector3 &p, const float radius, const Color &col);
 
+    /**
+     * Draw a sphere container as a set of axis aligned rings where the center
+     * of each ring is point p_center, and each ring extends radius units from
+     * p_center. Uses the default color of the DebugGraphics object.
+     */
     void AddSphere (const Vector3 &p_center, const float radius = 1.0f);
+
+    /**
+     * Draw a sphere container as a set of axis aligned rings where the center
+     * of each ring is point p_center, and each ring extends radius units from
+     * p_center. Uses a custom color.
+     */
     void AddSphere (const Vector3 &p_center, const float radius, const Color &col);
 
+    /**
+     * Draw a Grid on the (X, Z) plane at Y = 0, where the center of the grid
+     * is point p_center, and the grid extends size / 2 units in X and Z. Grid
+     * squares are drawn 1 unit apart. Uses the default color of this
+     * DebugGraphics object.
+     *
+     * TODO More configurable grids?
+     */
     void AddGrid (const Vector3 &p_center, const u32 size = 10);
+
+    /**
+     * Draw a Grid on the (X, Z) plane at Y = 0, where the center of the grid
+     * is point p_center, and the grid extends size / 2 units in X and Z. Grid
+     * squares are drawn 1 unit apart. Uses a custom color.
+     *
+     * TODO More configurable grids?
+     */
     void AddGrid (const Vector3 &p_center, const u32 size, const Color &col);
 
+    /**
+     * Draw a bounding box enclosing the region defined by points p_min..p_max.
+     * Uses the default color of this DebugGraphics object.
+     */
     void AddBox (const Vector3 &p_min, const Vector3 &p_max);
+
+    /**
+     * Draw a bounding box enclosing the region defined by points p_min..p_max.
+     * Uses a custom color of this DebugGraphics object.
+     */
     void AddBox (const Vector3 &p_min, const Vector3 &p_max, const Color &col);
 
 private:
@@ -77,6 +132,22 @@ inline void DebugGraphics::AddEdge (const Vector3 &v1, const Vector3 &v2) {
 inline void DebugGraphics::AddEdge (const Vector3 &v1, const Vector3 &v2, const Color &col) {
     m_vertices.emplace_back(v1, col);
     m_vertices.emplace_back(v2, col);
+}
+
+inline void DebugGraphics::AddPoint (const Vector3 &p, const float radius) {
+    AddPoint(p, radius, color);
+}
+
+inline void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius) {
+    AddSphere(p_center, radius, color);
+}
+
+inline void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size) {
+    AddGrid(p_center, size, color);
+}
+
+inline void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max) {
+    AddBox(p_min, p_max, color);
 }
 
 } /* namespace sge */

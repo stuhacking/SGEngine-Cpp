@@ -45,18 +45,10 @@ void DebugGraphics::Render () {
 // --------------------------------------------------------------------------
 //   DebugGraphics Draw Commands
 
-void DebugGraphics::AddPoint (const Vector3 &p, const float radius) {
-    AddPoint(p, radius, color);
-}
-
 void DebugGraphics::AddPoint (const Vector3 &p, const float radius, const Color &col) {
     AddEdge(Vector3(p.x - radius, p.y, p.z), Vector3(p.x + radius, p.y, p.z), col);
     AddEdge(Vector3(p.x, p.y - radius, p.z), Vector3(p.x, p.y + radius, p.z), col);
     AddEdge(Vector3(p.x, p.y, p.z - radius), Vector3(p.x, p.y, p.z + radius), col);
-}
-
-void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius) {
-    AddSphere(p_center, radius, color);
 }
 
 void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius, const Color &col) {
@@ -78,10 +70,6 @@ void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius, cons
     }
 }
 
-void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size) {
-    AddGrid(p_center, size, color);
-}
-
 void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size, const Color &col) {
     float hSize = size * 0.5f;
     s32 xMin = static_cast<s32>(p_center.x) - hSize;
@@ -92,10 +80,6 @@ void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size, const Colo
         AddEdge(Vector3(xMin, p_center.y, zMin + offset), Vector3(xMin + size, p_center.y, zMin + offset), col);
         AddEdge(Vector3(xMin + offset, p_center.y, zMin), Vector3(xMin + offset, p_center.y, zMin + size), col);
     }
-}
-
-void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max) {
-    AddBox(p_min, p_max, color);
 }
 
 void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max, const Color &col) {

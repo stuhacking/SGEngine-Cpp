@@ -88,4 +88,31 @@ std::ostream& operator<< (std::ostream &os, const Vertex &vert) {
               << " T=" << vert.texCoord << " C=" << vert.color << ">";
 }
 
+// Transform Printer
+std::ostream& operator<< (std::ostream &os, const Transform &tr) {
+    Vector3 up = tr.Up();
+    Vector3 f = tr.Forward();
+    Vector3 r = tr.Right();
+    bool uniScale = ((tr.scale.x == tr.scale.y) && (tr.scale.x == tr.scale.z));
+
+    os << "<Transform P=" << tr.position
+       << " O=[" << f.x << " " << f.y << " " << f.z
+       << "|" << up.x << " " << up.y << " " << up.z
+       << "|" << r.x << " " << r.y << " " << r.z
+       << "] S=";
+
+    if (uniScale) {
+        os << tr.scale.x;
+    } else {
+        os << tr.scale;
+    }
+    os << ">";
+    return os;
+}
+
+// Clock Printer
+std::ostream& operator<< (std::ostream &os, const Clock &clock) {
+    return os << "<Clock " << clock.Elapsed() << "ns (" << clock.DeltaSeconds() << "ds)>";
+}
+
 } /* namespace sge */

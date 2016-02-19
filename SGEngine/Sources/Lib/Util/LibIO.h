@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Define a bunch of << overloads for SGE types.
  */
 #ifndef __SGECORELIB_LIBIO_H_
@@ -29,6 +29,9 @@ std::ostream& operator<< (std::ostream &os, const Matrix4 &mat);
 std::ostream& operator<< (std::ostream &os, const Color &col);
 
 std::ostream& operator<< (std::ostream &os, const Vertex &vert);
+std::ostream& operator<< (std::ostream &os, const Transform &tr);
+
+std::ostream& operator<< (std::ostream &os, const Clock &clock);
 
 } /* namespace sge */
 

@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a low level Matrix2 type.
  */
 #ifndef __SGENGINE_MATRIX2_H_
@@ -21,10 +21,12 @@ namespace sge {
  * 2x2 Matrix. Implements math operations for 2x2 Matrices stored in
  * Column Major.
  *
+ * <pre>
  *     0 1
  *   +----
  *  x| 0 2
  *  y| 1 3
+ * </pre>
  */
 class Matrix2 {
 public:
@@ -50,13 +52,13 @@ public:
 
     /** 2D Array Constructor */
     Matrix2 (const float data[2][2]);
-    
+
     /**
      * Write the data from the columns of this Matrix2 into
      * Vector2s.
      */
     void Columns (Vector2 &col1, Vector2 &col2) const;
-    
+
     /**
      * Set the values of this Matrix2 using floats.
      * Destructive.
@@ -186,10 +188,10 @@ public:
      * within a given tolerance.
      */
     bool Compare (const Matrix2 &other, const float threshold) const;
-    
+
     /**
      * Test if this Matrix2 is equivalent to another Matrix2.
-     */ 
+     */
     bool operator== (const Matrix2 &other) const;
 
     /**
@@ -280,7 +282,7 @@ inline Matrix2 operator* (const float a, const Matrix2 &rhs) {
 inline Matrix2 Matrix2::operator* (const Matrix2 &rhs) const {
     return Matrix2(mat[0].x * rhs[0].x + mat[0].y * rhs[1].x,
                    mat[0].x * rhs[0].y + mat[0].y * rhs[1].y,
-                                                            
+
                    mat[1].x * rhs[0].x + mat[1].y * rhs[1].x,
                    mat[1].x * rhs[0].y + mat[1].y * rhs[1].y);
 }
@@ -309,7 +311,7 @@ inline Matrix2 &Matrix2::operator*= (const Matrix2 &rhs) {
 
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
-    
+
     return *this;
 }
 

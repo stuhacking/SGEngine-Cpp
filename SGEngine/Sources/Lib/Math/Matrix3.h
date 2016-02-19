@@ -21,11 +21,13 @@ namespace sge {
  * 3x3 Matrix. Implements math operations for 3x3 Matrices stored in
  * Column Major form.
  *
+ * <pre>
  *     0 1 2
  *   +------
  *  x| 0 3 6
  *  y| 1 4 7
  *  z| 2 5 8
+ * </pre>
  */
 class Matrix3 {
 public:

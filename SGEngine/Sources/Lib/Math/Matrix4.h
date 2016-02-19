@@ -21,12 +21,14 @@ namespace sge {
  * 4x4 Matrix. Implements math operations for 4x4 Matrices stored in
  * column major form.
  *
+ * <pre>
  *     0 1 2 3
  *   +--------
  *  x| 0 4 8 C
  *  y| 1 5 9 D
  *  z| 2 6 A E
  *  w| 3 7 B F
+ * </pre>
  */
 class Matrix4 {
 public:

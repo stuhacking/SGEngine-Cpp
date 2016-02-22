@@ -13,3 +13,8 @@ The CMake command will automatically download GoogleTest into the External folde
 To run tests after build:
 
     project/build$ ./SGEngine/Test/SGEngineTest
+
+To run test application:
+
+    project/build$ ln -sf ../Examples/HelloWorld/data data
+    project/build$ ./Examples/HelloWorld/HelloWorld

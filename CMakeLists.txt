@@ -17,3 +17,6 @@ add_subdirectory(External/googletest/googletest)
 # Build Targets
 add_subdirectory(SGEngine/Sources)
 add_subdirectory(SGEngine/Test)
+
+# Example Programs
+add_subdirectory(Examples/HelloWorld)

@@ -4,6 +4,7 @@
 #include "../Lib.h"
 
 #include <ostream>
+#include <iomanip>
 #include <string>
 
 namespace sge {
@@ -34,7 +35,7 @@ std::ostream &operator<< (std::ostream &os, const Matrix2 &mat) {
     for (u8 i = 0; i < 2; ++i) {
         auto sep = "";
         os << "[";
-        for (u8 j = 0; j < 2; ++j) {
+        for (u32 j = 0; j < 2; ++j) {
             os << sep << mat[i][j];
             sep = " ";
         }
@@ -50,7 +51,7 @@ std::ostream &operator<< (std::ostream &os, const Matrix3 &mat) {
     for (u8 i = 0; i < 4; ++i) {
         auto sep = "";
         os << "[";
-        for (u8 j = 0; j < 4; ++j) {
+        for (u32 j = 0; j < 4; ++j) {
             os << sep << mat[i][j];
             sep = " ";
         }
@@ -66,7 +67,7 @@ std::ostream &operator<< (std::ostream &os, const Matrix4 &mat) {
     for (u8 i = 0; i < 4; ++i) {
         auto sep = "";
         os << "[";
-        for (u8 j = 0; j < 4; ++j) {
+        for (u32 j = 0; j < 4; ++j) {
             os << sep << mat[i][j];
             sep = " ";
         }
@@ -112,7 +113,22 @@ std::ostream& operator<< (std::ostream &os, const Transform &tr) {
 
 // Clock Printer
 std::ostream& operator<< (std::ostream &os, const Clock &clock) {
-    return os << "<Clock " << clock.Elapsed() << "ns (" << clock.DeltaSeconds() << "ds)>";
+    u64 ns = clock.Elapsed();
+    u32 ms = ns / 1000000;
+    u32 hours = ms / (1000 * 60 * 60);
+    u32 mins = (ms / (1000 * 60)) % 60;
+    u32 sec = (ms / 1000) % 60;
+    ms = ms % 1000;
+
+    return os << std::setfill('0') << "<Clock "
+        // HH:MM:SS
+              << hours << ":" << std::setw(2) << mins << ":" << std::setw(2) << sec
+        // :MS
+              << ":" << std::setw(3) << ms
+        // (Time Delta in seconds)
+              << " (" << clock.DeltaSeconds() << "ds) "
+        // Total elapsed time in nanoseconds.
+              << ns << "ns>";
 }
 
 } /* namespace sge */

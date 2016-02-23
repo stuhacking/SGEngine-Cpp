@@ -34,11 +34,11 @@ int main (int argc, char *argv[]) {
 
     float clockSpeed = 1.0f;
     Clock gameClock = Clock(clockSpeed);
-    while (!Input::SignalQuit() && !Input::KeyReleased(SDLK_ESCAPE)) {
+    while (!Input::SignalQuit() && !Input::KeyReleased(Input::Key::Escape)) {
         gameClock.Update();
         Input::Update();
 
-        if (Input::KeyReleased(SDLK_SPACE)) {
+        if (Input::KeyReleased(Input::Key::Space)) {
             gameClock.Pause(!gameClock.IsPaused());
         }
 

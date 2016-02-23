@@ -79,11 +79,11 @@ void Game::Input () {
         view.position += view.Forward() * CAM_SPEED;
     }
 
-    if (Input::MousePressed(1)) {
+    if (Input::MousePressed(1) && !Input::KeyDown(Input::Key::LShift)) {
         Input::LockMouse();
     }
 
-    if (Input::MousePressed(3)) {
+    if (Input::MousePressed(1) && Input::KeyDown(Input::Key::LShift)) {
         Input::ReleaseMouse();
     }
 

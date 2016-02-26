@@ -5,8 +5,6 @@
 
 #include <chrono>
 
-constexpr static float idealDelta = 1.0f / 30.0f;
-
 namespace sge {
 
 // Initialize the internal high-res clock.
@@ -27,8 +25,8 @@ u64 Clock::MillisTime () {
 void Clock::Update () {
     u64 currentTime = NanoTime();
     if (!m_paused) {
-        u64 realDelta = currentTime - m_lastTime;
-        u64 scaledDelta = realDelta * m_scale;
+        u32 realDelta = currentTime - m_lastTime;
+        u32 scaledDelta = realDelta * m_scale;
 
         m_lastTime = currentTime;
         m_elapsed += scaledDelta;
@@ -41,7 +39,7 @@ void Clock::Update () {
 
 void Clock::Step (const float seconds) {
     if (m_paused) {
-        u64 scaledDelta = SecondsToNanoTime(seconds) * m_scale;
+        u32 scaledDelta = SecondsToNanoTime(seconds) * m_scale;
         m_lastTime = NanoTime();
         m_elapsed += scaledDelta;
         m_delta = scaledDelta;

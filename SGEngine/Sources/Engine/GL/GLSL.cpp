@@ -77,6 +77,9 @@ GLuint DetectShaderType (const std::string &filename) {
     }
 }
 
+/**
+ * Return a print friendly string for GL shader types.
+ */
 static
 std::string ShaderTypeString (const GLenum shaderType) {
     switch (shaderType) {
@@ -118,9 +121,7 @@ bool GLSLProgram::Compile () {
     GLint a_id = 0;
 
     if (IsCompiled()) {
-#ifndef NDEBUG
-        std::cerr << "Recompiling GLSL Program " << a_id << "\n";
-#endif
+        DEBUG( std::cerr << "Recompiling GLSL Program " << a_id << "\n"; );
     } else {
         a_id = glCreateProgram();
     }
@@ -130,7 +131,7 @@ bool GLSLProgram::Compile () {
         return false;
     }
 
-    DEBUG( std::cout << "Compiling Program Sources (" << a_id << ")\n"; );
+    DEBUG( console->Printf("Compiling Program Sources (%u)\n", a_id); );
 
     for (auto &shader : m_shaders) {
         bool compiled = shader.Compile();
@@ -302,8 +303,8 @@ GLuint GLSLShader::Compile() {
         return 0;
     }
 
-    std::cout << " Compiling " << ShaderTypeString(m_type) << " Shader ("
-              << a_id << "): " << m_filename << "\n";
+    DEBUG( console->Printf(" Compiling %s shader (%u): %s\n",
+                           ShaderTypeString(m_type).c_str(), a_id, m_filename.c_str()); );
 
     const char *src = source.c_str();
     glShaderSource(a_id, 1, &src, nullptr);

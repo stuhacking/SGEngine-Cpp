@@ -12,6 +12,8 @@
 #ifndef __SGENGINE_CONSOLE_H_
 #define __SGENGINE_CONSOLE_H_
 
+namespace sge {
+
 class Console {
 public:
     /**
@@ -27,5 +29,7 @@ public:
 
 // Global console
 extern Console *console;
+
+} /* namespace sge */
 
 #endif /* __SGENGINE_CONSOLE_H_ */

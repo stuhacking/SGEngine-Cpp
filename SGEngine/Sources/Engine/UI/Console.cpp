@@ -5,6 +5,8 @@
 #include <cstdio>
 #include <cstdarg>
 
+namespace sge {
+
 /**
  * Console class to replace simple standard output.
  */
@@ -30,3 +32,5 @@ void TextConsole::Printf (const std::string &fmt, ...) {
     vprintf(fmt.c_str(), args);
     va_end(args);
 }
+
+} /* namespace sge */

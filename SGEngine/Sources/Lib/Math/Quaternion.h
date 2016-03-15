@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a low level Quaternion type.
  */
 #ifndef __SGENGINE_QUATERNION_H_
@@ -33,11 +33,11 @@ public:
 
 public:
     static const Quaternion IDENTITY;
-    
+
 public:
     /** Default Constructor */
     Quaternion () : i(0.0f), j(0.0f), k(0.0f), w(0.0f) { }
-    
+
     /** Value Constructor */
     Quaternion (const float ii, const float jj, const float kk, const float ww)
         : i(ii), j(jj), k(kk), w(ww) { }
@@ -48,9 +48,9 @@ public:
      * @param angle Angle of rotation in radians.
      */
     static Quaternion AxisAngle (const Vector3 &axis, const float angle);
-    
+
     /**
-     * Read access to this Quaternion's components using 
+     * Read access to this Quaternion's components using
      *subscript notation.
      */
     float operator[] (const u32 index) const;
@@ -132,23 +132,23 @@ public:
      * Apply the rotation in this quaternion to a Vector3.
      */
     Vector3 Rotate (const Vector3 &vec) const;
-        
+
     /**
      * Test if two Quaternions are equivalent.
      */
     bool Compare (const Quaternion &rhs) const;
-    
+
     /**
-     * Test if two Quaternions are similar within a 
+     * Test if two Quaternions are similar within a
      * given tolerance.
      */
     bool Compare (const Quaternion &rhs, const float threshold) const;
-    
+
     /**
      * Test if two Quaternions are equivalent.
      */
     bool operator== (const Quaternion &rhs) const;
-    
+
     /**
      * Test if two Quaternions are not equivalent.
      */
@@ -198,7 +198,7 @@ inline bool Quaternion::IsIdentity () const {
 }
 
 inline bool Quaternion::IsUnit () const {
-    return 1 == Length();
+    return 1 == LengthSqr();
 }
 
 inline Quaternion Quaternion::Conjugate () const {
@@ -269,7 +269,7 @@ inline Quaternion &Quaternion::operator*= (const Quaternion &rhs) {
     j = j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k;
     k = k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i;
     w = w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k;
-    
+
     return *this;
 }
 

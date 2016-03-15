@@ -108,6 +108,7 @@ inline Vector3 Transform::Right () const {
 
 inline void Transform::Rotate (const Vector3 &axis, const float angle) {
     orientation *= Quaternion::AxisAngle(axis, angle);
+    orientation.NormalizeSelf();
 }
 
 inline Matrix4 Transform::GetTranslationMatrix () const {

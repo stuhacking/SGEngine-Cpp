@@ -3,9 +3,17 @@
 //
 #include "../Engine.h"
 
+#include <SDL2/SDL.h>
 #include <unordered_map>
 
 namespace sge {
+
+static SDL_Keycode sdlKeyMap[24] = {
+    SDLK_SPACE, SDLK_ESCAPE, SDLK_BACKSPACE, SDLK_RETURN, SDLK_KP_ENTER,
+    SDLK_INSERT, SDLK_DELETE, SDLK_END, SDLK_HOME, SDLK_PAGEUP, SDLK_PAGEDOWN,
+    SDLK_PAUSE, SDLK_PRINTSCREEN, SDLK_LCTRL, SDLK_RCTRL, SDLK_LALT, SDLK_RALT,
+    SDLK_LSHIFT, SDLK_RSHIFT, SDLK_TAB, SDLK_UP, SDLK_DOWN, SDLK_LEFT, SDLK_RIGHT
+};
 
 // Map of Keycodes which are currently down.
 static std::unordered_map<SDL_Keycode, bool> keyMap;
@@ -82,7 +90,7 @@ void Input::Update () {
 //--------------------------
 
 bool Input::KeyDown (const Key keyCode) {
-    return keyMap[keyCode];
+    return keyMap[sdlKeyMap[keyCode]];
 }
 
 bool Input::KeyDown (const char keyCode) {
@@ -90,7 +98,7 @@ bool Input::KeyDown (const char keyCode) {
 }
 
 bool Input::KeyPressed (const Key keyCode) {
-    return keysPressed[keyCode];
+    return keysPressed[sdlKeyMap[keyCode]];
 }
 
 bool Input::KeyPressed (const char keyCode) {
@@ -98,7 +106,7 @@ bool Input::KeyPressed (const char keyCode) {
 }
 
 bool Input::KeyReleased (const Key keyCode) {
-    return keysReleased[keyCode];
+    return keysReleased[sdlKeyMap[keyCode]];
 }
 
 bool Input::KeyReleased (const char keyCode) {

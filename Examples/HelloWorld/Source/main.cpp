@@ -11,26 +11,22 @@
 
 using namespace sge;
 
-static std::unique_ptr<SGEWindow> win;
-
 static std::unique_ptr<Game> game;
 
 int main (int argc, char *argv[]) {
 
-    win = std::unique_ptr<SGEWindow>(new SGEWindow("Hello World", 1024, 576));
-
-    if (!win->IsInitialized()) {
+    if (!window->IsInitialized()) {
         std::cerr << "Error initializing SGE Window.\n";
         return 1;
     }
 
-    game = std::unique_ptr<Game>(new Game(win->GetWidth(), win->GetHeight()));
+    game = std::unique_ptr<Game>(new Game(window->GetWidth(), window->GetHeight()));
     if (!game->Init()) {
         std::cerr << "Failure during game init!\n";
         return 1;
     }
 
-    win->Clear();
+    window->Clear();
 
     float clockSpeed = 1.0f;
     Clock gameClock = Clock(clockSpeed);
@@ -42,15 +38,27 @@ int main (int argc, char *argv[]) {
             gameClock.Pause(!gameClock.IsPaused());
         }
 
+        if (Input::KeyDown(Input::Key::PageUp)) {
+            clockSpeed *= 2.0f;
+            gameClock.SetScale(clockSpeed);
+        }
+        if (Input::KeyDown(Input::Key::PageDown)) {
+            if (clockSpeed >= 2.0f) {
+                clockSpeed /= 2.0f;
+            }
+            gameClock.SetScale(clockSpeed);
+        }
+        std::cout << gameClock << "\n";
+
         game->Input();
         game->Update(gameClock.DeltaSeconds());
 
-        win->Clear();
+        window->Clear();
 
         game->Render();
 
-        win->Delay(33);
-        win->Update();
+        window->Delay(33);
+        window->Update();
     }
 
     return 0;

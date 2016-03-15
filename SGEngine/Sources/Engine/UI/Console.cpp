@@ -28,7 +28,7 @@ void TextConsole::Print (const std::string &msg) {
 
 void TextConsole::Printf (const std::string &fmt, ...) {
     va_list args;
-    va_start (args, fmt);
+    va_start (args, fmt.c_str());
     vprintf(fmt.c_str(), args);
     va_end(args);
 }

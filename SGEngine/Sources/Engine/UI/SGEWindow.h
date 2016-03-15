@@ -6,29 +6,18 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Define a Window class to initialize the GL/SDL context.
  */
 #ifndef __SGENGINE_SGEWINDOW_h_
 #define __SGENGINE_SGEWINDOW_h_
 
-#include <SDL2/SDL.h>
 #include <string>
 
 namespace sge {
 
 class SGEWindow {
 public:
-    /**
-     * Create a new window and initialize the SDL and OpenGL contexts.
-     */
-    SGEWindow (const std::string &name, const u32 w, const u32 h,
-               const bool fullScreen = false);
-
-    /**
-     * Destroy SDL subsystems and free up pointers.
-     */
-    ~SGEWindow ();
 
     bool IsInitialized () const;
 
@@ -36,34 +25,36 @@ public:
 
     u32 GetHeight () const;
 
-    void Update () const;
+    virtual void Update () const = 0;
 
-    void Delay (u32 period) const;
+    virtual void Delay (u32 period) const = 0;
 
     /**
      * Set the clear color of the rendering back-end.
      */
-    void SetClearColor (const float r, const float g, const float b,
-                        const float a = 1.0f) const;
+    virtual void SetClearColor (const float r, const float g, const float b,
+                        const float a = 1.0f) const = 0;
 
     /**
      * Clear contents of the panel using the rendering back-end.
      */
-    void Clear () const;
+    virtual void Clear () const = 0;
 
     /**
      * Get the center of this window in window coordinates
      * (top-left origin).
      */
     Vector2 Center () const;
-    
-private:
-    SDL_Window *window;
+
+protected:
     bool m_initialized;
     u32 m_width;
     u32 m_height;
     std::string m_name;
 };
+
+// Global Window
+extern SGEWindow *window;
 
 // --------------------------------------------------------------------------
 
@@ -80,7 +71,7 @@ inline u32 SGEWindow::GetHeight () const {
 }
 
 inline Vector2 SGEWindow::Center () const {
-    return Vector2(m_width * 0.5f, m_height * 0.5f);
+    return Vector2(m_width / 2, m_height / 2);
 }
 
 } /* namespace sge */

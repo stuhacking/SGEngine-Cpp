@@ -4,6 +4,7 @@
  */
 #include "../Engine.h"
 
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <iostream>
 
@@ -13,10 +14,34 @@
 
 namespace sge {
 
+class SGEWindowSDL : public SGEWindow {
+public:
+    /**
+     * Initialize an SGE Window using SDL2 as the UI backend and
+     * SDL2 OpenGL for rendering context.
+     */
+    SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
+                  const bool fullScreen = false);
+
+    ~SGEWindowSDL ();
+
+    virtual void Update () const;
+
+    virtual void Delay (const u32 period) const;
+
+    virtual void SetClearColor (const float r, const float g, const float b,
+                                const float a = 1.0f) const;
+
+    virtual void Clear () const;
+
+private:
+    SDL_Window *m_window;
+};
+
 /**
  * Create an SDL Window with OpenGL context.
  */
-SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h,
+SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
                       const bool fullScreen) {
     m_initialized = false;
     m_name = name;
@@ -37,12 +62,12 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h,
     }
 
     u32 fullScreenFlag = (fullScreen) ? SDL_WINDOW_FULLSCREEN : 0;
-    window = SDL_CreateWindow(m_name.c_str(),
+    m_window = SDL_CreateWindow(m_name.c_str(),
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               m_width, m_height,
                               SDL_WINDOW_OPENGL | fullScreenFlag | SDL_WINDOW_SHOWN);
-    if (nullptr == window) {
-        std::cerr << "Failed to create window! SDL_Error: " << SDL_GetError() << "\n";
+    if (nullptr == m_window) {
+        std::cerr << "Failed to create SDL window! SDL_Error: " << SDL_GetError() << "\n";
         return;
     }
 
@@ -53,7 +78,7 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h,
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, OGL_PROFILE);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    auto glContext = SDL_GL_CreateContext(window);
+    auto glContext = SDL_GL_CreateContext(m_window);
     if (nullptr == glContext) {
         std::cerr << "Failed to create OpenGL context! SDL_Error: " << SDL_GetError() << "\n";
         return;
@@ -87,7 +112,7 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h,
     // TODO Renderer class.
 
     // Default Cyan Clear color.
-    SGEWindow::SetClearColor(0.4f, 0.6f, 0.9f, 1.0f);
+    SetClearColor(0.4f, 0.6f, 0.9f, 1.0f);
 
     //
     glEnable(GL_LINE_SMOOTH);
@@ -118,29 +143,34 @@ SGEWindow::SGEWindow (const std::string &name, const u32 w, const u32 h,
     DEBUG( console->Print(std::string(78, '*') + '\n'); );
 }
 
-SGEWindow::~SGEWindow () {
-    if (nullptr != window) {
-        SDL_DestroyWindow(window);
+SGEWindowSDL::~SGEWindowSDL () {
+    if (nullptr != m_window) {
+        SDL_DestroyWindow(m_window);
     }
 
     IMG_Quit();
     SDL_Quit();
 }
 
-void SGEWindow::Update () const {
-    SDL_GL_SwapWindow(window);
+void SGEWindowSDL::Update () const {
+    SDL_GL_SwapWindow(m_window);
 }
 
-void SGEWindow::Delay (u32 period) const {
+void SGEWindowSDL::Delay (u32 period) const {
     SDL_Delay(period);
 }
 
-void SGEWindow::SetClearColor (const float r, const float g, const float b, const float a) const {
+void SGEWindowSDL::SetClearColor (const float r, const float g, const float b, const float a) const {
     glClearColor(r, g, b, a);
 }
 
-void SGEWindow::Clear () const {
+void SGEWindowSDL::Clear () const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+// --------------------------------------------------------------------------
+
+static SGEWindowSDL sdlWindow = SGEWindowSDL("SGE Window", 800, 600);
+SGEWindow *window = &sdlWindow;
 
 } /* namespace sge */

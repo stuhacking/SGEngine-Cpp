@@ -1,4 +1,4 @@
-/*---  Input.h - SDL2 Realtime Input Header  ----------------------*- C++ -*---
+/*---  Input.h - Realtime Input Header  ---------------------------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *
@@ -7,49 +7,49 @@
  *
  * --------------------------------------------------------------------------
  *
- * @brief Define wrapper for querying keyboard and mouse state from SDL2.
+ * @brief Define wrapper for querying keyboard and mouse state.
  */
 #ifndef __SGENGINE_INPUT_H_
 #define __SGENGINE_INPUT_H_
-
-#include <SDL2/SDL.h>
 
 namespace sge {
 
 class Input {
 public:
-    /* Define our own common key codes to avoid exposing
-       SDL specifics. */
-    enum Key : SDL_Keycode {
-        Space = SDLK_SPACE,
-        Escape = SDLK_ESCAPE,
-        Backspace = SDLK_BACKSPACE,
-        Return = SDLK_RETURN,
-        KeypadEnter = SDLK_KP_ENTER,
-        Insert = SDLK_INSERT,
-        Delete = SDLK_DELETE,
-        End = SDLK_END,
-        Home = SDLK_HOME,
-        PageUp = SDLK_PAGEUP,
-        PageDown = SDLK_PAGEDOWN,
-        Pause = SDLK_PAUSE,
-        Print = SDLK_PRINTSCREEN,
-        LCtrl = SDLK_LCTRL,
-        RCtrl = SDLK_RCTRL,
-        Alt = SDLK_LALT,
-        AltGr = SDLK_RALT,
-        LShift = SDLK_LSHIFT,
-        RShift = SDLK_RSHIFT,
-        Tab = SDLK_TAB,
-        Up = SDLK_UP,
-        Down = SDLK_DOWN,
-        Left = SDLK_LEFT,
-        Right = SDLK_RIGHT
+    /**
+     * Enumerate special Key Codes which can be mapped onto
+     * implementation specific codes depending on backend.
+     */
+    enum Key : u8 {
+        Space = 0,
+        Escape = 1,
+        Backspace = 2,
+        Return = 3,
+        KeypadEnter = 4,
+        Insert = 5,
+        Delete = 6,
+        End = 7,
+        Home = 8,
+        PageUp = 9,
+        PageDown = 10,
+        Pause = 11,
+        Print = 12,
+        LCtrl = 13,
+        RCtrl = 14,
+        Alt = 15,
+        AltGr = 16,
+        LShift = 17,
+        RShift = 18,
+        Tab = 19,
+        Up = 20,
+        Down = 21,
+        Left = 22,
+        Right = 23
     };
 
 public:
     /**
-     * Poll the internal SDL2 Event Queue and update the
+     * Poll the internal input Event Queue and update the
      * current mouse and keyboard state.
      * Should be called once per frame, or once per input
      * poll in your application.

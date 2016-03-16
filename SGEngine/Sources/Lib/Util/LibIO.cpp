@@ -125,8 +125,10 @@ std::ostream& operator<< (std::ostream &os, const Clock &clock) {
               << hours << ":" << std::setw(2) << mins << ":" << std::setw(2) << sec
         // :MS
               << ":" << std::setw(3) << ms
+        // Time Scale
+              << " " << clock.Scale()
         // (Time Delta in seconds)
-              << " (" << clock.DeltaSeconds() << "ds) "
+              << "x (" << clock.DeltaSeconds() << "ds) "
         // Total elapsed time in nanoseconds.
               << ns << "ns>";
 }

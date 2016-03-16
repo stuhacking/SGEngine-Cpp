@@ -74,6 +74,8 @@ public:
 
     void SetScale (const float scale);
 
+    float Scale () const { return m_scale; }
+
     /**
      * Get the total elapsed time in nanoseconds
      * for this clock.
@@ -110,9 +112,7 @@ private:
 // --------------------------------------------------------------------------
 
 inline void Clock::SetScale (const float scale) {
-    if (scale > 0.0f && scale <= 100.0f) {
-        m_scale = scale;
-    }
+    m_scale = FMath::ClampFloat(scale, 0.0f, 100.0f);
 }
 
 inline float Clock::DeltaSeconds () const {

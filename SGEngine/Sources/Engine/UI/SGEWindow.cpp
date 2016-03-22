@@ -38,6 +38,11 @@ private:
     SDL_Window *m_window;
 };
 
+static SGEWindowSDL sdlWindow = SGEWindowSDL("SGE Window", 800, 600);
+SGEWindow *window = &sdlWindow;
+
+// --------------------------------------------------------------------------
+
 /**
  * Create an SDL Window with OpenGL context.
  */
@@ -167,10 +172,5 @@ void SGEWindowSDL::SetClearColor (const float r, const float g, const float b, c
 void SGEWindowSDL::Clear () const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-
-// --------------------------------------------------------------------------
-
-static SGEWindowSDL sdlWindow = SGEWindowSDL("SGE Window", 800, 600);
-SGEWindow *window = &sdlWindow;
 
 } /* namespace sge */

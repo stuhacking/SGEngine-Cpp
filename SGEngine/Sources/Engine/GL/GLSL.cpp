@@ -62,7 +62,7 @@ bool checkValidateStatus(const GLuint glslID) {
  */
 static
 GLuint DetectShaderType (const std::string &filename) {
-    std::string ext = String::FileExtension(filename);
+    std::string ext = str::FileExtension(filename);
 
     if ("vs" == ext || "vert" == ext) {
         return GL_VERTEX_SHADER;
@@ -131,7 +131,7 @@ bool GLSLProgram::Compile () {
         return false;
     }
 
-    DEBUG( console->Printf("Compiling Program Sources (%u)\n", a_id); );
+    DEBUG( console->Printf("Compiling Program Sources (%d)\n", a_id); );
 
     for (auto &shader : m_shaders) {
         bool compiled = shader.Compile();

@@ -17,7 +17,7 @@ include_directories(../../SGEngine/Sources/Engine)
 
 file(GLOB_RECURSE SOURCES *.cpp .)
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} SDL2 SDL2main)
+target_link_libraries(${PROJECT_NAME} SDL2)
 target_link_libraries(${PROJECT_NAME} SDL2_image)
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
 if(NOT APPLE)

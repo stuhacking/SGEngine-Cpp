@@ -51,14 +51,14 @@ public:
     size_t Size () const { return m_positions.size(); }
     bool IsValid () const { return m_isValid; }
 
-    Vector3 Position (const s32 index) const { return m_positions[index]; }
-    Vector3 Normal (const s32 index) const { return m_normals[index]; }
-    Vector2 TexCoord (const s32 index) const { return m_texCoords[index]; }
+    Vec3f Position (const s32 index) const { return m_positions[index]; }
+    Vec3f Normal (const s32 index) const { return m_normals[index]; }
+    Vec2f TexCoord (const s32 index) const { return m_texCoords[index]; }
 
 private:
-    std::vector<Vector3> m_positions;
-    std::vector<Vector3> m_normals;
-    std::vector<Vector2> m_texCoords;
+    std::vector<Vec3f> m_positions;
+    std::vector<Vec3f> m_normals;
+    std::vector<Vec2f> m_texCoords;
 
     bool m_hasNormals;
     bool m_hasTexture;
@@ -75,7 +75,7 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline ObjDocument::ObjDocument (const std::string &filename) {
+INLINE ObjDocument::ObjDocument (const std::string &filename) {
     name = "untitled_obj";
 
     groups.reserve(DEFAULT_GROUP_SIZE);

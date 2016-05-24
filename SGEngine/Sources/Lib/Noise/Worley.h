@@ -46,12 +46,12 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline void Worley::SetSeed(const s32 seed) {
+INLINE void Worley::SetSeed(const s32 seed) {
     s32 s = static_cast<s32>(seed & 0xFF);
     m_seed = 2 + s * s;
 }
 
-inline float Worley::Get(const float x, const float y) const {
+INLINE float Worley::Get(const float x, const float y) const {
     return worley(x * frequency, y * frequency);
 }
 

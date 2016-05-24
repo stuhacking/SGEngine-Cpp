@@ -34,7 +34,7 @@ private:
     std::string m_filename;
 };
 
-inline bool GLSLShader::IsCompiled() const {
+INLINE bool GLSLShader::IsCompiled() const {
     return m_id > 0;
 }
 

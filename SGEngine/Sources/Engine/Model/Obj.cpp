@@ -8,7 +8,7 @@
 
 namespace sge {
 
-static inline
+static INLINE
 void logParseError (const std::string &file, const u32 line, const std::string &el) {
     std::cerr << "Malformed " << el << " in " << file << "on line " << line << "\n";
 }

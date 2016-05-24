@@ -16,12 +16,12 @@ namespace sge {
 
 class ICOSphere {
 public:
-    ICOSphere (const Vector3 &p_center, const float p_size)
+    ICOSphere (const Vec3f &p_center, const float p_size)
         : center(p_center) {
-        hSize = Vector3(p_size * 0.5f);
+        hSize = Vec3f(p_size * 0.5f);
     }
     
-    ICOSphere (const Vector3 &p_center, const Vector3 &p_size)
+    ICOSphere (const Vec3f &p_center, const Vec3f &p_size)
         : center(p_center) {
         hSize = p_size * 0.5f;
     }
@@ -29,8 +29,8 @@ public:
     Mesh ToMesh () const;
     
 private:
-    Vector3 center;
-    Vector3 hSize;
+    Vec3f center;
+    Vec3f hSize;
 };
     
 } /* namespace sge */

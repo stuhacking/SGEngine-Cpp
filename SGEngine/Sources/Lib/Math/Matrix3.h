@@ -47,8 +47,8 @@ public:
              const float ba, const float bb, const float bc,
              const float ca, const float cb, const float cc);
 
-    /** Vector3 Column Constructor */
-    Matrix3 (const Vector3 &col1, const Vector3 &col2, const Vector3 &col3);
+    /** Vec3f Column Constructor */
+    Matrix3 (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3);
 
     /** 1D Array Constructor */
     Matrix3 (const float data[9]);
@@ -65,10 +65,10 @@ public:
               const float ca, const float cb, const float cc);
 
     /**
-     * Set the values of this Matrix3 using Vector3 columns.
+     * Set the values of this Matrix3 using Vec3f columns.
      * Destructive.
      */
-    void Set (const Vector3 &col1, const Vector3 &col2, const Vector3 &col3);
+    void Set (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3);
 
     /**
      * Set the values of this Matrix3 using a 1D array.
@@ -90,9 +90,9 @@ public:
 
     bool IsIdentity () const;
 
-    const Vector3 &operator[] (const u32 index) const;
+    const Vec3f &operator[] (const u32 index) const;
 
-    Vector3 &operator[] (const u32 index);
+    Vec3f &operator[] (const u32 index);
 
     /**
      * Matrix3 Scale.
@@ -110,14 +110,14 @@ public:
     Matrix3 operator* (const Matrix3 &rhs) const;
 
     /**
-     * Matrix3 x Vector3 multiplication.
+     * Matrix3 x Vec3f multiplication.
      */
-    Vector3 operator* (const Vector3 &rhs) const;
+    Vec3f operator* (const Vec3f &rhs) const;
 
     /**
-     * Vector3 x Matrix3 multiplication.
+     * Vec3f x Matrix3 multiplication.
      */
-    friend Vector3 operator* (const Vector3 &lhs, const Matrix3 &rhs);
+    friend Vec3f operator* (const Vec3f &lhs, const Matrix3 &rhs);
 
     /**
      * Matrix3 Addition.
@@ -199,18 +199,18 @@ public:
     bool operator!= (const Matrix3 &other) const;
 
 private:
-    Vector3 mat[3];
+    Vec3f mat[3];
 };
 
 // --------------------------------------------------------------------------
 
-inline Matrix3::Matrix3 (const float f) {
+INLINE Matrix3::Matrix3 (const float f) {
     mat[0].x = mat[0].y = mat[0].z = f;
     mat[1].x = mat[1].y = mat[1].z = f;
     mat[2].x = mat[2].y = mat[2].z = f;
 }
 
-inline Matrix3::Matrix3 (const float aa, const float ab, const float ac,
+INLINE Matrix3::Matrix3 (const float aa, const float ab, const float ac,
                          const float ba, const float bb, const float bc,
                          const float ca, const float cb, const float cc) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac;
@@ -218,21 +218,21 @@ inline Matrix3::Matrix3 (const float aa, const float ab, const float ac,
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc;
 }
 
-inline Matrix3::Matrix3 (const Vector3 &col1, const Vector3 &col2, const Vector3 &col3) {
+INLINE Matrix3::Matrix3 (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z;
     mat[2].x = col3.x; mat[2].y = col3.y; mat[2].z = col3.z;
 }
 
-inline Matrix3::Matrix3 (const float data[9]) {
+INLINE Matrix3::Matrix3 (const float data[9]) {
     std::memcpy(mat, data, 9 * sizeof(float));
 }
 
-inline Matrix3::Matrix3 (const float data[3][3]) {
+INLINE Matrix3::Matrix3 (const float data[3][3]) {
     std::memcpy(mat, data, 3 * 3 * sizeof(float));
 }
 
-inline void Matrix3::Set (const float aa, const float ab, const float ac,
+INLINE void Matrix3::Set (const float aa, const float ab, const float ac,
                           const float ba, const float bb, const float bc,
                           const float ca, const float cb, const float cc) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac;
@@ -240,35 +240,35 @@ inline void Matrix3::Set (const float aa, const float ab, const float ac,
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc;
 }
 
-inline void Matrix3::Set (const Vector3 &col1, const Vector3 &col2, const Vector3 &col3) {
+INLINE void Matrix3::Set (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3) {
     mat[0] = col1;
     mat[1] = col2;
     mat[2] = col3;
 }
 
-inline void Matrix3::Set (const float data[9]) {
+INLINE void Matrix3::Set (const float data[9]) {
     std::memcpy(mat, data, 9 * sizeof(float));
 }
 
-inline void Matrix3::Set (const float data[3][3]) {
+INLINE void Matrix3::Set (const float data[3][3]) {
     std::memcpy(mat, data, 3 * 3 * sizeof(float));
 }
 
-inline void Matrix3::Zero () {
+INLINE void Matrix3::Zero () {
     mat[0].Zero();
     mat[1].Zero();
     mat[2].Zero();
 }
 
-inline bool Matrix3::IsIdentity () const {
+INLINE bool Matrix3::IsIdentity () const {
     return Compare(Matrix3::IDENTITY);
 }
 
-inline const Vector3 &Matrix3::operator[] (const u32 index) const {
+INLINE const Vec3f &Matrix3::operator[] (const u32 index) const {
     return mat[index];
 }
 
-inline Vector3 &Matrix3::operator[] (const u32 index) {
+INLINE Vec3f &Matrix3::operator[] (const u32 index) {
     return mat[index];
 }
 
@@ -276,15 +276,15 @@ inline Vector3 &Matrix3::operator[] (const u32 index) {
 // Matrix3 Operations
 //=======================
 
-inline Matrix3 Matrix3::operator* (const float a) const {
+INLINE Matrix3 Matrix3::operator* (const float a) const {
     return Matrix3(mat[0] * a, mat[1] * a, mat[2] * a);
 }
 
-inline Matrix3 operator* (const float a, const Matrix3 &rhs) {
+INLINE Matrix3 operator* (const float a, const Matrix3 &rhs) {
     return rhs * a;
 }
 
-inline Matrix3 Matrix3::operator* (const Matrix3 &rhs) const {
+INLINE Matrix3 Matrix3::operator* (const Matrix3 &rhs) const {
     Matrix3 lhs = Transpose();
 
     return Matrix3(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
@@ -292,25 +292,25 @@ inline Matrix3 Matrix3::operator* (const Matrix3 &rhs) const {
                    lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]));
 }
 
-inline Vector3 Matrix3::operator* (const Vector3 &rhs) const {
-    return Vector3(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z,
+INLINE Vec3f Matrix3::operator* (const Vec3f &rhs) const {
+    return Vec3f(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z,
                    mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z,
                    mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z);
 }
 
-inline Vector3 operator* (const Vector3 &lhs, const Matrix3 &rhs) {
+INLINE Vec3f operator* (const Vec3f &lhs, const Matrix3 &rhs) {
     return rhs * lhs;
 }
 
-inline Matrix3 Matrix3::operator+ (const Matrix3 &rhs) const {
+INLINE Matrix3 Matrix3::operator+ (const Matrix3 &rhs) const {
     return Matrix3(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2]);
 }
 
-inline Matrix3 Matrix3::operator- (const Matrix3 &rhs) const {
+INLINE Matrix3 Matrix3::operator- (const Matrix3 &rhs) const {
     return Matrix3(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2]);
 }
 
-inline Matrix3 &Matrix3::operator*= (const float a) {
+INLINE Matrix3 &Matrix3::operator*= (const float a) {
     mat[0] *= a;
     mat[1] *= a;
     mat[2] *= a;
@@ -318,7 +318,7 @@ inline Matrix3 &Matrix3::operator*= (const float a) {
     return *this;
 }
 
-inline Matrix3 &Matrix3::operator*= (const Matrix3 &rhs) {
+INLINE Matrix3 &Matrix3::operator*= (const Matrix3 &rhs) {
     Matrix3 lhs = Transpose();
 
     Set(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
@@ -328,7 +328,7 @@ inline Matrix3 &Matrix3::operator*= (const Matrix3 &rhs) {
     return *this;
 }
 
-inline Matrix3 &Matrix3::operator+= (const Matrix3 &rhs) {
+INLINE Matrix3 &Matrix3::operator+= (const Matrix3 &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
     mat[2] += rhs[2];
@@ -336,7 +336,7 @@ inline Matrix3 &Matrix3::operator+= (const Matrix3 &rhs) {
     return *this;
 }
 
-inline Matrix3 &Matrix3::operator-= (const Matrix3 &rhs) {
+INLINE Matrix3 &Matrix3::operator-= (const Matrix3 &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
     mat[2] -= rhs[2];
@@ -344,7 +344,7 @@ inline Matrix3 &Matrix3::operator-= (const Matrix3 &rhs) {
     return *this;
 }
 
-inline float Matrix3::Determinant () const {
+INLINE float Matrix3::Determinant () const {
     // Laplace Expansion Determinant
     //    0 1 2
     // x |0 3 6|
@@ -355,17 +355,17 @@ inline float Matrix3::Determinant () const {
            mat[0].z * (mat[1].x * mat[2].y - mat[2].x * mat[1].y);
 }
 
-inline bool Matrix3::HasInverse () const {
+INLINE bool Matrix3::HasInverse () const {
     return 0 != Determinant();
 }
 
-inline Matrix3 Matrix3::Transpose () const {
+INLINE Matrix3 Matrix3::Transpose () const {
     return Matrix3(mat[0].x, mat[1].x, mat[2].x,
                    mat[0].y, mat[1].y, mat[2].y,
                    mat[0].z, mat[1].z, mat[2].z);
 }
 
-inline Matrix3 &Matrix3::TransposeSelf () {
+INLINE Matrix3 &Matrix3::TransposeSelf () {
     std::swap(mat[0].y, mat[1].x);
     std::swap(mat[0].z, mat[2].x);
     std::swap(mat[1].z, mat[2].y);
@@ -377,23 +377,23 @@ inline Matrix3 &Matrix3::TransposeSelf () {
 // Matrix3 Comparisons
 //=======================
 
-inline bool Matrix3::Compare (const Matrix3 &other) const {
+INLINE bool Matrix3::Compare (const Matrix3 &other) const {
     return mat[0].Compare(other.mat[0]) &&
         mat[1].Compare(other.mat[1]) &&
         mat[2].Compare(other.mat[2]);
 }
 
-inline bool Matrix3::Compare (const Matrix3 &other, const float threshold) const {
+INLINE bool Matrix3::Compare (const Matrix3 &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold) &&
         mat[2].Compare(other.mat[2], threshold);
 }
 
-inline bool Matrix3::operator== (const Matrix3 &other) const {
+INLINE bool Matrix3::operator== (const Matrix3 &other) const {
     return Compare(other);
 }
 
-inline bool Matrix3::operator!= (const Matrix3 &other) const {
+INLINE bool Matrix3::operator!= (const Matrix3 &other) const {
     return !Compare(other);
 }
 

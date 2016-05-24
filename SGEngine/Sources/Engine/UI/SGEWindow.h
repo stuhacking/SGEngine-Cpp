@@ -44,7 +44,7 @@ public:
      * Get the center of this window in window coordinates
      * (top-left origin).
      */
-    Vector2 Center () const;
+    Vec2f Center () const;
 
 protected:
     bool m_initialized;
@@ -58,20 +58,20 @@ extern SGEWindow *window;
 
 // --------------------------------------------------------------------------
 
-inline bool SGEWindow::IsInitialized () const {
+INLINE bool SGEWindow::IsInitialized () const {
     return m_initialized;
 }
 
-inline u32 SGEWindow::GetWidth () const {
+INLINE u32 SGEWindow::GetWidth () const {
     return m_width;
 }
 
-inline u32 SGEWindow::GetHeight () const {
+INLINE u32 SGEWindow::GetHeight () const {
     return m_height;
 }
 
-inline Vector2 SGEWindow::Center () const {
-    return Vector2(m_width / 2, m_height / 2);
+INLINE Vec2f SGEWindow::Center () const {
+    return Vec2f(m_width / 2, m_height / 2);
 }
 
 } /* namespace sge */

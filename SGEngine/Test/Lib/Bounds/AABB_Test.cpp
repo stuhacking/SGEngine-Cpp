@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vector3;
+using sge::Vec3f;
 using sge::AABB;
 
 // Basic Tests
@@ -53,8 +53,8 @@ TEST (AABB_Test, Intersects) {
 }
 
 TEST (AABB_Test, getCenter) {
-    EXPECT_EQ(Vector3(2.0f, 2.0f, 2.0f), A.Center());
-    EXPECT_EQ(Vector3(4.5f, 3.0f, 4.5f), B.Center());
+    EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), A.Center());
+    EXPECT_EQ(Vec3f(4.5f, 3.0f, 4.5f), B.Center());
 }
 
 TEST (AABB_Test, getVolume) {
@@ -66,10 +66,10 @@ TEST (AABB_Test, getVolume) {
 }
 
 TEST (AABB_Test, ContainsPoint) {
-    EXPECT_TRUE(A.Contains(Vector3(2.0f, 2.0f, 2.0f)));
-    EXPECT_TRUE(C.Contains(Vector3(5.0f, 6.0f, 5.0f)));
+    EXPECT_TRUE(A.Contains(Vec3f(2.0f, 2.0f, 2.0f)));
+    EXPECT_TRUE(C.Contains(Vec3f(5.0f, 6.0f, 5.0f)));
 
-    EXPECT_FALSE(E.Contains(Vector3(0.0f, 0.0f, 0.0f)));
+    EXPECT_FALSE(E.Contains(Vec3f(0.0f, 0.0f, 0.0f)));
 }
 
 TEST (AABB_Test, ContainsRect) {

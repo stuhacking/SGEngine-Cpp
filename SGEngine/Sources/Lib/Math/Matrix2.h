@@ -44,8 +44,8 @@ public:
     /** Construct a Matrix2 with float values. */
     Matrix2 (const float aa, const float ab, const float ba, const float bb);
 
-    /** Construct a Matrix2 using Vector2 columns. */
-    Matrix2 (const Vector2 &col1, const Vector2 &col2);
+    /** Construct a Matrix2 using Vec2f columns. */
+    Matrix2 (const Vec2f &col1, const Vec2f &col2);
 
     /** 1D Array Constructor */
     Matrix2 (const float data[4]);
@@ -55,9 +55,9 @@ public:
 
     /**
      * Write the data from the columns of this Matrix2 into
-     * Vector2s.
+     * Vec2fs.
      */
-    void Columns (Vector2 &col1, Vector2 &col2) const;
+    void Columns (Vec2f &col1, Vec2f &col2) const;
 
     /**
      * Set the values of this Matrix2 using floats.
@@ -66,10 +66,10 @@ public:
     void Set (const float aa, const float ab, const float ba, const float bb);
 
     /**
-     * Set the values of this Matrix2 using Vector2 columns.
+     * Set the values of this Matrix2 using Vec2f columns.
      * Destructive.
      */
-    void Set (const Vector2 &col1, const Vector2 &col2);
+    void Set (const Vec2f &col1, const Vec2f &col2);
 
     /**
      * Set the values of this Matrix2 using a 1D array.
@@ -98,12 +98,12 @@ public:
     /**
      * Read access to the matrix columns using subscript notation.
      */
-    const Vector2 &operator[] (const u32 index) const;
+    const Vec2f &operator[] (const u32 index) const;
 
     /**
      * Reference/Write access to the matrix columns using subscript notation.
      */
-    Vector2 &operator[] (const u32 index);
+    Vec2f &operator[] (const u32 index);
 
     // Matrix2 operators
 
@@ -200,70 +200,70 @@ public:
     bool operator!= (const Matrix2 &other) const;
 
 private:
-    Vector2 mat[2];
+    Vec2f mat[2];
 };
 
 // --------------------------------------------------------------------------
 
-inline Matrix2::Matrix2 (const float f) {
+INLINE Matrix2::Matrix2 (const float f) {
     mat[0].x = mat[0].y = mat[1].x = mat[1].y = f;
 }
 
-inline Matrix2::Matrix2 (const float aa, const float ab, const float ba, const float bb) {
+INLINE Matrix2::Matrix2 (const float aa, const float ab, const float ba, const float bb) {
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
 }
 
-inline Matrix2::Matrix2 (const Vector2 &col1, const Vector2 &col2) {
+INLINE Matrix2::Matrix2 (const Vec2f &col1, const Vec2f &col2) {
     mat[0].x = col1.x; mat[0].y = col1.y;
     mat[1].x = col2.x; mat[1].y = col2.y;
 }
 
-inline Matrix2::Matrix2 (const float data[4]) {
+INLINE Matrix2::Matrix2 (const float data[4]) {
     std::memcpy(mat, data, 4 * sizeof(float));
 }
 
-inline Matrix2::Matrix2 (const float data[2][2]) {
+INLINE Matrix2::Matrix2 (const float data[2][2]) {
     std::memcpy(mat, data, 2 * 2 * sizeof(float));
 }
 
-inline void Matrix2::Columns (Vector2 &col1, Vector2 &col2) const {
+INLINE void Matrix2::Columns (Vec2f &col1, Vec2f &col2) const {
     col1 = mat[0];
     col2 = mat[1];
 }
 
-inline void Matrix2::Set (const float aa, const float ab, const float ba, const float bb) {
+INLINE void Matrix2::Set (const float aa, const float ab, const float ba, const float bb) {
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
 }
 
-inline void Matrix2::Set (const Vector2 &col1, const Vector2 &col2) {
+INLINE void Matrix2::Set (const Vec2f &col1, const Vec2f &col2) {
     mat[0] = col1;
     mat[1] = col2;
 }
 
-inline void Matrix2::Set (const float data[4]) {
+INLINE void Matrix2::Set (const float data[4]) {
     std::memcpy(mat, data, 4 * sizeof(float));
 }
 
-inline void Matrix2::Set (const float data[2][2]) {
+INLINE void Matrix2::Set (const float data[2][2]) {
     std::memcpy(mat, data, 2 * 2 * sizeof(float));
 }
 
-inline void Matrix2::Zero () {
+INLINE void Matrix2::Zero () {
     mat[0].Zero();
     mat[1].Zero();
 }
 
-inline bool Matrix2::IsIdentity () const {
+INLINE bool Matrix2::IsIdentity () const {
     return Compare(Matrix2::IDENTITY);
 }
 
-inline const Vector2 &Matrix2::operator[] (const u32 index) const {
+INLINE const Vec2f &Matrix2::operator[] (const u32 index) const {
     return mat[index];
 }
 
-inline Vector2 &Matrix2::operator[] (const u32 index) {
+INLINE Vec2f &Matrix2::operator[] (const u32 index) {
     return mat[index];
 }
 
@@ -271,15 +271,15 @@ inline Vector2 &Matrix2::operator[] (const u32 index) {
 // Matrix2 Operators
 //=======================
 
-inline Matrix2 Matrix2::operator* (const float a) const {
+INLINE Matrix2 Matrix2::operator* (const float a) const {
     return Matrix2(mat[0] * a, mat[1] * a);
 }
 
-inline Matrix2 operator* (const float a, const Matrix2 &rhs) {
+INLINE Matrix2 operator* (const float a, const Matrix2 &rhs) {
     return rhs * a;
 }
 
-inline Matrix2 Matrix2::operator* (const Matrix2 &rhs) const {
+INLINE Matrix2 Matrix2::operator* (const Matrix2 &rhs) const {
     return Matrix2(mat[0].x * rhs[0].x + mat[0].y * rhs[1].x,
                    mat[0].x * rhs[0].y + mat[0].y * rhs[1].y,
 
@@ -287,22 +287,22 @@ inline Matrix2 Matrix2::operator* (const Matrix2 &rhs) const {
                    mat[1].x * rhs[0].y + mat[1].y * rhs[1].y);
 }
 
-inline Matrix2 Matrix2::operator+ (const Matrix2 &rhs) const {
+INLINE Matrix2 Matrix2::operator+ (const Matrix2 &rhs) const {
     return Matrix2(mat[0] + rhs[0], mat[1] + rhs[1]);
 }
 
-inline Matrix2 Matrix2::operator- (const Matrix2 &rhs) const {
+INLINE Matrix2 Matrix2::operator- (const Matrix2 &rhs) const {
     return Matrix2(mat[0] - rhs[0], mat[1] - rhs[1]);
 }
 
-inline Matrix2 &Matrix2::operator*= (const float a) {
+INLINE Matrix2 &Matrix2::operator*= (const float a) {
     mat[0] *= a;
     mat[1] *= a;
 
     return *this;
 }
 
-inline Matrix2 &Matrix2::operator*= (const Matrix2 &rhs) {
+INLINE Matrix2 &Matrix2::operator*= (const Matrix2 &rhs) {
     float aa, ab, ba, bb;
     aa = mat[0].x * rhs[0].x + mat[0].y * rhs[1].x;
     ab = mat[0].x * rhs[0].y + mat[0].y * rhs[1].y;
@@ -315,33 +315,33 @@ inline Matrix2 &Matrix2::operator*= (const Matrix2 &rhs) {
     return *this;
 }
 
-inline Matrix2 &Matrix2::operator+= (const Matrix2 &rhs) {
+INLINE Matrix2 &Matrix2::operator+= (const Matrix2 &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
 
     return *this;
 }
 
-inline Matrix2 &Matrix2::operator-= (const Matrix2 &rhs) {
+INLINE Matrix2 &Matrix2::operator-= (const Matrix2 &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
 
     return *this;
 }
 
-inline float Matrix2::Determinant () const {
+INLINE float Matrix2::Determinant () const {
     return mat[0].x * mat[1].y - mat[0].y * mat[1].x;
 }
 
-inline bool Matrix2::HasInverse () const {
+INLINE bool Matrix2::HasInverse () const {
     return 0 != Determinant();
 }
 
-inline Matrix2 Matrix2::Transpose () const {
+INLINE Matrix2 Matrix2::Transpose () const {
     return Matrix2(mat[0].x, mat[1].x, mat[0].y, mat[1].y);
 }
 
-inline Matrix2 &Matrix2::TransposeSelf () {
+INLINE Matrix2 &Matrix2::TransposeSelf () {
     std::swap(mat[0].y, mat[1].x);
 
     return *this;
@@ -351,21 +351,21 @@ inline Matrix2 &Matrix2::TransposeSelf () {
 // Matrix2 Comparisons
 //=======================
 
-inline bool Matrix2::Compare (const Matrix2 &other) const {
+INLINE bool Matrix2::Compare (const Matrix2 &other) const {
     return mat[0].Compare(other.mat[0]) &&
         mat[1].Compare(other.mat[1]);
 }
 
-inline bool Matrix2::Compare (const Matrix2 &other, const float threshold) const {
+INLINE bool Matrix2::Compare (const Matrix2 &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold);
 }
 
-inline bool Matrix2::operator== (const Matrix2 &other) const {
+INLINE bool Matrix2::operator== (const Matrix2 &other) const {
     return Compare(other);
 }
 
-inline bool Matrix2::operator!= (const Matrix2 &other) const {
+INLINE bool Matrix2::operator!= (const Matrix2 &other) const {
     return !Compare(other);
 }
 

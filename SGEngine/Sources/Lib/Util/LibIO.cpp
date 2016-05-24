@@ -9,19 +9,19 @@
 
 namespace sge {
 
-// Vector2 Printer
-std::ostream &operator<< (std::ostream &os, const Vector2 &vec) {
-    return os << "<Vector2 " << vec.x << " " << vec.y << ">";
+// Vec2f Printer
+std::ostream &operator<< (std::ostream &os, const Vec2f &vec) {
+    return os << "<Vec2f " << vec.x << " " << vec.y << ">";
 }
 
-// Vector3 Printer
-std::ostream &operator<< (std::ostream &os, const Vector3 &vec) {
-    return os << "<Vector3 " << vec.x << " " << vec.y << " " << vec.z << ">";
+// Vec3f Printer
+std::ostream &operator<< (std::ostream &os, const Vec3f &vec) {
+    return os << "<Vec3f " << vec.x << " " << vec.y << " " << vec.z << ">";
 }
 
-// Vector4 Printer
-std::ostream &operator<< (std::ostream &os, const Vector4 &vec) {
-    return os << "<Vector4 " << vec.x << " " << vec.y << " " << vec.z << " " << vec.w << ">";
+// Vec4f Printer
+std::ostream &operator<< (std::ostream &os, const Vec4f &vec) {
+    return os << "<Vec4f " << vec.x << " " << vec.y << " " << vec.z << " " << vec.w << ">";
 }
 
 // Quaternion Printer
@@ -91,9 +91,9 @@ std::ostream& operator<< (std::ostream &os, const Vertex &vert) {
 
 // Transform Printer
 std::ostream& operator<< (std::ostream &os, const Transform &tr) {
-    Vector3 up = tr.Up();
-    Vector3 f = tr.Forward();
-    Vector3 r = tr.Right();
+    Vec3f up = tr.Up();
+    Vec3f f = tr.Forward();
+    Vec3f r = tr.Right();
     bool uniScale = ((tr.scale.x == tr.scale.y) && (tr.scale.x == tr.scale.z));
 
     os << "<Transform P=" << tr.position

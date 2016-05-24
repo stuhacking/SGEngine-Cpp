@@ -13,13 +13,13 @@ static std::default_random_engine generator;
 static std::uniform_int_distribution<s8> features(1, MAX_FEATURE_POINTS);
 static std::uniform_real_distribution<float> coords(0.0f, 1.0f);
 
-static float euclidDistance(const Vector2 &a, const Vector2 &b) {
+static float euclidDistance(const Vec2f &a, const Vec2f &b) {
     return (a - b).LengthSqr();
 }
 
 float Worley::worley(const float x, const float y) const {
     s32 sqX, sqY;
-    Vector2 fp, v;
+    Vec2f fp, v;
     bool first = true;
     float nearest = 0.0f;
 

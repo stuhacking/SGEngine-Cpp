@@ -55,16 +55,16 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline void Perlin::SetSeed(const s32 seed) {
+INLINE void Perlin::SetSeed(const s32 seed) {
     s32 s = static_cast<s32>(seed & 0xFF);
     m_seed = 2 + s * s;
 }
 
-inline float Perlin::Get(const float x) const {
+INLINE float Perlin::Get(const float x) const {
     return Get(x, 0.0f);
 }
 
-inline float Perlin::Get(const float x, const float y) const {
+INLINE float Perlin::Get(const float x, const float y) const {
     return amplitude * perlin(x, y);
 }
 

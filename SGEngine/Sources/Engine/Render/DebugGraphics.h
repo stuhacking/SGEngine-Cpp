@@ -40,40 +40,40 @@ public:
      * Draw an edge using the default color of this DebugGraphics
      * object.
      */
-    void AddEdge (const Vector3 &v1, const Vector3 &v2);
+    void AddEdge (const Vec3f &v1, const Vec3f &v2);
 
     /**
      * Draw an edge using a custom color.
      */
-    void AddEdge (const Vector3 &v1, const Vector3 &v2, const Color &col);
+    void AddEdge (const Vec3f &v1, const Vec3f &v2, const Color &col);
 
     /**
      * Draw a point as an intersection of 3 edges where the intersection
      * occurs at point p and the edges extends radius units from p. Uses
      * the default color of the DebugGraphics object.
      */
-    void AddPoint (const Vector3 &p, const float radius = 1.0f);
+    void AddPoint (const Vec3f &p, const float radius = 1.0f);
 
     /**
      * Draw a point as an intersection of 3 edges where the intersection
      * occurs at point p and the edges extends radius units from p using
      * a custom color.
      */
-    void AddPoint (const Vector3 &p, const float radius, const Color &col);
+    void AddPoint (const Vec3f &p, const float radius, const Color &col);
 
     /**
      * Draw a sphere container as a set of axis aligned rings where the center
      * of each ring is point p_center, and each ring extends radius units from
      * p_center. Uses the default color of the DebugGraphics object.
      */
-    void AddSphere (const Vector3 &p_center, const float radius = 1.0f);
+    void AddSphere (const Vec3f &p_center, const float radius = 1.0f);
 
     /**
      * Draw a sphere container as a set of axis aligned rings where the center
      * of each ring is point p_center, and each ring extends radius units from
      * p_center. Uses a custom color.
      */
-    void AddSphere (const Vector3 &p_center, const float radius, const Color &col);
+    void AddSphere (const Vec3f &p_center, const float radius, const Color &col);
 
     /**
      * Draw a Grid on the (X, Z) plane at Y = 0, where the center of the grid
@@ -83,7 +83,7 @@ public:
      *
      * TODO More configurable grids?
      */
-    void AddGrid (const Vector3 &p_center, const u32 size = 10);
+    void AddGrid (const Vec3f &p_center, const u32 size = 10);
 
     /**
      * Draw a Grid on the (X, Z) plane at Y = 0, where the center of the grid
@@ -92,26 +92,26 @@ public:
      *
      * TODO More configurable grids?
      */
-    void AddGrid (const Vector3 &p_center, const u32 size, const Color &col);
+    void AddGrid (const Vec3f &p_center, const u32 size, const Color &col);
 
     /**
      * Draw a bounding box enclosing the region defined by points p_min..p_max.
      * Uses the default color of this DebugGraphics object.
      */
-    void AddBox (const Vector3 &p_min, const Vector3 &p_max);
+    void AddBox (const Vec3f &p_min, const Vec3f &p_max);
 
     /**
      * Draw a bounding box enclosing the region defined by points p_min..p_max.
      * Uses a custom color of this DebugGraphics object.
      */
-    void AddBox (const Vector3 &p_min, const Vector3 &p_max, const Color &col);
+    void AddBox (const Vec3f &p_min, const Vec3f &p_max, const Color &col);
 
 private:
     struct DVertex {
-        Vector3 v1;
+        Vec3f v1;
         Color color;
 
-        DVertex (const Vector3 &p_v1, const Color &p_col)
+        DVertex (const Vec3f &p_v1, const Color &p_col)
         : v1(p_v1), color(p_col) { }
     };
 
@@ -125,28 +125,28 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline void DebugGraphics::AddEdge (const Vector3 &v1, const Vector3 &v2) {
+INLINE void DebugGraphics::AddEdge (const Vec3f &v1, const Vec3f &v2) {
     AddEdge(v1, v2, color);
 }
 
-inline void DebugGraphics::AddEdge (const Vector3 &v1, const Vector3 &v2, const Color &col) {
+INLINE void DebugGraphics::AddEdge (const Vec3f &v1, const Vec3f &v2, const Color &col) {
     m_vertices.emplace_back(v1, col);
     m_vertices.emplace_back(v2, col);
 }
 
-inline void DebugGraphics::AddPoint (const Vector3 &p, const float radius) {
+INLINE void DebugGraphics::AddPoint (const Vec3f &p, const float radius) {
     AddPoint(p, radius, color);
 }
 
-inline void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius) {
+INLINE void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius) {
     AddSphere(p_center, radius, color);
 }
 
-inline void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size) {
+INLINE void DebugGraphics::AddGrid (const Vec3f &p_center, const u32 size) {
     AddGrid(p_center, size, color);
 }
 
-inline void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max) {
+INLINE void DebugGraphics::AddBox (const Vec3f &p_min, const Vec3f &p_max) {
     AddBox(p_min, p_max, color);
 }
 

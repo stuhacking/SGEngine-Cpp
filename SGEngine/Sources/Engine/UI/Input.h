@@ -111,13 +111,13 @@ public:
      * Get the current position (in top-left origin window coordinates)
      * of the mouse cursor
      */
-    static Vector2 GetMousePosition ();
+    static Vec2f GetMousePosition ();
 
     /**
      * Get the relative position of the mouse since the last time
      * Input was updated.
      */
-    static Vector2 GetMouseDelta ();
+    static Vec2f GetMouseDelta ();
 
     /**
      * Test if the given mouse button is currently held. Use for

@@ -16,14 +16,14 @@ namespace sge {
 
 class Transform {
 public:
-    Vector3 position;
+    Vec3f position;
     Quaternion orientation;
-    Vector3 scale;
+    Vec3f scale;
 
 public:
-    Transform (const Vector3 &p_pos = Vector3::ZERO,
+    Transform (const Vec3f &p_pos = VEC3F_ZERO,
                const Quaternion &p_ori = Quaternion::IDENTITY,
-               const Vector3 &p_scale = Vector3::ONE)
+               const Vec3f &p_scale = VEC3F_ONE)
         : position(p_pos), orientation(p_ori), scale(p_scale) { }
 
     /**
@@ -35,24 +35,24 @@ public:
     /**
      * Get the Local Up Vector.
      */
-    Vector3 Up () const;
+    Vec3f Up () const;
 
     /**
      * Get the Local Forward Vector.
      */
-    Vector3 Forward () const;
+    Vec3f Forward () const;
 
     /**
      * Get the Local Right Vector.
      */
-    Vector3 Right () const;
+    Vec3f Right () const;
 
     /**
      * Rotate this transform by angles in radians about
      * axis.
      * Destructive.
      */
-    void Rotate (const Vector3 &axis, const float angle);
+    void Rotate (const Vec3f &axis, const float angle);
 
     /**
      * Return a Matrix4 representing the translation component
@@ -88,40 +88,40 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline void Transform::Clear () {
-    position = Vector3::ZERO;
+INLINE void Transform::Clear () {
+    position = VEC3F_ZERO;
     orientation = Quaternion::IDENTITY;
-    scale = Vector3::ONE;
+    scale = VEC3F_ONE;
 }
 
-inline Vector3 Transform::Up () const {
-    return orientation.Rotate(Vector3::Y);
+INLINE Vec3f Transform::Up () const {
+    return orientation.Rotate(VEC3F_Y);
 }
 
-inline Vector3 Transform::Forward () const {
-    return orientation.Rotate(Vector3::Z);
+INLINE Vec3f Transform::Forward () const {
+    return orientation.Rotate(VEC3F_Z);
 }
 
-inline Vector3 Transform::Right () const {
-    return orientation.Rotate(Vector3::X);
+INLINE Vec3f Transform::Right () const {
+    return orientation.Rotate(VEC3F_X);
 }
 
-inline void Transform::Rotate (const Vector3 &axis, const float angle) {
+INLINE void Transform::Rotate (const Vec3f &axis, const float angle) {
     orientation *= Quaternion::AxisAngle(axis, angle);
     orientation.NormalizeSelf();
 }
 
-inline Matrix4 Transform::GetTranslationMatrix () const {
+INLINE Matrix4 Transform::GetTranslationMatrix () const {
     return Matrix4(1.0f,       0.0f,       0.0f,       0.0f,
                    0.0f,       1.0f,       0.0f,       0.0f,
                    0.0f,       0.0f,       1.0f,       0.0f,
                    position.x, position.y, position.z, 1.0f);
 }
 
-inline Matrix4 Transform::GetOrientationMatrix () const {
-    Vector3 u = Up();
-    Vector3 f = Forward();
-    Vector3 r = Right();
+INLINE Matrix4 Transform::GetOrientationMatrix () const {
+    Vec3f u = Up();
+    Vec3f f = Forward();
+    Vec3f r = Right();
 
     return Matrix4(
         r.x,  r.y,  r.z, 0.0f,
@@ -131,18 +131,18 @@ inline Matrix4 Transform::GetOrientationMatrix () const {
         );
 }
 
-inline Matrix4 Transform::GetScaleMatrix () const {
+INLINE Matrix4 Transform::GetScaleMatrix () const {
     return Matrix4(scale.x, 0.0f,    0.0f,    0.0f,
                    0.0f,    scale.y, 0.0f,    0.0f,
                    0.0f,    0.0f,    scale.z, 0.0f,
                    0.0f,    0.0f,    0.0f,    1.0f);
 }
 
-inline Matrix4 Transform::GetTransformationMatrix () const {
+INLINE Matrix4 Transform::GetTransformationMatrix () const {
     return GetScaleMatrix() * GetOrientationMatrix() * GetTranslationMatrix();
 }
 
-inline Matrix4 Transform::GetViewTransformationMatrix () const {
+INLINE Matrix4 Transform::GetViewTransformationMatrix () const {
     return (GetTranslationMatrix() * GetOrientationMatrix() * GetScaleMatrix()).Inverse();
 }
 

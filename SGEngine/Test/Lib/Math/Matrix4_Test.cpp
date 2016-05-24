@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vector4;
+using sge::Vec4f;
 using sge::Matrix4;
 
 TEST (Matrix4_Test, Inverse) {

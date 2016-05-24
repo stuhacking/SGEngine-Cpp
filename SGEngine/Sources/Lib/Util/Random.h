@@ -43,44 +43,44 @@ private:
     std::default_random_engine m_generator;
 };
 
-inline Random::Random() {
+INLINE Random::Random() {
     SetSeed(time(nullptr));
 }
 
-inline Random::Random(const s32 p_seed) {
+INLINE Random::Random(const s32 p_seed) {
     SetSeed(p_seed);
 }
 
-inline void Random::SetSeed(const s32 p_seed) {
+INLINE void Random::SetSeed(const s32 p_seed) {
     m_generator.seed(p_seed);
 }
 
-inline float Random::NextFloat() {
+INLINE float Random::NextFloat() {
     std::uniform_real_distribution<float> vals(0.0f, 1.0f);
     return vals(m_generator);
 }
 
-inline float Random::NextFloat(const float max) {
+INLINE float Random::NextFloat(const float max) {
     std::uniform_real_distribution<float> vals(0.0f, max);
     return vals(m_generator);
 }
 
-inline float Random::NextFloat(const float min, const float max) {
+INLINE float Random::NextFloat(const float min, const float max) {
     std::uniform_real_distribution<float> vals(min, max);
     return vals(m_generator);
 }
 
-inline s32 Random::NextInt() {
+INLINE s32 Random::NextInt() {
     std::uniform_int_distribution<int> vals(0, INT_MAX);
     return vals(m_generator);
 }
 
-inline s32 Random::NextInt(const s32 max) {
+INLINE s32 Random::NextInt(const s32 max) {
     std::uniform_int_distribution<int> vals(0, max);
     return vals(m_generator);
 }
 
-inline s32 Random::NextInt(const s32 min, const s32 max) {
+INLINE s32 Random::NextInt(const s32 min, const s32 max) {
     std::uniform_int_distribution<int> vals(min, max);
     return vals(m_generator);
 }

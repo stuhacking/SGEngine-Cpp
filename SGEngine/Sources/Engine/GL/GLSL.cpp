@@ -225,7 +225,7 @@ void GLSLProgram::SetUniform (const std::string &name, const float value) {
     }
 }
 
-void GLSLProgram::SetUniform (const std::string &name, const Vector2 &value) {
+void GLSLProgram::SetUniform (const std::string &name, const Vec2f &value) {
     GLint u = GetUniform(name);
 
     if (u >= 0) {
@@ -233,7 +233,7 @@ void GLSLProgram::SetUniform (const std::string &name, const Vector2 &value) {
     }
 }
 
-void GLSLProgram::SetUniform (const std::string &name, const Vector3 &value) {
+void GLSLProgram::SetUniform (const std::string &name, const Vec3f &value) {
     GLint u = GetUniform(name);
 
     if (u >= 0) {
@@ -241,7 +241,7 @@ void GLSLProgram::SetUniform (const std::string &name, const Vector3 &value) {
     }
 }
 
-void GLSLProgram::SetUniform (const std::string &name, const Vector4 &value) {
+void GLSLProgram::SetUniform (const std::string &name, const Vec4f &value) {
     GLint u = GetUniform(name);
 
     if (u >= 0) {

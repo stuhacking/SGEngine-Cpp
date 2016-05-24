@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a 2D bounding circle type.
  */
 #ifndef __SGENGINE_CIRCLE_H_
@@ -23,9 +23,9 @@ namespace sge {
 class Circle {
 public:
     Circle()
-        : origin(Vector2::ZERO), radius(-FMath::INFTY) { }
+        : origin(VEC2F_ZERO), radius(-FMath::INFTY) { }
 
-    Circle(const Vector2 &p_origin, const float p_radius = -FMath::INFTY)
+    Circle(const Vec2f &p_origin, const float p_radius = -FMath::INFTY)
         : origin(p_origin), radius(p_radius) { }
 
     /**
@@ -43,14 +43,14 @@ public:
     /**
      * Get the center of this circle.
      */
-    Vector2 Center() const;
+    Vec2f Center() const;
 
     /**
      * Get the area of this circle.
      */
     float Area() const;
 
-    bool Contains(const Vector2 &point) const;
+    bool Contains(const Vec2f &point) const;
 
     bool Contains(const Circle &other) const;
 
@@ -78,43 +78,43 @@ public:
     bool operator!= (const Circle &other) const;
 
 private:
-    Vector2 origin;
+    Vec2f origin;
     float radius;
 };
 
 // --------------------------------------------------------------------------
 
-inline void Circle::Clear() {
+INLINE void Circle::Clear() {
     radius = -FMath::INFTY;
-    origin = Vector2(0.0f, 0.0f);
+    origin = Vec2f(0.0f, 0.0f);
 }
 
-inline void Circle::Maximize() {
+INLINE void Circle::Maximize() {
     radius = FMath::INFTY;
     origin.x = origin.y = 0.0f;
 }
 
-inline Vector2 Circle::Center() const {
+INLINE Vec2f Circle::Center() const {
     return origin;
 }
 
-inline float Circle::Area() const {
+INLINE float Circle::Area() const {
     return radius * radius * FMath::PI;
 }
 
-inline bool Circle::Contains(const Vector2 &point) const {
-    Vector2 relPoint = point - origin;
+INLINE bool Circle::Contains(const Vec2f &point) const {
+    Vec2f relPoint = point - origin;
     return (radius * radius) >= relPoint.LengthSqr();
 }
 
-inline bool Circle::Contains(const Circle &other) const {
-    Vector2 relPoint = other.origin - origin;
+INLINE bool Circle::Contains(const Circle &other) const {
+    Vec2f relPoint = other.origin - origin;
     float distance = relPoint.Length() + other.radius;
     return radius > distance;
 }
 
-inline bool Circle::Intersects(const Circle &other) const {
-    Vector2 relPoint = other.origin - origin;
+INLINE bool Circle::Intersects(const Circle &other) const {
+    Vec2f relPoint = other.origin - origin;
     float distance = relPoint.Length() - other.radius;
     return radius >= distance;
 }
@@ -123,11 +123,11 @@ inline bool Circle::Intersects(const Circle &other) const {
 // Circle Comparison
 //===================
 
-inline bool Circle::Compare (const Circle &other) const {
+INLINE bool Circle::Compare (const Circle &other) const {
     return radius == radius && origin == origin;
 }
 
-inline bool Circle::Compare (const Circle &other, const float threshold) const {
+INLINE bool Circle::Compare (const Circle &other, const float threshold) const {
     if (fabsf(radius - other.radius) > threshold) {
         return false;
     }
@@ -135,11 +135,11 @@ inline bool Circle::Compare (const Circle &other, const float threshold) const {
     return origin.Compare(other.origin, threshold);
 }
 
-inline bool Circle::operator== (const Circle &other) const {
+INLINE bool Circle::operator== (const Circle &other) const {
     return Compare(other);
 }
 
-inline bool Circle::operator!= (const Circle &other) const {
+INLINE bool Circle::operator!= (const Circle &other) const {
     return !Compare(other);
 }
 

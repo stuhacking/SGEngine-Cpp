@@ -9,29 +9,31 @@ namespace sge {
 // VECTOR 2
 //==================================
 
-const Vector2 Vector2::ZERO(0.0f);
-const Vector2 Vector2::ONE(1.0f);
-const Vector2 Vector2::X(1.0f, 0.0f);
-const Vector2 Vector2::Y(0.0f, 1.0f);
+const Vec2f VEC2F_ZERO(0.0f);
+const Vec2f VEC2F_ONE(1.0f);
+const Vec2f VEC2F_X(1.0f, 0.0f);
+const Vec2f VEC2F_Y(0.0f, 1.0f);
 
 //==================================
 // VECTOR 3
 //==================================
 
-const Vector3 Vector3::ZERO(0.0f);
-const Vector3 Vector3::ONE(1.0f);
-const Vector3 Vector3::X(1.0f, 0.0f, 0.0f);
-const Vector3 Vector3::Y(0.0f, 1.0f, 0.0f);
-const Vector3 Vector3::Z(0.0f, 0.0f, 1.0f);
+const Vec3f VEC3F_ZERO(0.0f);
+const Vec3f VEC3F_ONE(1.0f);
+const Vec3f VEC3F_X(1.0f, 0.0f, 0.0f);
+const Vec3f VEC3F_Y(0.0f, 1.0f, 0.0f);
+const Vec3f VEC3F_Z(0.0f, 0.0f, 1.0f);
 
-Vector3 Vector3::Rotate (const float angle, const Vector3 &axis) const {
-    Vector3 rot = *this;
+template <typename T>
+Vec3_T<T> Vec3_T<T>::Rotate (const T angle, const Vec3_T<T> &axis) const {
+    Vec3_T<T> rot = *this;
     rot.RotateSelf(angle, axis);
 
     return rot;
 }
 
-void Vector3::RotateSelf (const float angle, const Vector3 &axis) {
+template <typename T>
+void Vec3_T<T>::RotateSelf (const T angle, const Vec3_T<T> &axis) {
     *this = Quaternion::AxisAngle(axis, TO_RADIANS(angle)).Rotate(*this);
 }
 
@@ -39,11 +41,11 @@ void Vector3::RotateSelf (const float angle, const Vector3 &axis) {
 // VECTOR 4
 //==================================
 
-const Vector4 Vector4::ZERO(0.0f);
-const Vector4 Vector4::ONE(1.0f);
-const Vector4 Vector4::X(1.0f, 0.0f, 0.0f, 0.0f);
-const Vector4 Vector4::Y(0.0f, 1.0f, 0.0f, 0.0f);
-const Vector4 Vector4::Z(0.0f, 0.0f, 1.0f, 0.0f);
-const Vector4 Vector4::W(0.0f, 0.0f, 0.0f, 1.0f);
+const Vec4f VEC4F_ZERO(0.0f);
+const Vec4f VEC4F_ONE(1.0f);
+const Vec4f VEC4F_X(1.0f, 0.0f, 0.0f, 0.0f);
+const Vec4f VEC4F_Y(0.0f, 1.0f, 0.0f, 0.0f);
+const Vec4f VEC4F_Z(0.0f, 0.0f, 1.0f, 0.0f);
+const Vec4f VEC4F_W(0.0f, 0.0f, 0.0f, 1.0f);
 
 } /* namespace sge */

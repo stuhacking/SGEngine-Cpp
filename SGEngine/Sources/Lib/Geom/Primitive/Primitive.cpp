@@ -10,15 +10,15 @@ namespace sge {
 Mesh Plane::ToMesh () const {
     Mesh m;
 
-    Vector3 v1 = Vector3(center.x - hSize.x, center.y, center.z + hSize.y);
-    Vector3 v2 = Vector3(center.x + hSize.x, center.y, center.z + hSize.y);
-    Vector3 v3 = Vector3(center.x + hSize.x, center.y, center.z - hSize.y);
-    Vector3 v4 = Vector3(center.x - hSize.x, center.y, center.z - hSize.y);
+    Vec3f v1 = Vec3f(center.x - hSize.x, center.y, center.z + hSize.y);
+    Vec3f v2 = Vec3f(center.x + hSize.x, center.y, center.z + hSize.y);
+    Vec3f v3 = Vec3f(center.x + hSize.x, center.y, center.z - hSize.y);
+    Vec3f v4 = Vec3f(center.x - hSize.x, center.y, center.z - hSize.y);
 
-    m.AutoQuadFace(Vertex(v1, Vector2(0.0f, 0.0f), Vector3::Y),
-                   Vertex(v2, Vector2(1.0f, 0.0f), Vector3::Y),
-                   Vertex(v3, Vector2(1.0f, 1.0f), Vector3::Y),
-                   Vertex(v4, Vector2(0.0f, 1.0f), Vector3::Y));
+    m.AutoQuadFace(Vertex(v1, Vec2f(0.0f, 0.0f), VEC3F_Y),
+                   Vertex(v2, Vec2f(1.0f, 0.0f), VEC3F_Y),
+                   Vertex(v3, Vec2f(1.0f, 1.0f), VEC3F_Y),
+                   Vertex(v4, Vec2f(0.0f, 1.0f), VEC3F_Y));
 
     return m;
 }
@@ -36,50 +36,50 @@ Mesh Cube::ToMesh () const {
     //
     
     // Bottom Vecs
-    Vector3 v1 = Vector3(center.x - hSize.x, center.y - hSize.y, center.z + hSize.z);
-    Vector3 v2 = Vector3(center.x + hSize.x, center.y - hSize.y, center.z + hSize.z);
-    Vector3 v3 = Vector3(center.x + hSize.x, center.y - hSize.y, center.z - hSize.z);
-    Vector3 v4 = Vector3(center.x - hSize.x, center.y - hSize.y, center.z - hSize.z);
+    Vec3f v1 = Vec3f(center.x - hSize.x, center.y - hSize.y, center.z + hSize.z);
+    Vec3f v2 = Vec3f(center.x + hSize.x, center.y - hSize.y, center.z + hSize.z);
+    Vec3f v3 = Vec3f(center.x + hSize.x, center.y - hSize.y, center.z - hSize.z);
+    Vec3f v4 = Vec3f(center.x - hSize.x, center.y - hSize.y, center.z - hSize.z);
     
     // Top Vecs
-    Vector3 v5 = Vector3(center.x - hSize.x, center.y + hSize.y, center.z + hSize.z);
-    Vector3 v6 = Vector3(center.x + hSize.x, center.y + hSize.y, center.z + hSize.z);
-    Vector3 v7 = Vector3(center.x + hSize.x, center.y + hSize.y, center.z - hSize.z);
-    Vector3 v8 = Vector3(center.x - hSize.x, center.y + hSize.y, center.z - hSize.z);
+    Vec3f v5 = Vec3f(center.x - hSize.x, center.y + hSize.y, center.z + hSize.z);
+    Vec3f v6 = Vec3f(center.x + hSize.x, center.y + hSize.y, center.z + hSize.z);
+    Vec3f v7 = Vec3f(center.x + hSize.x, center.y + hSize.y, center.z - hSize.z);
+    Vec3f v8 = Vec3f(center.x - hSize.x, center.y + hSize.y, center.z - hSize.z);
 
     // Top
-    m.AutoQuadFace(Vertex(v5, Vector2(0.0f, 0.0f), Vector3::Y),
-                   Vertex(v6, Vector2(1.0f, 0.0f), Vector3::Y),
-                   Vertex(v7, Vector2(1.0f, 1.0f), Vector3::Y),
-                   Vertex(v8, Vector2(0.0f, 1.0f), Vector3::Y));
+    m.AutoQuadFace(Vertex(v5, Vec2f(0.0f, 0.0f), VEC3F_Y),
+                   Vertex(v6, Vec2f(1.0f, 0.0f), VEC3F_Y),
+                   Vertex(v7, Vec2f(1.0f, 1.0f), VEC3F_Y),
+                   Vertex(v8, Vec2f(0.0f, 1.0f), VEC3F_Y));
     // Bottom
-    m.AutoQuadFace(Vertex(v4, Vector2(0.0f, 0.0f), -Vector3::Y),
-                   Vertex(v3, Vector2(1.0f, 0.0f), -Vector3::Y),
-                   Vertex(v2, Vector2(1.0f, 1.0f), -Vector3::Y),
-                   Vertex(v1, Vector2(0.0f, 1.0f), -Vector3::Y));
+    m.AutoQuadFace(Vertex(v4, Vec2f(0.0f, 0.0f), -VEC3F_Y),
+                   Vertex(v3, Vec2f(1.0f, 0.0f), -VEC3F_Y),
+                   Vertex(v2, Vec2f(1.0f, 1.0f), -VEC3F_Y),
+                   Vertex(v1, Vec2f(0.0f, 1.0f), -VEC3F_Y));
 
 
     // Left
-    m.AutoQuadFace(Vertex(v4, Vector2(0.0f, 0.0f), -Vector3::X),
-                   Vertex(v1, Vector2(1.0f, 0.0f), -Vector3::X),
-                   Vertex(v5, Vector2(1.0f, 1.0f), -Vector3::X),
-                   Vertex(v8, Vector2(0.0f, 1.0f), -Vector3::X));
+    m.AutoQuadFace(Vertex(v4, Vec2f(0.0f, 0.0f), -VEC3F_X),
+                   Vertex(v1, Vec2f(1.0f, 0.0f), -VEC3F_X),
+                   Vertex(v5, Vec2f(1.0f, 1.0f), -VEC3F_X),
+                   Vertex(v8, Vec2f(0.0f, 1.0f), -VEC3F_X));
     // Right
-    m.AutoQuadFace(Vertex(v2, Vector2(0.0f, 0.0f), Vector3::X),
-                   Vertex(v3, Vector2(1.0f, 0.0f), Vector3::X),
-                   Vertex(v7, Vector2(1.0f, 1.0f), Vector3::X),
-                   Vertex(v6, Vector2(0.0f, 1.0f), Vector3::X));
+    m.AutoQuadFace(Vertex(v2, Vec2f(0.0f, 0.0f), VEC3F_X),
+                   Vertex(v3, Vec2f(1.0f, 0.0f), VEC3F_X),
+                   Vertex(v7, Vec2f(1.0f, 1.0f), VEC3F_X),
+                   Vertex(v6, Vec2f(0.0f, 1.0f), VEC3F_X));
     
     // Front
-    m.AutoQuadFace(Vertex(v1, Vector2(0.0f, 0.0f), Vector3::Z),
-                   Vertex(v2, Vector2(1.0f, 0.0f), Vector3::Z),
-                   Vertex(v6, Vector2(1.0f, 1.0f), Vector3::Z),
-                   Vertex(v5, Vector2(0.0f, 1.0f), Vector3::Z));
+    m.AutoQuadFace(Vertex(v1, Vec2f(0.0f, 0.0f), VEC3F_Z),
+                   Vertex(v2, Vec2f(1.0f, 0.0f), VEC3F_Z),
+                   Vertex(v6, Vec2f(1.0f, 1.0f), VEC3F_Z),
+                   Vertex(v5, Vec2f(0.0f, 1.0f), VEC3F_Z));
     // Back
-    m.AutoQuadFace(Vertex(v3, Vector2(0.0f, 0.0f), -Vector3::Z),
-                   Vertex(v4, Vector2(1.0f, 0.0f), -Vector3::Z),
-                   Vertex(v8, Vector2(1.0f, 1.0f), -Vector3::Z),
-                   Vertex(v7, Vector2(0.0f, 1.0f), -Vector3::Z));
+    m.AutoQuadFace(Vertex(v3, Vec2f(0.0f, 0.0f), -VEC3F_Z),
+                   Vertex(v4, Vec2f(1.0f, 0.0f), -VEC3F_Z),
+                   Vertex(v8, Vec2f(1.0f, 1.0f), -VEC3F_Z),
+                   Vertex(v7, Vec2f(0.0f, 1.0f), -VEC3F_Z));
     
     return m;
 }
@@ -88,29 +88,29 @@ Mesh Cube::ToMesh () const {
 
 Mesh ICOSphere::ToMesh () const {
     Mesh m;
-    Vector3 points[12];
+    Vec3f points[12];
 
     float t = (1.0f + sqrt(5.0f)) * 0.5f;
 
-    points[0] = Vector3(-1.0f, t, 0);
-    points[1] = Vector3(1.0f, t, 0);
-    points[2] = Vector3(-1.0f, -t, 0);
-    points[3] = Vector3(1.0f, -t, 0);
+    points[0] = Vec3f(-1.0f, t, 0);
+    points[1] = Vec3f(1.0f, t, 0);
+    points[2] = Vec3f(-1.0f, -t, 0);
+    points[3] = Vec3f(1.0f, -t, 0);
     
-    points[4] = Vector3(0, -1, t);
-    points[5] = Vector3(0, 1, t);
-    points[6] = Vector3(0, -1, -t);
-    points[7] = Vector3(0, 1, -t);
+    points[4] = Vec3f(0, -1, t);
+    points[5] = Vec3f(0, 1, t);
+    points[6] = Vec3f(0, -1, -t);
+    points[7] = Vec3f(0, 1, -t);
     
-    points[8] = Vector3(t, 0, -1);
-    points[9] = Vector3(t, 0, 1);
-    points[10] = Vector3(-t, 0, -1);
-    points[11] = Vector3(-t, 0, 1);
+    points[8] = Vec3f(t, 0, -1);
+    points[9] = Vec3f(t, 0, 1);
+    points[10] = Vec3f(-t, 0, -1);
+    points[11] = Vec3f(-t, 0, 1);
 
     // TODO Figure out how to project a texture properly, for now: Planar.
     for (auto &p : points) {
         m.AddVertex(Vertex(p * hSize + center,
-                           Vector2(FMath::ToRatio(p.x, -1.0f, 1.0f),
+                           Vec2f(FMath::ToRatio(p.x, -1.0f, 1.0f),
                                    FMath::ToRatio(p.y, -1.0f, 1.0f)),
                            p.Normalize()));
     }

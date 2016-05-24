@@ -16,9 +16,9 @@ class ostream;
 
 namespace sge {
 
-std::ostream& operator<< (std::ostream &os, const Vector2 &vec);
-std::ostream& operator<< (std::ostream &os, const Vector3 &vec);
-std::ostream& operator<< (std::ostream &os, const Vector4 &vec);
+std::ostream& operator<< (std::ostream &os, const Vec2f &vec);
+std::ostream& operator<< (std::ostream &os, const Vec3f &vec);
+std::ostream& operator<< (std::ostream &os, const Vec4f &vec);
 
 std::ostream& operator<< (std::ostream &os, const Quaternion &quat);
 

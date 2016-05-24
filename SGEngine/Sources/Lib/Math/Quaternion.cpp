@@ -7,7 +7,7 @@ namespace sge {
 
 const Quaternion Quaternion::IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
 
-Quaternion Quaternion::AxisAngle (const Vector3 &axis, const float angle) {
+Quaternion Quaternion::AxisAngle (const Vec3f &axis, const float angle) {
     float sinHalf, cosHalf;
     FMath::SinCos(angle * 0.5f, sinHalf, cosHalf);
 
@@ -15,10 +15,10 @@ Quaternion Quaternion::AxisAngle (const Vector3 &axis, const float angle) {
                       cosHalf);
 }
 
-Vector3 Quaternion::Rotate (const Vector3 &vec) const {
+Vec3f Quaternion::Rotate (const Vec3f &vec) const {
     Quaternion result = (*this) * vec * Conjugate();
 
-    return Vector3(result.i, result.j, result.k);
+    return Vec3f(result.i, result.j, result.k);
 }
 
 } /* namespace sge */

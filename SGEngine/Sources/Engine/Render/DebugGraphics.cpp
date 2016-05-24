@@ -45,13 +45,13 @@ void DebugGraphics::Render () {
 // --------------------------------------------------------------------------
 //   DebugGraphics Draw Commands
 
-void DebugGraphics::AddPoint (const Vector3 &p, const float radius, const Color &col) {
-    AddEdge(Vector3(p.x - radius, p.y, p.z), Vector3(p.x + radius, p.y, p.z), col);
-    AddEdge(Vector3(p.x, p.y - radius, p.z), Vector3(p.x, p.y + radius, p.z), col);
-    AddEdge(Vector3(p.x, p.y, p.z - radius), Vector3(p.x, p.y, p.z + radius), col);
+void DebugGraphics::AddPoint (const Vec3f &p, const float radius, const Color &col) {
+    AddEdge(Vec3f(p.x - radius, p.y, p.z), Vec3f(p.x + radius, p.y, p.z), col);
+    AddEdge(Vec3f(p.x, p.y - radius, p.z), Vec3f(p.x, p.y + radius, p.z), col);
+    AddEdge(Vec3f(p.x, p.y, p.z - radius), Vec3f(p.x, p.y, p.z + radius), col);
 }
 
-void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius, const Color &col) {
+void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius, const Color &col) {
     float limit = TO_RADIANS(360.0f);
     float step = limit / SPHERE_INCREMENT;
     float x_ = radius * std::cos(0.0f);
@@ -61,42 +61,42 @@ void DebugGraphics::AddSphere (const Vector3 &p_center, const float radius, cons
         float x = radius * std::cos(theta);
         float y = radius * std::sin(theta);
 
-        AddEdge(p_center + Vector3(x_, 0.0f, y_), p_center + Vector3(x, 0.0f, y), col);
-        AddEdge(p_center + Vector3(x_, y_, 0.0f), p_center + Vector3(x, y, 0.0f), col);
-        AddEdge(p_center + Vector3(0.0f, x_, y_), p_center + Vector3(0.0f, x, y), col);
+        AddEdge(p_center + Vec3f(x_, 0.0f, y_), p_center + Vec3f(x, 0.0f, y), col);
+        AddEdge(p_center + Vec3f(x_, y_, 0.0f), p_center + Vec3f(x, y, 0.0f), col);
+        AddEdge(p_center + Vec3f(0.0f, x_, y_), p_center + Vec3f(0.0f, x, y), col);
 
         x_ = x;
         y_ = y;
     }
 }
 
-void DebugGraphics::AddGrid (const Vector3 &p_center, const u32 size, const Color &col) {
+void DebugGraphics::AddGrid (const Vec3f &p_center, const u32 size, const Color &col) {
     float hSize = size * 0.5f;
     s32 xMin = static_cast<s32>(p_center.x) - hSize;
     s32 zMin = static_cast<s32>(p_center.z) - hSize;
 
     for (u32 i = 0; i <= size; ++i) {
         s32 offset = static_cast<s32>(i);
-        AddEdge(Vector3(xMin, p_center.y, zMin + offset), Vector3(xMin + size, p_center.y, zMin + offset), col);
-        AddEdge(Vector3(xMin + offset, p_center.y, zMin), Vector3(xMin + offset, p_center.y, zMin + size), col);
+        AddEdge(Vec3f(xMin, p_center.y, zMin + offset), Vec3f(xMin + size, p_center.y, zMin + offset), col);
+        AddEdge(Vec3f(xMin + offset, p_center.y, zMin), Vec3f(xMin + offset, p_center.y, zMin + size), col);
     }
 }
 
-void DebugGraphics::AddBox (const Vector3 &p_min, const Vector3 &p_max, const Color &col) {
-    AddEdge(Vector3(p_min.x, p_min.y, p_min.z), Vector3(p_max.x, p_min.y, p_min.z), col);
-    AddEdge(Vector3(p_min.x, p_min.y, p_max.z), Vector3(p_max.x, p_min.y, p_max.z), col);
-    AddEdge(Vector3(p_min.x, p_min.y, p_min.z), Vector3(p_min.x, p_min.y, p_max.z), col);
-    AddEdge(Vector3(p_max.x, p_min.y, p_min.z), Vector3(p_max.x, p_min.y, p_max.z), col);
+void DebugGraphics::AddBox (const Vec3f &p_min, const Vec3f &p_max, const Color &col) {
+    AddEdge(Vec3f(p_min.x, p_min.y, p_min.z), Vec3f(p_max.x, p_min.y, p_min.z), col);
+    AddEdge(Vec3f(p_min.x, p_min.y, p_max.z), Vec3f(p_max.x, p_min.y, p_max.z), col);
+    AddEdge(Vec3f(p_min.x, p_min.y, p_min.z), Vec3f(p_min.x, p_min.y, p_max.z), col);
+    AddEdge(Vec3f(p_max.x, p_min.y, p_min.z), Vec3f(p_max.x, p_min.y, p_max.z), col);
 
-    AddEdge(Vector3(p_min.x, p_max.y, p_min.z), Vector3(p_max.x, p_max.y, p_min.z), col);
-    AddEdge(Vector3(p_min.x, p_max.y, p_max.z), Vector3(p_max.x, p_max.y, p_max.z), col);
-    AddEdge(Vector3(p_min.x, p_max.y, p_min.z), Vector3(p_min.x, p_max.y, p_max.z), col);
-    AddEdge(Vector3(p_max.x, p_max.y, p_min.z), Vector3(p_max.x, p_max.y, p_max.z), col);
+    AddEdge(Vec3f(p_min.x, p_max.y, p_min.z), Vec3f(p_max.x, p_max.y, p_min.z), col);
+    AddEdge(Vec3f(p_min.x, p_max.y, p_max.z), Vec3f(p_max.x, p_max.y, p_max.z), col);
+    AddEdge(Vec3f(p_min.x, p_max.y, p_min.z), Vec3f(p_min.x, p_max.y, p_max.z), col);
+    AddEdge(Vec3f(p_max.x, p_max.y, p_min.z), Vec3f(p_max.x, p_max.y, p_max.z), col);
 
-    AddEdge(Vector3(p_min.x, p_min.y, p_min.z), Vector3(p_min.x, p_max.y, p_min.z), col);
-    AddEdge(Vector3(p_min.x, p_min.y, p_max.z), Vector3(p_min.x, p_max.y, p_max.z), col);
-    AddEdge(Vector3(p_max.x, p_min.y, p_min.z), Vector3(p_max.x, p_max.y, p_min.z), col);
-    AddEdge(Vector3(p_max.x, p_min.y, p_max.z), Vector3(p_max.x, p_max.y, p_max.z), col);
+    AddEdge(Vec3f(p_min.x, p_min.y, p_min.z), Vec3f(p_min.x, p_max.y, p_min.z), col);
+    AddEdge(Vec3f(p_min.x, p_min.y, p_max.z), Vec3f(p_min.x, p_max.y, p_max.z), col);
+    AddEdge(Vec3f(p_max.x, p_min.y, p_min.z), Vec3f(p_max.x, p_max.y, p_min.z), col);
+    AddEdge(Vec3f(p_max.x, p_min.y, p_max.z), Vec3f(p_max.x, p_max.y, p_max.z), col);
 }
 
 } /* namespace sge */

@@ -6,8 +6,8 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
- * @brief Defines a low level Vector3 type.
+ *
+ * @brief Defines a low level Vec3 type.
  */
 #ifndef __SGENGINE_VECTOR3_H_
 #define __SGENGINE_VECTOR3_H_
@@ -19,41 +19,29 @@ namespace sge {
 /**
  * 3D Vector. Implements math operations for 3D geometry vectors.
  */
-class Vector3 {
+template <typename T>
+class Vec3_T {
 public:
-    /** Vector3 X component. */
-    float x;
-
-    /** Vector3 Y component. */
-    float y;
-
-    /** Vector3 Z component. */
-    float z;
+    /** Vec3 components. */
+    T x, y, z;
 
 public:
-    static const Vector3 ZERO;
-    static const Vector3 ONE;
-    static const Vector3 X;
-    static const Vector3 Y;
-    static const Vector3 Z;
-
-public:
-    /** Construct a default Vector3 at origin. */
-    Vector3 () : x(0.0f), y(0.0f), z(0.0f) { }
+    /** Construct a default Vec3_T at origin. */
+             Vec3_T () : x(0), y(0), z(0) { }
 
     /** Fill Constructor. */
-    Vector3 (const float f) : x(f), y(f), z(f) { }
+    explicit Vec3_T (const T f) : x(f), y(f), z(f) { }
 
-    /** Construct a Vector3 using x, y, z coordinates. */
-    Vector3 (const float xx, const float yy, const float zz)
+    /** Construct a Vec3_T using x, y, z coordinates. */
+    explicit Vec3_T (const T xx, const float yy, const float zz)
         : x(xx), y(yy), z(zz) { }
 
     /** Value access using an index. */
-    float operator[] (const u32 index) const;
+    T operator[] (const u32 index) const;
 
     /** Reference access using an index. */
-    float &operator[] (const u32 index);
-    
+    T &operator[] (const u32 index);
+
     /**
      * Set the values of x, y, and z.
      * Destructive.
@@ -62,7 +50,7 @@ public:
      * @param yy The Y component
      * @param zz The Z component
      */
-    void Set (const float xx, const float yy, const float zz);
+    void Set (const T xx, const float yy, const float zz);
 
     /**
      * Set the values of x, y, and z to 0.0f.
@@ -71,177 +59,178 @@ public:
     void Zero ();
 
     /**
-     * Get the squared length of this Vector3.
+     * Get the squared length of this Vec3_T.
      * @return The Vector's Length squared
      */
-    float LengthSqr () const;
+    T LengthSqr () const;
 
     /**
-     * Get the length of this Vector3.
+     * Get the length of this Vec3_T.
      * @return The Vector's length
      */
-    float Length () const;
+    T Length () const;
 
     /**
-     * Set the length of a Vector3, maintaining direction. If the
+     * Set the length of a Vec3_T, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess.
      * @param length The desired new length
-     * @return New Vector3 with adjusted length
+     * @return New Vec3_T with adjusted length
      */
-    Vector3 SetLength (const float length) const;
-    
+    Vec3_T SetLength (const T length) const;
+
     /**
-     * Set the length of this Vector3, maintaining direction. If the
+     * Set the length of this Vec3_T, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess.
      * Destructive.
      * @param length The desired new length
      */
-    void SetLengthSelf (const float length);
+    void SetLengthSelf (const T length);
 
     /**
-     * Set the length of a Vector3 to 1.0f, maintaining direction. If
+     * Set the length of a Vec3_T to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess.
-     * @return New normalized Vector3
+     * @return New normalized Vec3_T
      */
-    Vector3 Normalize () const;
-    
+    Vec3_T Normalize () const;
+
     /**
-     * Set the length of this Vector3 to 1.0f, maintaining direction. If
+     * Set the length of this Vec3_T to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess.
      * Destructive.
      */
     void NormalizeSelf ();
 
     /**
-     * Return a new Vector3 which has been truncated if its length
+     * Return a new Vec3_T which has been truncated if its length
      * exceeds the limit.
-     * @param max Maximum length of Vector3
-     * @return New clamped Vector3
+     * @param max Maximum length of Vec3_T
+     * @return New clamped Vec3_T
      */
-    Vector3 ClampLength (const float max) const;
+    Vec3_T ClampLength (const T max) const;
 
     /**
-     * Return a new Vector3 which has been truncated if its length
+     * Return a new Vec3_T which has been truncated if its length
      * exceeds the limit.
-     * @param min Minimum length of Vector3
-     * @param max Maximum length of Vector3
-     * @return New clamped Vector3
+     * @param min Minimum length of Vec3_T
+     * @param max Maximum length of Vec3_T
+     * @return New clamped Vec3_T
      */
-    Vector3 ClampLength (const float min, const float max) const;
-    
-    /**
-     * Truncate this Vector3 if its length exceeds the limit.
-     * Destructive.
-     * @param max Maximum length of Vector3
-     */
-    void ClampLengthSelf (const float max);
-    
-    /**
-     * Truncate this Vector3 if its length exceeds the limit.
-     * Destructive.
-     * @param min Minimum length of Vector3
-     * @param max Maximum length of Vector3
-     */
-    void ClampLengthSelf (const float min, const float max);
+    Vec3_T ClampLength (const T min, const float max) const;
 
     /**
-     * Clamp Vector3 within minimum and maximum bounds, given by other
-     * Vector3 values.
+     * Truncate this Vec3_T if its length exceeds the limit.
      * Destructive.
-     * @param min Vector3 minimum bound
-     * @param max Vector3 maximum bound
+     * @param max Maximum length of Vec3_T
      */
-    void Clamp (const Vector3 &min, const Vector3 &max);
+    void ClampLengthSelf (const T max);
 
     /**
-     * Return a copy of this Vector3 with the components negated.
+     * Truncate this Vec3_T if its length exceeds the limit.
+     * Destructive.
+     * @param min Minimum length of Vec3_T
+     * @param max Maximum length of Vec3_T
      */
-    Vector3 operator- () const;
+    void ClampLengthSelf (const T min, const float max);
 
     /**
-     * Return a scaled copy of this Vector3.
+     * Clamp Vec3_T within minimum and maximum bounds, given by other
+     * Vec3_T values.
+     * Destructive.
+     * @param min Vec3_T minimum bound
+     * @param max Vec3_T maximum bound
+     */
+    void Clamp (const Vec3_T &min, const Vec3_T &max);
+
+    /**
+     * Return a copy of this Vec3_T with the components negated.
+     */
+    Vec3_T operator- () const;
+
+    /**
+     * Return a scaled copy of this Vec3_T.
      * @param a Scale factor
      */
-    Vector3 operator* (const float a) const;
+    Vec3_T operator* (const T a) const;
 
     /**
-     * Return a scaled copy of a Vector3, reversed operands.
+     * Return a scaled copy of a Vec3_T, reversed operands.
      * @param a Scale Factor
-     * @param rhs Vector3 to be scaled
+     * @param rhs Vec3_T to be scaled
      */
-    friend Vector3 operator* (const float a, const Vector3 &rhs);
+    template <typename U>
+    friend Vec3_T<U> operator* (const T a, const Vec3_T<U> &rhs);
 
     /**
-     * Multiply this Vector3 by another Vector3 componentwise.
-     * @return Result of Vector3 multiplication
+     * Multiply this Vec3_T by another Vec3_T componentwise.
+     * @return Result of Vec3_T multiplication
      */
-    Vector3 operator* (const Vector3 &rhs) const;
+    Vec3_T operator* (const Vec3_T &rhs) const;
 
     /**
-     * Add this Vector3 to another Vector3.
-     * @return Result of Vector3 addition
+     * Add this Vec3_T to another Vec3_T.
+     * @return Result of Vec3_T addition
      */
-    Vector3 operator+ (const Vector3 &rhs) const;
+    Vec3_T operator+ (const Vec3_T &rhs) const;
 
     /**
-     * Subtract another Vector3 from this Vector3.
-     * @return Result of Vector3 subtraction
+     * Subtract another Vec3_T from this Vec3_T.
+     * @return Result of Vec3_T subtraction
      */
-    Vector3 operator- (const Vector3 &rhs) const;
+    Vec3_T operator- (const Vec3_T &rhs) const;
 
     /**
-     * Divide this Vector3 by a scalar value.
+     * Divide this Vec3_T by a scalar value.
      * @param a Divisor
-     * @return Result of Vector3 division
+     * @return Result of Vec3_T division
      */
-    Vector3 operator/ (const float a) const;
+    Vec3_T operator/ (const T a) const;
 
     /**
-     * Multiply and mutate this Vector3 with a scalar value.
+     * Multiply and mutate this Vec3_T with a scalar value.
      * Destructive.
      * @param Scale Factor
      */
-    Vector3 &operator*= (const float a);
+    Vec3_T &operator*= (const T a);
 
     /**
-     * Multiply and mutate this Vector3 componentwise with another Vector3.
+     * Multiply and mutate this Vec3_T componentwise with another Vec3_T.
      * Destructive.
      */
-    Vector3 &operator*= (const Vector3 &rhs);
+    Vec3_T &operator*= (const Vec3_T &rhs);
 
     /**
-     * Add and mutate this Vector3 with another Vector3.
+     * Add and mutate this Vec3_T with another Vec3_T.
      * Destructive.
      */
-    Vector3 &operator+= (const Vector3 &rhs);
+    Vec3_T &operator+= (const Vec3_T &rhs);
 
     /**
-     * Subtract and mutate this Vector3 with another Vector3.
+     * Subtract and mutate this Vec3_T with another Vec3_T.
      * Destructive.
      */
-    Vector3 &operator-= (const Vector3 &rhs);
+    Vec3_T &operator-= (const Vec3_T &rhs);
 
     /**
-     * Divide and mutate this Vector3 by a scalar value.
+     * Divide and mutate this Vec3_T by a scalar value.
      * Destructive.
      */
-    Vector3 &operator/= (const float a);
+    Vec3_T &operator/= (const T a);
 
     /**
-     * Divide and mutate this Vector3 componentwise with another Vector3.
+     * Divide and mutate this Vec3_T componentwise with another Vec3_T.
      * Destructive.
      */
-    Vector3 &operator/= (const Vector3 &rhs);
+    Vec3_T &operator/= (const Vec3_T &rhs);
 
     /**
-     * Return the dot product of this Vector3 and another Vector3.
-     * @return Vector3 Dot Product
+     * Return the dot product of this Vec3_T and another Vec3_T.
+     * @return Vec3_T Dot Product
      */
-    float Dot (const Vector3 &rhs) const;
+    T Dot (const Vec3_T &rhs) const;
 
     /**
-     * Return the cross product of this Vector3 and another Vector3. The
-     * resulting Vector3 is perpendicular to A and B.
+     * Return the cross product of this Vec3_T and another Vec3_T. The
+     * resulting Vec3_T is perpendicular to A and B.
      *
      *    AxB
      *     ^
@@ -253,216 +242,247 @@ public:
      *     v
      *    BxA
      *
-     * @return Vector2 Cross Product
+     * @return Vec2f Cross Product
      */
-    Vector3 Cross (const Vector3 &rhs) const;
+    Vec3_T Cross (const Vec3_T &rhs) const;
 
     /**
-     * Return the mirror of this Vector3 about an arbitrary axis.
+     * Return the mirror of this Vec3_T about an arbitrary axis.
      * @param axis The axis of symmetry
-     * @return Result of mirroring this Vector3 about axis
+     * @return Result of mirroring this Vec3_T about axis
      */
-    Vector3 Mirror (const Vector3 &axis) const;
+    Vec3_T Mirror (const Vec3_T &axis) const;
 
     /**
-     * Return the result of rotation this Vector3 by an angle around an
+     * Return the result of rotation this Vec3_T by an angle around an
      * axis of rotation.
      * @param angle Angle of rotation in degrees
-     * @param axis Axis of rotation as a Unit Vector3
-     * @return New rotated Vector3
+     * @param axis Axis of rotation as a Unit Vec3_T
+     * @return New rotated Vec3_T
      */
-    Vector3 Rotate (const float angle, const Vector3 &axis) const;
+    Vec3_T Rotate (const T angle, const Vec3_T &axis) const;
 
     /**
-     * Return the result of rotation this Vector3 by an angle around an
+     * Return the result of rotation this Vec3_T by an angle around an
      * axis of rotation.
      * Destructive.
      * @param angle Angle of rotation in degrees
-     * @param axis Axis of rotation as a Unit Vector3
+     * @param axis Axis of rotation as a Unit Vec3_T
      */
-    void RotateSelf (const float angle, const Vector3 &axis);
+    void RotateSelf (const T angle, const Vec3_T &axis);
 
     /** Swizzling */
-    Vector2 xy () const;
+    Vec2_T<T> xy () const;
 
-    Vector2 xz () const;
+    Vec2_T<T> xz () const;
 
-    Vector2 yz () const;
+    Vec2_T<T> yz () const;
 
     /**
-     * Compare this Vector3 against another Vector3 exactly.
-     * @return true if this Vector3 exactly equals the other, false otherwise
+     * Compare this Vec3_T against another Vec3_T exactly.
+     * @return true if this Vec3_T exactly equals the other, false otherwise
      */
-    bool Compare (const Vector3 &other) const;
+    bool Compare (const Vec3_T &other) const;
 
     /**
-     * Compare this Vector3 against another Vector3 within a given tolerance.
-     * @param threshold Tolerance within which Vector3 are considered equal
-     * @return true if this Vector3 equals the other within given
+     * Compare this Vec3_T against another Vec3_T within a given tolerance.
+     * @param threshold Tolerance within which Vec3_T are considered equal
+     * @return true if this Vec3_T equals the other within given
      *         tolerance, false otherwise
      */
-    bool Compare (const Vector3 &other, const float threshold) const;
+    bool Compare (const Vec3_T &other, const T threshold) const;
 
     /**
-     * Compare this Vector3 against another Vector3 exactly.
-     * @return true if this Vector3 exactly equals the other, false otherwise
+     * Compare this Vec3_T against another Vec3_T exactly.
+     * @return true if this Vec3_T exactly equals the other, false otherwise
      */
-    bool operator== (const Vector3 &other) const;
+    bool operator== (const Vec3_T &other) const;
 
     /**
-     * Compare this Vector3 against another Vector3 exactly.
-     * @return true if this Vector3 does not equal the other, false otherwise
+     * Compare this Vec3_T against another Vec3_T exactly.
+     * @return true if this Vec3_T does not equal the other, false otherwise
      */
-    bool operator!= (const Vector3 &other) const;
+    bool operator!= (const Vec3_T &other) const;
 };
 
+// Common Vec3 Types.
+typedef Vec3_T<float> Vec3f;
+
+extern const Vec3f VEC3F_ZERO;
+extern const Vec3f VEC3F_ONE;
+extern const Vec3f VEC3F_X;
+extern const Vec3f VEC3F_Y;
+extern const Vec3f VEC3F_Z;
 // --------------------------------------------------------------------------
 
-inline float Vector3::operator[] (const u32 index) const {
+template <typename T>
+INLINE T Vec3_T<T>::operator[] (const u32 index) const {
     return (&x)[index];
 }
 
-inline float &Vector3::operator[] (const u32 index) {
+template <typename T>
+INLINE T &Vec3_T<T>::operator[] (const u32 index) {
     return (&x)[index];
 }
 
-inline void Vector3::Set (const float xx, const float yy, const float zz) {
+template <typename T>
+INLINE void Vec3_T<T>::Set (const T xx, const float yy, const float zz) {
     x = xx;
     y = yy;
     z = zz;
 }
 
-inline void Vector3::Zero () {
+template <typename T>
+INLINE void Vec3_T<T>::Zero () {
     x = 0.0f;
     y = 0.0f;
     z = 0.0f;
 }
 
 //==========================
-// Vector3 Length Operators
+// Vec3_T<T> Length Operators
 //==========================
 
-inline float Vector3::LengthSqr () const {
+template <typename T>
+INLINE T Vec3_T<T>::LengthSqr () const {
     return x * x + y * y + z * z;
 }
 
-inline float Vector3::Length () const {
+template <typename T>
+INLINE T Vec3_T<T>::Length () const {
     return sqrt(x * x + y * y + z * z);
 }
 
-inline Vector3 Vector3::SetLength (float length) const {
-    float currMag = Length();
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::SetLength (T length) const {
+    T currMag = Length();
     if (currMag == 0.0f) {
-        return Vector3(*this);
+        return Vec3_T<T>(*this);
     } else {
         return *this * (length / currMag);
     }
 }
 
-inline void Vector3::SetLengthSelf (const float length) {
-    float currMag = Length();
+template <typename T>
+INLINE void Vec3_T<T>::SetLengthSelf (const T length) {
+    T currMag = Length();
     if (currMag != 0.0f) {
         *this *= (length / currMag);
     }
 
 }
 
-inline Vector3 Vector3::Normalize () const {
-    float currMag = Length();
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::Normalize () const {
+    T currMag = Length();
     if (currMag == 0.0f) {
-        return Vector3(*this);
+        return Vec3_T<T>(*this);
     } else {
         return *this / currMag;
     }
 }
 
-inline void Vector3::NormalizeSelf () {
-    float currMag = Length();
+template <typename T>
+INLINE void Vec3_T<T>::NormalizeSelf () {
+    T currMag = Length();
     if (currMag != 0.0f) {
         *this /= currMag;
     }
 }
 
-inline Vector3 Vector3::ClampLength (const float max) const {
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::ClampLength (const T max) const {
     if (LengthSqr() > (max * max)) {
         return SetLength(max);
     }
-    
-    return Vector3(*this);
+
+    return Vec3_T<T>(*this);
 }
 
-inline Vector3 Vector3::ClampLength (const float min, const float max) const {
-    float ls = LengthSqr();
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::ClampLength (const T min, const float max) const {
+    T ls = LengthSqr();
 
     if (ls < (min * min)) {
         return SetLength(min);
     }
-    
+
     if (ls > (max * max)) {
         return SetLength(max);
     }
-    
-    return Vector3(*this);
+
+    return Vec3_T<T>(*this);
 }
 
-inline void Vector3::ClampLengthSelf (const float max) {
+template <typename T>
+INLINE void Vec3_T<T>::ClampLengthSelf (const T max) {
     if (LengthSqr() > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-inline void Vector3::ClampLengthSelf (const float min, const float max) {
-    float ls = LengthSqr();
+template <typename T>
+INLINE void Vec3_T<T>::ClampLengthSelf (const T min, const float max) {
+    T ls = LengthSqr();
 
     if (ls < (min * min)) {
         SetLengthSelf(min);
     }
-    
+
     if (ls > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-inline void Vector3::Clamp (const Vector3 &min, const Vector3 &max) {
+template <typename T>
+INLINE void Vec3_T<T>::Clamp (const Vec3_T<T> &min, const Vec3_T<T> &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
     z = FMath::ClampFloat(z, min.z, max.z);
 }
 
 //==========================
-// Vector3 Operators
+// Vec3_T<T> Operators
 //==========================
 
-inline Vector3 Vector3::operator- () const {
-    return Vector3(-x, -y, -z);
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::operator- () const {
+    return Vec3_T<T>(-x, -y, -z);
 }
 
-inline Vector3 Vector3::operator* (const float rhs) const {
-    return Vector3(x * rhs, y * rhs, z * rhs);
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::operator* (const T rhs) const {
+    return Vec3_T<T>(x * rhs, y * rhs, z * rhs);
 }
 
-inline Vector3 operator* (const float a, const Vector3 &rhs) {
-    return Vector3(a * rhs.x, a * rhs.y, a * rhs.z);
+template <typename T>
+INLINE Vec3_T<T> operator* (const T a, const Vec3_T<T> &rhs) {
+    return Vec3_T<T>(a * rhs.x, a * rhs.y, a * rhs.z);
 }
 
-inline Vector3 Vector3::operator* (const Vector3 &rhs) const {
-    return Vector3(x * rhs.x, y * rhs.y, z * rhs.z);
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::operator* (const Vec3_T<T> &rhs) const {
+    return Vec3_T<T>(x * rhs.x, y * rhs.y, z * rhs.z);
 }
 
-inline Vector3 Vector3::operator+ (const Vector3 &rhs) const {
-    return Vector3(x + rhs.x, y + rhs.y, z + rhs.z);
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::operator+ (const Vec3_T<T> &rhs) const {
+    return Vec3_T<T>(x + rhs.x, y + rhs.y, z + rhs.z);
 }
 
-inline Vector3 Vector3::operator- (const Vector3 &rhs) const {
-    return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::operator- (const Vec3_T<T> &rhs) const {
+    return Vec3_T<T>(x - rhs.x, y - rhs.y, z - rhs.z);
 }
 
-inline Vector3 Vector3::operator/ (const float a) const {
-    float inva = 1.0f / a;
-    return Vector3(x * inva, y * inva, z * inva);
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::operator/ (const T a) const {
+    T inva = 1.0f / a;
+    return Vec3_T<T>(x * inva, y * inva, z * inva);
 }
 
-inline Vector3 &Vector3::operator*= (const float a) {
+template <typename T>
+INLINE Vec3_T<T> &Vec3_T<T>::operator*= (const T a) {
     x *= a;
     y *= a;
     z *= a;
@@ -470,7 +490,8 @@ inline Vector3 &Vector3::operator*= (const float a) {
     return *this;
 }
 
-inline Vector3 &Vector3::operator*= (const Vector3 &rhs) {
+template <typename T>
+INLINE Vec3_T<T> &Vec3_T<T>::operator*= (const Vec3_T<T> &rhs) {
     x *= rhs.x;
     y *= rhs.y;
     z *= rhs.z;
@@ -478,7 +499,8 @@ inline Vector3 &Vector3::operator*= (const Vector3 &rhs) {
     return *this;
 }
 
-inline Vector3 &Vector3::operator+= (const Vector3 &rhs) {
+template <typename T>
+INLINE Vec3_T<T> &Vec3_T<T>::operator+= (const Vec3_T<T> &rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -486,7 +508,8 @@ inline Vector3 &Vector3::operator+= (const Vector3 &rhs) {
     return *this;
 }
 
-inline Vector3 &Vector3::operator-= (const Vector3 &rhs) {
+template <typename T>
+INLINE Vec3_T<T> &Vec3_T<T>::operator-= (const Vec3_T<T> &rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -494,8 +517,9 @@ inline Vector3 &Vector3::operator-= (const Vector3 &rhs) {
     return *this;
 }
 
-inline Vector3 &Vector3::operator/= (const float a) {
-    float inva = 1.0f / a;
+template <typename T>
+INLINE Vec3_T<T> &Vec3_T<T>::operator/= (const T a) {
+    T inva = 1.0f / a;
     x *= inva;
     y *= inva;
     z *= inva;
@@ -503,7 +527,8 @@ inline Vector3 &Vector3::operator/= (const float a) {
     return *this;
 }
 
-inline Vector3 &Vector3::operator/= (const Vector3 &rhs) {
+template <typename T>
+INLINE Vec3_T<T> &Vec3_T<T>::operator/= (const Vec3_T<T> &rhs) {
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -512,42 +537,50 @@ inline Vector3 &Vector3::operator/= (const Vector3 &rhs) {
 }
 
 // Dot product.
-inline float Vector3::Dot (const Vector3 &rhs) const {
+template <typename T>
+INLINE T Vec3_T<T>::Dot (const Vec3_T<T> &rhs) const {
     return x * rhs.x + y * rhs.y + z * rhs.z;
 }
 
-// Vector3 Cross Product.
-inline Vector3 Vector3::Cross (const Vector3 &rhs) const {
-    return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
+// Vec3_T<T> Cross Product.
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::Cross (const Vec3_T<T> &rhs) const {
+    return Vec3_T<T>(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
 }
 
-inline Vector3 Vector3::Mirror (const Vector3 &axis) const {
+template <typename T>
+INLINE Vec3_T<T> Vec3_T<T>::Mirror (const Vec3_T<T> &axis) const {
     return 2.0f * this->Dot(axis) * axis - *this;
 }
 
-inline Vector2 Vector3::xy () const {
-    return Vector2(x, y);
+template <typename T>
+INLINE Vec2_T<T> Vec3_T<T>::xy () const {
+    return Vec2f(x, y);
 }
 
-inline Vector2 Vector3::xz () const {
-    return Vector2(x, z);
+template <typename T>
+INLINE Vec2_T<T> Vec3_T<T>::xz () const {
+    return Vec2f(x, z);
 }
 
-inline Vector2 Vector3::yz () const {
-    return Vector2(y, z);
+template <typename T>
+INLINE Vec2_T<T> Vec3_T<T>::yz () const {
+    return Vec2f(y, z);
 }
 
 //==========================
-// Vector3 Comparison
+// Vec3_T<T> Comparison
 //==========================
 
 // This comparison may be inaccurate, prefer Compare(val, threshold)
 // where possible.
-inline bool Vector3::Compare (const Vector3 &other) const {
+template <typename T>
+INLINE bool Vec3_T<T>::Compare (const Vec3_T<T> &other) const {
     return x == other.x && y == other.y && z == other.z;
 }
 
-inline bool Vector3::Compare (const Vector3 &other, const float threshold) const {
+template <typename T>
+INLINE bool Vec3_T<T>::Compare (const Vec3_T<T> &other, const T threshold) const {
     if (fabs(x - other.x) > threshold)
         return false;
     if (fabs(y - other.y) > threshold)
@@ -558,11 +591,13 @@ inline bool Vector3::Compare (const Vector3 &other, const float threshold) const
     return true;
 }
 
-inline bool Vector3::operator== (const Vector3 &other) const {
+template <typename T>
+INLINE bool Vec3_T<T>::operator== (const Vec3_T<T> &other) const {
     return Compare(other);
 }
 
-inline bool Vector3::operator!= (const Vector3 &other) const {
+template <typename T>
+INLINE bool Vec3_T<T>::operator!= (const Vec3_T<T> &other) const {
     return !Compare(other);
 }
 

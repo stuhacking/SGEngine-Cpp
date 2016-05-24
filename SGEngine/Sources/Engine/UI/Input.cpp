@@ -28,8 +28,8 @@ static std::unordered_map<u32, bool> mousePressed;
 // Cache mouse positions so we can query mouse delta
 // multiple times per update.
 static bool mouseLocked;
-static Vector2 mousePos;
-static Vector2 mouseDelta;
+static Vec2f mousePos;
+static Vec2f mouseDelta;
 
 // Other signalled Events caught. These should be flagged and
 // handled by the caller.
@@ -136,11 +136,11 @@ bool Input::MouseLocked () {
     return mouseLocked;
 }
 
-Vector2 Input::GetMousePosition () {
+Vec2f Input::GetMousePosition () {
     return mousePos;
 }
 
-Vector2 Input::GetMouseDelta () {
+Vec2f Input::GetMouseDelta () {
     return mouseDelta;
 }
 

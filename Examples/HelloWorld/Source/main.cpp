@@ -48,7 +48,8 @@ int main (int argc, char *argv[]) {
             }
             gameClock.SetScale(clockSpeed);
         }
-        std::cout << gameClock << "\n";
+
+        DEBUG( std::cout << gameClock << "\n"; );
 
         game->Input();
         game->Update(gameClock.DeltaSeconds());

@@ -49,11 +49,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline void Mesh::AddVertex (const Vertex &v) {
+INLINE void Mesh::AddVertex (const Vertex &v) {
     vertices.push_back(v);
 }
 
-inline void Mesh::AddFace (const u32 a, const u32 b, const u32 c) {
+INLINE void Mesh::AddFace (const u32 a, const u32 b, const u32 c) {
     indices.push_back(a);
     indices.push_back(b);
     indices.push_back(c);
@@ -62,7 +62,7 @@ inline void Mesh::AddFace (const u32 a, const u32 b, const u32 c) {
 //  v3---v2
 //   | /  
 //  v1
-inline void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
+INLINE void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
                                const Vertex &v3) {
     u32 size = VertCount();
     
@@ -76,7 +76,7 @@ inline void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
 //  v4---v3
 //   |   |
 //  v1---v2
-inline void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
+INLINE void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
                                 const Vertex &v3, const Vertex &v4) {
     u32 size = VertCount();
     
@@ -89,15 +89,15 @@ inline void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
     AddFace(size, size + 1, size + 2);
 }
 
-inline u32 Mesh::VertCount () const {
+INLINE u32 Mesh::VertCount () const {
     return vertices.size();
 }
 
-inline u32 Mesh::IndexCount () const {
+INLINE u32 Mesh::IndexCount () const {
     return indices.size();
 }
 
-inline u32 Mesh::FaceCount () const {
+INLINE u32 Mesh::FaceCount () const {
     return indices.size() / 3;
 }
 

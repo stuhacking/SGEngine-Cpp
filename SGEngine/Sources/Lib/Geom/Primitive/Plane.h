@@ -16,12 +16,12 @@ namespace sge {
 
 class Plane {
 public:
-    Plane (const Vector3 &p_center, const float p_size)
+    Plane (const Vec3f &p_center, const float p_size)
         : center(p_center) {
-        hSize = Vector2(p_size * 0.5f);
+        hSize = Vec2f(p_size * 0.5f);
     }
     
-    Plane (const Vector3 &p_center, const Vector2 &p_size)
+    Plane (const Vec3f &p_center, const Vec2f &p_size)
         : center(p_center) {
         hSize = p_size * 0.5f;
     }
@@ -29,8 +29,8 @@ public:
     Mesh ToMesh () const;
     
 private:
-    Vector3 center;
-    Vector2 hSize;
+    Vec3f center;
+    Vec2f hSize;
 };
     
 } /* namespace sge */

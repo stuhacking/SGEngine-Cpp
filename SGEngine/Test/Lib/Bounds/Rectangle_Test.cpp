@@ -5,7 +5,7 @@
 #include "Lib.h"
 
 using sge::FMath;
-using sge::Vector2;
+using sge::Vec2f;
 using sge::Rectangle;
 
 TEST (Rectangle_Test, Area) {
@@ -21,11 +21,11 @@ TEST (Rectangle_Test, Area) {
 TEST (Rectangle_Test, Center) {
     Rectangle r = Rectangle(0.0f, 0.0f, 3.0f, 5.0f);
 
-    EXPECT_EQ(Vector2(1.5f, 2.5f), r.Center());
+    EXPECT_EQ(Vec2f(1.5f, 2.5f), r.Center());
 
     r = Rectangle(2.0f, 3.0f, 6.0f, -1.0f);
 
-    EXPECT_EQ(Vector2(4.0f, 1.0f), r.Center());
+    EXPECT_EQ(Vec2f(4.0f, 1.0f), r.Center());
 }
 
 TEST (Rectangle_Test, Clear) {
@@ -34,7 +34,7 @@ TEST (Rectangle_Test, Clear) {
     r.Clear();
 
     EXPECT_FLOAT_EQ(FMath::INFTY, r.Area());
-    EXPECT_FALSE(r.Contains(Vector2::ZERO));
+    EXPECT_FALSE(r.Contains(sge::VEC2F_ZERO));
 }
 
 // Basic Tests
@@ -77,21 +77,21 @@ TEST (Rectangle_Test, Intersects) {
     EXPECT_TRUE(C.Intersects(G));
     EXPECT_TRUE(G.Intersects(H));
     EXPECT_TRUE(H.Intersects(G));
-    
+
     EXPECT_FALSE(E.Intersects(A));
     EXPECT_FALSE(A.Intersects(E));
 }
 
 TEST (Rectangle_Test, Contains_Point) {
-    EXPECT_TRUE(A.Contains(Vector2(2.0f, 2.0f)));
-    EXPECT_TRUE(C.Contains(Vector2(5.0f, 6.0f)));
-    
-    EXPECT_FALSE(E.Contains(Vector2(0.0f, 0.0f)));
+    EXPECT_TRUE(A.Contains(Vec2f(2.0f, 2.0f)));
+    EXPECT_TRUE(C.Contains(Vec2f(5.0f, 6.0f)));
+
+    EXPECT_FALSE(E.Contains(Vec2f(0.0f, 0.0f)));
 }
 
 TEST (Rectangle_Test, Contains_Rectangle) {
     EXPECT_TRUE(G.Contains(H));
-    
+
     EXPECT_FALSE(H.Contains(G));
     EXPECT_FALSE(A.Contains(B));
 }
@@ -105,4 +105,3 @@ TEST (Rectangle_Test, expand) {
     r1.ExpandSelf(2.5f);
     EXPECT_EQ(Rectangle(-1.5f, -0.5f, 6.5f, 6.5f), r1);
 }
-

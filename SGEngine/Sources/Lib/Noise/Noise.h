@@ -27,19 +27,19 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline s32 Noise::Hash (const s32 x, const s32 y) {
+INLINE s32 Noise::Hash (const s32 x, const s32 y) {
     s32 n = x + y * 57;
     n = (n << 13) ^ n;
     s32 nn = (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
     return nn;
 }
 
-inline float Noise::SimpleNoise (const s32 x, const s32 y) {
+INLINE float Noise::SimpleNoise (const s32 x, const s32 y) {
     s32 nn = Noise::Hash(x, y);
     return 1.0f - (static_cast<float>(nn) / 1073741824.0f);
 }
 
-inline float Noise::SmoothNoise (const float x, const float y) {
+INLINE float Noise::SmoothNoise (const float x, const float y) {
     s32 xf = static_cast<s32>(x); // floor of x
     s32 yf = static_cast<s32>(y); // floor of y
     float xFrac = x - xf;

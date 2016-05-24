@@ -20,6 +20,8 @@
  #define DEBUG(x) do { } while(0)
 #endif /* NDEBUG */
 
+#define INLINE inline
+
 // Unsigned aliases
 typedef uint8_t  u8;
 typedef uint16_t u16;

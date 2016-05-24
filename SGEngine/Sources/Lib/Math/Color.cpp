@@ -7,10 +7,10 @@
 
 namespace sge {
 
-Vector4 Color::ToVector4 (const bool normalize) const {
+Vec4f Color::ToVec4f (const bool normalize) const {
     float f = normalize ? (1.0f / 255.0f) : 1.0f;
 
-    return Vector4((float)r * f, (float)g * f, (float)b * f, (float)a * f); 
+    return Vec4f((float)r * f, (float)g * f, (float)b * f, (float)a * f); 
 }
 
 Color Color::FromHSL (const float p_hue, const float p_sat, const float p_val) {

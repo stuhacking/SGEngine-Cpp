@@ -68,7 +68,7 @@ public:
      */
     bool IsHidden () const;
 
-    Vector4 ToVector4 (const bool normalize = false) const;
+    Vec4f ToVec4f (const bool normalize = false) const;
     
     bool Compare (const Color &other) const;
 
@@ -85,26 +85,26 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline Color::Color (const u32 val) {
+INLINE Color::Color (const u32 val) {
     r = (val >> 24) & 0xFF;
     g = (val >> 16) & 0xFF;
     b = (val >> 8) & 0xFF;
     a = val & 0xFF;
 }
 
-inline bool Color::IsOpaque () const {
+INLINE bool Color::IsOpaque () const {
     return a == 255;
 }
 
-inline bool Color::IsHidden () const {
+INLINE bool Color::IsHidden () const {
     return a == 0;
 }
 
-inline bool Color::Compare (const Color &other) const {
+INLINE bool Color::Compare (const Color &other) const {
     return r == other.r && g == other.g && b == other.b && a == other.a;
 }
 
-inline bool Color::Compare (const Color &other, const u8 threshold) const {
+INLINE bool Color::Compare (const Color &other, const u8 threshold) const {
     if (abs(r - other.r) > threshold)
         return false;
     if (abs(g - other.g) > threshold)
@@ -117,11 +117,11 @@ inline bool Color::Compare (const Color &other, const u8 threshold) const {
     return true;
 }
 
-inline bool Color::operator== (const Color &other) const {
+INLINE bool Color::operator== (const Color &other) const {
     return Compare(other);
 }
 
-inline bool Color::operator!= (const Color &other) const {
+INLINE bool Color::operator!= (const Color &other) const {
     return !Compare(other);
 }
 

@@ -5,12 +5,12 @@
 #include "Lib.h"
 
 using sge::FMath;
-using sge::Vector2;
+using sge::Vec2f;
 using sge::Circle;
 
 TEST (Circle_Test, Constructors) {
-    EXPECT_EQ(Circle(), Circle(Vector2(0.0f, 0.0f), -FMath::INFTY));
-    EXPECT_EQ(Circle(Vector2(1.0f, 2.0f)), Circle(Vector2(1.0f, 2.0f), -FMath::INFTY));    
+    EXPECT_EQ(Circle(), Circle(Vec2f(0.0f, 0.0f), -FMath::INFTY));
+    EXPECT_EQ(Circle(Vec2f(1.0f, 2.0f)), Circle(Vec2f(1.0f, 2.0f), -FMath::INFTY));    
 }
 
 // Basic Circles
@@ -32,10 +32,10 @@ TEST (Circle_Test, Constructors) {
 //                        ...       ...
 //     0    1    2    3    4    5    6    7    8
 //
-static const Circle A = Circle(Vector2(3.0f, 3.0f), 1.0f);
-static const Circle B = Circle(Vector2(5.0f, 3.0f), 2.0f);
-static const Circle C = Circle(Vector2(7.0f, 7.0f), 0.5f);
-static const Circle D = Circle(Vector2(2.0f, 3.0f), 4.0f);
+static const Circle A = Circle(Vec2f(3.0f, 3.0f), 1.0f);
+static const Circle B = Circle(Vec2f(5.0f, 3.0f), 2.0f);
+static const Circle C = Circle(Vec2f(7.0f, 7.0f), 0.5f);
+static const Circle D = Circle(Vec2f(2.0f, 3.0f), 4.0f);
 static const Circle E = Circle();
 
 TEST (Circle_Test, Intersects) {
@@ -56,10 +56,10 @@ TEST (Circle_Test, Intersects) {
 }
 
 TEST (Circle_Test, ContainsPoint) {
-    EXPECT_TRUE(A.Contains(Vector2(2.0f, 3.0f)));
-    EXPECT_TRUE(C.Contains(Vector2(6.8f, 7.0f)));
+    EXPECT_TRUE(A.Contains(Vec2f(2.0f, 3.0f)));
+    EXPECT_TRUE(C.Contains(Vec2f(6.8f, 7.0f)));
 
-    EXPECT_FALSE(B.Contains(Vector2(2.0f, 6.0f)));
+    EXPECT_FALSE(B.Contains(Vec2f(2.0f, 6.0f)));
 }
 
 TEST (Circle_Test, Contains) {

@@ -65,22 +65,22 @@ public:
     void SetUniform (const std::string &name, const float value);
 
     /**
-     * Set the value of a uniform using data from a Vector2.
+     * Set the value of a uniform using data from a Vec2f.
      * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, const Vector2 &value);
+    void SetUniform (const std::string &name, const Vec2f &value);
 
     /**
-     * Set the value of a uniform using data from a Vector3.
+     * Set the value of a uniform using data from a Vec3f.
      * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, const Vector3 &value);
+    void SetUniform (const std::string &name, const Vec3f &value);
 
     /**
-     * Set the value of a uniform using data from a Vector4.
+     * Set the value of a uniform using data from a Vec4f.
      * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, const Vector4 &value);
+    void SetUniform (const std::string &name, const Vec4f &value);
 
     /**
      * Set the value of a uniform using data from a 2x2 Matrix.
@@ -108,13 +108,13 @@ private:
 
 // --------------------------------------------------------------------------
 
-inline GLSLProgram &GLSLProgram::AddSource (const std::string &filename) {
+INLINE GLSLProgram &GLSLProgram::AddSource (const std::string &filename) {
     m_shaders.emplace_back(filename);
 
     return *this;
 }
 
-inline bool GLSLProgram::IsCompiled() const {
+INLINE bool GLSLProgram::IsCompiled() const {
     return m_id > 0;
 }
 

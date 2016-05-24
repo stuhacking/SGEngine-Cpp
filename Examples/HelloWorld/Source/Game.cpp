@@ -52,7 +52,7 @@ bool Game::Init () {
 
     // Emulate a camera/view transform
     view = Transform();
-    view.position = Vector3(0.0f, 3.0f, 18.0f);
+    view.position = Vec3f(0.0f, 3.0f, 18.0f);
 
     return true;
 }
@@ -90,17 +90,17 @@ void Game::Input () {
     float sensitivity = 0.01f;
     if (Input::MouseLocked()) {
         SDL_SetRelativeMouseMode(SDL_TRUE);
-        Vector2 deltaPos = Input::GetMouseDelta();
+        Vec2f deltaPos = Input::GetMouseDelta();
 
         bool rotX = deltaPos.y != 0;
         bool rotY = deltaPos.x != 0;
 
         if (rotX) {
-            view.Rotate(Vector3::X, -deltaPos.y * sensitivity);
+            view.Rotate(VEC3F_X, -deltaPos.y * sensitivity);
         }
 
         if (rotY) {
-            view.Rotate(Vector3::Y, -deltaPos.x * sensitivity);
+            view.Rotate(VEC3F_Y, -deltaPos.x * sensitivity);
         }
     }
 }
@@ -122,14 +122,14 @@ void Game::Render () {
 
 
     DebugGraphics dGraph = DebugGraphics();
-    dGraph.AddGrid(Vector3::ZERO, 16, Color(255, 255, 255, 80));
+    dGraph.AddGrid(VEC3F_ZERO, 16, Color(255, 255, 255, 80));
 
     // Show World Axis
-    dGraph.AddEdge(Vector3::ZERO, Vector3(0.0f, 100.0f, 0.0f),
+    dGraph.AddEdge(VEC3F_ZERO, Vec3f(0.0f, 100.0f, 0.0f),
                    Color(0, 0, 255));
-    dGraph.AddEdge(Vector3::ZERO, Vector3(100.0f, 0.0f, 0.0f),
+    dGraph.AddEdge(VEC3F_ZERO, Vec3f(100.0f, 0.0f, 0.0f),
                    Color(255, 0, 0));
-    dGraph.AddEdge(Vector3::ZERO, Vector3(0.0f, 0.0f, 100.0f),
+    dGraph.AddEdge(VEC3F_ZERO, Vec3f(0.0f, 0.0f, 100.0f),
                    Color(0, 255, 0));
 
     m_debugShader.Bind();

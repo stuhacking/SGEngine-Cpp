@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vector2;
+using sge::Vec2f;
 using sge::Matrix2;
 
 TEST (Matrix2_Test, Constructors) {
@@ -17,7 +17,7 @@ TEST (Matrix2_Test, Constructors) {
               Matrix2(1.0f));
 
     EXPECT_EQ(Matrix2(1.0f, 2.0f, 3.0f, 4.0f),
-              Matrix2(Vector2(1.0f, 2.0f), Vector2(3.0f, 4.0f)));
+              Matrix2(Vec2f(1.0f, 2.0f), Vec2f(3.0f, 4.0f)));
 
     float data1[4]  = {1.0f, 2.0f, 3.0f, 4.0f};
     EXPECT_EQ(Matrix2(1.0f, 2.0f, 3.0f, 4.0f),

@@ -47,7 +47,7 @@ public:
      * @param axis about which to rotate.
      * @param angle Angle of rotation in radians.
      */
-    static Quaternion AxisAngle (const Vector3 &axis, const float angle);
+    static Quaternion AxisAngle (const Vec3f &axis, const float angle);
 
     /**
      * Read access to this Quaternion's components using
@@ -99,7 +99,7 @@ public:
     /**
      * Quaternion x Vector multiplication.
      */
-    Quaternion operator* (const Vector3 &rhs) const;
+    Quaternion operator* (const Vec3f &rhs) const;
 
     /**
      * Quaternion Addition.
@@ -129,9 +129,9 @@ public:
     Quaternion &operator/= (const Quaternion &rhs);
 
     /**
-     * Apply the rotation in this quaternion to a Vector3.
+     * Apply the rotation in this quaternion to a Vec3f.
      */
-    Vector3 Rotate (const Vector3 &vec) const;
+    Vec3f Rotate (const Vec3f &vec) const;
 
     /**
      * Test if two Quaternions are equivalent.
@@ -157,27 +157,27 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float Quaternion::operator[] (const u32 index) const {
+INLINE float Quaternion::operator[] (const u32 index) const {
     return (&i)[index];
 }
 
-inline float &Quaternion::operator[] (const u32 index) {
+INLINE float &Quaternion::operator[] (const u32 index) {
     return (&i)[index];
 }
 
-inline void Quaternion::Zero () {
+INLINE void Quaternion::Zero () {
     i = j = k = w = 0.0f;
 }
 
-inline float Quaternion::LengthSqr () const {
+INLINE float Quaternion::LengthSqr () const {
     return i * i + j * j + k * k + w * w;
 }
 
-inline float Quaternion::Length () const {
+INLINE float Quaternion::Length () const {
     return sqrt(i * i + j * j + k * k + w * w);
 }
 
-inline Quaternion Quaternion::Normalize () const {
+INLINE Quaternion Quaternion::Normalize () const {
     float length = Length();
     if (length == 0) {
         return Quaternion(*this);
@@ -186,30 +186,30 @@ inline Quaternion Quaternion::Normalize () const {
     }
 }
 
-inline void Quaternion::NormalizeSelf () {
+INLINE void Quaternion::NormalizeSelf () {
     float length = Length();
     if (length != 0.0f) {
         *this /= length;
     }
 }
 
-inline bool Quaternion::IsIdentity () const {
+INLINE bool Quaternion::IsIdentity () const {
     return *this == Quaternion::IDENTITY;
 }
 
-inline bool Quaternion::IsUnit () const {
+INLINE bool Quaternion::IsUnit () const {
     return 1 == LengthSqr();
 }
 
-inline Quaternion Quaternion::Conjugate () const {
+INLINE Quaternion Quaternion::Conjugate () const {
     return Quaternion(-i, -j, -k, w);
 }
 
-inline float Quaternion::Dot (const Quaternion &rhs) const {
+INLINE float Quaternion::Dot (const Quaternion &rhs) const {
     return i * rhs.i + j * rhs.j + k * rhs.k;
 }
 
-inline Quaternion Quaternion::Cross (const Quaternion &rhs) const {
+INLINE Quaternion Quaternion::Cross (const Quaternion &rhs) const {
     return Quaternion(j * rhs.k - k * rhs.j,
                       k * rhs.i - i * rhs.k,
                       i * rhs.j - j * rhs.i,
@@ -220,42 +220,42 @@ inline Quaternion Quaternion::Cross (const Quaternion &rhs) const {
 // Quaternion Operators
 //======================
 
-inline Quaternion Quaternion::operator* (const float a) const {
+INLINE Quaternion Quaternion::operator* (const float a) const {
     return Quaternion(i * a, j * a, k * a, w * a);
 }
 
-inline Quaternion operator* (const float a, const Quaternion &rhs) {
+INLINE Quaternion operator* (const float a, const Quaternion &rhs) {
     return Quaternion(a * rhs.i, a * rhs.j, a * rhs.k, a * rhs.w);
 }
 
-inline Quaternion Quaternion::operator* (const Quaternion &rhs) const {
+INLINE Quaternion Quaternion::operator* (const Quaternion &rhs) const {
     return Quaternion(i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j,
                       j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k,
                       k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i,
                       w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k);
 }
 
-inline Quaternion Quaternion::operator* (const Vector3 &rhs) const {
+INLINE Quaternion Quaternion::operator* (const Vec3f &rhs) const {
     return Quaternion(w * rhs.x + j * rhs.z - k * rhs.y,
                       w * rhs.y + k * rhs.x - i * rhs.z,
                       w * rhs.z + i * rhs.y - j * rhs.x,
                       -i * rhs.x - j * rhs.y - k * rhs.z);
 }
 
-inline Quaternion Quaternion::operator+ (const Quaternion &rhs) const {
+INLINE Quaternion Quaternion::operator+ (const Quaternion &rhs) const {
     return Quaternion(i + rhs.i, j + rhs.j, k + rhs.k, w + rhs.w);
 }
 
-inline Quaternion Quaternion::operator- (const Quaternion &rhs) const {
+INLINE Quaternion Quaternion::operator- (const Quaternion &rhs) const {
     return Quaternion(i - rhs.i, j - rhs.j, k - rhs.k, w - rhs.w);
 }
 
-inline Quaternion Quaternion::operator/ (const float a) const {
+INLINE Quaternion Quaternion::operator/ (const float a) const {
     float inva = 1.0f / a;
     return Quaternion(i * inva, j * inva, k * inva, w * inva);
 }
 
-inline Quaternion &Quaternion::operator*= (const float a) {
+INLINE Quaternion &Quaternion::operator*= (const float a) {
     i *= a;
     j *= a;
     k *= a;
@@ -264,7 +264,7 @@ inline Quaternion &Quaternion::operator*= (const float a) {
     return *this;
 }
 
-inline Quaternion &Quaternion::operator*= (const Quaternion &rhs) {
+INLINE Quaternion &Quaternion::operator*= (const Quaternion &rhs) {
     i = i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j;
     j = j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k;
     k = k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i;
@@ -273,7 +273,7 @@ inline Quaternion &Quaternion::operator*= (const Quaternion &rhs) {
     return *this;
 }
 
-inline Quaternion &Quaternion::operator+= (const Quaternion &rhs) {
+INLINE Quaternion &Quaternion::operator+= (const Quaternion &rhs) {
     i += rhs.i;
     j += rhs.j;
     k += rhs.k;
@@ -282,7 +282,7 @@ inline Quaternion &Quaternion::operator+= (const Quaternion &rhs) {
     return *this;
 }
 
-inline Quaternion &Quaternion::operator-= (const Quaternion &rhs) {
+INLINE Quaternion &Quaternion::operator-= (const Quaternion &rhs) {
     i -= rhs.i;
     j -= rhs.j;
     k -= rhs.k;
@@ -291,7 +291,7 @@ inline Quaternion &Quaternion::operator-= (const Quaternion &rhs) {
     return *this;
 }
 
-inline Quaternion &Quaternion::operator/= (const float a) {
+INLINE Quaternion &Quaternion::operator/= (const float a) {
     float inva = 1.0f / a;
 
     i *= inva;
@@ -306,11 +306,11 @@ inline Quaternion &Quaternion::operator/= (const float a) {
 // Quaternion Comparison
 //=======================
 
-inline bool Quaternion::Compare (const Quaternion &rhs) const {
+INLINE bool Quaternion::Compare (const Quaternion &rhs) const {
     return i == rhs.i && j == rhs.j && k == rhs.k && w == rhs.w;
 }
 
-inline bool Quaternion::Compare (const Quaternion &rhs, const float threshold) const {
+INLINE bool Quaternion::Compare (const Quaternion &rhs, const float threshold) const {
     if (fabsf(i - rhs.i) > threshold)
         return false;
     if (fabsf(j - rhs.j) > threshold)
@@ -322,11 +322,11 @@ inline bool Quaternion::Compare (const Quaternion &rhs, const float threshold) c
     return true;
 }
 
-inline bool Quaternion::operator== (const Quaternion &rhs) const {
+INLINE bool Quaternion::operator== (const Quaternion &rhs) const {
     return Compare(rhs);
 }
 
-inline bool Quaternion::operator!= (const Quaternion &rhs) const {
+INLINE bool Quaternion::operator!= (const Quaternion &rhs) const {
     return !Compare(rhs);
 }
 

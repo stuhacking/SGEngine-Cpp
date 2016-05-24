@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vector3;
+using sge::Vec3f;
 using sge::Matrix3;
 
 TEST (Matrix3_Test, Constructors) {

@@ -26,12 +26,12 @@ public:
     AABB ();
 
     /** Point Constructor */
-    AABB (const Vector3 &point);
+    AABB (const Vec3f &point);
 
     /**
-     * Construct a AABB with min and max bounds as Vector3.
+     * Construct a AABB with min and max bounds as Vec3f.
      */
-    AABB (const Vector3 &p_min, const Vector3 &p_max);
+    AABB (const Vec3f &p_min, const Vec3f &p_max);
 
     /**
      * Construct a AABB with min and max bounds as values.
@@ -50,9 +50,9 @@ public:
     void Maximize ();
 
     /**
-     * Get the center of this AABB as a Vector3.
+     * Get the center of this AABB as a Vec3f.
      */
-    Vector3 Center () const;
+    Vec3f Center () const;
 
     /**
      * Get the area of this AABB.
@@ -72,7 +72,7 @@ public:
     void ExpandSelf (const float val);
     
     /** Test if rectangle contains point. */
-    bool Contains (const Vector3 &point) const;
+    bool Contains (const Vec3f &point) const;
 
     /** Test if rectangle entirely contains other rectangle. */
     bool Contains (const AABB &other) const;
@@ -102,56 +102,56 @@ public:
     bool operator!= (const AABB &other) const;
 
 private:
-    Vector3 min;
-    Vector3 max;
+    Vec3f min;
+    Vec3f max;
 };
 
 // --------------------------------------------------------------------------
 
-inline AABB::AABB () {
+INLINE AABB::AABB () {
     min.x = min.y = min.z = FMath::INFTY;
     max.x = max.y = max.z = -FMath::INFTY;
 }
 
-inline AABB::AABB (const Vector3 &point) {
+INLINE AABB::AABB (const Vec3f &point) {
     min = max = point;
 }
 
-inline AABB::AABB (const Vector3 &p_min, const Vector3 &p_max) {
+INLINE AABB::AABB (const Vec3f &p_min, const Vec3f &p_max) {
     min = p_min;
     max = p_max;
 }
 
-inline AABB::AABB (const float xMin, const float yMin, const float zMin,
+INLINE AABB::AABB (const float xMin, const float yMin, const float zMin,
                    const float xMax, const float yMax, const float zMax) {
-    min = Vector3(xMin, yMin, zMin);
-    max = Vector3(xMax, yMax, zMax);
+    min = Vec3f(xMin, yMin, zMin);
+    max = Vec3f(xMax, yMax, zMax);
 }
 
-inline void AABB::Clear () {
+INLINE void AABB::Clear () {
     min.x = min.y = min.z = FMath::INFTY;
     max.x = max.y = max.z = -FMath::INFTY;
 }
 
-inline void AABB::Maximize () {
+INLINE void AABB::Maximize () {
     min.x = min.y = min.z = -FMath::INFTY;
     max.x = max.y = max.z = FMath::INFTY;
 }
 
-inline Vector3 AABB::Center () const {
+INLINE Vec3f AABB::Center () const {
     return (min + max) / 2.0f;
 }
 
-inline float AABB::Volume () const {
+INLINE float AABB::Volume () const {
     return fabsf((max.x - min.x) * (max.y - min.y) * (max.z - min.z));
 }
 
-inline AABB AABB::Expand (const float val) const {
+INLINE AABB AABB::Expand (const float val) const {
     return AABB(min.x - val, min.y - val, min.z - val,
                 max.x + val, max.y + val, max.z + val);
 }
 
-inline void AABB::ExpandSelf (const float val) {
+INLINE void AABB::ExpandSelf (const float val) {
     min.x -= val;
     min.y -= val;
     min.z -= val;
@@ -160,17 +160,17 @@ inline void AABB::ExpandSelf (const float val) {
     max.z += val;
 }
 
-inline bool AABB::Contains (const Vector3 &point) const {
+INLINE bool AABB::Contains (const Vec3f &point) const {
     return point.x >= min.x && point.x <= max.x &&
         point.y >= min.y && point.y <= max.y &&
         point.z >= min.z && point.z <= max.z;
 }
 
-inline bool AABB::Contains (const AABB &other) const {
+INLINE bool AABB::Contains (const AABB &other) const {
     return Contains(other.min) && Contains(other.max);
 }
 
-inline bool AABB::Intersects (const AABB &other) const {
+INLINE bool AABB::Intersects (const AABB &other) const {
     if (other.max.x < min.x || other.max.y < min.y || other.max.z < min.z ||
         other.min.x > max.x || other.min.y > max.y || other.min.z > max.z) {
         return false;
@@ -183,19 +183,19 @@ inline bool AABB::Intersects (const AABB &other) const {
 // AABB Comparison
 //=================
 
-inline bool AABB::Compare (const AABB &other) const {
+INLINE bool AABB::Compare (const AABB &other) const {
     return min == other.min && max == other.max;
 }
 
-inline bool AABB::Compare (const AABB &other, const float threshold) const {
+INLINE bool AABB::Compare (const AABB &other, const float threshold) const {
     return min.Compare(other.min, threshold) && max.Compare(other.max, threshold);
 }
 
-inline bool AABB::operator== (const AABB &other) const {
+INLINE bool AABB::operator== (const AABB &other) const {
     return Compare(other);
 }
 
-inline bool AABB::operator!= (const AABB &other) const {
+INLINE bool AABB::operator!= (const AABB &other) const {
     return !Compare(other);
 }
 

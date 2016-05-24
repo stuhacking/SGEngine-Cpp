@@ -91,19 +91,19 @@ public:
 
 // --------------------------------------------------------------------------
 
-inline float FMath::Min (const float a, const float b) {
+INLINE float FMath::Min (const float a, const float b) {
     return (a < b) ? a : b;
 }
 
-inline float FMath::Max (const float a, const float b) {
+INLINE float FMath::Max (const float a, const float b) {
     return (a > b) ? a : b;
 }
 
-inline float FMath::ClampFloat (const float val, const float a, const float b) {
+INLINE float FMath::ClampFloat (const float val, const float a, const float b) {
     return FMath::Max(a, FMath::Min(b, val));
 }
 
-inline s32 FMath::ClampInt (const s32 val, const s32 a, const s32 b) {
+INLINE s32 FMath::ClampInt (const s32 val, const s32 a, const s32 b) {
     if (val < a)
         return a;
 
@@ -113,7 +113,7 @@ inline s32 FMath::ClampInt (const s32 val, const s32 a, const s32 b) {
     return val;
 }
 
-inline u32 FMath::Nearest2Pow (const u32 val) {
+INLINE u32 FMath::Nearest2Pow (const u32 val) {
     u32 result = 2;
     while (result < val) {
         result <<= 1;
@@ -121,15 +121,15 @@ inline u32 FMath::Nearest2Pow (const u32 val) {
     return result;
 }
 
-inline float FMath::ToRatio (const float val, const float min, const float max) {
+INLINE float FMath::ToRatio (const float val, const float min, const float max) {
     return (val - min) / (max - min);
 }
 
-inline float FMath::ClampedRatio (float val, float min, float max) {
+INLINE float FMath::ClampedRatio (float val, float min, float max) {
     return ClampFloat(ToRatio(val, min, max), 0.0f, 1.0f);
 }
 
-inline float FMath::Lerp (const float min, const float max, const float ratio) {
+INLINE float FMath::Lerp (const float min, const float max, const float ratio) {
     if (ratio <= 0.0f)
         return min;
     else if (ratio >= 1.0f)
@@ -138,23 +138,23 @@ inline float FMath::Lerp (const float min, const float max, const float ratio) {
         return min + ratio * (max - min);
 }
 
-inline float FMath::Fit (const float val, const float oMin, const float oMax, const float nMin, const float nMax) {
+INLINE float FMath::Fit (const float val, const float oMin, const float oMax, const float nMin, const float nMax) {
     return Lerp(nMin, nMax, ToRatio(val, oMin, oMax));
 }
 
-inline float FMath::SinInterpolate (const float min, const float max, const float ratio) {
+INLINE float FMath::SinInterpolate (const float min, const float max, const float ratio) {
     float ft = ratio * FMath::PI;
     float f = (1.0f - sinf(ft)) * 0.5f;
     return min * (1.0f - f) + max * f;
 }
 
-inline float FMath::CosInterpolate (const float min, const float max, const float ratio) {
+INLINE float FMath::CosInterpolate (const float min, const float max, const float ratio) {
     float ft = ratio * FMath::PI;
     float f = (1.0f - cosf(ft)) * 0.5f;
     return min * (1.0f - f) + max * f;
 }
 
-inline void FMath::SinCos (const float angle, float &s, float &c) {
+INLINE void FMath::SinCos (const float angle, float &s, float &c) {
     s = sinf(angle);
     c = cosf(angle);
 }

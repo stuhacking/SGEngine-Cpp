@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a 2D Line Section for intersection tests.
  */
 #ifndef __SGENGINE_LINE2D_H_
@@ -14,15 +14,13 @@
 
 namespace sge {
 
-class Vector2;
-
 /**
- * 2D Line Section. Implements intersection tests against 
+ * 2D Line Section. Implements intersection tests against
  * other lines.
  */
 class Line2D {
 public:
-    Line2D(const Vector2 &p_start, const Vector2 &p_end)
+    Line2D(const Vec2f &p_start, const Vec2f &p_end)
         : m_start(p_start), m_end(p_end) { }
 
     /**
@@ -40,16 +38,16 @@ public:
      * another Line2D, or extend the Input line to
      * INFINITY if no intersection exists.
      */
-    Vector2 Intersection(const Line2D &rhs) const;
+    Vec2f Intersection(const Line2D &rhs) const;
 
 private:
-    Vector2 m_start;
-    Vector2 m_end;
+    Vec2f m_start;
+    Vec2f m_end;
 };
 
 // --------------------------------------------------------------------------
 
-inline float Line2D::Length () const {
+INLINE float Line2D::Length () const {
     return (m_end - m_start).Length();
 }
 

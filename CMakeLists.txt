@@ -4,8 +4,6 @@ project(SGEngine)
 # Start with modern standard: C++14
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++1y -Wall -pedantic")
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
-
 execute_process(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMAND ./deps.sh

@@ -90,11 +90,11 @@ TEST (StringUtil_Test, PadCenter) {
 
 TEST (StringUtil_Test, TruncateEllipsis) {
     EXPECT_EQ("", TruncateEllipsis("Hello", 0));
-    EXPECT_EQ(">", TruncateEllipsis("Hello", 1));
-    EXPECT_EQ("H>", TruncateEllipsis("Hello", 2));
+    EXPECT_EQ("~", TruncateEllipsis("Hello", 1));
+    EXPECT_EQ("H~", TruncateEllipsis("Hello", 2));
     EXPECT_EQ("Hello", TruncateEllipsis("Hello", 10));
     EXPECT_EQ("Hello", TruncateEllipsis("Hello", 5));
-    EXPECT_EQ("Hel>", TruncateEllipsis("Hello, World!", 4));
+    EXPECT_EQ("Hel~", TruncateEllipsis("Hello, World!", 4));
 }
 
 TEST (StringUtil_Test, Truncate) {
@@ -108,7 +108,7 @@ TEST (StringUtil_Test, Truncate) {
 
 TEST (StringUtil_Test, SetWidth) {
     EXPECT_EQ("Hello", SetWidth("Hello", 5));
-    EXPECT_EQ("Hello, Wo>", SetWidth("Hello, World", 10));
+    EXPECT_EQ("Hello, Wo~", SetWidth("Hello, World", 10));
     EXPECT_EQ("Hello    ", SetWidth("Hello", 9));
 }
 

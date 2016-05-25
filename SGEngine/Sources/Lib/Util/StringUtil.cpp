@@ -9,6 +9,7 @@ namespace sge { namespace str {
 
 static constexpr auto whitespace = " \t";
 static constexpr auto path_sep = "/";
+static constexpr auto continuation_char = "~";
 
 bool StartsWith (const std::string &str, const std::string &pattern) {
     return str.length() >= pattern.length() && 0 == str.find(pattern);
@@ -86,7 +87,7 @@ std::string TruncateEllipsis (const std::string &str, const size_t width) {
         return str;
     }
 
-    return Truncate(str, width - 1) + ">"; // Ellipsis char
+    return Truncate(str, width - 1) + continuation_char; // Ellipsis char
 }
 
 std::string SetWidth (const std::string &str, const size_t width) {

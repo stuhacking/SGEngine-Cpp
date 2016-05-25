@@ -12,8 +12,6 @@
 #ifndef __SGENGINE_VECTOR2_H_
 #define __SGENGINE_VECTOR2_H_
 
-#include <cmath>
-
 namespace sge {
 
 /**
@@ -27,7 +25,7 @@ public:
 
 public:
     /** Construct a default Vec2_T at 0,0. */
-             Vec2_T () : x(0), y(0) { }
+    Vec2_T () : x(0), y(0) { }
 
     /** Fill Constructor. */
     explicit Vec2_T (const T f) : x(f), y(f) { }
@@ -159,7 +157,7 @@ public:
      * @param rhs Vec2_T to be scaled
      */
     template <typename U>
-    friend Vec2_T<U> operator* (const T a, const Vec2_T<U> &rhs);
+    friend Vec2_T<U> operator* (const U a, const Vec2_T<U> &rhs);
 
     /**
      * Multiply this Vec2_T by another Vec2_T componentwise.

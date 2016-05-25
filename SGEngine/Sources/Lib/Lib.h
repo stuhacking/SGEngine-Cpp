@@ -11,6 +11,7 @@
 #define __SGENGINE_LIB_H_
 
 #include <cstdint>
+#include <cmath>
 
 // - Miscellaneous Utilities ------------------------------------------------
 

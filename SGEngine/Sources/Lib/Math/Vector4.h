@@ -12,8 +12,6 @@
 #ifndef __SGENGINE_VECTOR4_H_
 #define __SGENGINE_VECTOR4_H_
 
-#include <cmath>
-
 namespace sge {
 
 /**
@@ -27,7 +25,7 @@ public:
 
 public:
     /** Construct a default Vec4_T at origin. */
-             Vec4_T () : x(0), y(0), z(0), w(0) { }
+    Vec4_T () : x(0), y(0), z(0), w(0) { }
 
     /** Fill Constructor. */
     explicit Vec4_T (const T f) : x(f), y(f), z(f), w(f) { }
@@ -167,7 +165,7 @@ public:
      * @param rhs Vec4_T to be scaled
      */
     template <typename U>
-    friend Vec4_T<U> operator* (const T a, const Vec4_T<U> &rhs);
+    friend Vec4_T<U> operator* (const U a, const Vec4_T<U> &rhs);
 
     /**
      * Multiply this Vec4_T by another Vec4_T componentwise.

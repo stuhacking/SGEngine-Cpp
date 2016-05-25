@@ -42,16 +42,26 @@ TEST (Vec3f_Test, ClampLength) {
     v.ClampLengthSelf(5.0f);
 
     EXPECT_EQ(Vec3f(3.0f, 4.0f, 0.0f), v);
-    
+
     v = Vec3f(1.5f, 0.0f, 2.0f);
     v.ClampLengthSelf(5.0f, 10.0f);
-    
+
     EXPECT_EQ(Vec3f(3.0f, 0.0f, 4.0f), v);
-    
+
     v = Vec3f(0.0f, 3.0f, 4.0f);
     v.ClampLengthSelf(2.0f, 6.0f);
 
     EXPECT_EQ(Vec3f(0.0f, 3.0f, 4.0f), v);
+}
+
+TEST (Vec3f_Test, Rotate) {
+    Vec3f v = Vec3f(1.0f, 0.0f, 0.0f);
+
+    EXPECT_TRUE(Vec3f(0.0f, 1.0f, 0.0f).Compare(v.Rotate(TO_RADIANS(90.0f), Vec3f(0.0f, 0.0f, 1.0f)), 0.0001f));
+
+    v.RotateSelf(TO_RADIANS(90.0f), Vec3f(0.0f, 0.0f, 1.0f));
+
+    EXPECT_TRUE(Vec3f(0.0f, 1.0f, 0.0f).Compare(v, 0.0001f));
 }
 
 /*==========================

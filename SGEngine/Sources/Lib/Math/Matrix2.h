@@ -7,7 +7,7 @@
  *
  * --------------------------------------------------------------------------
  *
- * @brief Defines a low level Matrix2 type.
+ * @brief Defines a low level Mat2 type.
  */
 #ifndef __SGENGINE_MATRIX2_H_
 #define __SGENGINE_MATRIX2_H_
@@ -28,69 +28,65 @@ namespace sge {
  *  y| 1 3
  * </pre>
  */
-class Matrix2 {
+template <typename T>
+class Mat2_T {
 public:
-    static const Matrix2 ZERO;
-    static const Matrix2 ONE;
-    static const Matrix2 IDENTITY;
-
-public:
-    /** Construct a default (All 0.0f) Matrix2. */
-    Matrix2 () { }
+    /** Construct a default (All 0.0f) Mat2_T. */
+    Mat2_T () { }
 
     /** Fill Constructor */
-    Matrix2 (const float f);
+    explicit Mat2_T (const T f);
 
-    /** Construct a Matrix2 with float values. */
-    Matrix2 (const float aa, const float ab, const float ba, const float bb);
+    /** Construct a Mat2_T with T values. */
+    explicit Mat2_T (const T aa, const T ab, const T ba, const T bb);
 
-    /** Construct a Matrix2 using Vec2f columns. */
-    Matrix2 (const Vec2f &col1, const Vec2f &col2);
+    /** Construct a Mat2_T using Vec2_T<T> columns. */
+    explicit Mat2_T (const Vec2_T<T> &col1, const Vec2_T<T> &col2);
 
     /** 1D Array Constructor */
-    Matrix2 (const float data[4]);
+    explicit Mat2_T (const T data[4]);
 
     /** 2D Array Constructor */
-    Matrix2 (const float data[2][2]);
+    explicit Mat2_T (const T data[2][2]);
 
     /**
-     * Write the data from the columns of this Matrix2 into
-     * Vec2fs.
+     * Write the data from the columns of this Mat2_T into
+     * Vec2_T<T>s.
      */
-    void Columns (Vec2f &col1, Vec2f &col2) const;
+    void Columns (Vec2_T<T> &col1, Vec2_T<T> &col2) const;
 
     /**
-     * Set the values of this Matrix2 using floats.
+     * Set the values of this Mat2_T using Ts.
      * Destructive.
      */
-    void Set (const float aa, const float ab, const float ba, const float bb);
+    void Set (const T aa, const T ab, const T ba, const T bb);
 
     /**
-     * Set the values of this Matrix2 using Vec2f columns.
+     * Set the values of this Mat2_T using Vec2_T<T> columns.
      * Destructive.
      */
-    void Set (const Vec2f &col1, const Vec2f &col2);
+    void Set (const Vec2_T<T> &col1, const Vec2_T<T> &col2);
 
     /**
-     * Set the values of this Matrix2 using a 1D array.
+     * Set the values of this Mat2_T using a 1D array.
      * Destructive.
      */
-    void Set (const float data[4]);
+    void Set (const T data[4]);
 
     /**
-     * Set the values of this Matrix2 using a 2D array.
+     * Set the values of this Mat2_T using a 2D array.
      * Destructive.
      */
-    void Set (const float data[2][2]);
+    void Set (const T data[2][2]);
 
     /**
-     * Set all the values of this Matrix2 to 0.0f.
+     * Set all the values of this Mat2_T to 0.0f.
      * Destructive.
      */
     void Zero ();
 
     /**
-     * Return true if this Matrix2 is the identity Matrix.
+     * Return true if this Mat2_T is the identity Matrix.
      * @return true if identity, false otherwise
      */
     bool IsIdentity () const;
@@ -98,212 +94,241 @@ public:
     /**
      * Read access to the matrix columns using subscript notation.
      */
-    const Vec2f &operator[] (const u32 index) const;
+    const Vec2_T<T> &operator[] (const u32 index) const;
 
     /**
      * Reference/Write access to the matrix columns using subscript notation.
      */
-    Vec2f &operator[] (const u32 index);
+    Vec2_T<T> &operator[] (const u32 index);
 
-    // Matrix2 operators
+    // Mat2_T operators
 
     /**
-     * Matrix2 Uniform Scale.
+     * Mat2_T Uniform Scale.
      */
-    Matrix2 operator* (const float a) const;
+    Mat2_T operator* (const T a) const;
 
     /**
-     * Matrix2 Uniform Scale.
+     * Mat2_T Uniform Scale.
      * Reversed operands.
      */
-    friend Matrix2 operator* (const float a, const Matrix2 &rhs);
+    template <typename U>
+    friend Mat2_T<U> operator* (const U a, const Mat2_T<U> &rhs);
 
     /**
-     * Matrix2 Multiplication.
+     * Mat2_T Multiplication.
      */
-    Matrix2 operator* (const Matrix2 &rhs) const;
+    Mat2_T operator* (const Mat2_T &rhs) const;
 
     /**
-     * Matrix2 Addition.
+     * Mat2_T Addition.
      */
-    Matrix2 operator+ (const Matrix2 &rhs) const;
+    Mat2_T operator+ (const Mat2_T &rhs) const;
 
     /**
-     * Matrix2 Subtraction.
+     * Mat2_T Subtraction.
      */
-    Matrix2 operator- (const Matrix2 &rhs) const;
+    Mat2_T operator- (const Mat2_T &rhs) const;
 
     /**
-     * Matrix2 Uniform Scale in place.
+     * Mat2_T Uniform Scale in place.
      * Destructive.
      */
-    Matrix2 &operator*= (const float a);
+    Mat2_T &operator*= (const T a);
 
     /**
-     * Matrix2 Multiplication in place.
+     * Mat2_T Multiplication in place.
      * Destructive.
      */
-    Matrix2 &operator*= (const Matrix2 &rhs);
+    Mat2_T &operator*= (const Mat2_T &rhs);
 
     /**
-     * Matrix2 Addition in place.
+     * Mat2_T Addition in place.
      * Destructive.
      */
-    Matrix2 &operator+= (const Matrix2 &rhs);
+    Mat2_T &operator+= (const Mat2_T &rhs);
 
     /**
-     * Matrix2 Subtraction in place.
+     * Mat2_T Subtraction in place.
      * Destructive.
      */
-    Matrix2 &operator-= (const Matrix2 &rhs);
+    Mat2_T &operator-= (const Mat2_T &rhs);
 
     /**
-     * Get the determinant of this Matrix2
+     * Get the determinant of this Mat2_T
      */
-    float Determinant () const;
+    T Determinant () const;
 
     /**
-     * Determine whether this Matrix2 has an inverse.
+     * Determine whether this Mat2_T has an inverse.
      */
     bool HasInverse () const;
 
     /**
      * Mirror the cells of this Matrix about the line x==y.
      */
-    Matrix2 Transpose () const;
+    Mat2_T Transpose () const;
 
     /**
      * Mirror the cells of this Matrix about the line x==y in place.
      * Destructive.
      */
-    Matrix2 &TransposeSelf ();
+    Mat2_T &TransposeSelf ();
 
     /**
-     * Test if this Matrix2 is equivalent to another Matrix2.
+     * Test if this Mat2_T is equivalent to another Mat2_T.
      */
-    bool Compare (const Matrix2 &other) const;
+    bool Compare (const Mat2_T &other) const;
 
     /**
-     * Test if this Matrix2 is similar to another Matrix2
+     * Test if this Mat2_T is similar to another Mat2_T
      * within a given tolerance.
      */
-    bool Compare (const Matrix2 &other, const float threshold) const;
+    bool Compare (const Mat2_T &other, const T threshold) const;
 
     /**
-     * Test if this Matrix2 is equivalent to another Matrix2.
+     * Test if this Mat2_T is equivalent to another Mat2_T.
      */
-    bool operator== (const Matrix2 &other) const;
+    bool operator== (const Mat2_T &other) const;
 
     /**
-     * Test if this Matrix2 is not equivalent to another Matrix2.
+     * Test if this Mat2_T is not equivalent to another Mat2_T.
      */
-    bool operator!= (const Matrix2 &other) const;
+    bool operator!= (const Mat2_T &other) const;
 
 private:
-    Vec2f mat[2];
+    Vec2_T<T> mat[2];
 };
+
+// Common Mat2 types.
+typedef Mat2_T<float> Mat2f;
+
+extern const Mat2f MAT2F_ZERO;
+extern const Mat2f MAT2F_ONE;
+extern const Mat2f MAT2F_IDENTITY;
 
 // --------------------------------------------------------------------------
 
-INLINE Matrix2::Matrix2 (const float f) {
+template <typename T>
+INLINE Mat2_T<T>::Mat2_T (const T f) {
     mat[0].x = mat[0].y = mat[1].x = mat[1].y = f;
 }
 
-INLINE Matrix2::Matrix2 (const float aa, const float ab, const float ba, const float bb) {
+template <typename T>
+INLINE Mat2_T<T>::Mat2_T (const T aa, const T ab, const T ba, const T bb) {
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
 }
 
-INLINE Matrix2::Matrix2 (const Vec2f &col1, const Vec2f &col2) {
+template <typename T>
+INLINE Mat2_T<T>::Mat2_T (const Vec2_T<T> &col1, const Vec2_T<T> &col2) {
     mat[0].x = col1.x; mat[0].y = col1.y;
     mat[1].x = col2.x; mat[1].y = col2.y;
 }
 
-INLINE Matrix2::Matrix2 (const float data[4]) {
-    std::memcpy(mat, data, 4 * sizeof(float));
+template <typename T>
+INLINE Mat2_T<T>::Mat2_T (const T data[4]) {
+    std::memcpy(mat, data, 4 * sizeof(T));
 }
 
-INLINE Matrix2::Matrix2 (const float data[2][2]) {
-    std::memcpy(mat, data, 2 * 2 * sizeof(float));
+template <typename T>
+INLINE Mat2_T<T>::Mat2_T (const T data[2][2]) {
+    std::memcpy(mat, data, 2 * 2 * sizeof(T));
 }
 
-INLINE void Matrix2::Columns (Vec2f &col1, Vec2f &col2) const {
+template <typename T>
+INLINE void Mat2_T<T>::Columns (Vec2_T<T> &col1, Vec2_T<T> &col2) const {
     col1 = mat[0];
     col2 = mat[1];
 }
 
-INLINE void Matrix2::Set (const float aa, const float ab, const float ba, const float bb) {
+template <typename T>
+INLINE void Mat2_T<T>::Set (const T aa, const T ab, const T ba, const T bb) {
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
 }
 
-INLINE void Matrix2::Set (const Vec2f &col1, const Vec2f &col2) {
+template <typename T>
+INLINE void Mat2_T<T>::Set (const Vec2_T<T> &col1, const Vec2_T<T> &col2) {
     mat[0] = col1;
     mat[1] = col2;
 }
 
-INLINE void Matrix2::Set (const float data[4]) {
-    std::memcpy(mat, data, 4 * sizeof(float));
+template <typename T>
+INLINE void Mat2_T<T>::Set (const T data[4]) {
+    std::memcpy(mat, data, 4 * sizeof(T));
 }
 
-INLINE void Matrix2::Set (const float data[2][2]) {
-    std::memcpy(mat, data, 2 * 2 * sizeof(float));
+template <typename T>
+INLINE void Mat2_T<T>::Set (const T data[2][2]) {
+    std::memcpy(mat, data, 2 * 2 * sizeof(T));
 }
 
-INLINE void Matrix2::Zero () {
+template <typename T>
+INLINE void Mat2_T<T>::Zero () {
     mat[0].Zero();
     mat[1].Zero();
 }
 
-INLINE bool Matrix2::IsIdentity () const {
-    return Compare(Matrix2::IDENTITY);
+template <typename T>
+INLINE bool Mat2_T<T>::IsIdentity () const {
+    return Compare(Mat2_T<T>::IDENTITY);
 }
 
-INLINE const Vec2f &Matrix2::operator[] (const u32 index) const {
+template <typename T>
+INLINE const Vec2_T<T> &Mat2_T<T>::operator[] (const u32 index) const {
     return mat[index];
 }
 
-INLINE Vec2f &Matrix2::operator[] (const u32 index) {
+template <typename T>
+INLINE Vec2_T<T> &Mat2_T<T>::operator[] (const u32 index) {
     return mat[index];
 }
 
 //=======================
-// Matrix2 Operators
+// Mat2_T<T> Operators
 //=======================
 
-INLINE Matrix2 Matrix2::operator* (const float a) const {
-    return Matrix2(mat[0] * a, mat[1] * a);
+template <typename T>
+INLINE Mat2_T<T> Mat2_T<T>::operator* (const T a) const {
+    return Mat2_T<T>(mat[0] * a, mat[1] * a);
 }
 
-INLINE Matrix2 operator* (const float a, const Matrix2 &rhs) {
+template <typename T>
+INLINE Mat2_T<T> operator* (const T a, const Mat2_T<T> &rhs) {
     return rhs * a;
 }
 
-INLINE Matrix2 Matrix2::operator* (const Matrix2 &rhs) const {
-    return Matrix2(mat[0].x * rhs[0].x + mat[0].y * rhs[1].x,
-                   mat[0].x * rhs[0].y + mat[0].y * rhs[1].y,
+template <typename T>
+INLINE Mat2_T<T> Mat2_T<T>::operator* (const Mat2_T<T> &rhs) const {
+    return Mat2_T<T>(mat[0].x * rhs[0].x + mat[0].y * rhs[1].x,
+                     mat[0].x * rhs[0].y + mat[0].y * rhs[1].y,
 
-                   mat[1].x * rhs[0].x + mat[1].y * rhs[1].x,
-                   mat[1].x * rhs[0].y + mat[1].y * rhs[1].y);
+                     mat[1].x * rhs[0].x + mat[1].y * rhs[1].x,
+                     mat[1].x * rhs[0].y + mat[1].y * rhs[1].y);
 }
 
-INLINE Matrix2 Matrix2::operator+ (const Matrix2 &rhs) const {
-    return Matrix2(mat[0] + rhs[0], mat[1] + rhs[1]);
+template <typename T>
+INLINE Mat2_T<T> Mat2_T<T>::operator+ (const Mat2_T<T> &rhs) const {
+    return Mat2_T<T>(mat[0] + rhs[0], mat[1] + rhs[1]);
 }
 
-INLINE Matrix2 Matrix2::operator- (const Matrix2 &rhs) const {
-    return Matrix2(mat[0] - rhs[0], mat[1] - rhs[1]);
+template <typename T>
+INLINE Mat2_T<T> Mat2_T<T>::operator- (const Mat2_T<T> &rhs) const {
+    return Mat2_T<T>(mat[0] - rhs[0], mat[1] - rhs[1]);
 }
 
-INLINE Matrix2 &Matrix2::operator*= (const float a) {
+template <typename T>
+INLINE Mat2_T<T> &Mat2_T<T>::operator*= (const T a) {
     mat[0] *= a;
     mat[1] *= a;
 
     return *this;
 }
 
-INLINE Matrix2 &Matrix2::operator*= (const Matrix2 &rhs) {
-    float aa, ab, ba, bb;
+template <typename T>
+INLINE Mat2_T<T> &Mat2_T<T>::operator*= (const Mat2_T<T> &rhs) {
+    T aa, ab, ba, bb;
     aa = mat[0].x * rhs[0].x + mat[0].y * rhs[1].x;
     ab = mat[0].x * rhs[0].y + mat[0].y * rhs[1].y;
     ba = mat[1].x * rhs[0].x + mat[1].y * rhs[1].x;
@@ -315,57 +340,67 @@ INLINE Matrix2 &Matrix2::operator*= (const Matrix2 &rhs) {
     return *this;
 }
 
-INLINE Matrix2 &Matrix2::operator+= (const Matrix2 &rhs) {
+template <typename T>
+INLINE Mat2_T<T> &Mat2_T<T>::operator+= (const Mat2_T<T> &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
 
     return *this;
 }
 
-INLINE Matrix2 &Matrix2::operator-= (const Matrix2 &rhs) {
+template <typename T>
+INLINE Mat2_T<T> &Mat2_T<T>::operator-= (const Mat2_T<T> &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
 
     return *this;
 }
 
-INLINE float Matrix2::Determinant () const {
+template <typename T>
+INLINE T Mat2_T<T>::Determinant () const {
     return mat[0].x * mat[1].y - mat[0].y * mat[1].x;
 }
 
-INLINE bool Matrix2::HasInverse () const {
+template <typename T>
+INLINE bool Mat2_T<T>::HasInverse () const {
     return 0 != Determinant();
 }
 
-INLINE Matrix2 Matrix2::Transpose () const {
-    return Matrix2(mat[0].x, mat[1].x, mat[0].y, mat[1].y);
+template <typename T>
+INLINE Mat2_T<T> Mat2_T<T>::Transpose () const {
+    return Mat2_T<T>(mat[0].x, mat[1].x, mat[0].y, mat[1].y);
 }
 
-INLINE Matrix2 &Matrix2::TransposeSelf () {
+template <typename T>
+INLINE Mat2_T<T> &Mat2_T<T>::TransposeSelf () {
     std::swap(mat[0].y, mat[1].x);
 
     return *this;
 }
 
 //=======================
-// Matrix2 Comparisons
+// Mat2_T<T> Comparisons
 //=======================
 
-INLINE bool Matrix2::Compare (const Matrix2 &other) const {
+template <typename T>
+INLINE bool Mat2_T<T>::Compare (const Mat2_T<T> &other) const {
     return mat[0].Compare(other.mat[0]) &&
         mat[1].Compare(other.mat[1]);
 }
 
-INLINE bool Matrix2::Compare (const Matrix2 &other, const float threshold) const {
+template <typename T>
+INLINE bool Mat2_T<T>::Compare (const Mat2_T<T> &other, const T threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold);
 }
 
-INLINE bool Matrix2::operator== (const Matrix2 &other) const {
+template <typename T>
+INLINE bool Mat2_T<T>::operator== (const Mat2_T<T> &other) const {
     return Compare(other);
 }
 
-INLINE bool Matrix2::operator!= (const Matrix2 &other) const {
+template <typename T>
+INLINE bool Mat2_T<T>::operator!= (const Mat2_T<T> &other) const {
     return !Compare(other);
 }
 

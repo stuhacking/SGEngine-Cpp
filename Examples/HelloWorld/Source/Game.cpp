@@ -109,7 +109,7 @@ void Game::Update (double deltaSeconds) {
 }
 
 void Game::Render () {
-    Matrix4 proj_view = proj.GetPerspectiveProjection(m_width, m_height) *
+    Mat4f proj_view = proj.GetPerspectiveProjection(m_width, m_height) *
         view.GetViewTransformationMatrix();
 
     // Custom drawing...

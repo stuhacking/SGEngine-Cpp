@@ -1,19 +1,19 @@
 //
-// Matrix4 Tests
+// Mat4f Tests
 //
 #include <gtest/gtest.h>
 #include "Lib.h"
 
 using sge::Vec4f;
-using sge::Matrix4;
+using sge::Mat4f;
 
-TEST (Matrix4_Test, Inverse) {
-    Matrix4 M = Matrix4(2.0f, 2.0f, 4.0f, 0.0f,
+TEST (Mat4f_Test, Inverse) {
+    Mat4f M = Mat4f(2.0f, 2.0f, 4.0f, 0.0f,
                         4.0f, 2.0f, 6.0f, 0.0f,
                         4.0f, 2.0f, 2.0f, 0.0f,
                         2.0f, 4.0f, 2.0f, 1.0f);
     
-    EXPECT_EQ(Matrix4(-0.5f, 0.25f, 0.25f, 0.0f,
+    EXPECT_EQ(Mat4f(-0.5f, 0.25f, 0.25f, 0.0f,
                       1.0f, -0.75f, 0.25f, 0.0f,
                       0.0f, 0.25f, -0.25f, 0.0f,
                       -3.0f, 2.0f, -1.0f, 1.0f),
@@ -21,7 +21,7 @@ TEST (Matrix4_Test, Inverse) {
     
     M.InverseSelf();
     
-    EXPECT_EQ(Matrix4(-0.5f, 0.25f, 0.25f, 0.0f,
+    EXPECT_EQ(Mat4f(-0.5f, 0.25f, 0.25f, 0.0f,
                       1.0f, -0.75f, 0.25f, 0.0f,
                       0.0f, 0.25f, -0.25f, 0.0f,
                       -3.0f, 2.0f, -1.0f, 1.0f),

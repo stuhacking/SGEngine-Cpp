@@ -7,12 +7,12 @@
 
 using sge::Vec3f;
 using sge::Vec4f;
-using sge::Matrix4;
+using sge::Mat4f;
 using sge::Transform;
 
 // Helper: Apply transform to position vector3
 static Vec3f apply_transform_position (const Transform &tr, const Vec3f &v_in) {
-    Matrix4 M = tr.GetTransformationMatrix();
+    Mat4f M = tr.GetTransformationMatrix();
     Vec4f v = Vec4f(v_in, 1.0f);
     Vec4f result = M * v;
 
@@ -21,7 +21,7 @@ static Vec3f apply_transform_position (const Transform &tr, const Vec3f &v_in) {
 
 // Helper: Apply transform to direction vector3
 static Vec3f apply_transform_direction (const Transform &tr, const Vec3f &v_in) {
-    Matrix4 M = tr.GetTransformationMatrix();
+    Mat4f M = tr.GetTransformationMatrix();
     Vec4f v = Vec4f(v_in, 0.0f);
     Vec4f result = M * v;
 
@@ -32,7 +32,7 @@ TEST (Transform_Test, Translation_Matrix) {
     Transform t = Transform();
     t.position = Vec3f(1.0f, 2.0f, 3.0f);
 
-    Matrix4 m = t.GetTranslationMatrix();
+    Mat4f m = t.GetTranslationMatrix();
 
     EXPECT_EQ(Vec4f(5.0f, 6.0f, 7.0f, 1.0f), m * Vec4f(4.0f, 4.0f, 4.0f, 1.0f));
     EXPECT_EQ(Vec4f(4.0f, 4.0f, 4.0f, 0.0f), m * Vec4f(4.0f, 4.0f, 4.0f, 0.0f));
@@ -42,7 +42,7 @@ TEST (Transform_Test, Scale_Matrix) {
     Transform t = Transform();
     t.scale = Vec3f(0.5f, 2.0f, 3.0f);
 
-    Matrix4 m = t.GetScaleMatrix();
+    Mat4f m = t.GetScaleMatrix();
 
     EXPECT_EQ(Vec4f(2.0f, 4.0f, 3.0f, 1.0f), m * Vec4f(4.0f, 2.0f, 1.0f, 1.0f));
     EXPECT_EQ(Vec4f(2.0f, 8.0f, 12.0f, 0.0f), m * Vec4f(4.0f, 4.0f, 4.0f, 0.0f));

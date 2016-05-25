@@ -17,12 +17,12 @@ namespace sge {
 class Transform {
 public:
     Vec3f position;
-    Quaternion orientation;
+    Quat4f orientation;
     Vec3f scale;
 
 public:
     Transform (const Vec3f &p_pos = VEC3F_ZERO,
-               const Quaternion &p_ori = Quaternion::IDENTITY,
+               const Quat4f &p_ori = QUAT4F_IDENTITY,
                const Vec3f &p_scale = VEC3F_ONE)
         : position(p_pos), orientation(p_ori), scale(p_scale) { }
 
@@ -55,42 +55,42 @@ public:
     void Rotate (const Vec3f &axis, const float angle);
 
     /**
-     * Return a Matrix4 representing the translation component
+     * Return a Mat4f representing the translation component
      * of this Transform.
      */
-    Matrix4 GetTranslationMatrix () const;
+    Mat4f GetTranslationMatrix () const;
 
     /**
-     * Return a Matrix4 representing the orientation/rotation component
+     * Return a Mat4f representing the orientation/rotation component
      * of this Transform.
      */
-    Matrix4 GetOrientationMatrix () const;
+    Mat4f GetOrientationMatrix () const;
 
     /**
-     * Return a Matrix4 representing the scale component of this
+     * Return a Mat4f representing the scale component of this
      * Transform.
      */
-    Matrix4 GetScaleMatrix () const;
+    Mat4f GetScaleMatrix () const;
 
     /**
-     * Return a Matrix4 representing complete model transformation
+     * Return a Mat4f representing complete model transformation
      * of this Transform.
      */
-    Matrix4 GetTransformationMatrix () const;
+    Mat4f GetTransformationMatrix () const;
 
     /**
-     * Return a Matrix4 representing the view transformation (i.e.
+     * Return a Mat4f representing the view transformation (i.e.
      * components are applied in reverse order and the final Matrix is
      * inverted. Use this if you want to transform the camera/viewport.)
      */
-    Matrix4 GetViewTransformationMatrix () const;
+    Mat4f GetViewTransformationMatrix () const;
 };
 
 // --------------------------------------------------------------------------
 
 INLINE void Transform::Clear () {
     position = VEC3F_ZERO;
-    orientation = Quaternion::IDENTITY;
+    orientation = QUAT4F_IDENTITY;
     scale = VEC3F_ONE;
 }
 
@@ -107,23 +107,23 @@ INLINE Vec3f Transform::Right () const {
 }
 
 INLINE void Transform::Rotate (const Vec3f &axis, const float angle) {
-    orientation *= Quaternion::AxisAngle(axis, angle);
+    orientation *= Quat4f::AxisAngle(axis, angle);
     orientation.NormalizeSelf();
 }
 
-INLINE Matrix4 Transform::GetTranslationMatrix () const {
-    return Matrix4(1.0f,       0.0f,       0.0f,       0.0f,
-                   0.0f,       1.0f,       0.0f,       0.0f,
-                   0.0f,       0.0f,       1.0f,       0.0f,
-                   position.x, position.y, position.z, 1.0f);
+INLINE Mat4f Transform::GetTranslationMatrix () const {
+    return Mat4f(1.0f,       0.0f,       0.0f,       0.0f,
+                 0.0f,       1.0f,       0.0f,       0.0f,
+                 0.0f,       0.0f,       1.0f,       0.0f,
+                 position.x, position.y, position.z, 1.0f);
 }
 
-INLINE Matrix4 Transform::GetOrientationMatrix () const {
+INLINE Mat4f Transform::GetOrientationMatrix () const {
     Vec3f u = Up();
     Vec3f f = Forward();
     Vec3f r = Right();
 
-    return Matrix4(
+    return Mat4f(
         r.x,  r.y,  r.z, 0.0f,
         u.x,  u.y,  u.z, 0.0f,
         f.x,  f.y,  f.z, 0.0f,
@@ -131,18 +131,18 @@ INLINE Matrix4 Transform::GetOrientationMatrix () const {
         );
 }
 
-INLINE Matrix4 Transform::GetScaleMatrix () const {
-    return Matrix4(scale.x, 0.0f,    0.0f,    0.0f,
-                   0.0f,    scale.y, 0.0f,    0.0f,
-                   0.0f,    0.0f,    scale.z, 0.0f,
-                   0.0f,    0.0f,    0.0f,    1.0f);
+INLINE Mat4f Transform::GetScaleMatrix () const {
+    return Mat4f(scale.x, 0.0f,    0.0f,    0.0f,
+                 0.0f,    scale.y, 0.0f,    0.0f,
+                 0.0f,    0.0f,    scale.z, 0.0f,
+                 0.0f,    0.0f,    0.0f,    1.0f);
 }
 
-INLINE Matrix4 Transform::GetTransformationMatrix () const {
+INLINE Mat4f Transform::GetTransformationMatrix () const {
     return GetScaleMatrix() * GetOrientationMatrix() * GetTranslationMatrix();
 }
 
-INLINE Matrix4 Transform::GetViewTransformationMatrix () const {
+INLINE Mat4f Transform::GetViewTransformationMatrix () const {
     return (GetTranslationMatrix() * GetOrientationMatrix() * GetScaleMatrix()).Inverse();
 }
 

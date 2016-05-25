@@ -20,11 +20,11 @@ std::ostream& operator<< (std::ostream &os, const Vec2f &vec);
 std::ostream& operator<< (std::ostream &os, const Vec3f &vec);
 std::ostream& operator<< (std::ostream &os, const Vec4f &vec);
 
-std::ostream& operator<< (std::ostream &os, const Quaternion &quat);
+std::ostream& operator<< (std::ostream &os, const Quat4f &quat);
 
-std::ostream& operator<< (std::ostream &os, const Matrix2 &mat);
-std::ostream& operator<< (std::ostream &os, const Matrix3 &mat);
-std::ostream& operator<< (std::ostream &os, const Matrix4 &mat);
+std::ostream& operator<< (std::ostream &os, const Mat2f &mat);
+std::ostream& operator<< (std::ostream &os, const Mat3f &mat);
+std::ostream& operator<< (std::ostream &os, const Mat4f &mat);
 
 std::ostream& operator<< (std::ostream &os, const Color &col);
 

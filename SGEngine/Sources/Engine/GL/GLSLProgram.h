@@ -86,19 +86,19 @@ public:
      * Set the value of a uniform using data from a 2x2 Matrix.
      * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, const Matrix2 &value);
+    void SetUniform (const std::string &name, const Mat2f &value);
 
     /**
      * Set the value of a uniform using data from a 3x3 Matrix.
      * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, const Matrix3 &value);
+    void SetUniform (const std::string &name, const Mat3f &value);
 
     /**
      * Set the value of a uniform using data from a 4x4 Matrix.
      * (Might update uniform cache.)
      */
-    void SetUniform (const std::string &name, const Matrix4 &value);
+    void SetUniform (const std::string &name, const Mat4f &value);
 
 private:
     GLuint m_id; // 0 == error/uninitialized

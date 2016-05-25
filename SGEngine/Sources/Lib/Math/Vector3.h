@@ -12,8 +12,6 @@
 #ifndef __SGENGINE_VECTOR3_H_
 #define __SGENGINE_VECTOR3_H_
 
-#include <cmath> // fabs
-
 namespace sge {
 
 /**
@@ -27,7 +25,7 @@ public:
 
 public:
     /** Construct a default Vec3_T at origin. */
-             Vec3_T () : x(0), y(0), z(0) { }
+    Vec3_T () : x(0), y(0), z(0) { }
 
     /** Fill Constructor. */
     explicit Vec3_T (const T f) : x(f), y(f), z(f) { }
@@ -158,7 +156,7 @@ public:
      * @param rhs Vec3_T to be scaled
      */
     template <typename U>
-    friend Vec3_T<U> operator* (const T a, const Vec3_T<U> &rhs);
+    friend Vec3_T<U> operator* (const U a, const Vec3_T<U> &rhs);
 
     /**
      * Multiply this Vec3_T by another Vec3_T componentwise.

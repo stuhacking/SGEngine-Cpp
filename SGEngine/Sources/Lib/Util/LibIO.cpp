@@ -24,14 +24,14 @@ std::ostream &operator<< (std::ostream &os, const Vec4f &vec) {
     return os << "<Vec4f " << vec.x << " " << vec.y << " " << vec.z << " " << vec.w << ">";
 }
 
-// Quaternion Printer
-std::ostream &operator<< (std::ostream &os, const Quaternion &quat) {
-    return os << "<Quaternion (" << quat.i << " " << quat.j << " " << quat.k << ") " << quat.w << ">";
+// Quat4f Printer
+std::ostream &operator<< (std::ostream &os, const Quat4f &quat) {
+    return os << "<Quat4f (" << quat.i << " " << quat.j << " " << quat.k << ") " << quat.w << ">";
 }
 
-// Matrix2 Printer
-std::ostream &operator<< (std::ostream &os, const Matrix2 &mat) {
-    os << "<Matrix2 ";
+// Mat2f Printer
+std::ostream &operator<< (std::ostream &os, const Mat2f &mat) {
+    os << "<Mat2f ";
     for (u8 i = 0; i < 2; ++i) {
         auto sep = "";
         os << "[";
@@ -45,9 +45,9 @@ std::ostream &operator<< (std::ostream &os, const Matrix2 &mat) {
     return os;
 }
 
-// Matrix3 Printer
-std::ostream &operator<< (std::ostream &os, const Matrix3 &mat) {
-    os << "<Matrix3 ";
+// Mat3f Printer
+std::ostream &operator<< (std::ostream &os, const Mat3f &mat) {
+    os << "<Mat3f ";
     for (u8 i = 0; i < 4; ++i) {
         auto sep = "";
         os << "[";
@@ -61,9 +61,9 @@ std::ostream &operator<< (std::ostream &os, const Matrix3 &mat) {
     return os;
 }
 
-// Matrix4 Printer
-std::ostream &operator<< (std::ostream &os, const Matrix4 &mat) {
-    os << "<Matrix4 ";
+// Mat4f Printer
+std::ostream &operator<< (std::ostream &os, const Mat4f &mat) {
+    os << "<Mat4f ";
     for (u8 i = 0; i < 4; ++i) {
         auto sep = "";
         os << "[";

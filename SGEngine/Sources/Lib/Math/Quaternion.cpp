@@ -1,24 +1,29 @@
 //
-// Quaternion Implementation.
+// Quat4f Implementation.
 //
 #include "../Lib.h"
 
 namespace sge {
 
-const Quaternion Quaternion::IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
+const Quat4f QUAT4F_IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
 
-Quaternion Quaternion::AxisAngle (const Vec3f &axis, const float angle) {
-    float sinHalf, cosHalf;
+template <typename T>
+Quat4_T<T> Quat4_T<T>::AxisAngle (const Vec3_T<T> &axis, const T angle) {
+    T sinHalf, cosHalf;
     FMath::SinCos(angle * 0.5f, sinHalf, cosHalf);
 
-    return Quaternion(axis.x * sinHalf, axis.y * sinHalf, axis.z * sinHalf,
+    return Quat4_T<T>(axis.x * sinHalf, axis.y * sinHalf, axis.z * sinHalf,
                       cosHalf);
 }
 
-Vec3f Quaternion::Rotate (const Vec3f &vec) const {
-    Quaternion result = (*this) * vec * Conjugate();
+template <typename T>
+Vec3_T<T> Quat4_T<T>::Rotate (const Vec3_T<T> &vec) const {
+    Quat4_T<T> result = (*this) * vec * Conjugate();
 
-    return Vec3f(result.i, result.j, result.k);
+    return Vec3_T<T>(result.i, result.j, result.k);
 }
+
+// Generate code for common types
+template class Quat4_T<float>;
 
 } /* namespace sge */

@@ -1,6 +1,6 @@
-/**
- * Vector Implementation.
- */
+//
+//Vector Implementation.
+//
 #include "../Lib.h"
 
 namespace sge {
@@ -34,8 +34,11 @@ Vec3_T<T> Vec3_T<T>::Rotate (const T angle, const Vec3_T<T> &axis) const {
 
 template <typename T>
 void Vec3_T<T>::RotateSelf (const T angle, const Vec3_T<T> &axis) {
-    *this = Quaternion::AxisAngle(axis, TO_RADIANS(angle)).Rotate(*this);
+    *this = Quat4f::AxisAngle(axis, angle).Rotate(*this);
 }
+
+// Generate code for common types.
+template class Vec3_T<float>;
 
 //==================================
 // VECTOR 4

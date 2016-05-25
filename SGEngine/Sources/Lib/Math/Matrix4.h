@@ -7,7 +7,7 @@
  *
  * --------------------------------------------------------------------------
  *
- * @brief Defines a low level Matrix4 type.
+ * @brief Defines a low level Mat4 type.
  */
 #ifndef __SGENGINE_MATRIX4_H_
 #define __SGENGINE_MATRIX4_H_
@@ -30,246 +30,273 @@ namespace sge {
  *  w| 3 7 B F
  * </pre>
  */
-class Matrix4 {
-public:
-    static const Matrix4 ZERO;
-    static const Matrix4 ONE;
-    static const Matrix4 IDENTITY;
-
+template <typename T>
+class Mat4_T {
 public:
     /** Default Constructor */
-    Matrix4 () { }
+    Mat4_T () { }
 
     /** Fill Constructor */
-    Matrix4 (const float f);
+    explicit Mat4_T (const T f);
 
     /** Value Constructor */
-    Matrix4 (const float aa, const float ab, const float ac, const float ad,
-             const float ba, const float bb, const float bc, const float bd,
-             const float ca, const float cb, const float cc, const float cd,
-             const float da, const float db, const float dc, const float dd);
+    explicit Mat4_T (const T aa, const T ab, const T ac, const T ad,
+                     const T ba, const T bb, const T bc, const T bd,
+                     const T ca, const T cb, const T cc, const T cd,
+                     const T da, const T db, const T dc, const T dd);
 
-    /** Vec4f Column Constructor */
-    Matrix4 (const Vec4f &col1, const Vec4f &col2,
-             const Vec4f &col3, const Vec4f &col4);
+    /** Vec4_T<T> Column Constructor */
+    explicit Mat4_T (const Vec4_T<T> &col1, const Vec4_T<T> &col2,
+                     const Vec4_T<T> &col3, const Vec4_T<T> &col4);
 
     /** 1D Array Constructor */
-    Matrix4 (const float data[16]);
+    explicit Mat4_T (const T data[16]);
 
     /** 2D Array Constructor */
-    Matrix4 (const float data[4][4]);
+    explicit Mat4_T (const T data[4][4]);
 
     /**
-     * Set the values of this Matrix4 using float values.
+     * Set the values of this Mat4_T using T values.
      * Destructive.
      */
-    void Set (const float aa, const float ab, const float ac, const float ad,
-              const float ba, const float bb, const float bc, const float bd,
-              const float ca, const float cb, const float cc, const float cd,
-              const float da, const float db, const float dc, const float dd);
+    void Set (const T aa, const T ab, const T ac, const T ad,
+              const T ba, const T bb, const T bc, const T bd,
+              const T ca, const T cb, const T cc, const T cd,
+              const T da, const T db, const T dc, const T dd);
 
     /**
-     * Set the columns of this Matrix4 using Vec4fs.
+     * Set the columns of this Mat4_T using Vec4_T<T>s.
      * Destructive.
      */
-    void Set (const Vec4f &col1, const Vec4f &col2, const Vec4f &col3, const Vec4f &col4);
+    void Set (const Vec4_T<T> &col1, const Vec4_T<T> &col2, const Vec4_T<T> &col3, const Vec4_T<T> &col4);
 
     /**
-     * Set the values of this Matrix4 using a 1D float array.
+     * Set the values of this Mat4_T using a 1D T array.
      * Destructive.
      */
-    void Set (const float data[16]);
+    void Set (const T data[16]);
 
     /**
-     * Set the values of this Matrix4 using a 2D float array.
+     * Set the values of this Mat4_T using a 2D T array.
      * Destructive.
      */
-    void Set (const float data[4][4]);
+    void Set (const T data[4][4]);
 
     /**
-     * Set all values of this Matrix4 to zero.
+     * Set all values of this Mat4_T to zero.
      * Destructive.
      */
     void Zero ();
 
     /**
-     * Test if this Matrix4 is the identity Matrix.
+     * Test if this Mat4_T is the identity Matrix.
      */
     bool IsIdentity () const;
 
-    const Vec4f &operator[] (const u32 index) const;
+    const Vec4_T<T> &operator[] (const u32 index) const;
 
-    Vec4f &operator[] (const u32 index);
+    Vec4_T<T> &operator[] (const u32 index);
 
-    /** Matrix4 operations. */
-    Matrix4 operator* (const float a) const;
+    /** Mat4_T operations. */
+    Mat4_T operator* (const T a) const;
 
-    friend Matrix4 operator* (const float a, const Matrix4 &rhs);
+    template <typename U>
+    friend Mat4_T<U> operator* (const U a, const Mat4_T<U> &rhs);
 
-    Matrix4 operator* (const Matrix4 &rhs) const;
+    Mat4_T operator* (const Mat4_T &rhs) const;
 
-    Vec4f operator* (const Vec4f &rhs) const;
+    Vec4_T<T> operator* (const Vec4_T<T> &rhs) const;
 
-    friend Vec4f operator* (const Vec4f &lhs, const Matrix4 &rhs);
+    template <typename U>
+    friend Vec4_T<U> operator* (const Vec4_T<U> &lhs, const Mat4_T<U> &rhs);
 
-    Matrix4 operator+ (const Matrix4 &rhs) const;
+    Mat4_T operator+ (const Mat4_T &rhs) const;
 
-    Matrix4 operator- (const Matrix4 &rhs) const;
+    Mat4_T operator- (const Mat4_T &rhs) const;
 
-    Matrix4 &operator*= (const float a);
+    Mat4_T &operator*= (const T a);
 
-    Matrix4 &operator*= (const Matrix4 &rhs);
+    Mat4_T &operator*= (const Mat4_T &rhs);
 
-    Matrix4 &operator+= (const Matrix4 &rhs);
+    Mat4_T &operator+= (const Mat4_T &rhs);
 
-    Matrix4 &operator-= (const Matrix4 &rhs);
+    Mat4_T &operator-= (const Mat4_T &rhs);
 
-    float Determinant () const;
+    T Determinant () const;
 
     bool HasInverse () const;
 
-    Matrix4 Inverse () const;
+    Mat4_T Inverse () const;
 
     bool InverseSelf ();
 
-    Matrix4 Transpose () const;
+    Mat4_T Transpose () const;
 
-    Matrix4 &TransposeSelf ();
+    Mat4_T &TransposeSelf ();
 
     /** Comarisons. */
-    bool Compare (const Matrix4 &other) const;
+    bool Compare (const Mat4_T &other) const;
 
-    bool Compare (const Matrix4 &other, const float threshold) const;
+    bool Compare (const Mat4_T &other, const T threshold) const;
 
-    bool operator== (const Matrix4 &other) const;
+    bool operator== (const Mat4_T &other) const;
 
-    bool operator!= (const Matrix4 &other) const;
+    bool operator!= (const Mat4_T &other) const;
 
 public:
-    Vec4f mat[4];
+    Vec4_T<T> mat[4];
 };
+
+// Common Mat4 types
+typedef Mat4_T<float> Mat4f;
+
+// Constants
+extern const Mat4f MAT4F_ZERO;
+extern const Mat4f MAT4F_ONE;
+extern const Mat4f MAT4F_IDENTITY;
 
 // --------------------------------------------------------------------------
 
-INLINE Matrix4::Matrix4 (const float f) {
+template <typename T>
+INLINE Mat4_T<T>::Mat4_T (const T f) {
     mat[0].x = f; mat[0].y = f; mat[0].z = f; mat[0].w = f;
     mat[1].x = f; mat[1].y = f; mat[1].z = f; mat[1].w = f;
     mat[2].x = f; mat[2].y = f; mat[2].z = f; mat[2].w = f;
     mat[3].x = f; mat[3].y = f; mat[3].z = f; mat[3].w = f;
 }
 
-INLINE Matrix4::Matrix4 (const float aa, const float ab, const float ac, const float ad,
-                         const float ba, const float bb, const float bc, const float bd,
-                         const float ca, const float cb, const float cc, const float cd,
-                         const float da, const float db, const float dc, const float dd) {
+template <typename T>
+INLINE Mat4_T<T>::Mat4_T (const T aa, const T ab, const T ac, const T ad,
+                          const T ba, const T bb, const T bc, const T bd,
+                          const T ca, const T cb, const T cc, const T cd,
+                          const T da, const T db, const T dc, const T dd) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac; mat[0].w = ad;
     mat[1].x = ba; mat[1].y = bb; mat[1].z = bc; mat[1].w = bd;
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc; mat[2].w = cd;
     mat[3].x = da; mat[3].y = db; mat[3].z = dc; mat[3].w = dd;
 }
 
-INLINE Matrix4::Matrix4 (const Vec4f &col1, const Vec4f &col2,
-                         const Vec4f &col3, const Vec4f &col4) {
+template <typename T>
+INLINE Mat4_T<T>::Mat4_T (const Vec4_T<T> &col1, const Vec4_T<T> &col2,
+                          const Vec4_T<T> &col3, const Vec4_T<T> &col4) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z; mat[0].w = col1.w;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z; mat[1].w = col2.w;
     mat[2].x = col3.x; mat[2].y = col3.y; mat[2].z = col3.z; mat[2].w = col3.w;
     mat[3].x = col4.x; mat[3].y = col4.y; mat[3].z = col4.z; mat[3].w = col4.w;
 }
 
-INLINE Matrix4::Matrix4 (const float data[16]) {
-    std::memcpy(mat, data, 16 * sizeof(float));
+template <typename T>
+INLINE Mat4_T<T>::Mat4_T (const T data[16]) {
+    std::memcpy(mat, data, 16 * sizeof(T));
 }
 
-INLINE Matrix4::Matrix4 (const float data[4][4]) {
-    std::memcpy(mat, data, 4 * 4 * sizeof(float));
+template <typename T>
+INLINE Mat4_T<T>::Mat4_T (const T data[4][4]) {
+    std::memcpy(mat, data, 4 * 4 * sizeof(T));
 }
 
-INLINE void Matrix4::Set (const float aa, const float ab, const float ac, const float ad,
-                          const float ba, const float bb, const float bc, const float bd,
-                          const float ca, const float cb, const float cc, const float cd,
-                          const float da, const float db, const float dc, const float dd) {
+template <typename T>
+INLINE void Mat4_T<T>::Set (const T aa, const T ab, const T ac, const T ad,
+                            const T ba, const T bb, const T bc, const T bd,
+                            const T ca, const T cb, const T cc, const T cd,
+                            const T da, const T db, const T dc, const T dd) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac; mat[0].w = ad;
     mat[1].x = ba; mat[1].y = bb; mat[1].z = bc; mat[1].w = bd;
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc; mat[2].w = cd;
     mat[3].x = da; mat[3].y = db; mat[3].z = dc; mat[3].w = dd;
 }
 
-INLINE void Matrix4::Set (const Vec4f &col1, const Vec4f &col2,
-                          const Vec4f &col3, const Vec4f &col4) {
+template <typename T>
+INLINE void Mat4_T<T>::Set (const Vec4_T<T> &col1, const Vec4_T<T> &col2,
+                            const Vec4_T<T> &col3, const Vec4_T<T> &col4) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z; mat[0].w = col1.w;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z; mat[1].w = col2.w;
     mat[2].x = col3.x; mat[2].y = col3.y; mat[2].z = col3.z; mat[2].w = col3.w;
     mat[3].x = col4.x; mat[3].y = col4.y; mat[3].z = col4.z; mat[3].w = col4.w;
 }
 
-INLINE void Matrix4::Set (const float data[16]) {
-    std::memcpy(mat, data, 16 * sizeof(float));
+template <typename T>
+INLINE void Mat4_T<T>::Set (const T data[16]) {
+    std::memcpy(mat, data, 16 * sizeof(T));
 }
 
-INLINE void Matrix4::Set (const float data[4][4]) {
-    std::memcpy(mat, data, 4 * 4 * sizeof(float));
+template <typename T>
+INLINE void Mat4_T<T>::Set (const T data[4][4]) {
+    std::memcpy(mat, data, 4 * 4 * sizeof(T));
 }
 
-INLINE void Matrix4::Zero () {
+template <typename T>
+INLINE void Mat4_T<T>::Zero () {
     mat[0].Zero();
     mat[1].Zero();
     mat[2].Zero();
     mat[3].Zero();
 }
 
-INLINE bool Matrix4::IsIdentity () const {
-    return Compare(Matrix4::IDENTITY);
+template <typename T>
+INLINE bool Mat4_T<T>::IsIdentity () const {
+    return Compare(MAT4F_IDENTITY);
 }
 
-INLINE const Vec4f &Matrix4::operator[] (const u32 index) const {
+template <typename T>
+INLINE const Vec4_T<T> &Mat4_T<T>::operator[] (const u32 index) const {
     return mat[index];
 }
 
-INLINE Vec4f &Matrix4::operator[] (const u32 index) {
+template <typename T>
+INLINE Vec4_T<T> &Mat4_T<T>::operator[] (const u32 index) {
     return mat[index];
 }
 
 //=======================
-// Matrix4 Operations
+// Mat4_T<T> Operations
 //=======================
 
-INLINE Matrix4 Matrix4::operator* (const float a) const {
-    return Matrix4(mat[0] * a, mat[1] * a, mat[2] * a, mat[3] * a);
+template <typename T>
+INLINE Mat4_T<T> Mat4_T<T>::operator* (const T a) const {
+    return Mat4_T<T>(mat[0] * a, mat[1] * a, mat[2] * a, mat[3] * a);
 }
 
-INLINE Matrix4 operator* (const float a, const Matrix4 &rhs) {
+template <typename T>
+INLINE Mat4_T<T> operator* (const T a, const Mat4_T<T> &rhs) {
     return rhs * a;
 }
 
-INLINE Matrix4 Matrix4::operator* (const Matrix4 &rhs) const {
-    Matrix4 lhs = Transpose();
+template <typename T>
+INLINE Mat4_T<T> Mat4_T<T>::operator* (const Mat4_T<T> &rhs) const {
+    Mat4_T<T> lhs = Transpose();
 
-    return Matrix4(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
-                   lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]), lhs[3].Dot(rhs[1]),
-                   lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]), lhs[3].Dot(rhs[2]),
-                   lhs[0].Dot(rhs[3]), lhs[1].Dot(rhs[3]), lhs[2].Dot(rhs[3]), lhs[3].Dot(rhs[3]));
+    return Mat4_T<T>(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
+                     lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]), lhs[3].Dot(rhs[1]),
+                     lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]), lhs[3].Dot(rhs[2]),
+                     lhs[0].Dot(rhs[3]), lhs[1].Dot(rhs[3]), lhs[2].Dot(rhs[3]), lhs[3].Dot(rhs[3]));
 }
 
-INLINE Vec4f Matrix4::operator* (const Vec4f &rhs) const {
-    return Vec4f(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z + mat[3].x * rhs.w,
-                   mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z + mat[3].y * rhs.w,
-                   mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z + mat[3].z * rhs.w,
-                   mat[0].w * rhs.x + mat[1].w * rhs.y + mat[2].w * rhs.z + mat[3].w * rhs.w);
+template <typename T>
+INLINE Vec4_T<T> Mat4_T<T>::operator* (const Vec4_T<T> &rhs) const {
+    return Vec4_T<T>(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z + mat[3].x * rhs.w,
+                     mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z + mat[3].y * rhs.w,
+                     mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z + mat[3].z * rhs.w,
+                     mat[0].w * rhs.x + mat[1].w * rhs.y + mat[2].w * rhs.z + mat[3].w * rhs.w);
 }
 
-INLINE Vec4f operator* (const Vec4f &lhs, const Matrix4 &rhs) {
+template <typename T>
+INLINE Vec4_T<T> operator* (const Vec4_T<T> &lhs, const Mat4_T<T> &rhs) {
     return rhs * lhs;
 }
 
-INLINE Matrix4 Matrix4::operator+ (const Matrix4 &rhs) const {
-    return Matrix4(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2], mat[3] + rhs[3]);
+template <typename T>
+INLINE Mat4_T<T> Mat4_T<T>::operator+ (const Mat4_T<T> &rhs) const {
+    return Mat4_T<T>(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2], mat[3] + rhs[3]);
 }
 
-INLINE Matrix4 Matrix4::operator- (const Matrix4 &rhs) const {
-    return Matrix4(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2], mat[3] - rhs[3]);
+template <typename T>
+INLINE Mat4_T<T> Mat4_T<T>::operator- (const Mat4_T<T> &rhs) const {
+    return Mat4_T<T>(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2], mat[3] - rhs[3]);
 }
 
-INLINE Matrix4 &Matrix4::operator*= (const float a) {
+template <typename T>
+INLINE Mat4_T<T> &Mat4_T<T>::operator*= (const T a) {
     mat[0] *= a;
     mat[1] *= a;
     mat[2] *= a;
@@ -278,8 +305,9 @@ INLINE Matrix4 &Matrix4::operator*= (const float a) {
     return *this;
 }
 
-INLINE Matrix4 &Matrix4::operator*= (const Matrix4 &rhs) {
-    Matrix4 lhs = Transpose();
+template <typename T>
+INLINE Mat4_T<T> &Mat4_T<T>::operator*= (const Mat4_T<T> &rhs) {
+    Mat4_T<T> lhs = Transpose();
 
     Set(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
         lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]), lhs[3].Dot(rhs[1]),
@@ -289,7 +317,8 @@ INLINE Matrix4 &Matrix4::operator*= (const Matrix4 &rhs) {
     return *this;
 }
 
-INLINE Matrix4 &Matrix4::operator+= (const Matrix4 &rhs) {
+template <typename T>
+INLINE Mat4_T<T> &Mat4_T<T>::operator+= (const Mat4_T<T> &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
     mat[2] += rhs[2];
@@ -298,7 +327,8 @@ INLINE Matrix4 &Matrix4::operator+= (const Matrix4 &rhs) {
     return *this;
 }
 
-INLINE Matrix4 &Matrix4::operator-= (const Matrix4 &rhs) {
+template <typename T>
+INLINE Mat4_T<T> &Mat4_T<T>::operator-= (const Mat4_T<T> &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
     mat[2] -= rhs[2];
@@ -307,33 +337,37 @@ INLINE Matrix4 &Matrix4::operator-= (const Matrix4 &rhs) {
     return *this;
 }
 
-INLINE float Matrix4::Determinant () const {
-    float a, b, c, d;
+template <typename T>
+INLINE T Mat4_T<T>::Determinant () const {
+    T a, b, c, d;
 
-    a = Matrix3(mat[1].y, mat[2].y, mat[3].y, mat[1].z, mat[2].z, mat[3].z, mat[1].w, mat[2].w, mat[3].w)
+    a = Mat3f(mat[1].y, mat[2].y, mat[3].y, mat[1].z, mat[2].z, mat[3].z, mat[1].w, mat[2].w, mat[3].w)
         .Determinant();
-    b = Matrix3(mat[1].x, mat[2].x, mat[3].x, mat[1].z, mat[2].z, mat[3].z, mat[1].w, mat[2].w, mat[3].w)
+    b = Mat3f(mat[1].x, mat[2].x, mat[3].x, mat[1].z, mat[2].z, mat[3].z, mat[1].w, mat[2].w, mat[3].w)
         .Determinant();
-    c = Matrix3(mat[1].x, mat[2].x, mat[3].x, mat[1].y, mat[2].y, mat[3].y, mat[1].w, mat[2].w, mat[3].w)
+    c = Mat3f(mat[1].x, mat[2].x, mat[3].x, mat[1].y, mat[2].y, mat[3].y, mat[1].w, mat[2].w, mat[3].w)
         .Determinant();
-    d = Matrix3(mat[1].x, mat[2].x, mat[3].x, mat[1].y, mat[2].y, mat[3].y, mat[1].z, mat[2].z, mat[3].z)
+    d = Mat3f(mat[1].x, mat[2].x, mat[3].x, mat[1].y, mat[2].y, mat[3].y, mat[1].z, mat[2].z, mat[3].z)
         .Determinant();
 
     return mat[0].x * a - mat[0].y * b + mat[0].z * c - mat[0].w * d;
 }
 
-INLINE bool Matrix4::HasInverse () const {
+template <typename T>
+INLINE bool Mat4_T<T>::HasInverse () const {
     return 0 != Determinant();
 }
 
-INLINE Matrix4 Matrix4::Transpose () const {
-    return Matrix4(mat[0].x, mat[1].x, mat[2].x, mat[3].x,
-                   mat[0].y, mat[1].y, mat[2].y, mat[3].y,
-                   mat[0].z, mat[1].z, mat[2].z, mat[3].z,
-                   mat[0].w, mat[1].w, mat[2].w, mat[3].w);
+template <typename T>
+INLINE Mat4_T<T> Mat4_T<T>::Transpose () const {
+    return Mat4_T<T>(mat[0].x, mat[1].x, mat[2].x, mat[3].x,
+                     mat[0].y, mat[1].y, mat[2].y, mat[3].y,
+                     mat[0].z, mat[1].z, mat[2].z, mat[3].z,
+                     mat[0].w, mat[1].w, mat[2].w, mat[3].w);
 }
 
-INLINE Matrix4 &Matrix4::TransposeSelf () {
+template <typename T>
+INLINE Mat4_T<T> &Mat4_T<T>::TransposeSelf () {
 
     std::swap(mat[0].y, mat[1].x);
     std::swap(mat[0].z, mat[2].x);
@@ -346,26 +380,30 @@ INLINE Matrix4 &Matrix4::TransposeSelf () {
 }
 
 //=======================
-// Matrix4 Comparisons
+// Mat4_T<T> Comparisons
 //=======================
 
-INLINE bool Matrix4::Compare (const Matrix4 &other) const {
+template <typename T>
+INLINE bool Mat4_T<T>::Compare (const Mat4_T<T> &other) const {
     return mat[0].Compare(other.mat[0]) && mat[1].Compare(other.mat[1]) && mat[2].Compare(other.mat[2]) &&
-           mat[3].Compare(other.mat[3]);
+        mat[3].Compare(other.mat[3]);
 }
 
-INLINE bool Matrix4::Compare (const Matrix4 &other, const float threshold) const {
+template <typename T>
+INLINE bool Mat4_T<T>::Compare (const Mat4_T<T> &other, const T threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold) &&
         mat[2].Compare(other.mat[2], threshold) &&
         mat[3].Compare(other.mat[3], threshold);
 }
 
-INLINE bool Matrix4::operator== (const Matrix4 &other) const {
+template <typename T>
+INLINE bool Mat4_T<T>::operator== (const Mat4_T<T> &other) const {
     return Compare(other);
 }
 
-INLINE bool Matrix4::operator!= (const Matrix4 &other) const {
+template <typename T>
+INLINE bool Mat4_T<T>::operator!= (const Mat4_T<T> &other) const {
     return !Compare(other);
 }
 

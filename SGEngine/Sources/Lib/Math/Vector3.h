@@ -33,7 +33,7 @@ public:
     explicit Vec3_T (const T f) : x(f), y(f), z(f) { }
 
     /** Construct a Vec3_T using x, y, z coordinates. */
-    explicit Vec3_T (const T xx, const float yy, const float zz)
+    explicit Vec3_T (const T xx, const T yy, const T zz)
         : x(xx), y(yy), z(zz) { }
 
     /** Value access using an index. */
@@ -50,7 +50,7 @@ public:
      * @param yy The Y component
      * @param zz The Z component
      */
-    void Set (const T xx, const float yy, const float zz);
+    void Set (const T xx, const T yy, const T zz);
 
     /**
      * Set the values of x, y, and z to 0.0f.
@@ -115,7 +115,7 @@ public:
      * @param max Maximum length of Vec3_T
      * @return New clamped Vec3_T
      */
-    Vec3_T ClampLength (const T min, const float max) const;
+    Vec3_T ClampLength (const T min, const T max) const;
 
     /**
      * Truncate this Vec3_T if its length exceeds the limit.
@@ -130,7 +130,7 @@ public:
      * @param min Minimum length of Vec3_T
      * @param max Maximum length of Vec3_T
      */
-    void ClampLengthSelf (const T min, const float max);
+    void ClampLengthSelf (const T min, const T max);
 
     /**
      * Clamp Vec3_T within minimum and maximum bounds, given by other
@@ -326,7 +326,7 @@ INLINE T &Vec3_T<T>::operator[] (const u32 index) {
 }
 
 template <typename T>
-INLINE void Vec3_T<T>::Set (const T xx, const float yy, const float zz) {
+INLINE void Vec3_T<T>::Set (const T xx, const T yy, const T zz) {
     x = xx;
     y = yy;
     z = zz;
@@ -400,7 +400,7 @@ INLINE Vec3_T<T> Vec3_T<T>::ClampLength (const T max) const {
 }
 
 template <typename T>
-INLINE Vec3_T<T> Vec3_T<T>::ClampLength (const T min, const float max) const {
+INLINE Vec3_T<T> Vec3_T<T>::ClampLength (const T min, const T max) const {
     T ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -422,7 +422,7 @@ INLINE void Vec3_T<T>::ClampLengthSelf (const T max) {
 }
 
 template <typename T>
-INLINE void Vec3_T<T>::ClampLengthSelf (const T min, const float max) {
+INLINE void Vec3_T<T>::ClampLengthSelf (const T min, const T max) {
     T ls = LengthSqr();
 
     if (ls < (min * min)) {

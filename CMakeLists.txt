@@ -1,12 +1,16 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(SGEngine)
 
-# Start with modern standard: C++14, or C++1y if using APPLE
-# TODO Better check for C++14 compiler support, and fallback/failure.
-if (APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++14")
+# Start with modern standard: C++14, or C++1y
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
+CHECK_CXX_COMPILER_FLAG("-std=c++1y" COMPILER_SUPPORTS_CXX1Y)
+if(COMPILER_SUPPORTS_CXX14)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+elseif(COMPILER_SUPPORTS_CXX1Y)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++1y")
+  message(FATAL_ERROR "${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
 endif()
 
 # Automatically download/build External Dependencies

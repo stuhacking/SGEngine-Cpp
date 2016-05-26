@@ -24,6 +24,12 @@ public:
     T x, y;
 
 public:
+    static const Vec2_T ZERO;
+    static const Vec2_T ONE;
+    static const Vec2_T X;
+    static const Vec2_T Y;
+
+public:
     /** Construct a default Vec2_T at 0,0. */
     Vec2_T () : x(0), y(0) { }
 
@@ -276,12 +282,6 @@ public:
 
 // Common Vec2 types.
 typedef Vec2_T<float> Vec2f;
-
-// Constants
-extern const Vec2f VEC2F_ZERO;
-extern const Vec2f VEC2F_ONE;
-extern const Vec2f VEC2F_X;
-extern const Vec2f VEC2F_Y;
 
 // --------------------------------------------------------------------------
 

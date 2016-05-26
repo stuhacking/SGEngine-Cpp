@@ -28,6 +28,9 @@ public:
     T w;
 
 public:
+    static const Quat4_T IDENTITY;
+
+public:
     /** Default Constructor */
     Quat4_T () : i(0.0f), j(0.0f), k(0.0f), w(0.0f) { }
 
@@ -152,9 +155,6 @@ public:
 // Common Quat4 types
 typedef Quat4_T<float> Quat4f;
 
-// Constants
-extern const Quat4f QUAT4F_IDENTITY;
-
 // --------------------------------------------------------------------------
 
 template <typename T>
@@ -202,7 +202,7 @@ INLINE void Quat4_T<T>::NormalizeSelf () {
 
 template <typename T>
 INLINE bool Quat4_T<T>::IsIdentity () const {
-    return *this == QUAT4F_IDENTITY;
+    return *this == Quat4f::IDENTITY;
 }
 
 template <typename T>

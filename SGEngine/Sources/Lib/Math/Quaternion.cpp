@@ -5,7 +5,7 @@
 
 namespace sge {
 
-const Quat4f QUAT4F_IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
+template <typename T> const Quat4_T<T> Quat4_T<T>::IDENTITY(0, 0, 0, 1);
 
 template <typename T>
 Quat4_T<T> Quat4_T<T>::AxisAngle (const Vec3_T<T> &axis, const T angle) {

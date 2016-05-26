@@ -49,22 +49,22 @@ TEST (Transform_Test, Scale_Matrix) {
 }
 
 TEST (Transform_Test, No_Transform) {
-    Vec3f v = sge::VEC3F_ZERO;
+    Vec3f v = sge::Vec3f::ZERO;
 
     EXPECT_EQ(v, apply_transform_position(Transform(), v));
     EXPECT_EQ(v, apply_transform_direction(Transform(), v));
 }
 
 TEST (Transform_Test, Clear_Transform) {
-    Vec3f v = sge::VEC3F_ZERO;
+    Vec3f v = sge::Vec3f::ZERO;
     Transform t = Transform();
     t.position += Vec3f(2.0f, 2.0f, 2.0f);
 
     EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), apply_transform_position(t, v));
-    EXPECT_EQ(sge::VEC3F_ZERO, apply_transform_direction(t, v));
+    EXPECT_EQ(sge::Vec3f::ZERO, apply_transform_direction(t, v));
 
     t.Clear();
 
-    EXPECT_EQ(sge::VEC3F_ZERO, apply_transform_position(t, v));
-    EXPECT_EQ(sge::VEC3F_ZERO, apply_transform_direction(t, v));
+    EXPECT_EQ(sge::Vec3f::ZERO, apply_transform_position(t, v));
+    EXPECT_EQ(sge::Vec3f::ZERO, apply_transform_direction(t, v));
 }

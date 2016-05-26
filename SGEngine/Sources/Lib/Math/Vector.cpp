@@ -9,20 +9,23 @@ namespace sge {
 // VECTOR 2
 //==================================
 
-const Vec2f VEC2F_ZERO(0.0f);
-const Vec2f VEC2F_ONE(1.0f);
-const Vec2f VEC2F_X(1.0f, 0.0f);
-const Vec2f VEC2F_Y(0.0f, 1.0f);
+template <typename T> const Vec2_T<T> Vec2_T<T>::ZERO(0);
+template <typename T> const Vec2_T<T> Vec2_T<T>::ONE(1);
+template <typename T> const Vec2_T<T> Vec2_T<T>::X(1, 0);
+template <typename T> const Vec2_T<T> Vec2_T<T>::Y(0, 1);
+
+// Generate code for common types
+template class Vec2_T<float>;
 
 //==================================
 // VECTOR 3
 //==================================
 
-const Vec3f VEC3F_ZERO(0.0f);
-const Vec3f VEC3F_ONE(1.0f);
-const Vec3f VEC3F_X(1.0f, 0.0f, 0.0f);
-const Vec3f VEC3F_Y(0.0f, 1.0f, 0.0f);
-const Vec3f VEC3F_Z(0.0f, 0.0f, 1.0f);
+template <typename T> const Vec3_T<T> Vec3_T<T>::ZERO(0);
+template <typename T> const Vec3_T<T> Vec3_T<T>::ONE(1);
+template <typename T> const Vec3_T<T> Vec3_T<T>::X(1, 0, 0);
+template <typename T> const Vec3_T<T> Vec3_T<T>::Y(0, 1, 0);
+template <typename T> const Vec3_T<T> Vec3_T<T>::Z(0, 0, 1);
 
 template <typename T>
 Vec3_T<T> Vec3_T<T>::Rotate (const T angle, const Vec3_T<T> &axis) const {
@@ -44,11 +47,14 @@ template class Vec3_T<float>;
 // VECTOR 4
 //==================================
 
-const Vec4f VEC4F_ZERO(0.0f);
-const Vec4f VEC4F_ONE(1.0f);
-const Vec4f VEC4F_X(1.0f, 0.0f, 0.0f, 0.0f);
-const Vec4f VEC4F_Y(0.0f, 1.0f, 0.0f, 0.0f);
-const Vec4f VEC4F_Z(0.0f, 0.0f, 1.0f, 0.0f);
-const Vec4f VEC4F_W(0.0f, 0.0f, 0.0f, 1.0f);
+template <typename T> const Vec4_T<T> Vec4_T<T>::ZERO(0);
+template <typename T> const Vec4_T<T> Vec4_T<T>::ONE(1);
+template <typename T> const Vec4_T<T> Vec4_T<T>::X(1, 0, 0, 0);
+template <typename T> const Vec4_T<T> Vec4_T<T>::Y(0, 1, 0, 0);
+template <typename T> const Vec4_T<T> Vec4_T<T>::Z(0, 0, 1, 0);
+template <typename T> const Vec4_T<T> Vec4_T<T>::W(0, 0, 0, 1);
+
+// Generate code for common types
+template class Vec4_T<float>;
 
 } /* namespace sge */

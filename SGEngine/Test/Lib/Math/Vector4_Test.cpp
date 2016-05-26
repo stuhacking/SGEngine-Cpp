@@ -102,7 +102,7 @@ TEST (Vec4f_Test, Scale_Equals) {
 }
 
 TEST (Vec4f_Test, NonUniformScale) {
-    EXPECT_EQ(Vec4f(0.0f), Vec4f(2.0f) * sge::VEC4F_ZERO);
+    EXPECT_EQ(Vec4f(0.0f), Vec4f(2.0f) * sge::Vec4f::ZERO);
     EXPECT_EQ(Vec4f(2.0f, 4.0f, 6.0f, 8.0f), Vec4f(2.0f) * Vec4f(1.0f, 2.0f, 3.0f, 4.0f));
     EXPECT_EQ(Vec4f(4.0f, 2.0f, 0.0f, -2.0f), Vec4f(2.0f, 4.0f, 5.0f, 4.0f) * Vec4f(2.0f, 0.5f, 0.0f, -0.5f));
 }

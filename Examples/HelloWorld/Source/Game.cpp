@@ -96,11 +96,11 @@ void Game::Input () {
         bool rotY = deltaPos.x != 0;
 
         if (rotX) {
-            view.Rotate(VEC3F_X, -deltaPos.y * sensitivity);
+            view.Rotate(Vec3f::X, -deltaPos.y * sensitivity);
         }
 
         if (rotY) {
-            view.Rotate(VEC3F_Y, -deltaPos.x * sensitivity);
+            view.Rotate(Vec3f::Y, -deltaPos.x * sensitivity);
         }
     }
 }
@@ -122,14 +122,14 @@ void Game::Render () {
 
 
     DebugGraphics dGraph = DebugGraphics();
-    dGraph.AddGrid(VEC3F_ZERO, 16, Color(255, 255, 255, 80));
+    dGraph.AddGrid(Vec3f::ZERO, 16, Color(255, 255, 255, 80));
 
     // Show World Axis
-    dGraph.AddEdge(VEC3F_ZERO, Vec3f(0.0f, 100.0f, 0.0f),
+    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f),
                    Color(0, 0, 255));
-    dGraph.AddEdge(VEC3F_ZERO, Vec3f(100.0f, 0.0f, 0.0f),
+    dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f),
                    Color(255, 0, 0));
-    dGraph.AddEdge(VEC3F_ZERO, Vec3f(0.0f, 0.0f, 100.0f),
+    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f),
                    Color(0, 255, 0));
 
     m_debugShader.Bind();

@@ -32,6 +32,11 @@ namespace sge {
 template <typename T>
 class Mat3_T {
 public:
+    static const Mat3_T ZERO;
+    static const Mat3_T ONE;
+    static const Mat3_T IDENTITY;
+
+public:
     /** Default Constructor */
     Mat3_T () { }
 
@@ -203,11 +208,6 @@ private:
 // Common Mat3 types.
 typedef Mat3_T<float> Mat3f;
 
-// Constants
-extern const Mat3f MAT3F_ZERO;
-extern const Mat3f MAT3F_ONE;
-extern const Mat3f MAT3F_IDENTITY;
-
 // --------------------------------------------------------------------------
 
 template <typename T>
@@ -278,7 +278,7 @@ INLINE void Mat3_T<T>::Zero () {
 
 template <typename T>
 INLINE bool Mat3_T<T>::IsIdentity () const {
-    return Compare(MAT3F_IDENTITY);
+    return Compare(Mat3f::IDENTITY);
 }
 
 template <typename T>

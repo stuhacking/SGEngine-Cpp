@@ -23,7 +23,7 @@ namespace sge {
 class Circle {
 public:
     Circle()
-        : origin(VEC2F_ZERO), radius(-FMath::INFTY) { }
+        : origin(Vec2f::ZERO), radius(-FMath::INFTY) { }
 
     Circle(const Vec2f &p_origin, const float p_radius = -FMath::INFTY)
         : origin(p_origin), radius(p_radius) { }

@@ -33,6 +33,11 @@ namespace sge {
 template <typename T>
 class Mat4_T {
 public:
+    static const Mat4_T ZERO;
+    static const Mat4_T ONE;
+    static const Mat4_T IDENTITY;
+
+public:
     /** Default Constructor */
     Mat4_T () { }
 
@@ -150,11 +155,6 @@ public:
 // Common Mat4 types
 typedef Mat4_T<float> Mat4f;
 
-// Constants
-extern const Mat4f MAT4F_ZERO;
-extern const Mat4f MAT4F_ONE;
-extern const Mat4f MAT4F_IDENTITY;
-
 // --------------------------------------------------------------------------
 
 template <typename T>
@@ -235,7 +235,7 @@ INLINE void Mat4_T<T>::Zero () {
 
 template <typename T>
 INLINE bool Mat4_T<T>::IsIdentity () const {
-    return Compare(MAT4F_IDENTITY);
+    return Compare(Mat4f::IDENTITY);
 }
 
 template <typename T>

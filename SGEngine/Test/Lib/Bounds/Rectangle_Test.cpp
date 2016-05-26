@@ -34,7 +34,7 @@ TEST (Rectangle_Test, Clear) {
     r.Clear();
 
     EXPECT_FLOAT_EQ(FMath::INFTY, r.Area());
-    EXPECT_FALSE(r.Contains(sge::VEC2F_ZERO));
+    EXPECT_FALSE(r.Contains(sge::Vec2f::ZERO));
 }
 
 // Basic Tests

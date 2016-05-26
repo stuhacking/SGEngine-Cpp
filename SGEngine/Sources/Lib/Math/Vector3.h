@@ -24,6 +24,13 @@ public:
     T x, y, z;
 
 public:
+    static const Vec3_T ZERO;
+    static const Vec3_T ONE;
+    static const Vec3_T X;
+    static const Vec3_T Y;
+    static const Vec3_T Z;
+
+public:
     /** Construct a default Vec3_T at origin. */
     Vec3_T () : x(0), y(0), z(0) { }
 
@@ -306,11 +313,6 @@ public:
 // Common Vec3 Types.
 typedef Vec3_T<float> Vec3f;
 
-extern const Vec3f VEC3F_ZERO;
-extern const Vec3f VEC3F_ONE;
-extern const Vec3f VEC3F_X;
-extern const Vec3f VEC3F_Y;
-extern const Vec3f VEC3F_Z;
 // --------------------------------------------------------------------------
 
 template <typename T>

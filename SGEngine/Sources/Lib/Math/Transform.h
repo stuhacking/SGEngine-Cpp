@@ -21,9 +21,9 @@ public:
     Vec3f scale;
 
 public:
-    Transform (const Vec3f &p_pos = VEC3F_ZERO,
-               const Quat4f &p_ori = QUAT4F_IDENTITY,
-               const Vec3f &p_scale = VEC3F_ONE)
+    Transform (const Vec3f &p_pos = Vec3f::ZERO,
+               const Quat4f &p_ori = Quat4f::IDENTITY,
+               const Vec3f &p_scale = Vec3f::ONE)
         : position(p_pos), orientation(p_ori), scale(p_scale) { }
 
     /**
@@ -89,21 +89,21 @@ public:
 // --------------------------------------------------------------------------
 
 INLINE void Transform::Clear () {
-    position = VEC3F_ZERO;
-    orientation = QUAT4F_IDENTITY;
-    scale = VEC3F_ONE;
+    position = Vec3f::ZERO;
+    orientation = Quat4f::IDENTITY;
+    scale = Vec3f::ONE;
 }
 
 INLINE Vec3f Transform::Up () const {
-    return orientation.Rotate(VEC3F_Y);
+    return orientation.Rotate(Vec3f::Y);
 }
 
 INLINE Vec3f Transform::Forward () const {
-    return orientation.Rotate(VEC3F_Z);
+    return orientation.Rotate(Vec3f::Z);
 }
 
 INLINE Vec3f Transform::Right () const {
-    return orientation.Rotate(VEC3F_X);
+    return orientation.Rotate(Vec3f::X);
 }
 
 INLINE void Transform::Rotate (const Vec3f &axis, const float angle) {

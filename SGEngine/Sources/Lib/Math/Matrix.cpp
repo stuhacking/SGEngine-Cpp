@@ -11,20 +11,23 @@ namespace sge {
 // MATRIX 2x2
 //==================================
 
-const Mat2f MAT2F_ZERO(0.0f);
-const Mat2f MAT2F_ONE(1.0f);
-const Mat2f MAT2F_IDENTITY(1.0f, 0.0f,
-                           0.0f, 1.0f);
+template <typename T> const Mat2_T<T> Mat2_T<T>::ZERO((T)0);
+template <typename T> const Mat2_T<T> Mat2_T<T>::ONE(1);
+template <typename T> const Mat2_T<T> Mat2_T<T>::IDENTITY(1, 0,
+                                                          0, 1);
+
+// Generate code for common types
+template class Mat2_T<float>;
 
 //==================================
 // MATRIX 3x3
 //==================================
 
-const Mat3f MAT3F_ZERO(0.0f);
-const Mat3f MAT3F_ONE(1.0f);
-const Mat3f MAT3F_IDENTITY(1.0f, 0.0f, 0.0f,
-                           0.0f, 1.0f, 0.0f,
-                           0.0f, 0.0f, 1.0f);
+template <typename T> const Mat3_T<T> Mat3_T<T>::ZERO((T)0);
+template <typename T> const Mat3_T<T> Mat3_T<T>::ONE(1);
+template <typename T> const Mat3_T<T> Mat3_T<T>::IDENTITY(1, 0, 0,
+                                                          0, 1, 0,
+                                                          0, 0, 1);
 
 template <typename T>
 Mat3_T<T> Mat3_T<T>::Inverse () const {
@@ -75,12 +78,12 @@ template class Mat3_T<float>;
 // MATRIX 4x4
 //==================================
 
-const Mat4f MAT4F_ZERO(0.0f);
-const Mat4f MAT4F_ONE(1.0f);
-const Mat4f MAT4F_IDENTITY(1.0f, 0.0f, 0.0f, 0.0f,
-                           0.0f, 1.0f, 0.0f, 0.0f,
-                           0.0f, 0.0f, 1.0f, 0.0f,
-                           0.0f, 0.0f, 0.0f, 1.0f);
+template <typename T> const Mat4_T<T> Mat4_T<T>::ZERO((T)0);
+template <typename T> const Mat4_T<T> Mat4_T<T>::ONE(1);
+template <typename T> const Mat4_T<T> Mat4_T<T>::IDENTITY(1, 0, 0, 0,
+                                                          0, 1, 0, 0,
+                                                          0, 0, 1, 0,
+                                                          0, 0, 0, 1);
 
 template <typename T>
 Mat4_T<T> Mat4_T<T>::Inverse () const {

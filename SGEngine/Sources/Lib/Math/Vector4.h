@@ -24,6 +24,14 @@ public:
     T x, y, z, w;
 
 public:
+    static const Vec4_T ZERO;
+    static const Vec4_T ONE;
+    static const Vec4_T X;
+    static const Vec4_T Y;
+    static const Vec4_T Z;
+    static const Vec4_T W;
+
+public:
     /** Construct a default Vec4_T at origin. */
     Vec4_T () : x(0), y(0), z(0), w(0) { }
 
@@ -271,13 +279,6 @@ public:
 
 // Common Vec4 types.
 typedef Vec4_T<float> Vec4f;
-
-extern const Vec4f VEC4F_ZERO;
-extern const Vec4f VEC4F_ONE;
-extern const Vec4f VEC4F_X;
-extern const Vec4f VEC4F_Y;
-extern const Vec4f VEC4F_Z;
-extern const Vec4f VEC4F_W;
 
 // --------------------------------------------------------------------------
 

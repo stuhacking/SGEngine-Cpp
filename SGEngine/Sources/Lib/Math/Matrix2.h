@@ -31,6 +31,11 @@ namespace sge {
 template <typename T>
 class Mat2_T {
 public:
+    static const Mat2_T ZERO;
+    static const Mat2_T ONE;
+    static const Mat2_T IDENTITY;
+
+public:
     /** Construct a default (All 0.0f) Mat2_T. */
     Mat2_T () { }
 
@@ -202,10 +207,6 @@ private:
 
 // Common Mat2 types.
 typedef Mat2_T<float> Mat2f;
-
-extern const Mat2f MAT2F_ZERO;
-extern const Mat2f MAT2F_ONE;
-extern const Mat2f MAT2F_IDENTITY;
 
 // --------------------------------------------------------------------------
 

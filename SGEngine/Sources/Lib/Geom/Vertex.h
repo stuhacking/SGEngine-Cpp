@@ -29,7 +29,7 @@ public:
     /**
      * Construct a Vertex with component parts.
      */
-    Vertex (const Vec3f &p_pos, const Vec2f &p_tex = VEC2F_ZERO,
+    Vertex (const Vec3f &p_pos, const Vec2f &p_tex = Vec2f::ZERO,
             const Vec3f &p_norm = Vec3f(0.0f, 1.0f, 0.0f),
             const Color &p_col = Color(255, 255, 255, 255))
         : position(p_pos), texCoord(p_tex), normal(p_norm), color(p_col) { }

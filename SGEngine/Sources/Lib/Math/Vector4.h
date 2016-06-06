@@ -17,39 +17,38 @@ namespace sge {
 /**
  * 4D Vector. Implement math operations for 4D geometry vectors.
  */
-template <typename T>
-class Vec4_T {
+class Vec4f {
 public:
     /** Vec4 components. */
-    T x, y, z, w;
+    float x, y, z, w;
 
 public:
-    static const Vec4_T ZERO;
-    static const Vec4_T ONE;
-    static const Vec4_T X;
-    static const Vec4_T Y;
-    static const Vec4_T Z;
-    static const Vec4_T W;
+    static const Vec4f ZERO;
+    static const Vec4f ONE;
+    static const Vec4f X;
+    static const Vec4f Y;
+    static const Vec4f Z;
+    static const Vec4f W;
 
 public:
-    /** Construct a default Vec4_T at origin. */
-    Vec4_T () : x(0), y(0), z(0), w(0) { }
+    /** Construct a default Vec4f at origin. */
+    Vec4f () : x(0), y(0), z(0), w(0) { }
 
     /** Fill Constructor. */
-    explicit Vec4_T (const T f) : x(f), y(f), z(f), w(f) { }
+    explicit Vec4f (const float f) : x(f), y(f), z(f), w(f) { }
 
-    /** Construct a Vec4_T using x, y, z, w coordinates. */
-    explicit Vec4_T (const T xx, const T yy, const T zz, const T ww)
+    /** Construct a Vec4f using x, y, z, w coordinates. */
+    explicit Vec4f (const float xx, const float yy, const float zz, const float ww)
         : x(xx), y(yy), z(zz), w(ww) { }
 
-    /** Construct a Vec4_T using the x,y,z components of a Vec3f. */
-    Vec4_T (const Vec3_T<T> &vec, const T ww) : x(vec.x), y(vec.y), z(vec.z), w(ww) { }
+    /** Construct a Vec4f using the x,y,z components of a Vec3f. */
+    Vec4f (const Vec3f &vec, const float ww) : x(vec.x), y(vec.y), z(vec.z), w(ww) { }
 
     /** Value access using an index. */
-    T operator[] (const u32 index) const;
+    float operator[] (const u32 index) const;
 
     /** Reference access using an index. */
-    T &operator[] (const u32 index);
+    float &operator[] (const u32 index);
 
     /**
      * Set the values of x, y, z, and w.
@@ -60,7 +59,7 @@ public:
      * @param zz The Z component
      * @param ww The W component
      */
-    void Set (const T xx, const T yy, const T zz, const T ww);
+    void Set (const float xx, const float yy, const float zz, const float ww);
 
     /**
      * Set the values of x, y, z, and w to 0.0f.
@@ -69,305 +68,289 @@ public:
     void Zero ();
 
     /**
-     * Get the squared length of this Vec4_T.
+     * Get the squared length of this Vec4f.
      * @return The Vector's Length squared
      */
-    T LengthSqr () const;
+    float LengthSqr () const;
 
     /**
-     * Get the length of this Vec4_T.
+     * Get the length of this Vec4f.
      * @return The Vector's length
      */
-    T Length () const;
+    float Length () const;
 
     /**
-     * Set the length of a Vec4_T, maintaining direction. If the
+     * Set the length of a Vec4f, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess. Returns
-     * a new Vec4_T.
-     * @param vec Original Vec4_T
+     * a new Vec4f.
+     * @param vec Original Vec4f
      * @param length The desired new length
-     * @return New Vec4_T with adjusted length
+     * @return New Vec4f with adjusted length
      */
-    Vec4_T SetLength (const T length) const;
+    Vec4f SetLength (const float length) const;
 
     /**
-     * Set the length of this Vec4_T, maintaining direction. If the
+     * Set the length of this Vec4f, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess.
      * Destructive.
      * @param length The desired new length
      */
-    void SetLengthSelf (const T length);
+    void SetLengthSelf (const float length);
 
     /**
-     * Set the length of a Vec4_T to 1.0f, maintaining direction. If
+     * Set the length of a Vec4f to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess. Returns
-     * a new Vec4_T.
-     * @param vec Original Vec4_T
-     * @return New normalized Vec4_T
+     * a new Vec4f.
+     * @param vec Original Vec4f
+     * @return New normalized Vec4f
      */
-    Vec4_T Normalize () const;
+    Vec4f Normalize () const;
 
     /**
-     * Set the length of this Vec4_T to 1.0f, maintaining direction. If
+     * Set the length of this Vec4f to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess.
      * Destructive.
      */
     void NormalizeSelf ();
 
     /**
-     * Return a new Vec4_T which has been truncated if its length
+     * Return a new Vec4f which has been truncated if its length
      * exceeds the limit.
-     * @param max Maximum length of Vec4_T
-     * @return New (possibly truncated) Vec4_T
+     * @param max Maximum length of Vec4f
+     * @return New (possibly truncated) Vec4f
      */
-    Vec4_T ClampLength (const T max) const;
+    Vec4f ClampLength (const float max) const;
 
     /**
-     * Return a new Vec4_T which has been extended or truncated
+     * Return a new Vec4f which has been extended or truncated
      * if its length is outside the limits.
-     * @param min Minimum length of Vec4_T
-     * @param max Maximum length of Vec4_T
-     * @return New (possibly truncated) Vec4_T
+     * @param min Minimum length of Vec4f
+     * @param max Maximum length of Vec4f
+     * @return New (possibly truncated) Vec4f
      */
-    Vec4_T ClampLength (const T min, const T max) const;
+    Vec4f ClampLength (const float min, const float max) const;
 
     /**
-     * Truncate this Vec4_T if its length exceeds the limit.
+     * Truncate this Vec4f if its length exceeds the limit.
      * Destructive.
-     * @param max Maximum length of Vec4_T
+     * @param max Maximum length of Vec4f
      */
-    void ClampLengthSelf (const T max);
+    void ClampLengthSelf (const float max);
 
     /**
-     * Truncate or extend this Vec4_T if its length is outside
+     * Truncate or extend this Vec4f if its length is outside
      * the limits.
      * Destructive.
-     * @param min Minimum length of Vec4_T
-     * @param max Maximum length of Vec4_T
+     * @param min Minimum length of Vec4f
+     * @param max Maximum length of Vec4f
      */
-    void ClampLengthSelf (const T min, const T max);
+    void ClampLengthSelf (const float min, const float max);
 
     /**
-     * Clamp Vec4_T within minimum and maximum bounds, given by other
-     * Vec4_T values.
+     * Clamp Vec4f within minimum and maximum bounds, given by other
+     * Vec4f values.
      * Destructive.
-     * @param min Vec4_T minimum bound
-     * @param max Vec4_T maximum bound
+     * @param min Vec4f minimum bound
+     * @param max Vec4f maximum bound
      */
-    void Clamp (const Vec4_T &min, const Vec4_T &max);
+    void Clamp (const Vec4f &min, const Vec4f &max);
 
     /**
-     * Return a copy of this Vec4_T with the components negated.
+     * Return a copy of this Vec4f with the components negated.
      */
-    Vec4_T operator- () const;
+    Vec4f operator- () const;
 
     /**
-     * Return a scaled copy of this Vec4_T.
+     * Return a scaled copy of this Vec4f.
      * @param a Scale factor
      */
-    Vec4_T operator* (const T a) const;
+    Vec4f operator* (const float a) const;
 
     /**
-     * Return a scaled copy of a Vec4_T, reversed operands.
+     * Return a scaled copy of a Vec4f, reversed operands.
      * @param a Scale Factor
-     * @param rhs Vec4_T to be scaled
+     * @param rhs Vec4f to be scaled
      */
-    template <typename U>
-    friend Vec4_T<U> operator* (const U a, const Vec4_T<U> &rhs);
+    friend Vec4f operator* (const float a, const Vec4f &rhs);
 
     /**
-     * Multiply this Vec4_T by another Vec4_T componentwise.
-     * @return Result of Vec4_T multiplication
+     * Multiply this Vec4f by another Vec4f componentwise.
+     * @return Result of Vec4f multiplication
      */
-    Vec4_T operator* (const Vec4_T &rhs) const;
+    Vec4f operator* (const Vec4f &rhs) const;
 
     /**
-     * Add this Vec4_T to another Vec4_T.
-     * @return Result of Vec4_T addition
+     * Add this Vec4f to another Vec4f.
+     * @return Result of Vec4f addition
      */
-    Vec4_T operator+ (const Vec4_T &rhs) const;
+    Vec4f operator+ (const Vec4f &rhs) const;
 
     /**
-     * Subtract another Vec4_T from this Vec4_T.
-     * @return Result of Vec4_T subtraction
+     * Subtract another Vec4f from this Vec4f.
+     * @return Result of Vec4f subtraction
      */
-    Vec4_T operator- (const Vec4_T &rhs) const;
+    Vec4f operator- (const Vec4f &rhs) const;
 
     /**
-     * Divide this Vec4_T by a scalar value.
+     * Divide this Vec4f by a scalar value.
      * @param a Divisor
-     * @return Result of Vec4_T division
+     * @return Result of Vec4f division
      */
-    Vec4_T operator/ (const T a) const;
+    Vec4f operator/ (const float a) const;
 
     /**
-     * Multiply and mutate this Vec4_T with a scalar value.
+     * Multiply and mutate this Vec4f with a scalar value.
      * Destructive.
      * @param Scale Factor
      */
-    Vec4_T &operator*= (const T a);
+    Vec4f &operator*= (const float a);
 
     /**
-     * Multiply and mutate this Vec4_T componentwise with another Vec4_T.
+     * Multiply and mutate this Vec4f componentwise with another Vec4f.
      * Destructive.
      */
-    Vec4_T &operator*= (const Vec4_T &rhs);
+    Vec4f &operator*= (const Vec4f &rhs);
 
     /**
-     * Add and mutate this Vec4_T with another Vec4_T.
+     * Add and mutate this Vec4f with another Vec4f.
      * Destructive.
      */
-    Vec4_T &operator+= (const Vec4_T &rhs);
+    Vec4f &operator+= (const Vec4f &rhs);
 
     /**
-     * Subtract and mutate this Vec4_T with another Vec4_T.
+     * Subtract and mutate this Vec4f with another Vec4f.
      * Destructive.
      */
-    Vec4_T &operator-= (const Vec4_T &rhs);
+    Vec4f &operator-= (const Vec4f &rhs);
 
     /**
-     * Divide and mutate this Vec4_T by a scalar value.
+     * Divide and mutate this Vec4f by a scalar value.
      * Destructive.
      */
-    Vec4_T &operator/= (const T a);
+    Vec4f &operator/= (const float a);
 
     /**
-     * Divide and mutate this Vec4_T componentwise with another Vec4_T.
+     * Divide and mutate this Vec4f componentwise with another Vec4f.
      * Destructive.
      */
-    Vec4_T &operator/= (const Vec4_T &rhs);
+    Vec4f &operator/= (const Vec4f &rhs);
 
-    T Dot (const Vec4_T &rhs) const;
+    float Dot (const Vec4f &rhs) const;
 
-    Vec4_T Cross (const Vec4_T &rhs) const;
+    Vec4f Cross (const Vec4f &rhs) const;
 
     /** Swizzling */
-    Vec3_T<T> xyz () const;
+    Vec3f xyz () const;
 
-    Vec2_T<T> xy () const;
+    Vec2f xy () const;
 
-    Vec2_T<T> xz () const;
+    Vec2f xz () const;
 
-    Vec2_T<T> yz () const;
+    Vec2f yz () const;
 
     /**
-     * Compare this Vec4_T against another Vec4_T exactly.
-     * @return true if this Vec4_T exactly equals the other, false otherwise
+     * Compare this Vec4f against another Vec4f exactly.
+     * @return true if this Vec4f exactly equals the other, false otherwise
      */
-    bool Compare (const Vec4_T &other) const;
+    bool Compare (const Vec4f &other) const;
 
     /**
-     * Compare this Vec4_T against another Vec4_T within a given tolerance.
-     * @param threshold Tolerance within which Vec4_T are considered equal
-     * @return true if this Vec4_T equals the other within given
+     * Compare this Vec4f against another Vec4f within a given tolerance.
+     * @param threshold Tolerance within which Vec4f are considered equal
+     * @return true if this Vec4f equals the other within given
      *         tolerance, false otherwise
      */
-    bool Compare (const Vec4_T &other, const T threshold) const;
+    bool Compare (const Vec4f &other, const float threshold) const;
 
     /**
-     * Compare this Vec4_T against another Vec4_T exactly.
-     * @return true if this Vec4_T exactly equals the other, false otherwise
+     * Compare this Vec4f against another Vec4f exactly.
+     * @return true if this Vec4f exactly equals the other, false otherwise
      */
-    bool operator== (const Vec4_T &other) const;
+    bool operator== (const Vec4f &other) const;
 
     /**
-     * Compare this Vec4_T against another Vec4_T exactly.
-     * @return true if this Vec4_T does not equal the other, false otherwise
+     * Compare this Vec4f against another Vec4f exactly.
+     * @return true if this Vec4f does not equal the other, false otherwise
      */
-    bool operator!= (const Vec4_T &other) const;
+    bool operator!= (const Vec4f &other) const;
 };
-
-// Common Vec4 types.
-typedef Vec4_T<float> Vec4f;
 
 // --------------------------------------------------------------------------
 
-template <typename T>
-INLINE T Vec4_T<T>::operator[] (const u32 index) const {
+INLINE float Vec4f::operator[] (const u32 index) const {
     return (&x)[index];
 }
 
-template <typename T>
-INLINE T &Vec4_T<T>::operator[] (const u32 index) {
+INLINE float &Vec4f::operator[] (const u32 index) {
     return (&x)[index];
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::Set (const T xx, const T yy, const T zz, const T ww) {
+INLINE void Vec4f::Set (const float xx, const float yy, const float zz, const float ww) {
     x = xx;
     y = yy;
     z = zz;
     w = ww;
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::Zero () {
+INLINE void Vec4f::Zero () {
     x = y = z = w = 0.0f;
 }
 
 //==========================
-// Vec4_T<T> Length Operators
+// Vec4f Length Operators
 //==========================
 
-template <typename T>
-INLINE T Vec4_T<T>::LengthSqr () const {
+INLINE float Vec4f::LengthSqr () const {
     return x * x + y * y + z * z + w * w;
 }
 
-template <typename T>
-INLINE T Vec4_T<T>::Length () const {
+INLINE float Vec4f::Length () const {
     return sqrt(x * x + y * y + z * z + w * w);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::SetLength (T length) const {
-    T currMag = Length();
+INLINE Vec4f Vec4f::SetLength (const float length) const {
+    float currMag = Length();
     if (currMag == 0.0f) {
-        return Vec4_T<T>(*this);
+        return Vec4f(*this);
     } else {
         return *this * (length / currMag);
     }
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::SetLengthSelf (const T length) {
-    T currMag = Length();
+INLINE void Vec4f::SetLengthSelf (const float length) {
+    float currMag = Length();
     if (currMag != 0.0f) {
         *this *= (length / currMag);
     }
 
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::Normalize () const {
-    T currMag = Length();
+INLINE Vec4f Vec4f::Normalize () const {
+    float currMag = Length();
     if (currMag == 0.0f) {
-        return Vec4_T<T>(*this);
+        return Vec4f(*this);
     } else {
         return *this / currMag;
     }
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::NormalizeSelf () {
-    T currMag = Length();
+INLINE void Vec4f::NormalizeSelf () {
+    float currMag = Length();
     if (currMag != 0.0f) {
         *this /= currMag;
     }
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::ClampLength (const T max) const {
+INLINE Vec4f Vec4f::ClampLength (const float max) const {
     if (LengthSqr() > (max * max)) {
         return SetLength(max);
     }
 
-    return Vec4_T<T>(*this);
+    return Vec4f(*this);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::ClampLength (const T min, const T max) const {
-    T ls = LengthSqr();
+INLINE Vec4f Vec4f::ClampLength (const float min, const float max) const {
+    float ls = LengthSqr();
 
     if (ls < (min * min)) {
         return SetLength(min);
@@ -377,19 +360,17 @@ INLINE Vec4_T<T> Vec4_T<T>::ClampLength (const T min, const T max) const {
         return SetLength(max);
     }
 
-    return Vec4_T<T>(*this);
+    return Vec4f(*this);
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::ClampLengthSelf (const T max) {
+INLINE void Vec4f::ClampLengthSelf (const float max) {
     if (LengthSqr() > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::ClampLengthSelf (const T min, const T max) {
-    T ls = LengthSqr();
+INLINE void Vec4f::ClampLengthSelf (const float min, const float max) {
+    float ls = LengthSqr();
 
     if (ls < (min * min)) {
         SetLengthSelf(min);
@@ -400,56 +381,47 @@ INLINE void Vec4_T<T>::ClampLengthSelf (const T min, const T max) {
     }
 }
 
-template <typename T>
-INLINE void Vec4_T<T>::Clamp (const Vec4_T<T> &min, const Vec4_T<T> &max) {
+INLINE void Vec4f::Clamp (const Vec4f &min, const Vec4f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
     z = FMath::ClampFloat(z, min.z, max.z);
     w = FMath::ClampFloat(w, min.w, max.w);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::operator- () const {
-    return Vec4_T<T>(-x, -y, -z, -w);
+INLINE Vec4f Vec4f::operator- () const {
+    return Vec4f(-x, -y, -z, -w);
 }
 
 //==========================
-// Vec4_T<T> Operators
+// Vec4f Operators
 //==========================
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::operator* (const T rhs) const {
-    return Vec4_T<T>(x * rhs, y * rhs, z * rhs, w * rhs);
+INLINE Vec4f Vec4f::operator* (const float rhs) const {
+    return Vec4f(x * rhs, y * rhs, z * rhs, w * rhs);
 }
 
-template <typename T>
-INLINE Vec4_T<T> operator* (const T a, const Vec4_T<T> &rhs) {
-    return Vec4_T<T>(a * rhs.x, a * rhs.y, a * rhs.z, a * rhs.w);
+INLINE Vec4f operator* (const float a, const Vec4f &rhs) {
+    return Vec4f(a * rhs.x, a * rhs.y, a * rhs.z, a * rhs.w);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::operator* (const Vec4_T<T> &rhs) const {
-    return Vec4_T<T>(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
+INLINE Vec4f Vec4f::operator* (const Vec4f &rhs) const {
+    return Vec4f(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::operator+ (const Vec4_T<T> &rhs) const {
-    return Vec4_T<T>(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
+INLINE Vec4f Vec4f::operator+ (const Vec4f &rhs) const {
+    return Vec4f(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::operator- (const Vec4_T<T> &rhs) const {
-    return Vec4_T<T>(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
+INLINE Vec4f Vec4f::operator- (const Vec4f &rhs) const {
+    return Vec4f(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
 }
 
-template <typename T>
-INLINE Vec4_T<T> Vec4_T<T>::operator/ (const T a) const {
-    T inva = 1.0f / a;
-    return Vec4_T<T>(x * inva, y * inva, z * inva, w * inva);
+INLINE Vec4f Vec4f::operator/ (const float a) const {
+    float inva = 1.0f / a;
+    return Vec4f(x * inva, y * inva, z * inva, w * inva);
 }
 
-template <typename T>
-INLINE Vec4_T<T> &Vec4_T<T>::operator*= (const T a) {
+INLINE Vec4f &Vec4f::operator*= (const float a) {
     x *= a;
     y *= a;
     z *= a;
@@ -458,8 +430,7 @@ INLINE Vec4_T<T> &Vec4_T<T>::operator*= (const T a) {
     return *this;
 }
 
-template <typename T>
-INLINE Vec4_T<T> &Vec4_T<T>::operator*= (const Vec4_T<T> &rhs) {
+INLINE Vec4f &Vec4f::operator*= (const Vec4f &rhs) {
     x *= rhs.x;
     y *= rhs.y;
     z *= rhs.z;
@@ -468,8 +439,7 @@ INLINE Vec4_T<T> &Vec4_T<T>::operator*= (const Vec4_T<T> &rhs) {
     return *this;
 }
 
-template <typename T>
-INLINE Vec4_T<T> &Vec4_T<T>::operator+= (const Vec4_T<T> &rhs) {
+INLINE Vec4f &Vec4f::operator+= (const Vec4f &rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -478,8 +448,7 @@ INLINE Vec4_T<T> &Vec4_T<T>::operator+= (const Vec4_T<T> &rhs) {
     return *this;
 }
 
-template <typename T>
-INLINE Vec4_T<T> &Vec4_T<T>::operator-= (const Vec4_T<T> &rhs) {
+INLINE Vec4f &Vec4f::operator-= (const Vec4f &rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -488,9 +457,8 @@ INLINE Vec4_T<T> &Vec4_T<T>::operator-= (const Vec4_T<T> &rhs) {
     return *this;
 }
 
-template <typename T>
-INLINE Vec4_T<T> &Vec4_T<T>::operator/= (const T a) {
-    T inva = 1.0f / a;
+INLINE Vec4f &Vec4f::operator/= (const float a) {
+    float inva = 1.0f / a;
     x *= inva;
     y *= inva;
     z *= inva;
@@ -499,8 +467,7 @@ INLINE Vec4_T<T> &Vec4_T<T>::operator/= (const T a) {
     return *this;
 }
 
-template <typename T>
-INLINE Vec4_T<T> &Vec4_T<T>::operator/= (const Vec4_T<T> &rhs) {
+INLINE Vec4f &Vec4f::operator/= (const Vec4f &rhs) {
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -510,44 +477,37 @@ INLINE Vec4_T<T> &Vec4_T<T>::operator/= (const Vec4_T<T> &rhs) {
 }
 
 // Dot product.
-template <typename T>
-INLINE T Vec4_T<T>::Dot (const Vec4_T<T> &rhs) const {
+INLINE float Vec4f::Dot (const Vec4f &rhs) const {
     return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
 }
 
-template <typename T>
-INLINE Vec3_T<T> Vec4_T<T>::xyz () const {
-    return Vec3_T<T>(x, y, z);
+INLINE Vec3f Vec4f::xyz () const {
+    return Vec3f(x, y, z);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec4_T<T>::xy () const {
-    return Vec2_T<T>(x, y);
+INLINE Vec2f Vec4f::xy () const {
+    return Vec2f(x, y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec4_T<T>::xz () const {
-    return Vec2_T<T>(x, z);
+INLINE Vec2f Vec4f::xz () const {
+    return Vec2f(x, z);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec4_T<T>::yz () const {
-    return Vec2_T<T>(y, z);
+INLINE Vec2f Vec4f::yz () const {
+    return Vec2f(y, z);
 }
 
 //==========================
-// Vec4_T<T> Comparison
+// Vec4f Comparison
 //==========================
 
 // This comparison may be inaccurate, prefer Compare(val, threshold)
 // where possible.
-template <typename T>
-INLINE bool Vec4_T<T>::Compare (const Vec4_T<T> &other) const {
+INLINE bool Vec4f::Compare (const Vec4f &other) const {
     return x == other.x && y == other.y && z == other.z && w == other.w;
 }
 
-template <typename T>
-INLINE bool Vec4_T<T>::Compare (const Vec4_T<T> &other, const T threshold) const {
+INLINE bool Vec4f::Compare (const Vec4f &other, const float threshold) const {
     if (fabs(x - other.x) > threshold)
         return false;
     if (fabs(y - other.y) > threshold)
@@ -560,13 +520,11 @@ INLINE bool Vec4_T<T>::Compare (const Vec4_T<T> &other, const T threshold) const
     return true;
 }
 
-template <typename T>
-INLINE bool Vec4_T<T>::operator== (const Vec4_T<T> &other) const {
+INLINE bool Vec4f::operator== (const Vec4f &other) const {
     return Compare(other);
 }
 
-template <typename T>
-INLINE bool Vec4_T<T>::operator!= (const Vec4_T<T> &other) const {
+INLINE bool Vec4f::operator!= (const Vec4f &other) const {
     return !Compare(other);
 }
 

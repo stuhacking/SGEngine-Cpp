@@ -29,315 +29,288 @@ namespace sge {
  *  z| 2 5 8
  * </pre>
  */
-template <typename T>
-class Mat3_T {
+class Mat3f {
 public:
-    static const Mat3_T ZERO;
-    static const Mat3_T ONE;
-    static const Mat3_T IDENTITY;
+    static const Mat3f ZERO;
+    static const Mat3f ONE;
+    static const Mat3f IDENTITY;
 
 public:
     /** Default Constructor */
-    Mat3_T () { }
+    Mat3f () { }
 
     /** Fill Constructor */
-    explicit Mat3_T (const T f);
+    explicit Mat3f (const float f);
 
     /** Value Constructor */
-    explicit Mat3_T (const T aa, const T ab, const T ac,
-                     const T ba, const T bb, const T bc,
-                     const T ca, const T cb, const T cc);
+    explicit Mat3f (const float aa, const float ab, const float ac,
+                     const float ba, const float bb, const float bc,
+                     const float ca, const float cb, const float cc);
 
-    /** Vec3_T<T> Column Constructor */
-    explicit Mat3_T (const Vec3_T<T> &col1, const Vec3_T<T> &col2, const Vec3_T<T> &col3);
+    /** Vec3f Column Constructor */
+    explicit Mat3f (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3);
 
     /** 1D Array Constructor */
-    explicit Mat3_T (const T data[9]);
+    explicit Mat3f (const float data[9]);
 
     /** 2D Array Constructor */
-    explicit Mat3_T (const T data[3][3]);
+    explicit Mat3f (const float data[3][3]);
 
     /**
-     * Set the values of this Mat3_T using Ts.
+     * Set the values of this Mat3f using Ts.
      * Destructive.
      */
-    void Set (const T aa, const T ab, const T ac,
-              const T ba, const T bb, const T bc,
-              const T ca, const T cb, const T cc);
+    void Set (const float aa, const float ab, const float ac,
+              const float ba, const float bb, const float bc,
+              const float ca, const float cb, const float cc);
 
     /**
-     * Set the values of this Mat3_T using Vec3_T<T> columns.
+     * Set the values of this Mat3f using Vec3f columns.
      * Destructive.
      */
-    void Set (const Vec3_T<T> &col1, const Vec3_T<T> &col2, const Vec3_T<T> &col3);
+    void Set (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3);
 
     /**
-     * Set the values of this Mat3_T using a 1D array.
+     * Set the values of this Mat3f using a 1D array.
      * Destructive.
      */
-    void Set (const T data[9]);
+    void Set (const float data[9]);
 
     /**
-     * Set the values of this Mat3_T using a 2D array.
+     * Set the values of this Mat3f using a 2D array.
      * Destructive.
      */
-    void Set (const T data[3][3]);
+    void Set (const float data[3][3]);
 
     /**
-     * Set all values of this Mat3_T to zero.
+     * Set all values of this Mat3f to zero.
      * Destructive.
      */
     void Zero ();
 
     bool IsIdentity () const;
 
-    const Vec3_T<T> &operator[] (const u32 index) const;
+    const Vec3f &operator[] (const u32 index) const;
 
-    Vec3_T<T> &operator[] (const u32 index);
+    Vec3f &operator[] (const u32 index);
 
     /**
-     * Mat3_T Scale.
+     * Mat3f Scale.
      */
-    Mat3_T operator* (const T a) const;
+    Mat3f operator* (const float a) const;
 
     /**
-     * Mat3_T Scale, reversed operands.
+     * Mat3f Scale, reversed operands.
      */
-    template <typename U>
-    friend Mat3_T<U> operator* (const U a, const Mat3_T<U> &rhs);
+    friend Mat3f operator* (const float a, const Mat3f &rhs);
 
     /**
-     * Mat3_T Multiplication.
+     * Mat3f Multiplication.
      */
-    Mat3_T operator* (const Mat3_T &rhs) const;
+    Mat3f operator* (const Mat3f &rhs) const;
 
     /**
-     * Mat3_T x Vec3_T<T> multiplication.
+     * Mat3f x Vec3f multiplication.
      */
-    Vec3_T<T> operator* (const Vec3_T<T> &rhs) const;
+    Vec3f operator* (const Vec3f &rhs) const;
 
     /**
-     * Vec3_T<T> x Mat3_T multiplication.
+     * Vec3f x Mat3f multiplication.
      */
-    template <typename U>
-    friend Vec3_T<U> operator* (const Vec3_T<U> &lhs, const Mat3_T<U> &rhs);
+    friend Vec3f operator* (const Vec3f &lhs, const Mat3f &rhs);
 
     /**
-     * Mat3_T Addition.
+     * Mat3f Addition.
      */
-    Mat3_T operator+ (const Mat3_T &rhs) const;
+    Mat3f operator+ (const Mat3f &rhs) const;
 
     /**
-     * Mat3_T Subtraction.
+     * Mat3f Subtraction.
      */
-    Mat3_T operator- (const Mat3_T &rhs) const;
+    Mat3f operator- (const Mat3f &rhs) const;
 
     /**
-     * Mat3_T Scale in place.
+     * Mat3f Scale in place.
      * Destructive.
      */
-    Mat3_T &operator*= (const T a);
+    Mat3f &operator*= (const float a);
 
     /**
-     * Mat3_T Multiplication in place.
+     * Mat3f Multiplication in place.
      * Destructive.
      */
-    Mat3_T &operator*= (const Mat3_T &rhs);
+    Mat3f &operator*= (const Mat3f &rhs);
 
     /**
-     * Mat3_T Addition in place.
+     * Mat3f Addition in place.
      */
-    Mat3_T &operator+= (const Mat3_T &rhs);
+    Mat3f &operator+= (const Mat3f &rhs);
 
     /**
-     * Mat3_T Subtraction in place.
+     * Mat3f Subtraction in place.
      */
-    Mat3_T &operator-= (const Mat3_T &rhs);
+    Mat3f &operator-= (const Mat3f &rhs);
 
     /**
-     * Get the determinant of this Mat3_T.
+     * Get the determinant of this Mat3f.
      */
-    T Determinant () const;
+    float Determinant () const;
 
     /**
-     * Determine if this Mat3_T has an inverse.
+     * Determine if this Mat3f has an inverse.
      */
     bool HasInverse () const;
 
     /**
-     * Get the inverse of this Mat3_T.
+     * Get the inverse of this Mat3f.
      */
-    Mat3_T Inverse () const;
+    Mat3f Inverse () const;
 
     /**
-     * Set this Mat3_T to be its inverse.
+     * Set this Mat3f to be its inverse.
      * Destructive.
-     * @return false if Mat3_T has no inverse, true if success.
+     * @return false if Mat3f has no inverse, true if success.
      */
     bool InverseSelf ();
 
-    Mat3_T Transpose () const;
+    Mat3f Transpose () const;
 
-    Mat3_T &TransposeSelf ();
+    Mat3f &TransposeSelf ();
 
     /**
-     * Test if this Mat3_T is equivalent to another Mat3_T.
+     * Test if this Mat3f is equivalent to another Mat3f.
      */
-    bool Compare (const Mat3_T &other) const;
+    bool Compare (const Mat3f &other) const;
 
     /**
-     * Test if this Mat3_T is similar to another Mat3_T
+     * Test if this Mat3f is similar to another Mat3f
      * within a given tolerance.
      */
-    bool Compare (const Mat3_T &other, const T threshold) const;
+    bool Compare (const Mat3f &other, const float threshold) const;
 
     /**
-     * Test if this Mat3_T is equivalent to another Mat3_T.
+     * Test if this Mat3f is equivalent to another Mat3f.
      */
-    bool operator== (const Mat3_T &other) const;
+    bool operator== (const Mat3f &other) const;
 
     /**
-     * Test if this Mat3_T is not equivalent to another Mat3_T.
+     * Test if this Mat3f is not equivalent to another Mat3f.
      */
-    bool operator!= (const Mat3_T &other) const;
+    bool operator!= (const Mat3f &other) const;
 
 private:
-    Vec3_T<T> mat[3];
+    Vec3f mat[3];
 };
-
-// Common Mat3 types.
-typedef Mat3_T<float> Mat3f;
 
 // --------------------------------------------------------------------------
 
-template <typename T>
-INLINE Mat3_T<T>::Mat3_T (const T f) {
+INLINE Mat3f::Mat3f (const float f) {
     mat[0].x = mat[0].y = mat[0].z = f;
     mat[1].x = mat[1].y = mat[1].z = f;
     mat[2].x = mat[2].y = mat[2].z = f;
 }
 
-template <typename T>
-INLINE Mat3_T<T>::Mat3_T (const T aa, const T ab, const T ac,
-                          const T ba, const T bb, const T bc,
-                          const T ca, const T cb, const T cc) {
+INLINE Mat3f::Mat3f (const float aa, const float ab, const float ac,
+                          const float ba, const float bb, const float bc,
+                          const float ca, const float cb, const float cc) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac;
     mat[1].x = ba; mat[1].y = bb; mat[1].z = bc;
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc;
 }
 
-template <typename T>
-INLINE Mat3_T<T>::Mat3_T (const Vec3_T<T> &col1, const Vec3_T<T> &col2, const Vec3_T<T> &col3) {
+INLINE Mat3f::Mat3f (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z;
     mat[2].x = col3.x; mat[2].y = col3.y; mat[2].z = col3.z;
 }
 
-template <typename T>
-INLINE Mat3_T<T>::Mat3_T (const T data[9]) {
-    std::memcpy(mat, data, 9 * sizeof(T));
+INLINE Mat3f::Mat3f (const float data[9]) {
+    std::memcpy(mat, data, 9 * sizeof(float));
 }
 
-template <typename T>
-INLINE Mat3_T<T>::Mat3_T (const T data[3][3]) {
-    std::memcpy(mat, data, 3 * 3 * sizeof(T));
+INLINE Mat3f::Mat3f (const float data[3][3]) {
+    std::memcpy(mat, data, 3 * 3 * sizeof(float));
 }
 
-template <typename T>
-INLINE void Mat3_T<T>::Set (const T aa, const T ab, const T ac,
-                            const T ba, const T bb, const T bc,
-                            const T ca, const T cb, const T cc) {
+INLINE void Mat3f::Set (const float aa, const float ab, const float ac,
+                            const float ba, const float bb, const float bc,
+                            const float ca, const float cb, const float cc) {
     mat[0].x = aa; mat[0].y = ab; mat[0].z = ac;
     mat[1].x = ba; mat[1].y = bb; mat[1].z = bc;
     mat[2].x = ca; mat[2].y = cb; mat[2].z = cc;
 }
 
-template <typename T>
-INLINE void Mat3_T<T>::Set (const Vec3_T<T> &col1, const Vec3_T<T> &col2, const Vec3_T<T> &col3) {
+INLINE void Mat3f::Set (const Vec3f &col1, const Vec3f &col2, const Vec3f &col3) {
     mat[0] = col1;
     mat[1] = col2;
     mat[2] = col3;
 }
 
-template <typename T>
-INLINE void Mat3_T<T>::Set (const T data[9]) {
-    std::memcpy(mat, data, 9 * sizeof(T));
+INLINE void Mat3f::Set (const float data[9]) {
+    std::memcpy(mat, data, 9 * sizeof(float));
 }
 
-template <typename T>
-INLINE void Mat3_T<T>::Set (const T data[3][3]) {
-    std::memcpy(mat, data, 3 * 3 * sizeof(T));
+INLINE void Mat3f::Set (const float data[3][3]) {
+    std::memcpy(mat, data, 3 * 3 * sizeof(float));
 }
 
-template <typename T>
-INLINE void Mat3_T<T>::Zero () {
+INLINE void Mat3f::Zero () {
     mat[0].Zero();
     mat[1].Zero();
     mat[2].Zero();
 }
 
-template <typename T>
-INLINE bool Mat3_T<T>::IsIdentity () const {
+INLINE bool Mat3f::IsIdentity () const {
     return Compare(Mat3f::IDENTITY);
 }
 
-template <typename T>
-INLINE const Vec3_T<T> &Mat3_T<T>::operator[] (const u32 index) const {
+INLINE const Vec3f &Mat3f::operator[] (const u32 index) const {
     return mat[index];
 }
 
-template <typename T>
-INLINE Vec3_T<T> &Mat3_T<T>::operator[] (const u32 index) {
+INLINE Vec3f &Mat3f::operator[] (const u32 index) {
     return mat[index];
 }
 
 //=======================
-// Mat3_T<T> Operations
+// Mat3f Operations
 //=======================
 
-template <typename T>
-INLINE Mat3_T<T> Mat3_T<T>::operator* (const T a) const {
-    return Mat3_T<T>(mat[0] * a, mat[1] * a, mat[2] * a);
+INLINE Mat3f Mat3f::operator* (const float a) const {
+    return Mat3f(mat[0] * a, mat[1] * a, mat[2] * a);
 }
 
-template <typename T>
-INLINE Mat3_T<T> operator* (const T a, const Mat3_T<T> &rhs) {
+INLINE Mat3f operator* (const float a, const Mat3f &rhs) {
     return rhs * a;
 }
 
-template <typename T>
-INLINE Mat3_T<T> Mat3_T<T>::operator* (const Mat3_T<T> &rhs) const {
-    Mat3_T<T> lhs = Transpose();
+INLINE Mat3f Mat3f::operator* (const Mat3f &rhs) const {
+    Mat3f lhs = Transpose();
 
-    return Mat3_T<T>(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
+    return Mat3f(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
                      lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]),
                      lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]));
 }
 
-template <typename T>
-INLINE Vec3_T<T> Mat3_T<T>::operator* (const Vec3_T<T> &rhs) const {
-    return Vec3_T<T>(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z,
+INLINE Vec3f Mat3f::operator* (const Vec3f &rhs) const {
+    return Vec3f(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z,
                      mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z,
                      mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z);
 }
 
-template <typename T>
-INLINE Vec3_T<T> operator* (const Vec3_T<T> &lhs, const Mat3_T<T> &rhs) {
+INLINE Vec3f operator* (const Vec3f &lhs, const Mat3f &rhs) {
     return rhs * lhs;
 }
 
-template <typename T>
-INLINE Mat3_T<T> Mat3_T<T>::operator+ (const Mat3_T<T> &rhs) const {
-    return Mat3_T<T>(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2]);
+INLINE Mat3f Mat3f::operator+ (const Mat3f &rhs) const {
+    return Mat3f(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2]);
 }
 
-template <typename T>
-INLINE Mat3_T<T> Mat3_T<T>::operator- (const Mat3_T<T> &rhs) const {
-    return Mat3_T<T>(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2]);
+INLINE Mat3f Mat3f::operator- (const Mat3f &rhs) const {
+    return Mat3f(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2]);
 }
 
-template <typename T>
-INLINE Mat3_T<T> &Mat3_T<T>::operator*= (const T a) {
+INLINE Mat3f &Mat3f::operator*= (const float a) {
     mat[0] *= a;
     mat[1] *= a;
     mat[2] *= a;
@@ -345,9 +318,8 @@ INLINE Mat3_T<T> &Mat3_T<T>::operator*= (const T a) {
     return *this;
 }
 
-template <typename T>
-INLINE Mat3_T<T> &Mat3_T<T>::operator*= (const Mat3_T<T> &rhs) {
-    Mat3_T<T> lhs = Transpose();
+INLINE Mat3f &Mat3f::operator*= (const Mat3f &rhs) {
+    Mat3f lhs = Transpose();
 
     Set(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
         lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]),
@@ -356,8 +328,7 @@ INLINE Mat3_T<T> &Mat3_T<T>::operator*= (const Mat3_T<T> &rhs) {
     return *this;
 }
 
-template <typename T>
-INLINE Mat3_T<T> &Mat3_T<T>::operator+= (const Mat3_T<T> &rhs) {
+INLINE Mat3f &Mat3f::operator+= (const Mat3f &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
     mat[2] += rhs[2];
@@ -365,8 +336,7 @@ INLINE Mat3_T<T> &Mat3_T<T>::operator+= (const Mat3_T<T> &rhs) {
     return *this;
 }
 
-template <typename T>
-INLINE Mat3_T<T> &Mat3_T<T>::operator-= (const Mat3_T<T> &rhs) {
+INLINE Mat3f &Mat3f::operator-= (const Mat3f &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
     mat[2] -= rhs[2];
@@ -374,8 +344,7 @@ INLINE Mat3_T<T> &Mat3_T<T>::operator-= (const Mat3_T<T> &rhs) {
     return *this;
 }
 
-template <typename T>
-INLINE T Mat3_T<T>::Determinant () const {
+INLINE float Mat3f::Determinant () const {
     // Laplace Expansion Determinant
     //    0 1 2
     // x |0 3 6|
@@ -386,20 +355,17 @@ INLINE T Mat3_T<T>::Determinant () const {
         mat[0].z * (mat[1].x * mat[2].y - mat[2].x * mat[1].y);
 }
 
-template <typename T>
-INLINE bool Mat3_T<T>::HasInverse () const {
+INLINE bool Mat3f::HasInverse () const {
     return 0 != Determinant();
 }
 
-template <typename T>
-INLINE Mat3_T<T> Mat3_T<T>::Transpose () const {
-    return Mat3_T<T>(mat[0].x, mat[1].x, mat[2].x,
+INLINE Mat3f Mat3f::Transpose () const {
+    return Mat3f(mat[0].x, mat[1].x, mat[2].x,
                      mat[0].y, mat[1].y, mat[2].y,
                      mat[0].z, mat[1].z, mat[2].z);
 }
 
-template <typename T>
-INLINE Mat3_T<T> &Mat3_T<T>::TransposeSelf () {
+INLINE Mat3f &Mat3f::TransposeSelf () {
     std::swap(mat[0].y, mat[1].x);
     std::swap(mat[0].z, mat[2].x);
     std::swap(mat[1].z, mat[2].y);
@@ -408,30 +374,26 @@ INLINE Mat3_T<T> &Mat3_T<T>::TransposeSelf () {
 }
 
 //=======================
-// Mat3_T<T> Comparisons
+// Mat3f Comparisons
 //=======================
 
-template <typename T>
-INLINE bool Mat3_T<T>::Compare (const Mat3_T<T> &other) const {
+INLINE bool Mat3f::Compare (const Mat3f &other) const {
     return mat[0].Compare(other.mat[0]) &&
         mat[1].Compare(other.mat[1]) &&
         mat[2].Compare(other.mat[2]);
 }
 
-template <typename T>
-INLINE bool Mat3_T<T>::Compare (const Mat3_T<T> &other, const T threshold) const {
+INLINE bool Mat3f::Compare (const Mat3f &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold) &&
         mat[2].Compare(other.mat[2], threshold);
 }
 
-template <typename T>
-INLINE bool Mat3_T<T>::operator== (const Mat3_T<T> &other) const {
+INLINE bool Mat3f::operator== (const Mat3f &other) const {
     return Compare(other);
 }
 
-template <typename T>
-INLINE bool Mat3_T<T>::operator!= (const Mat3_T<T> &other) const {
+INLINE bool Mat3f::operator!= (const Mat3f &other) const {
     return !Compare(other);
 }
 

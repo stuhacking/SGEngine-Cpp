@@ -17,33 +17,32 @@ namespace sge {
 /**
  * 2D Vector. Implement math operations for 2D geometry vectors.
  */
-template <typename T>
-class Vec2_T {
+class Vec2f {
 public:
-    /** Vec2_T components. */
-    T x, y;
+    /** Vec2f components. */
+    float x, y;
 
 public:
-    static const Vec2_T ZERO;
-    static const Vec2_T ONE;
-    static const Vec2_T X;
-    static const Vec2_T Y;
+    static const Vec2f ZERO;
+    static const Vec2f ONE;
+    static const Vec2f X;
+    static const Vec2f Y;
 
 public:
-    /** Construct a default Vec2_T at 0,0. */
-    Vec2_T () : x(0), y(0) { }
+    /** Construct a default Vec2f at 0,0. */
+    Vec2f () : x(0), y(0) { }
 
     /** Fill Constructor. */
-    explicit Vec2_T (const T f) : x(f), y(f) { }
+    explicit Vec2f (const float f) : x(f), y(f) { }
 
-    /** Construct a Vec2_T using x, y coordinates. */
-    explicit Vec2_T (const T xx, const T yy) : x(xx), y(yy) { }
+    /** Construct a Vec2f using x, y coordinates. */
+    explicit Vec2f (const float xx, const float yy) : x(xx), y(yy) { }
 
     /** Value access by index. */
-    T operator[] (const u32 index) const;
+    float operator[] (const u32 index) const;
 
     /** Reference access by index. */
-    T &operator[] (const u32 index);
+    float &operator[] (const u32 index);
 
     /**
      * Set the values of x and y.
@@ -52,7 +51,7 @@ public:
      * @param xx The X component
      * @param yy The Y component
      */
-    void Set (const T xx, const T yy);
+    void Set (const float xx, const float yy);
 
     /**
      * Set the values of x and y to 0.0f.
@@ -61,313 +60,297 @@ public:
     void Zero ();
 
     /**
-     * Get the squared length of this Vec2_T.
+     * Get the squared length of this Vec2f.
      * @return The Vector's Length squared
      */
-    T LengthSqr () const;
+    float LengthSqr () const;
 
     /**
-     * Get the length of this Vec2_T.
+     * Get the length of this Vec2f.
      * @return The Vector's length
      */
-    T Length () const;
+    float Length () const;
 
     /**
-     * Set the length of this Vec2_T, maintaining direction. If the
+     * Set the length of this Vec2f, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess.
      * Destructive.
      * @param length The desired new length
      */
-    void SetLengthSelf (const T length);
+    void SetLengthSelf (const float length);
 
     /**
-     * Set the length of a Vec2_T, maintaining direction. If the
+     * Set the length of a Vec2f, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess. Returns
-     * a new Vec2_T.
+     * a new Vec2f.
      * @param length The desired new length
-     * @return New Vec2_T with adjusted length
+     * @return New Vec2f with adjusted length
      */
-    Vec2_T SetLength (const T length) const;
+    Vec2f SetLength (const float length) const;
 
     /**
-     * Set the length of a Vec2_T to 1.0f, maintaining direction. If
+     * Set the length of a Vec2f to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess. Returns
-     * a new Vec2_T.
-     * @return New normalized Vec2_T
+     * a new Vec2f.
+     * @return New normalized Vec2f
      */
-    Vec2_T Normalize () const;
+    Vec2f Normalize () const;
 
     /**
-     * Set the length of this Vec2_T to 1.0f, maintaining direction. If
+     * Set the length of this Vec2f to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess.
      * Destructive.
      */
     void NormalizeSelf ();
 
     /**
-     * Return a new Vec2_T which has been truncated if its length
+     * Return a new Vec2f which has been truncated if its length
      * exceeds the limit.
-     * @param max Maximum length of Vec2_T
-     * @return New clamped Vec2_T
+     * @param max Maximum length of Vec2f
+     * @return New clamped Vec2f
      */
-    Vec2_T ClampLength (const T max) const;
+    Vec2f ClampLength (const float max) const;
 
     /**
-     * Return a new Vec2_T which has been extended or truncated
+     * Return a new Vec2f which has been extended or truncated
      * if its length falls outside the limits.
-     * @param min Minimum length of Vec2_T
-     * @param max Maximum length of Vec2_T
-     * @return New clamped Vec2_T
+     * @param min Minimum length of Vec2f
+     * @param max Maximum length of Vec2f
+     * @return New clamped Vec2f
      */
-    Vec2_T ClampLength (const T min, const T max) const;
+    Vec2f ClampLength (const float min, const float max) const;
 
     /**
-     * Truncate this Vec2_T if its length exceeds the limit.
+     * Truncate this Vec2f if its length exceeds the limit.
      * Destructive.
-     * @param max Maximum length of Vec2_T
+     * @param max Maximum length of Vec2f
      */
-    void ClampLengthSelf (const T max);
+    void ClampLengthSelf (const float max);
 
     /**
-     * Truncate or extend this Vec2_T if its length is outside
+     * Truncate or extend this Vec2f if its length is outside
      * the limits.
      * Destructive.
-     * @param min Minimum length of Vec2_T
-     * @param max Maximum length of Vec2_T
+     * @param min Minimum length of Vec2f
+     * @param max Maximum length of Vec2f
      */
-    void ClampLengthSelf (const T min, const T max);
+    void ClampLengthSelf (const float min, const float max);
 
     /**
-     * Clamp Vec2_T within minimum and maximum bounds, given by other
-     * Vec2_T values.
+     * Clamp Vec2f within minimum and maximum bounds, given by other
+     * Vec2f values.
      * Destructive.
-     * @param min Vec2_T minimum bound
-     * @param max Vec2_T maximum bound
+     * @param min Vec2f minimum bound
+     * @param max Vec2f maximum bound
      */
-    void Clamp (const Vec2_T &min, const Vec2_T &max);
+    void Clamp (const Vec2f &min, const Vec2f &max);
 
     /**
-     * Return a copy of this Vec2_T with the components negated.
+     * Return a copy of this Vec2f with the components negated.
      */
-    Vec2_T operator- () const;
+    Vec2f operator- () const;
 
     /**
-     * Return a scaled copy of this Vec2_T.
+     * Return a scaled copy of this Vec2f.
      * @param a Scale factor
      */
-    Vec2_T operator* (const T a) const;
+    Vec2f operator* (const float a) const;
 
     /**
-     * Return a scaled copy of a Vec2_T, reversed operands.
+     * Return a scaled copy of a Vec2f, reversed operands.
      * @param a Scale Factor
-     * @param rhs Vec2_T to be scaled
+     * @param rhs Vec2f to be scaled
      */
-    template <typename U>
-    friend Vec2_T<U> operator* (const U a, const Vec2_T<U> &rhs);
+    friend Vec2f operator* (const float a, const Vec2f &rhs);
 
     /**
-     * Multiply this Vec2_T by another Vec2_T componentwise.
-     * @return Result of Vec2_T multiplication
+     * Multiply this Vec2f by another Vec2f componentwise.
+     * @return Result of Vec2f multiplication
      */
-    Vec2_T operator* (const Vec2_T &rhs) const;
+    Vec2f operator* (const Vec2f &rhs) const;
 
     /**
-     * Add this Vec2_T to another Vec2_T.
-     * @return Result of Vec2_T addition
+     * Add this Vec2f to another Vec2f.
+     * @return Result of Vec2f addition
      */
-    Vec2_T operator+ (const Vec2_T &rhs) const;
+    Vec2f operator+ (const Vec2f &rhs) const;
 
     /**
-     * Subtract another Vec2_T from this Vec2_T.
-     * @return Result of Vec2_T subtraction
+     * Subtract another Vec2f from this Vec2f.
+     * @return Result of Vec2f subtraction
      */
-    Vec2_T operator- (const Vec2_T &rhs) const;
+    Vec2f operator- (const Vec2f &rhs) const;
 
     /**
-     * Divide this Vec2_T by a scalar value.
+     * Divide this Vec2f by a scalar value.
      * @param a Divisor
-     * @return Result of Vec2_T division
+     * @return Result of Vec2f division
      */
-    Vec2_T operator/ (const T a) const;
+    Vec2f operator/ (const float a) const;
 
     /**
-     * Divide this Vec2_T componenetwise by another Vec2_T.
+     * Divide this Vec2f componenetwise by another Vec2f.
      * @param rhs Divisor
-     * @return Result of Vec2_T division
+     * @return Result of Vec2f division
      */
-    Vec2_T operator/ (const Vec2_T &rhs) const;
+    Vec2f operator/ (const Vec2f &rhs) const;
 
     /**
-     * Multiply and mutate this Vec2_T with a scalar value.
+     * Multiply and mutate this Vec2f with a scalar value.
      * Destructive.
      * @param Scale Factor
      */
-    Vec2_T &operator*= (const T a);
+    Vec2f &operator*= (const float a);
 
     /**
-     * Multiply and mutate this Vec2_T componentwise with another Vec2_T.
+     * Multiply and mutate this Vec2f componentwise with another Vec2f.
      * Destructive.
      */
-    Vec2_T &operator*= (const Vec2_T &rhs);
+    Vec2f &operator*= (const Vec2f &rhs);
 
     /**
-     * Add and mutate this Vec2_T with another Vec2_T.
+     * Add and mutate this Vec2f with another Vec2f.
      * Destructive.
      */
-    Vec2_T &operator+= (const Vec2_T &rhs);
+    Vec2f &operator+= (const Vec2f &rhs);
 
     /**
-     * Subtract and mutate this Vec2_T with another Vec2_T.
+     * Subtract and mutate this Vec2f with another Vec2f.
      * Destructive.
      */
-    Vec2_T &operator-= (const Vec2_T &rhs);
+    Vec2f &operator-= (const Vec2f &rhs);
 
     /**
-     * Divide and mutate this Vec2_T by a scalar value.
+     * Divide and mutate this Vec2f by a scalar value.
      * Destructive.
      */
-    Vec2_T &operator/= (const T a);
+    Vec2f &operator/= (const float a);
 
     /**
-     * Divide and mutate this Vec2_T componentwise with another Vec2_T.
+     * Divide and mutate this Vec2f componentwise with another Vec2f.
      * Destructive.
      */
-    Vec2_T &operator/= (const Vec2_T &rhs);
+    Vec2f &operator/= (const Vec2f &rhs);
 
     /**
-     * Return the dot product of this Vec2_T and another Vec2_T.
-     * @return Vec2_T Dot Product
+     * Return the dot product of this Vec2f and another Vec2f.
+     * @return Vec2f Dot Product
      */
-    T Dot (const Vec2_T &rhs) const;
+    float Dot (const Vec2f &rhs) const;
 
     /**
-     * Return the cross product of this Vec2_T and another Vec2_T.
-     * @return Vec2_T Cross Product
+     * Return the cross product of this Vec2f and another Vec2f.
+     * @return Vec2f Cross Product
      */
-    T Cross (const Vec2_T &rhs) const;
+    float Cross (const Vec2f &rhs) const;
 
     /**
-     * Return the mirror of this Vec2_T about an arbitrary axis.
+     * Return the mirror of this Vec2f about an arbitrary axis.
      * @param axis The axis of symmetry
-     * @return Result of mirroring this Vec2_T about axis
+     * @return Result of mirroring this Vec2f about axis
      */
-    Vec2_T Mirror (const Vec2_T &axis) const;
+    Vec2f Mirror (const Vec2f &axis) const;
 
     /**
-     * Compare this Vec2_T against another Vec2_T exactly.
-     * @return true if this Vec2_T exactly equals the other, false otherwise
+     * Compare this Vec2f against another Vec2f exactly.
+     * @return true if this Vec2f exactly equals the other, false otherwise
      */
-    bool Compare (const Vec2_T &other) const;
+    bool Compare (const Vec2f &other) const;
 
     /**
-     * Compare this Vec2_T against another Vec2_T within a given tolerance.
-     * @param threshold Tolerance within which Vec2_T are considered equal
-     * @return true if this Vec2_T equals the other within given
+     * Compare this Vec2f against another Vec2f within a given tolerance.
+     * @param threshold Tolerance within which Vec2f are considered equal
+     * @return true if this Vec2f equals the other within given
      *         tolerance, false otherwise
      */
-    bool Compare (const Vec2_T &other, const T threshold) const;
+    bool Compare (const Vec2f &other, const float threshold) const;
 
     /**
-     * Compare this Vec2_T against another Vec2_T exactly.
-     * @return true if this Vec2_T exactly equals the other, false otherwise
+     * Compare this Vec2f against another Vec2f exactly.
+     * @return true if this Vec2f exactly equals the other, false otherwise
      */
-    bool operator== (const Vec2_T &other) const;
+    bool operator== (const Vec2f &other) const;
 
     /**
-     * Compare this Vec2_T against another Vec2_T exactly.
-     * @return true if this Vec2_T does not equal the other, false otherwise
+     * Compare this Vec2f against another Vec2f exactly.
+     * @return true if this Vec2f does not equal the other, false otherwise
      */
-    bool operator!= (const Vec2_T &other) const;
+    bool operator!= (const Vec2f &other) const;
 };
-
-// Common Vec2 types.
-typedef Vec2_T<float> Vec2f;
 
 // --------------------------------------------------------------------------
 
-template <typename T>
-INLINE T Vec2_T<T>::operator[] (const u32 index) const {
+INLINE float Vec2f::operator[] (const u32 index) const {
     return (&x)[index];
 }
 
-template <typename T>
-INLINE T &Vec2_T<T>::operator[] (const u32 index) {
+INLINE float &Vec2f::operator[] (const u32 index) {
     return (&x)[index];
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::Set (const T xx, const T yy) {
+INLINE void Vec2f::Set (const float xx, const float yy) {
     x = xx;
     y = yy;
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::Zero () {
+INLINE void Vec2f::Zero () {
     x = y = 0.0f;
 }
 
 //==========================
-// Vec2_T<T> Length Operators
+// Vec2f Length Operators
 //==========================
 
-template <typename T>
-INLINE T Vec2_T<T>::LengthSqr () const {
+INLINE float Vec2f::LengthSqr () const {
     return x * x + y * y;
 }
 
-template <typename T>
-INLINE T Vec2_T<T>::Length () const {
+INLINE float Vec2f::Length () const {
     return sqrt(x * x + y * y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::SetLength (T length) const {
-    T currMag = Length();
+INLINE Vec2f Vec2f::SetLength (const float length) const {
+    float currMag = Length();
     if (currMag == 0.0f) {
-        return Vec2_T<T>(*this);
+        return Vec2f(*this);
     } else {
         return *this * (length / currMag);
     }
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::SetLengthSelf (const T length) {
-    T currMag = Length();
+INLINE void Vec2f::SetLengthSelf (const float length) {
+    float currMag = Length();
     if (currMag != 0.0f) {
         *this *= (length / currMag);
     }
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::Normalize () const {
-    T currMag = Length();
+INLINE Vec2f Vec2f::Normalize () const {
+    float currMag = Length();
     if (currMag == 0.0f) {
-        return Vec2_T<T>(*this);
+        return Vec2f(*this);
     } else {
         return *this / currMag;
     }
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::NormalizeSelf () {
-    T currMag = Length();
+INLINE void Vec2f::NormalizeSelf () {
+    float currMag = Length();
     if (currMag != 0.0f) {
         *this /= currMag;
     }
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::ClampLength (const T max) const {
+INLINE Vec2f Vec2f::ClampLength (const float max) const {
     if (LengthSqr() > (max * max)) {
         return SetLength(max);
     }
 
-    return Vec2_T<T>(*this);
+    return Vec2f(*this);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::ClampLength (const T min, const T max) const {
-    T ls = LengthSqr();
+INLINE Vec2f Vec2f::ClampLength (const float min, const float max) const {
+    float ls = LengthSqr();
 
     if (ls < (min * min)) {
         return SetLength(min);
@@ -377,19 +360,17 @@ INLINE Vec2_T<T> Vec2_T<T>::ClampLength (const T min, const T max) const {
         return SetLength(max);
     }
 
-    return Vec2_T<T>(*this);
+    return Vec2f(*this);
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::ClampLengthSelf (const T max) {
+INLINE void Vec2f::ClampLengthSelf (const float max) {
     if (LengthSqr() > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::ClampLengthSelf (const T min, const T max) {
-    T ls = LengthSqr();
+INLINE void Vec2f::ClampLengthSelf (const float min, const float max) {
+    float ls = LengthSqr();
 
     if (ls < (min * min)) {
         SetLengthSelf(min);
@@ -400,134 +381,114 @@ INLINE void Vec2_T<T>::ClampLengthSelf (const T min, const T max) {
     }
 }
 
-template <typename T>
-INLINE void Vec2_T<T>::Clamp (const Vec2_T<T> &min, const Vec2_T<T> &max) {
+INLINE void Vec2f::Clamp (const Vec2f &min, const Vec2f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
 }
 
 //==========================
-// Vec2_T<T> Operators
+// Vec2f Operators
 //==========================
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator- () const {
-    return Vec2_T<T>(-x, -y);
+INLINE Vec2f Vec2f::operator- () const {
+    return Vec2f(-x, -y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator* (const T rhs) const {
-    return Vec2_T<T>(x * rhs, y * rhs);
+INLINE Vec2f Vec2f::operator* (const float rhs) const {
+    return Vec2f(x * rhs, y * rhs);
 }
 
-template <typename T>
-INLINE Vec2_T<T> operator* (const T a, const Vec2_T<T> &rhs) {
-    return Vec2_T<T>(a * rhs.x, a * rhs.y);
+INLINE Vec2f operator* (const float a, const Vec2f &rhs) {
+    return Vec2f(a * rhs.x, a * rhs.y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator* (const Vec2_T<T> &rhs) const {
-    return Vec2_T<T>(x * rhs.x, y * rhs.y);
+INLINE Vec2f Vec2f::operator* (const Vec2f &rhs) const {
+    return Vec2f(x * rhs.x, y * rhs.y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator+ (const Vec2_T<T> &rhs) const {
-    return Vec2_T<T>(x + rhs.x, y + rhs.y);
+INLINE Vec2f Vec2f::operator+ (const Vec2f &rhs) const {
+    return Vec2f(x + rhs.x, y + rhs.y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator- (const Vec2_T<T> &rhs) const {
-    return Vec2_T<T>(x - rhs.x, y - rhs.y);
+INLINE Vec2f Vec2f::operator- (const Vec2f &rhs) const {
+    return Vec2f(x - rhs.x, y - rhs.y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator/ (const T a) const {
-    T inva = 1.0f / a;
-    return Vec2_T<T>(x * inva, y * inva);
+INLINE Vec2f Vec2f::operator/ (const float a) const {
+    float inva = 1.0f / a;
+    return Vec2f(x * inva, y * inva);
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::operator/ (const Vec2_T<T> &rhs) const {
-    return Vec2_T<T>(x / rhs.x, y / rhs.y);
+INLINE Vec2f Vec2f::operator/ (const Vec2f &rhs) const {
+    return Vec2f(x / rhs.x, y / rhs.y);
 }
 
-template <typename T>
-INLINE Vec2_T<T> &Vec2_T<T>::operator*= (const T a) {
+INLINE Vec2f &Vec2f::operator*= (const float a) {
     x *= a;
     y *= a;
 
     return *this;
 }
 
-template <typename T>
-INLINE Vec2_T<T> &Vec2_T<T>::operator*= (const Vec2_T<T> &rhs) {
+INLINE Vec2f &Vec2f::operator*= (const Vec2f &rhs) {
     x *= rhs.x;
     y *= rhs.y;
 
     return *this;
 }
 
-template <typename T>
-INLINE Vec2_T<T> &Vec2_T<T>::operator+= (const Vec2_T<T> &rhs) {
+INLINE Vec2f &Vec2f::operator+= (const Vec2f &rhs) {
     x += rhs.x;
     y += rhs.y;
 
     return *this;
 }
 
-template <typename T>
-INLINE Vec2_T<T> &Vec2_T<T>::operator-= (const Vec2_T<T> &rhs) {
+INLINE Vec2f &Vec2f::operator-= (const Vec2f &rhs) {
     x -= rhs.x;
     y -= rhs.y;
 
     return *this;
 }
 
-template <typename T>
-INLINE Vec2_T<T> &Vec2_T<T>::operator/= (const T a) {
-    T inva = 1.0f / a;
+INLINE Vec2f &Vec2f::operator/= (const float a) {
+    float inva = 1.0f / a;
     x *= inva;
     y *= inva;
 
     return *this;
 }
 
-template <typename T>
-INLINE Vec2_T<T> &Vec2_T<T>::operator/= (const Vec2_T<T> &rhs) {
+INLINE Vec2f &Vec2f::operator/= (const Vec2f &rhs) {
     x /= rhs.x;
     y /= rhs.y;
 
     return *this;
 }
 
-template <typename T>
-INLINE T Vec2_T<T>::Dot (const Vec2_T<T> &rhs) const {
+INLINE float Vec2f::Dot (const Vec2f &rhs) const {
     return x * rhs.x + y * rhs.y;
 }
 
-template <typename T>
-INLINE T Vec2_T<T>::Cross (const Vec2_T<T> &rhs) const {
+INLINE float Vec2f::Cross (const Vec2f &rhs) const {
     return x * rhs.y - y * rhs.x;
 }
 
-template <typename T>
-INLINE Vec2_T<T> Vec2_T<T>::Mirror (const Vec2_T<T> &axis) const {
+INLINE Vec2f Vec2f::Mirror (const Vec2f &axis) const {
     return 2.0f * this->Dot(axis) * axis - *this;
 }
 
 //==========================
-// Vec2_T<T> Comparisons
+// Vec2f Comparisons
 //==========================
 
 // This comparison may be inaccurate, prefer Compare(val, threshold)
 // where possible.
-template <typename T>
-INLINE bool Vec2_T<T>::Compare (const Vec2_T<T> &other) const {
+INLINE bool Vec2f::Compare (const Vec2f &other) const {
     return x == other.x && y == other.y;
 }
 
-template <typename T>
-INLINE bool Vec2_T<T>::Compare (const Vec2_T<T> &other, const T threshold) const {
+INLINE bool Vec2f::Compare (const Vec2f &other, const float threshold) const {
     if (fabsf(x - other.x) > threshold)
         return false;
     if (fabsf(y - other.y) > threshold)
@@ -536,13 +497,11 @@ INLINE bool Vec2_T<T>::Compare (const Vec2_T<T> &other, const T threshold) const
     return true;
 }
 
-template <typename T>
-INLINE bool Vec2_T<T>::operator== (const Vec2_T<T> &other) const {
+INLINE bool Vec2f::operator== (const Vec2f &other) const {
     return Compare(other);
 }
 
-template <typename T>
-INLINE bool Vec2_T<T>::operator!= (const Vec2_T<T> &other) const {
+INLINE bool Vec2f::operator!= (const Vec2f &other) const {
     return !Compare(other);
 }
 

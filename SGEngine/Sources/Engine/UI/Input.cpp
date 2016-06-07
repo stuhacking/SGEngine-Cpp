@@ -21,15 +21,29 @@ static std::unordered_map<SDL_Keycode, bool> keysReleased;
 static std::unordered_map<SDL_Keycode, bool> keysPressed;
 
 // Mouse Stuff
-static std::unordered_map<u32, bool> mouseMap;
-static std::unordered_map<u32, bool> mouseReleased;
-static std::unordered_map<u32, bool> mousePressed;
+static constexpr u32 MOUSE_BUTTONS = 3;
 
-// Cache mouse positions so we can query mouse delta
-// multiple times per update.
-static bool mouseLocked;
-static Vec2f mousePos;
-static Vec2f mouseDelta;
+struct mouse_state {
+    bool buttons[MOUSE_BUTTONS];
+    bool locked;
+    // Cache SDL Mouse position each update.
+    Vec2f pos;
+    Vec2f delta;
+};
+
+/**
+ * Clear mouse_state back to zero.
+ */
+void resetMouse (struct mouse_state &mouse) {
+    for (u32 k = 0; k < MOUSE_BUTTONS; ++k) {
+        mouse.buttons[k] = false;
+    }
+
+    mouse.delta.Zero();
+}
+
+static struct mouse_state mouse;
+static struct mouse_state lastMouse;
 
 // Other signalled Events caught. These should be flagged and
 // handled by the caller.
@@ -41,10 +55,10 @@ static bool quit;
 void Input::Update () {
     keysReleased.clear();
     keysPressed.clear();
-    mouseReleased.clear();
-    mousePressed.clear();
 
-    mouseDelta.x = mouseDelta.y = 0.0f;
+    // Reset Mouse buttons
+    lastMouse = mouse;
+    resetMouse(mouse);
 
     SDL_Event evt;
     while (SDL_PollEvent(&evt)) {
@@ -66,18 +80,16 @@ void Input::Update () {
             SDL_GetMouseState(&x, &y);
             SDL_GetRelativeMouseState(&dx, &dy);
 
-            mousePos.x = static_cast<float>(x);
-            mousePos.y = static_cast<float>(y);
-            mouseDelta.x += static_cast<float>(dx);
-            mouseDelta.y += static_cast<float>(dy);
+            mouse.pos.x = static_cast<float>(x);
+            mouse.pos.y = static_cast<float>(y);
+            mouse.delta.x += static_cast<float>(dx);
+            mouse.delta.y += static_cast<float>(dy);
             break;
         case SDL_MOUSEBUTTONDOWN:
-            mousePressed[evt.button.button] = !mouseMap[evt.button.button];
-            mouseMap[evt.button.button] = true;
+            mouse.buttons[evt.button.button] = true;
             break;
         case SDL_MOUSEBUTTONUP:
-            mouseReleased[evt.button.button] = mouseMap[evt.button.button];
-            mouseMap[evt.button.button] = false;
+            mouse.buttons[evt.button.button] = false;
             break;
         default:
             break;
@@ -124,36 +136,36 @@ void Input::LockMouse () {
     // Throw away any current accumulated mouse delta. Avoids sudden
     // jerk when entering locked mouse state.
     SDL_GetRelativeMouseState(&x, &y);
-    mouseLocked = true;
+    mouse.locked = true;
 }
 
 void Input::ReleaseMouse () {
     SDL_SetRelativeMouseMode(SDL_FALSE);
-    mouseLocked = false;
+    mouse.locked = false;
 }
 
 bool Input::MouseLocked () {
-    return mouseLocked;
+    return mouse.locked;
 }
 
 Vec2f Input::GetMousePosition () {
-    return mousePos;
+    return mouse.pos;
 }
 
 Vec2f Input::GetMouseDelta () {
-    return mouseDelta;
+    return mouse.delta;
 }
 
 bool Input::MouseDown (const u32 button) {
-    return mouseMap[button];
+    return mouse.buttons[button];
 }
 
 bool Input::MousePressed (const u32 button) {
-    return mousePressed[button];
+    return mouse.buttons[button] && !lastMouse.buttons[button];
 }
 
 bool Input::MouseReleased (const u32 button) {
-    return mouseReleased[button];
+    return !mouse.buttons[button] && lastMouse.buttons[button];
 }
 
 //--------------------------

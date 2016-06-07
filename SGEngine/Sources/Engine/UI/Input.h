@@ -48,6 +48,12 @@ public:
     };
 
 public:
+
+    /**
+     * Initialize input handling.
+     */
+    static void Init ();
+
     /**
      * Poll the internal input Event Queue and update the
      * current mouse and keyboard state.

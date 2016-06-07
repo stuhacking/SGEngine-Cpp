@@ -22,8 +22,10 @@ set(SOURCES
   Render/MeshRenderer.cpp
   Render/DebugGraphics.cpp
   UI/Console.cpp
-  UI/Input.cpp
-  UI/SGEWindow.cpp)
+
+  platform/sdl2/sdl2_Input.cpp
+  platform/sdl2/sdl2_Window.cpp
+  )
 
 add_library(SGEEngineLib ${SOURCES})
 target_link_libraries(SGEEngineLib SGECoreLib)

@@ -2,7 +2,7 @@
  * This wrapper will initialize SDL and also
  * set up an OpenGL context.
  */
-#include "../Engine.h"
+#include "../../Engine.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>

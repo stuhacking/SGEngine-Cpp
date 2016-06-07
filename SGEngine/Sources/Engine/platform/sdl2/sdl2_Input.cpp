@@ -1,10 +1,10 @@
 //
 // Input Implementation
 //
-#include "../Engine.h"
+#include "../../Engine.h"
 
 #include <SDL2/SDL.h>
-#include <unordered_map>
+#include <map>
 
 namespace sge {
 
@@ -16,9 +16,9 @@ static SDL_Keycode sdlKeyMap[24] = {
 };
 
 // Map of Keycodes which are currently down.
-static std::unordered_map<SDL_Keycode, bool> keyMap;
-static std::unordered_map<SDL_Keycode, bool> keysReleased;
-static std::unordered_map<SDL_Keycode, bool> keysPressed;
+static std::map<SDL_Keycode, bool> keyMap;
+static std::map<SDL_Keycode, bool> keysReleased;
+static std::map<SDL_Keycode, bool> keysPressed;
 
 // Mouse Stuff
 static constexpr u32 MOUSE_BUTTONS = 3;
@@ -30,17 +30,6 @@ struct mouse_state {
     Vec2f pos;
     Vec2f delta;
 };
-
-/**
- * Clear mouse_state back to zero.
- */
-void resetMouse (struct mouse_state &mouse) {
-    for (u32 k = 0; k < MOUSE_BUTTONS; ++k) {
-        mouse.buttons[k] = false;
-    }
-
-    mouse.delta.Zero();
-}
 
 static struct mouse_state mouse;
 static struct mouse_state lastMouse;
@@ -58,11 +47,12 @@ void Input::Update () {
 
     // Reset Mouse buttons
     lastMouse = mouse;
-    resetMouse(mouse);
+    mouse.delta.Zero();
 
     SDL_Event evt;
     while (SDL_PollEvent(&evt)) {
         switch (evt.type) {
+        // TODO(smh): Maybe split input polling from window event polling.
         case SDL_QUIT:
             quit = true;
             break;

@@ -14,7 +14,17 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 include_directories(../Lib)
 
-file(GLOB_RECURSE SOURCES *.cpp .)
+set(SOURCES
+  GL/GLSL.cpp
+  GL/GLProjection.cpp
+  Image/Image.cpp
+  Model/Obj.cpp
+  Render/MeshRenderer.cpp
+  Render/DebugGraphics.cpp
+  UI/Console.cpp
+  UI/Input.cpp
+  UI/SGEWindow.cpp)
+
 add_library(SGEEngineLib ${SOURCES})
 target_link_libraries(SGEEngineLib SGECoreLib)
 target_link_libraries(SGEEngineLib ${OPENGL_gl_LIBRARY})

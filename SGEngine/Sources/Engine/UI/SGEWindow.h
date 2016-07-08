@@ -16,6 +16,18 @@
 
 namespace sge {
 
+/**
+ * Initialize the context for a 2D application.
+ */
+bool Init2DApplication (const std::string name, const u32 width, const u32 height,
+    const bool fullScreen = false);
+
+/**
+ * Initialize the context for a 3D application.
+ */
+bool Init3DApplication (const std::string name, const u32 width, const u32 height,
+    const bool fullScreen = false);
+
 class SGEWindow {
 public:
 

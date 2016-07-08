@@ -14,6 +14,7 @@ using namespace sge;
 static std::unique_ptr<Game> game;
 
 int main (int argc, char *argv[]) {
+    Init3DApplication("Test App", 1024, 600);
 
     if (!window->IsInitialized()) {
         std::cerr << "Error initializing SGE Window.\n";
@@ -42,14 +43,13 @@ int main (int argc, char *argv[]) {
             clockSpeed *= 2.0f;
             gameClock.SetScale(clockSpeed);
         }
+
         if (Input::KeyDown(Input::Key::PageDown)) {
             if (clockSpeed >= 2.0f) {
                 clockSpeed /= 2.0f;
             }
             gameClock.SetScale(clockSpeed);
         }
-
-        DEBUG( std::cout << gameClock << "\n"; );
 
         game->Input();
         game->Update(gameClock.DeltaSeconds());

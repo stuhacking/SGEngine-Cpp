@@ -7,12 +7,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <iostream>
+#include <memory>
 
 #define OGL_MAJOR 3
 #define OGL_MINOR 3
 #define OGL_PROFILE SDL_GL_CONTEXT_PROFILE_CORE
 
 namespace sge {
+
 
 class SGEWindowSDL : public SGEWindow {
 public:
@@ -38,8 +40,6 @@ private:
     SDL_Window *m_window;
 };
 
-static SGEWindowSDL sdlWindow = SGEWindowSDL("SGE Window", 800, 600);
-SGEWindow *window = &sdlWindow;
 
 // --------------------------------------------------------------------------
 
@@ -171,6 +171,38 @@ void SGEWindowSDL::SetClearColor (const float r, const float g, const float b, c
 
 void SGEWindowSDL::Clear () const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+// --------------------------------------------------------------------------
+
+/** Global Application Window */
+static std::unique_ptr<SGEWindowSDL> sdlWindow;
+SGEWindow *window;
+
+/**
+ * Initialize the context for a 2D application.
+ */
+bool Init2DApplication (const std::string name, const u32 width, const u32 height,
+    const bool fullScreen) {
+    sdlWindow = std::unique_ptr<SGEWindowSDL>(new SGEWindowSDL(name,
+                                                               width, height,
+                                                               fullScreen));
+    window = sdlWindow.get();
+
+    return window->IsInitialized();
+}
+
+/**
+ * Initialize the context for a 3D application.
+ */
+bool Init3DApplication (const std::string name, const u32 width, const u32 height,
+    const bool fullScreen) {
+    sdlWindow = std::unique_ptr<SGEWindowSDL>(new SGEWindowSDL(name,
+                                                               width, height,
+                                                               fullScreen));
+    window = sdlWindow.get();
+
+    return window->IsInitialized();
 }
 
 } /* namespace sge */

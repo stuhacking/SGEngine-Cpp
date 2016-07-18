@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(SGEngine)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
+
 # Start with modern standard: C++14, or C++1y
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)

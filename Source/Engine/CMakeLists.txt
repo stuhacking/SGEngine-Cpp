@@ -9,8 +9,11 @@ if(NOT APPLE)
     include_directories(${GLEW_INCLUDE_DIRS})
 endif()
 
-find_library(SDL2 REQUIRED)
+find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
+
+find_package(SDL2_image REQUIRED >= 2.0.0)
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
 include_directories(../Lib)
 
@@ -33,4 +36,4 @@ target_link_libraries(SGEEngineLib ${OPENGL_gl_LIBRARY})
 if(NOT APPLE)
     target_link_libraries(SGEEngineLib ${GLEW_LIBRARY})
 endif()
-target_link_libraries(SGEEngineLib ${SDL2_LIBRARIES})
+target_link_libraries(SGEEngineLib ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})

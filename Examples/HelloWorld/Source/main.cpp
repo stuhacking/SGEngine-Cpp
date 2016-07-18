@@ -14,7 +14,7 @@ using namespace sge;
 static std::unique_ptr<Game> game;
 
 int main (int argc, char *argv[]) {
-    Init3DApplication("Test App", 1024, 600);
+    InitSGEApplication("Test App", 1024, 600);
 
     if (!window->IsInitialized()) {
         std::cerr << "Error initializing SGE Window.\n";

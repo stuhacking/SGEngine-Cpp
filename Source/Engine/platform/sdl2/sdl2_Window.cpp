@@ -180,26 +180,11 @@ static std::unique_ptr<SGEWindowSDL> sdlWindow;
 SGEWindow *window;
 
 /**
- * Initialize the context for a 2D application.
- */
-bool Init2DApplication (const std::string name, const u32 width, const u32 height,
-    const bool fullScreen) {
-    sdlWindow = std::unique_ptr<SGEWindowSDL>(new SGEWindowSDL(name,
-                                                               width, height,
-                                                               fullScreen));
-    window = sdlWindow.get();
-
-    return window->IsInitialized();
-}
-
-/**
  * Initialize the context for a 3D application.
  */
-bool Init3DApplication (const std::string name, const u32 width, const u32 height,
+bool InitSGEApplication (const std::string name, const u32 width, const u32 height,
     const bool fullScreen) {
-    sdlWindow = std::unique_ptr<SGEWindowSDL>(new SGEWindowSDL(name,
-                                                               width, height,
-                                                               fullScreen));
+    sdlWindow = std::make_unique<SGEWindowSDL>(name, width, height, fullScreen);
     window = sdlWindow.get();
 
     return window->IsInitialized();

@@ -17,8 +17,8 @@ if(NOT APPLE)
     include_directories(${GLEW_INCLUDE_DIRS})
 endif()
 
-include_directories(../../SGEngine/Sources/Lib)
-include_directories(../../SGEngine/Sources/Engine)
+include_directories(../../Source/Lib)
+include_directories(../../Source/Engine)
 
 file(GLOB_RECURSE SOURCES *.cpp .)
 add_executable(${PROJECT_NAME} ${SOURCES})

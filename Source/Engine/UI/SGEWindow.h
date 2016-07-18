@@ -9,24 +9,19 @@
  *
  * @brief Define a Window class to initialize the GL/SDL context.
  */
-#ifndef __SGENGINE_SGEWINDOW_h_
-#define __SGENGINE_SGEWINDOW_h_
+#ifndef __SGENGINE_SGEWINDOW_H
+#define __SGENGINE_SGEWINDOW_H
 
 #include <string>
 
 namespace sge {
 
 /**
- * Initialize the context for a 2D application.
+ * Initialize the context for an application using SGEngine. This must
+ * be called to initialize the back-end graphics system.
  */
-bool Init2DApplication (const std::string name, const u32 width, const u32 height,
-    const bool fullScreen = false);
-
-/**
- * Initialize the context for a 3D application.
- */
-bool Init3DApplication (const std::string name, const u32 width, const u32 height,
-    const bool fullScreen = false);
+bool InitSGEApplication (const std::string name, const u32 width, const u32 height,
+                      const bool fullScreen = false);
 
 class SGEWindow {
 public:
@@ -88,4 +83,4 @@ INLINE Vec2f SGEWindow::Center () const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_SGEWINDOW_h_  */
+#endif /* __SGENGINE_SGEWINDOW_H  */

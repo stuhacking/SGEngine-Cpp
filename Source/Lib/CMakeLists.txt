@@ -18,4 +18,5 @@ set(SOURCES
   Util/LibIO.cpp
   )
 
-add_library(SGECoreLib ${SOURCES})
+# Builds: SGECoreLib
+add_library(${PROJECT_NAME} ${SOURCES})

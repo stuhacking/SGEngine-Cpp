@@ -1,9 +1,12 @@
+# SGEEngineLib - Rendering and UI library
+# Interface to lower level graphics.
 cmake_minimum_required(VERSION 2.8.11)
 project(SGEEngineLib)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS})
 
+# Link GLEW on non-apple.
 if(NOT APPLE)
     find_package(GLEW REQUIRED)
     include_directories(${GLEW_INCLUDE_DIRS})
@@ -30,10 +33,11 @@ set(SOURCES
   platform/sdl2/sdl2_Window.cpp
   )
 
-add_library(SGEEngineLib ${SOURCES})
-target_link_libraries(SGEEngineLib SGECoreLib)
-target_link_libraries(SGEEngineLib ${OPENGL_gl_LIBRARY})
+# Builds: SGEEngineLib
+add_library(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} SGECoreLib)
+target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
 if(NOT APPLE)
-    target_link_libraries(SGEEngineLib ${GLEW_LIBRARY})
+    target_link_libraries(${PROJECT_NAME} ${GLEW_LIBRARY})
 endif()
-target_link_libraries(SGEEngineLib ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})

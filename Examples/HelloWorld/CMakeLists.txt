@@ -1,3 +1,4 @@
+# HelloWorld - A Demo app for SGEngine
 cmake_minimum_required(VERSION 2.8.11)
 project(HelloWorld)
 
@@ -24,6 +25,8 @@ include_directories(../../Source/Lib)
 include_directories(../../Source/Engine)
 
 file(GLOB_RECURSE SOURCES *.cpp .)
+
+# Builds: HelloWorld
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})

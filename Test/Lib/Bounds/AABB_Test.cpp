@@ -4,8 +4,26 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
+using sge::FMath;
 using sge::Vec3f;
 using sge::AABB;
+
+TEST (AABB_Test, Constructors) {
+    EXPECT_EQ(AABB(), AABB(FMath::INFTY, FMath::INFTY, FMath::INFTY,
+                           -FMath::INFTY, -FMath::INFTY, -FMath::INFTY));
+
+    EXPECT_EQ(AABB(1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 3.0f),
+              AABB(Vec3f(1.0f, 1.0f, 1.0f), Vec3f(3.0f, 3.0f, 3.0f)));
+}
+
+TEST (AABB_Test, Clear) {
+    AABB r = AABB(0.0f, 0.0f, 0.0f, 3.0f, 5.0f, 4.0f);
+
+    r.Clear();
+
+    EXPECT_FLOAT_EQ(FMath::INFTY, r.Volume());
+    EXPECT_FALSE(r.Contains(sge::Vec3f::ZERO));
+}
 
 // Basic Tests
 //     8                        +--------------5
@@ -52,17 +70,16 @@ TEST (AABB_Test, Intersects) {
     EXPECT_FALSE(A.Intersects(E));
 }
 
-TEST (AABB_Test, getCenter) {
+TEST (AABB_Test, Center) {
     EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), A.Center());
     EXPECT_EQ(Vec3f(4.5f, 3.0f, 4.5f), B.Center());
 }
 
-TEST (AABB_Test, getVolume) {
+TEST (AABB_Test, Volume) {
     EXPECT_FLOAT_EQ(8.0f, A.Volume());
     EXPECT_FLOAT_EQ(27.0f, G.Volume());
     EXPECT_FLOAT_EQ(10.0f, C.Volume());
     EXPECT_FLOAT_EQ(1.0f, E.Volume());
-
 }
 
 TEST (AABB_Test, ContainsPoint) {
@@ -72,7 +89,7 @@ TEST (AABB_Test, ContainsPoint) {
     EXPECT_FALSE(E.Contains(Vec3f(0.0f, 0.0f, 0.0f)));
 }
 
-TEST (AABB_Test, ContainsRect) {
+TEST (AABB_Test, ContainsBox) {
     EXPECT_TRUE(G.Contains(H));
 
     EXPECT_FALSE(H.Contains(G));

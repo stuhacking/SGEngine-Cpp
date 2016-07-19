@@ -38,7 +38,7 @@ public:
 
 public:
     /** Default Constructor */
-    Mat4f () { }
+    Mat4f () = default;
 
     /** Fill Constructor */
     explicit Mat4f (const float f);

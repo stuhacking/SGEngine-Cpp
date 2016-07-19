@@ -7,7 +7,7 @@
  *
  * --------------------------------------------------------------------------
  *
- * @brief Defines a low level Quat4f type.
+ * @brief Defines a low level Quaternion type.
  */
 #ifndef __SGENGINE_QUATERNION_H_
 #define __SGENGINE_QUATERNION_H_
@@ -21,17 +21,19 @@ namespace sge {
 class Quat4f {
 public:
     /* Quat4f Imaginary (i,j,k) components */
-    float i, j, k;
+    float i = 0.0f;
+    float j = 0.0f;
+    float k = 0.0f;
 
     /* Quat4f real component */
-    float w;
+    float w = 0.0f;
 
 public:
     static const Quat4f IDENTITY;
 
 public:
     /** Default Constructor */
-    Quat4f () : i(0.0f), j(0.0f), k(0.0f), w(0.0f) { }
+    Quat4f () = default;
 
     /** Value Constructor */
     explicit Quat4f (const float ii, const float jj, const float kk, const float ww)

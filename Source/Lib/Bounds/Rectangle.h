@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a 2D axis aligned bounding rectangle type.
  */
 #ifndef __SGENGINE_RECTANGLE_H_
@@ -23,20 +23,25 @@ namespace sge {
 class Rectangle {
 public:
     /** Default Constructor */
-    Rectangle ();
+    Rectangle ()
+        : min{FMath::INFTY, FMath::INFTY}, max{-FMath::INFTY, -FMath::INFTY} { }
 
     /** Point Constructor */
-    Rectangle (const Vec2f &point);
+    explicit Rectangle (const Vec2f &point)
+        : min(point), max(point) { }
 
     /**
      * Construct a Rectangle with min and max bounds as Vec2f.
      */
-    Rectangle (const Vec2f &p_min, const Vec2f &p_max);
+    explicit Rectangle (const Vec2f &p_min, const Vec2f &p_max)
+        : min(p_min), max(p_max) { }
 
     /**
      * Construct a Rectangle with min and max bounds as values.
      */
-    Rectangle (const float xMin, const float yMin, const float xMax, const float yMax);
+    explicit Rectangle (const float xMin, const float yMin,
+                        const float xMax, const float yMax)
+        : min{xMin, yMin}, max{xMax, yMax} { }
 
     /**
      * Clear the contents of this Rectangle.
@@ -69,14 +74,14 @@ public:
      * Destructive.
      */
     void ExpandSelf (const float val);
-    
+
     /** Test if rectangle contains point. */
     bool Contains (const Vec2f &point) const;
 
     /** Test if rectangle entirely contains other rectangle. */
     bool Contains (const Rectangle &other) const;
 
-    /** 
+    /**
      * Test if this Rectangle partially (or fully) intersects
      * another Rectangle.
      */
@@ -109,26 +114,6 @@ private:
 };
 
 // --------------------------------------------------------------------------
-
-INLINE Rectangle::Rectangle () {
-    min.x = min.y = FMath::INFTY;
-    max.x = max.y = -FMath::INFTY;
-}
-
-INLINE Rectangle::Rectangle (const Vec2f &point) {
-    min = max = point;
-}
-
-INLINE Rectangle::Rectangle (const Vec2f &p_min, const Vec2f &p_max) {
-    min = p_min;
-    max = p_max;
-}
-
-INLINE Rectangle::Rectangle (const float xMin, const float yMin,
-                             const float xMax, const float yMax) {
-    min = Vec2f(xMin, yMin);
-    max = Vec2f(xMax, yMax);
-}
 
 INLINE void Rectangle::Clear () {
     min.x = min.y = FMath::INFTY;
@@ -169,12 +154,8 @@ INLINE bool Rectangle::Contains (const Rectangle &other) const {
 }
 
 INLINE bool Rectangle::Intersects (const Rectangle &other) const {
-    if (other.max.x < min.x || other.max.y < min.y ||
-        other.min.x > max.x || other.min.y > max.y) {
-        return false;
-    }
-    
-    return true;
+    return (other.max.x >= min.x && other.max.y >= min.y &&
+            other.min.x <= max.x && other.min.y <= max.y);
 }
 
 INLINE bool Rectangle::Compare (const Rectangle &other) const {

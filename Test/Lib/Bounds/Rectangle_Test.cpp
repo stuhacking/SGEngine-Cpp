@@ -8,24 +8,12 @@ using sge::FMath;
 using sge::Vec2f;
 using sge::Rectangle;
 
-TEST (Rectangle_Test, Area) {
-    Rectangle r = Rectangle(0.0f, 0.0f, 3.0f, 5.0f);
+TEST (Rectangle_Test, Constructors) {
+    EXPECT_EQ(Rectangle(), Rectangle(FMath::INFTY, FMath::INFTY,
+                                     -FMath::INFTY, -FMath::INFTY));
 
-    EXPECT_FLOAT_EQ(15.0f, r.Area());
-
-    r = Rectangle(2.0f, 3.0f, 6.0f, -1.0f);
-
-    EXPECT_FLOAT_EQ(16.0f, r.Area());
-}
-
-TEST (Rectangle_Test, Center) {
-    Rectangle r = Rectangle(0.0f, 0.0f, 3.0f, 5.0f);
-
-    EXPECT_EQ(Vec2f(1.5f, 2.5f), r.Center());
-
-    r = Rectangle(2.0f, 3.0f, 6.0f, -1.0f);
-
-    EXPECT_EQ(Vec2f(4.0f, 1.0f), r.Center());
+    EXPECT_EQ(Rectangle(1.0f, 1.0f, 3.0f, 3.0f),
+              Rectangle(Vec2f(1.0f, 1.0f), Vec2f(3.0f, 3.0f)));
 }
 
 TEST (Rectangle_Test, Clear) {
@@ -94,6 +82,18 @@ TEST (Rectangle_Test, Contains_Rectangle) {
 
     EXPECT_FALSE(H.Contains(G));
     EXPECT_FALSE(A.Contains(B));
+}
+
+TEST (Rectangle_Test, Center) {
+    EXPECT_EQ(Vec2f(2.0f, 2.0f), A.Center());
+    EXPECT_EQ(Vec2f(4.5f, 3.0f), B.Center());
+}
+
+TEST (Rectangle_Test, Area) {
+    EXPECT_FLOAT_EQ(4.0f, A.Area());
+    EXPECT_FLOAT_EQ(9.0f, G.Area());
+    EXPECT_FLOAT_EQ(5.0f, C.Area());
+    EXPECT_FLOAT_EQ(1.0f, E.Area());
 }
 
 TEST (Rectangle_Test, expand) {

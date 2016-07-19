@@ -37,7 +37,7 @@ public:
 
 public:
     /** Default Constructor */
-    Mat3f () { }
+    Mat3f () = default;
 
     /** Fill Constructor */
     explicit Mat3f (const float f);

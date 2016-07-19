@@ -20,7 +20,9 @@ namespace sge {
 class Vec3f {
 public:
     /** Vec3 components. */
-    float x, y, z;
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
 
 public:
     static const Vec3f ZERO;
@@ -30,8 +32,8 @@ public:
     static const Vec3f Z;
 
 public:
-    /** Construct a default Vec3f at origin. */
-    Vec3f () : x(0), y(0), z(0) { }
+    /** Default Constructor. */
+    Vec3f () = default;
 
     /** Fill Constructor. */
     explicit Vec3f (const float f) : x(f), y(f), z(f) { }

@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a 3D axis-aligned bounding box type.
  */
 #ifndef __SGENGINE_AABB_H_
@@ -17,27 +17,32 @@
 namespace sge {
 
 /**
- * Axis-aligned Bounding Box. Implements intersection and envelopment
+ * Axis-aligned Bounding Box. Implements intersection and containment
  * tests for 3D volumes.
  */
 class AABB {
 public:
     /** Default Constructor */
-    AABB ();
+    AABB ()
+        : min{FMath::INFTY, FMath::INFTY, FMath::INFTY},
+          max{-FMath::INFTY, -FMath::INFTY, -FMath::INFTY} { }
 
     /** Point Constructor */
-    AABB (const Vec3f &point);
+    explicit AABB (const Vec3f &point)
+        : min{point}, max{point} { }
 
     /**
      * Construct a AABB with min and max bounds as Vec3f.
      */
-    AABB (const Vec3f &p_min, const Vec3f &p_max);
+    explicit AABB (const Vec3f &p_min, const Vec3f &p_max)
+        : min{p_min}, max{p_max} { }
 
     /**
      * Construct a AABB with min and max bounds as values.
      */
-    AABB (const float xMin, const float yMin, const float zMin,
-          const float xMax, const float yMax, const float zMax);
+    explicit AABB (const float xMin, const float yMin, const float zMin,
+                   const float xMax, const float yMax, const float zMax)
+        : min{xMin, yMin, zMin}, max{xMax, yMax, zMax} { }
 
     /**
      * Clear the contents of this AABB.
@@ -70,7 +75,7 @@ public:
      * Destructive.
      */
     void ExpandSelf (const float val);
-    
+
     /** Test if rectangle contains point. */
     bool Contains (const Vec3f &point) const;
 
@@ -108,26 +113,6 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE AABB::AABB () {
-    min.x = min.y = min.z = FMath::INFTY;
-    max.x = max.y = max.z = -FMath::INFTY;
-}
-
-INLINE AABB::AABB (const Vec3f &point) {
-    min = max = point;
-}
-
-INLINE AABB::AABB (const Vec3f &p_min, const Vec3f &p_max) {
-    min = p_min;
-    max = p_max;
-}
-
-INLINE AABB::AABB (const float xMin, const float yMin, const float zMin,
-                   const float xMax, const float yMax, const float zMax) {
-    min = Vec3f(xMin, yMin, zMin);
-    max = Vec3f(xMax, yMax, zMax);
-}
-
 INLINE void AABB::Clear () {
     min.x = min.y = min.z = FMath::INFTY;
     max.x = max.y = max.z = -FMath::INFTY;
@@ -139,7 +124,7 @@ INLINE void AABB::Maximize () {
 }
 
 INLINE Vec3f AABB::Center () const {
-    return (min + max) / 2.0f;
+    return (min + max) * 0.5f;
 }
 
 INLINE float AABB::Volume () const {
@@ -171,12 +156,8 @@ INLINE bool AABB::Contains (const AABB &other) const {
 }
 
 INLINE bool AABB::Intersects (const AABB &other) const {
-    if (other.max.x < min.x || other.max.y < min.y || other.max.z < min.z ||
-        other.min.x > max.x || other.min.y > max.y || other.min.z > max.z) {
-        return false;
-    }
-    
-    return true;
+    return (other.max.x >= min.x && other.max.y >= min.y && other.max.z >= min.z &&
+            other.min.x <= max.x && other.min.y <= max.y && other.min.z <= max.z);
 }
 
 //=================

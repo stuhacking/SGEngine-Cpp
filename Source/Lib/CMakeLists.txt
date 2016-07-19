@@ -9,6 +9,7 @@ set(SOURCES
   Math/Quaternion.cpp
   Math/Matrix.cpp
   Math/Color.cpp
+  Bounds/Line2D.cpp
   Geom/Mesh.cpp
   Geom/Primitive/Primitive.cpp
   Noise/Perlin.cpp

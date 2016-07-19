@@ -20,7 +20,8 @@ namespace sge {
 class Vec2f {
 public:
     /** Vec2f components. */
-    float x, y;
+    float x = 0.0f;
+    float y = 0.0f;
 
 public:
     static const Vec2f ZERO;
@@ -29,8 +30,8 @@ public:
     static const Vec2f Y;
 
 public:
-    /** Construct a default Vec2f at 0,0. */
-    Vec2f () : x(0), y(0) { }
+    /** Default Constructor. */
+    Vec2f () = default;
 
     /** Fill Constructor. */
     explicit Vec2f (const float f) : x(f), y(f) { }

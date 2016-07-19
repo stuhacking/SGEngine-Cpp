@@ -21,9 +21,12 @@ public:
     Vec3f scale;
 
 public:
-    Transform (const Vec3f &p_pos = Vec3f::ZERO,
-               const Quat4f &p_ori = Quat4f::IDENTITY,
-               const Vec3f &p_scale = Vec3f::ONE)
+    /**
+     * Create a new Transformation.
+     */
+    explicit Transform (const Vec3f &p_pos = Vec3f::ZERO,
+                        const Quat4f &p_ori = Quat4f::IDENTITY,
+                        const Vec3f &p_scale = Vec3f::ONE)
         : position(p_pos), orientation(p_ori), scale(p_scale) { }
 
     /**

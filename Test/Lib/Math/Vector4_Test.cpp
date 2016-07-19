@@ -7,6 +7,8 @@
 #include "Lib.h"
 
 using sge::FMath;
+using sge::Vec2f;
+using sge::Vec3f;
 using sge::Vec4f;
 
 /*==========================
@@ -96,7 +98,7 @@ TEST (Vec4f_Test, Scale) {
 TEST (Vec4f_Test, Scale_Equals) {
     Vec4f v1 = Vec4f(3.0f, 1.5f, 2.0f, -3.0f);
 
-    v1 *= 2;
+    v1 *= 2.0f;
 
     EXPECT_EQ(Vec4f(6.0f, 3.0f, 4.0f, -6.0f), v1);
 }
@@ -125,9 +127,13 @@ TEST (Vec4f_Test, Div) {
 TEST (Vec4f_Test, Div_Equals) {
     Vec4f v1 = Vec4f(3.0f, 1.5f, 0.6f, 2.0f);
 
-    v1 /= 2;
+    v1 /= 2.0f;
 
     EXPECT_EQ(Vec4f(1.5f, 0.75f, 0.3f, 1.0f), v1);
+}
+
+TEST (Vec4f_Test, Dot) {
+    EXPECT_EQ(70.0f, Vec4f(1.0f, 2.0f, 3.0f, 4.0f).Dot(Vec4f(5.0f, 6.0f, 7.0f, 8.0f)));
 }
 
 /*==========================
@@ -155,4 +161,25 @@ TEST (Vec4f_Test, Operator_Index_Set) {
     EXPECT_FLOAT_EQ(3.0f, v[1]);
     EXPECT_FLOAT_EQ(4.0f, v[2]);
     EXPECT_FLOAT_EQ(5.0f, v[3]);
+}
+
+TEST (Vec4f_Test, Comparison) {
+    EXPECT_TRUE(Vec4f(1.0f, 1.0f, 1.0f, 1.0f) == Vec4f(1.0f, 1.0f, 1.0f, 1.0f));
+    EXPECT_FALSE(Vec4f(1.0f, 2.0f, 3.0f, 4.0f) != Vec4f(1.0f, 2.0f, 3.0f, 4.0f));
+
+    EXPECT_TRUE(Vec4f(1.0f, 2.0f, 3.0f, 4.0f) != Vec4f(3.0f, 4.0f, 5.0f, 6.0f));
+    EXPECT_FALSE(Vec4f(1.0f, 2.0f, 3.0f, 4.0f) == Vec4f(3.0f, 4.0f, 5.0f, 6.0f));
+
+    EXPECT_TRUE(Vec4f(1.245f, 2.345f, 4.056f, 7.168f).Compare(Vec4f(1.24f, 2.34f, 4.05f, 7.16f), 0.01f));
+    EXPECT_FALSE(Vec4f(1.245f, 2.345f, 4.056f, 7.168f).Compare(Vec4f(1.24f, 2.34f, 4.05f, 7.16f), 0.001f));
+}
+
+TEST (Vec4f_Test, Swizzle_Vec2f) {
+    EXPECT_EQ(Vec2f(1.0f, 2.0f), Vec4f(1.0f, 2.0f, 3.0f, 4.0f).xy());
+    EXPECT_EQ(Vec2f(1.0f, 3.0f), Vec4f(1.0f, 2.0f, 3.0f, 4.0f).xz());
+    EXPECT_EQ(Vec2f(2.0f, 3.0f), Vec4f(1.0f, 2.0f, 3.0f, 4.0f).yz());
+}
+
+TEST (Vec4f_Test, Swizzle_Vec3f) {
+    EXPECT_EQ(Vec3f(1.0f, 2.0f, 3.0f), Vec4f(1.0f, 2.0f, 3.0f, 4.0f).xyz());
 }

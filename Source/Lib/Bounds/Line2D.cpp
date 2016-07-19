@@ -5,7 +5,7 @@
 
 namespace sge {
 
-bool Line2D::Intersects(const Line2D &rhs) const {
+bool Line2D::Intersects (const Line2D &rhs) const {
     Vec2f l1 = m_end - m_start;
     Vec2f l2 = rhs.m_end - rhs.m_start;
 
@@ -22,14 +22,14 @@ bool Line2D::Intersects(const Line2D &rhs) const {
     return (0.0f < a) && (a < 1.0f) && (0.0f < b) && (b < 1.0f);
 }
 
-Vec2f Line2D::Intersection(const Line2D &rhs) const {
+Vec2f Line2D::Intersection (const Line2D &rhs) const {
     Vec2f l1 = m_end - m_start;
     Vec2f l2 = rhs.m_end - rhs.m_start;
 
     // Not intersecting if parallel
     float cross = l1.Cross(l2);
     if (cross == 0) {
-        return l1.SetLength(FMath::INFTY);
+        return Extrapolate(FMath::INFTY);
     }
 
     Vec2f distance = rhs.m_start - m_start;
@@ -40,7 +40,7 @@ Vec2f Line2D::Intersection(const Line2D &rhs) const {
         return m_start + (l1 * a);
     }
 
-    return l1.SetLength(FMath::INFTY);
+    return Extrapolate(FMath::INFTY);
 }
 
 } /* namespace sge */

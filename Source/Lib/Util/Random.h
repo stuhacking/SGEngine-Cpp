@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a wrapper around stl random generators.
  */
 #ifndef __SGENGINE_RANDOM_H_
@@ -19,24 +19,60 @@
 
 namespace sge {
 
+/**
+ * A Pseudo-random Number Generator which is a wrapper around
+ * C++11 random and uniform_*_distribution functions.
+ *
+ * Default and single argument overloads will assume you want a
+ * positive value, unless you explicitly negative values.
+ */
 class Random {
 public:
+    /**
+     * Create a Random Number Generator with a seed
+     * based on the current epoch time.
+     */
     Random();
 
-    Random (const s32 p_seed);
+    /**
+     * Create a Random Number Generator with a
+     * given seed.
+     */
+    explicit Random (const s64 p_seed);
 
-    void SetSeed (const s32 p_seed);
+    /**
+     * Set the seed value of this Random Number Generator.
+     */
+    void SetSeed (const s64 p_seed);
 
+    /**
+     * Return a random float value in the range 0..1.
+     */
     float NextFloat();
 
+    /**
+     * Return a random float value in the range 0..max.
+     */
     float NextFloat(const float max);
 
+    /**
+     * Return a random float value with given range min..max.
+     */
     float NextFloat(const float min, const float max);
 
+    /**
+     * Return a random integer in the random 0..INT_MAX.
+     */
     s32 NextInt();
 
+    /**
+     * Return a random integer in the range 0..max.
+     */
     s32 NextInt(const s32 max);
 
+    /**
+     * Return a random integer in the given range min..max.
+     */
     s32 NextInt(const s32 min, const s32 max);
 
 private:
@@ -47,11 +83,11 @@ INLINE Random::Random() {
     SetSeed(time(nullptr));
 }
 
-INLINE Random::Random(const s32 p_seed) {
+INLINE Random::Random(const s64 p_seed) {
     SetSeed(p_seed);
 }
 
-INLINE void Random::SetSeed(const s32 p_seed) {
+INLINE void Random::SetSeed(const s64 p_seed) {
     m_generator.seed(p_seed);
 }
 

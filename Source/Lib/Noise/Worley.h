@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Define a Worley/Cellular noise generator.
  */
 #ifndef __SGENGINE_WORLEY_H_
@@ -36,7 +36,7 @@ public:
     /**
      * Get the 2D value of this noise generator at position (x,y).
      */
-    float Get(const float x, const float y) const;
+    float Get(const float x, const float y = 0.0f) const;
 
 private:
     s32 m_seed;

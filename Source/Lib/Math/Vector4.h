@@ -20,7 +20,10 @@ namespace sge {
 class Vec4f {
 public:
     /** Vec4 components. */
-    float x, y, z, w;
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
+    float w = 0.0f;
 
 public:
     static const Vec4f ZERO;
@@ -31,8 +34,8 @@ public:
     static const Vec4f W;
 
 public:
-    /** Construct a default Vec4f at origin. */
-    Vec4f () : x(0), y(0), z(0), w(0) { }
+    /** Default Constructor. */
+    Vec4f () = default;
 
     /** Fill Constructor. */
     explicit Vec4f (const float f) : x(f), y(f), z(f), w(f) { }
@@ -236,8 +239,6 @@ public:
     Vec4f &operator/= (const Vec4f &rhs);
 
     float Dot (const Vec4f &rhs) const;
-
-    Vec4f Cross (const Vec4f &rhs) const;
 
     /** Swizzling */
     Vec3f xyz () const;

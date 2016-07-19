@@ -12,7 +12,7 @@
 #ifndef __SGENGINE_CIRCLE_H_
 #define __SGENGINE_CIRCLE_H_
 
-#include <cfloat> // fabsf
+#include <cmath> // fabsf
 
 namespace sge {
 
@@ -22,10 +22,12 @@ namespace sge {
  */
 class Circle {
 public:
+    /** Default Constructor. */
     Circle()
         : origin(Vec2f::ZERO), radius(-FMath::INFTY) { }
 
-    Circle(const Vec2f &p_origin, const float p_radius = -FMath::INFTY)
+    /** Construct a circle centered at p_origin, with radius p_radius. */
+    explicit Circle(const Vec2f &p_origin, const float p_radius = -FMath::INFTY)
         : origin(p_origin), radius(p_radius) { }
 
     /**
@@ -50,10 +52,21 @@ public:
      */
     float Area() const;
 
+    /**
+     * Test if this Circle contains point.
+     */
     bool Contains(const Vec2f &point) const;
 
+    /**
+     * Test if this Circle fully encloses another
+     * Circle.
+     */
     bool Contains(const Circle &other) const;
 
+    /**
+     * Test if this Circle intersects another
+     * Circle.
+     */
     bool Intersects(const Circle &other) const;
 
     /**

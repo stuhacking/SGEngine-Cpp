@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Define a Perlin/Simplex noise generator.
  */
 #ifndef __SGENGINE_PERLIN_H_
@@ -38,14 +38,9 @@ public:
     void SetSeed(const s32 seed);
 
     /**
-     * Get the 1D value of this noise at position x.
-     */
-    float Get(const float x) const;
-
-    /**
      * Get the 2D value of this noise at position (x,y).
      */
-    float Get(const float x, const float y) const;
+    float Get(const float x, const float y = 0.0f) const;
 
 private:
     s32 m_seed;
@@ -58,10 +53,6 @@ private:
 INLINE void Perlin::SetSeed(const s32 seed) {
     s32 s = static_cast<s32>(seed & 0xFF);
     m_seed = 2 + s * s;
-}
-
-INLINE float Perlin::Get(const float x) const {
-    return Get(x, 0.0f);
 }
 
 INLINE float Perlin::Get(const float x, const float y) const {

@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Utility functions for generating noise.
  */
 #ifndef __SGENGINE_NOISE_H_
@@ -18,11 +18,11 @@ namespace sge {
 
 class Noise {
 public:
-    static s32 Hash (const s32 x, const s32 y);
+    static s32 Hash (const s32 x, const s32 y = 0);
 
-    static float SimpleNoise (const s32 x, const s32 y);
+    static float SimpleNoise (const s32 x, const s32 y = 0);
 
-    static float SmoothNoise (const float x, const float y);
+    static float SmoothNoise (const float x, const float y = 0);
 };
 
 // --------------------------------------------------------------------------

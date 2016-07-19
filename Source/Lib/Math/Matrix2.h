@@ -36,7 +36,7 @@ public:
 
 public:
     /** Construct a default (All 0.0f) Mat2f. */
-    Mat2f () { }
+    Mat2f () = default;
 
     /** Fill Constructor */
     explicit Mat2f (const float f);

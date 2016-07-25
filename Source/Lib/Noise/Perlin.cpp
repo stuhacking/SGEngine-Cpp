@@ -5,18 +5,20 @@
 
 namespace sge {
 
-float Perlin::perlin(const float x, const float y) const {
+float Noise::Perlin (const float x, const float y,
+                    const float p_freq, const float p_amp,
+                    const float p_decay, const float p_oct) {
     float t = 0.0f;
-    float freq = frequency;
+    float freq = p_freq;
     float amp = 1.0f;
 
-    for (u32 o = 0, oMax = octaves; o < oMax; ++o) {
-        t += amp * Noise::SmoothNoise(x * freq + m_seed, y * freq + m_seed);
+    for (u32 o = 0; o < p_oct; ++o) {
+        t += amp * Noise::SmoothNoise(x * freq, y * freq);
         freq *= 2.0f;
-        amp *= persistence;
+        amp *= p_decay;
     }
 
-    return t;
+    return t * p_amp;
 }
 
 } /* namespace sge */

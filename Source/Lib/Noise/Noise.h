@@ -23,6 +23,13 @@ public:
     static float SimpleNoise (const s32 x, const s32 y = 0);
 
     static float SmoothNoise (const float x, const float y = 0);
+
+    static float Perlin (const float x, const float y,
+                         const float p_freq = 1.0f, const float p_amp = 1.0f,
+                         const float p_decay = 1.0f, const float p_oct = 1);
+
+    static float Worley (const float x, const float y,
+                         const float p_freq = 1.0f, const float p_amp = 1.0f);
 };
 
 // --------------------------------------------------------------------------
@@ -50,10 +57,10 @@ INLINE float Noise::SmoothNoise (const float x, const float y) {
     float sw = Noise::SimpleNoise(xf + 1, yf);
     float se = Noise::SimpleNoise(xf + 1, yf + 1);
 
-    float v1 = FMath::CosInterpolate(nw, sw, xFrac);
-    float v2 = FMath::CosInterpolate(ne, se, xFrac);
+    float v1 = FMath::Lerp(xFrac, nw, sw);
+    float v2 = FMath::Lerp(xFrac, ne, se);
 
-    return FMath::CosInterpolate(v1, v2, yFrac);
+    return FMath::Lerp(yFrac, v1, v2);
 }
 
 } /* namespace sge */

@@ -4,6 +4,7 @@
 #include "../Lib.h"
 
 #include <sstream>
+#include <cstring>
 
 namespace sge {
 
@@ -50,33 +51,34 @@ Color Color::FromHSL (const float p_hue, const float p_sat, const float p_val) {
 
     float m = p_val - 0.5f * chroma;
 
-    return Color(static_cast<u8>(FMath::Lerp(0, 255, r + m)),
-                 static_cast<u8>(FMath::Lerp(0, 255, g + m)),
-                 static_cast<u8>(FMath::Lerp(0, 255, b + m)));
+    return Color(static_cast<u8>(FMath::Lerp(r + m, 0, 255)),
+                 static_cast<u8>(FMath::Lerp(g + m, 0, 255)),
+                 static_cast<u8>(FMath::Lerp(b + m, 0, 255)));
 }
 
-static std::string expandColorCode (const std::string &code) {
-    std::ostringstream oss;
+/**
+ * <pre> code != nullptr
+ */
+static char * expandColorCode (char result[9], const char *code) {
+    size_t len = strlen(code);
 
-    if (code.length() == 3) {
-        oss << code[0] << code[0] << code[1] << code[1] << code[2] << code[2] << "FF";
-        return oss.str();
+    // Initialize result.
+    strncpy(result, "000000FF", 8);
+
+    if (len == 3) {
+        result[0] = result[1] = code[0];
+        result[2] = result[3] = code[1];
+        result[4] = result[5] = code[2];
+    } else if (len == 4) {
+        result[0] = result[1] = code[0];
+        result[2] = result[3] = code[1];
+        result[4] = result[5] = code[2];
+        result[6] = result[7] = code[3];
+    } else if (len == 6 || len == 8) {
+        strncpy(result, code, len);
     }
 
-    if (code.length() == 4) {
-        oss << code[0] << code[0] << code[1] << code[1] << code[2] << code[2] << code[3] << code[3];
-        return oss.str();
-    }
-
-    if (code.length() == 6) {
-        return code + "FF";
-    }
-
-    if (code.length() == 8){
-        return code;
-    }
-
-    return "000000FF";
+    return result;
 }
 
 Color Color::FromHex (const std::string &hex) {
@@ -85,10 +87,11 @@ Color Color::FromHex (const std::string &hex) {
     // Valid string lengths are 3 (RGB), 4 (RGBA), 6 (RRGGBB) or 8 (RRGGBBAA)
     // Expand each of the first 3 options to match an 8 byte string and then
     // parse as Hex
+    char fullCode[9];
     std::string code = (hex[0] == '#') ? hex.substr(1) : hex;
-    code = expandColorCode(code);
+    expandColorCode(fullCode, code.c_str());
 
-    u32 val = static_cast<u32>(strtoul(code.c_str(), nullptr, 16));
+    u32 val = static_cast<u32>(strtoul(fullCode, nullptr, 16));
 
     return Color(val);
 }

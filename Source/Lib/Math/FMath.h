@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Implements simple math functions for floats
  */
 #ifndef __SGENGINE_FMath_H_
@@ -65,7 +65,7 @@ public:
     /**
      * Linear interpolation.
      */
-    static float Lerp (float min, float max, float ratio);
+    static float Lerp (float ratio, float min, float max);
 
     /**
      * Reposition a value from an old range into a new range.
@@ -129,7 +129,7 @@ INLINE float FMath::ClampedRatio (float val, float min, float max) {
     return ClampFloat(ToRatio(val, min, max), 0.0f, 1.0f);
 }
 
-INLINE float FMath::Lerp (const float min, const float max, const float ratio) {
+INLINE float FMath::Lerp (const float ratio, const float min, const float max) {
     if (ratio <= 0.0f)
         return min;
     else if (ratio >= 1.0f)
@@ -139,7 +139,7 @@ INLINE float FMath::Lerp (const float min, const float max, const float ratio) {
 }
 
 INLINE float FMath::Fit (const float val, const float oMin, const float oMax, const float nMin, const float nMax) {
-    return Lerp(nMin, nMax, ToRatio(val, oMin, oMax));
+    return Lerp(ToRatio(val, oMin, oMax), nMin, nMax);
 }
 
 INLINE float FMath::SinInterpolate (const float min, const float max, const float ratio) {

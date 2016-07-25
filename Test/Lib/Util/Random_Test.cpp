@@ -92,8 +92,8 @@ TEST (Random_Test, set_seed_diff_sequence) {
 TEST (Random_Test, Uniform_Int_Distribution) {
     Random r1 = Random(1);
 
-    int max = 9;
-    int results[max + 1] = {};
+    constexpr int max = 9;
+    int results[max + 1] = {0};
 
     for (int k = 0; k < nrolls; ++k) {
         // This is the actual roll

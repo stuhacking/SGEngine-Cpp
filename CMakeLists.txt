@@ -31,3 +31,4 @@ add_subdirectory(Test)
 
 # Example Programs
 add_subdirectory(Examples/HelloWorld)
+add_subdirectory(Examples/Noise)

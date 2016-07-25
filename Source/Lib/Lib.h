@@ -58,8 +58,6 @@ typedef int64_t s64;
 #include "Bounds/AABB.h"
 
 #include "Noise/Noise.h"
-#include "Noise/Perlin.h"
-#include "Noise/Worley.h"
 
 #include "Geom/Vertex.h"
 #include "Geom/Mesh.h"

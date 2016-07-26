@@ -81,7 +81,7 @@ GLuint DetectShaderType (const std::string &filename) {
  * Return a print friendly string for GL shader types.
  */
 static
-std::string ShaderTypeString (const GLenum shaderType) {
+const char *ShaderTypeString (const GLenum shaderType) {
     switch (shaderType) {
     case GL_VERTEX_SHADER:
         return "vertex";
@@ -131,7 +131,7 @@ bool GLSLProgram::Compile () {
         return false;
     }
 
-    DEBUG( console->Printf("Compiling Program Sources (%d)\n", a_id); );
+    DEBUG( console.Printf("Compiling Program Sources (%d)\n", a_id); );
 
     for (auto &shader : m_shaders) {
         bool compiled = shader.Compile();
@@ -194,6 +194,7 @@ void GLSLProgram::Delete () {
 }
 
 GLint GLSLProgram::GetUniform (const std::string &name) {
+
     if (m_uniforms[name]) {
         return m_uniforms[name];
     }
@@ -303,8 +304,8 @@ GLuint GLSLShader::Compile() {
         return 0;
     }
 
-    DEBUG( console->Printf(" Compiling %s shader (%u): %s\n",
-                           ShaderTypeString(m_type).c_str(), a_id, m_filename.c_str()); );
+    console.Printf(" Compiling %s shader (%u): %s\n",
+                   ShaderTypeString(m_type), a_id, m_filename.c_str());
 
     const char *src = source.c_str();
     glShaderSource(a_id, 1, &src, nullptr);

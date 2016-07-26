@@ -58,7 +58,7 @@ int main (int argc, char *argv[]) {
 
         game->Render();
 
-        window->Delay(33);
+        //window->Delay(33);
         window->Update();
     }
 

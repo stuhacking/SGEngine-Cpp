@@ -84,7 +84,7 @@ std::string SDL_PixelFormat_String (const SDL_PixelFormat * const pf) {
 // image resizing/flipping functions.
 static
 void print_SDL_surface_info (const std::string &filename, const SDL_Surface * const surface) {
-    console->Printf("SDL_Surface (%s), Size: %dx%d, Pitch: %d bytes, \
+    console.Printf("SDL_Surface (%s), Size: %dx%d, Pitch: %d bytes, \
 PixelFormat: %u Bytes (%ubpp) %s\n",
                     filename.c_str(),
                     surface->w, surface->h, surface->pitch,
@@ -115,7 +115,7 @@ static
 bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const u8 flags = 0) {
 
     if (SDL_MUSTLOCK(src)) {
-        DEBUG( console->Print(" Locking input surface\n"); );
+        console.Print(" Locking input surface\n");
         SDL_LockSurface(src);
     }
 
@@ -151,7 +151,7 @@ bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const u8 flags =
     }
 
     if (SDL_MUSTLOCK(src)) {
-        DEBUG( std::cout << " Unlocking input src\n"; );
+        console.Print(" Unlocking input src\n");
         SDL_UnlockSurface(src);
     }
 
@@ -166,7 +166,7 @@ bool LoadImageSDL(const std::string &filename) {
     SDL_Surface *surface, *flipped;
     u32 mode;
 
-    DEBUG( console->Printf("Loading Image: %s\n", filename.c_str()); );
+    console.Printf("Loading Image: %s\n", filename.c_str());
 
     surface = IMG_Load(filename.c_str());
     if (nullptr == surface) {

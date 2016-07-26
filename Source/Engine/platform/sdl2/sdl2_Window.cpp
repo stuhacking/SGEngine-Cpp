@@ -53,8 +53,7 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
     m_width = w;
     m_height = h;
 
-    DEBUG( console->Print(std::string(78, '*') + '\n'); );
-    DEBUG( console->Print(" Initializing SDL...\n"); );
+    console.Print("Initializing SDL...\n");
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Failed to initialize SDL! SDL_Error: " << SDL_GetError() << "\n";
         return;
@@ -77,7 +76,7 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
     }
 
     // Create GL Context
-    DEBUG( console->Printf(" Request OpenGL Context [%d,%d]...\n", OGL_MAJOR, OGL_MINOR); );
+    console.Printf(" Request OpenGL Context [%d,%d]...\n", OGL_MAJOR, OGL_MINOR);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
@@ -89,9 +88,9 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
         return;
     }
 
-    DEBUG( console->Printf("  OpenGL Version: %s\n", glGetString(GL_VERSION)); );
-    DEBUG( console->Printf("  OpenGL Vender: %s\n", glGetString(GL_VENDOR)); );
-    DEBUG( console->Printf("  GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION)); );
+    console.Printf("  OpenGL Version: %s\n", glGetString(GL_VERSION));
+    console.Printf("  OpenGL Vender: %s\n", glGetString(GL_VENDOR));
+    console.Printf("  GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     if (SDL_GL_SetSwapInterval(1) != 0) {
         std::cerr << "Warn: Unable to use VSync! SDL_Error: " << SDL_GetError() << "\n";
@@ -100,7 +99,7 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
 
     // If using !Apple, need to initialize a GL Extension manager.
 #ifndef __APPLE__
-    DEBUG( console->Print(" Also initializing GL Extension Wrangler...\n"); );
+    console.Print(" Also initializing GL Extension Wrangler...\n");
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK) {
@@ -144,8 +143,7 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
 
     m_initialized = true;
 
-    DEBUG( console->Print(" Done initializing OpenGL.\n"); );
-    DEBUG( console->Print(std::string(78, '*') + '\n'); );
+    console.Print("Done initializing OpenGL.\n");
 }
 
 SGEWindowSDL::~SGEWindowSDL () {

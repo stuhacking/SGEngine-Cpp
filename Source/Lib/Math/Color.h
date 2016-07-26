@@ -12,7 +12,6 @@
 #ifndef __SGENGINE_COLOR_H_
 #define __SGENGINE_COLOR_H_
 
-#include <string>
 #include <cstdlib> // abs
 
 namespace sge {
@@ -46,15 +45,16 @@ public:
                           const float p_val = 0.5f);
 
     /**
-     * Create a new RGBA Color value by parsing a Hexadecimal color string.
+     * Create a new RGBA Color value by parsing a Hexadecimal
+     * color string.
      *
-     * The string may begin with a leading #, though this is optional. Accepted formats are:
-     *  #RGB, #RGBA, #RRGGBB, #RRGGBBAA.
-     * In each case, if an alpha value is not given, it will default to 255 (fully opaque).
+     * A leading # is optional. Accepted formats are: #RGB, #RGBA, #RRGGBB,
+     * #RRGGBBAA. In each case, if an alpha value is not given, it will default
+     * to 255 (fully opaque).
      *
      * @param hex A color value encoded as a hexadecimal string.
      */
-    static Color FromHex (const std::string &hex);
+    static Color FromHex (const char * const hex);
 
     /**
      * Test if this color is fully opaque.
@@ -68,6 +68,11 @@ public:
      */
     bool IsHidden () const;
 
+    /**
+     * Write Color to <Vec4f R, G, B, A>.
+     *
+     * @param normalize If true, resize values to 0..1 range.
+     */
     Vec4f ToVec4f (const bool normalize = false) const;
 
     bool Compare (const Color &other) const;

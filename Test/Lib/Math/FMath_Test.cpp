@@ -46,3 +46,10 @@ TEST (FMath_Test, ClampedRatio) {
     EXPECT_EQ(0.5f, FMath::ClampedRatio(5.0f, 0.0f, 10.0f));
     EXPECT_EQ(1.0f, FMath::ClampedRatio(12.0f, 10.0f, 11.0f));
 }
+
+TEST (FMath_Test, Lerp) {
+    EXPECT_EQ(2.0f, FMath::Lerp(0.5f, 1.0f, 3.0f));
+    EXPECT_EQ(1.0f, FMath::Lerp(0.0f, 1.0f, 3.0f));
+    EXPECT_EQ(3.0f, FMath::Lerp(1.0f, 1.0f, 3.0f));
+    EXPECT_EQ(3.0f, FMath::Lerp(2.0f, 1.0f, 3.0f));
+}

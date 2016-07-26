@@ -7,30 +7,23 @@
 
 namespace sge {
 
-/**
- * Console class to replace simple standard output.
- */
-class TextConsole : public Console {
-public:
-    void Print (const std::string &msg);
-
-    void Printf (const std::string &fmt, ...);
-};
-
-static TextConsole textConsole;
-Console *console = &textConsole;
+Console console;
 
 // -----------------------------------------------
 
-void TextConsole::Print (const std::string &msg) {
-    printf("%s", msg.c_str());
+#ifndef NDEBUG
+
+void Console::Print (const char *msg) {
+    printf("%s", msg);
 }
 
-void TextConsole::Printf (const std::string &fmt, ...) {
+void Console::Printf (const char *fmt, ...) {
     va_list args;
-    va_start (args, fmt.c_str());
-    vprintf(fmt.c_str(), args);
+    va_start (args, fmt);
+    vprintf(fmt, args);
     va_end(args);
 }
+
+#endif /* !NDEBUG */
 
 } /* namespace sge */

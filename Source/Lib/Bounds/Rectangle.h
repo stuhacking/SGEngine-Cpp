@@ -22,6 +22,10 @@ namespace sge {
  */
 class Rectangle {
 public:
+    Vec2f min;
+    Vec2f max;
+
+public:
     /** Default Constructor */
     Rectangle ()
         : min{FMath::INFTY, FMath::INFTY}, max{-FMath::INFTY, -FMath::INFTY} { }
@@ -107,10 +111,6 @@ public:
      * Test whether two Rectangles are not equivalent.
      */
     bool operator!= (const Rectangle &other) const;
-
-private:
-    Vec2f min;
-    Vec2f max;
 };
 
 // --------------------------------------------------------------------------

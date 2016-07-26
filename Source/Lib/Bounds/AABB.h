@@ -22,6 +22,10 @@ namespace sge {
  */
 class AABB {
 public:
+    Vec3f min;
+    Vec3f max;
+
+public:
     /** Default Constructor */
     AABB ()
         : min{FMath::INFTY, FMath::INFTY, FMath::INFTY},
@@ -105,10 +109,6 @@ public:
      * Test whether two AABBs are not equivalent.
      */
     bool operator!= (const AABB &other) const;
-
-private:
-    Vec3f min;
-    Vec3f max;
 };
 
 // --------------------------------------------------------------------------

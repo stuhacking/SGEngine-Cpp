@@ -14,21 +14,33 @@
 
 namespace sge {
 
+#ifndef NDEBUG
+
 class Console {
 public:
     /**
      * Print a simple string.
      */
-    virtual void Print (const std::string &msg) = 0;
+    void Print (const char *msg);
 
     /**
      * Print a formatted string.
      */
-    virtual void Printf (const std::string &fmt, ...) = 0;
+    void Printf (const char *fmt, ...);
 };
 
+#else
+
+class Console {
+public:
+    void Print (const char *msg) {}
+    void Printf (const char *fmt, ...) {}
+};
+
+#endif /* !NDEBUG */
+
 // Global console
-extern Console *console;
+extern Console console;
 
 } /* namespace sge */
 

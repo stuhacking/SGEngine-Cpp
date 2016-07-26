@@ -56,6 +56,7 @@ typedef int64_t s64;
 #include "Bounds/Rectangle.h"
 #include "Bounds/Circle.h"
 #include "Bounds/AABB.h"
+#include "Bounds/Sphere.h"
 
 #include "Noise/Noise.h"
 

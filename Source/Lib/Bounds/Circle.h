@@ -22,13 +22,17 @@ namespace sge {
  */
 class Circle {
 public:
+    Vec2f center;
+    float radius;
+
+public:
     /** Default Constructor. */
     Circle()
-        : origin(Vec2f::ZERO), radius(-FMath::INFTY) { }
+        : center(Vec2f::ZERO), radius(-FMath::INFTY) { }
 
-    /** Construct a circle centered at p_origin, with radius p_radius. */
-    explicit Circle(const Vec2f &p_origin, const float p_radius = -FMath::INFTY)
-        : origin(p_origin), radius(p_radius) { }
+    /** Construct a circle centered at p_center, with radius p_radius. */
+    explicit Circle(const Vec2f &p_center, const float p_radius = -FMath::INFTY)
+        : center(p_center), radius(p_radius) { }
 
     /**
      * Clear all points from this Circle.
@@ -41,11 +45,6 @@ public:
      * Destructive.
      */
     void Maximize();
-
-    /**
-     * Get the center of this circle.
-     */
-    Vec2f Center() const;
 
     /**
      * Get the area of this circle.
@@ -89,26 +88,18 @@ public:
      * Test if two Circles are not equivalent.
      */
     bool operator!= (const Circle &other) const;
-
-private:
-    Vec2f origin;
-    float radius;
 };
 
 // --------------------------------------------------------------------------
 
 INLINE void Circle::Clear() {
     radius = -FMath::INFTY;
-    origin = Vec2f(0.0f, 0.0f);
+    center = Vec2f(0.0f, 0.0f);
 }
 
 INLINE void Circle::Maximize() {
     radius = FMath::INFTY;
-    origin.x = origin.y = 0.0f;
-}
-
-INLINE Vec2f Circle::Center() const {
-    return origin;
+    center.x = center.y = 0.0f;
 }
 
 INLINE float Circle::Area() const {
@@ -116,18 +107,18 @@ INLINE float Circle::Area() const {
 }
 
 INLINE bool Circle::Contains(const Vec2f &point) const {
-    Vec2f relPoint = point - origin;
+    Vec2f relPoint = point - center;
     return (radius * radius) >= relPoint.LengthSqr();
 }
 
 INLINE bool Circle::Contains(const Circle &other) const {
-    Vec2f relPoint = other.origin - origin;
+    Vec2f relPoint = other.center - center;
     float distance = relPoint.Length() + other.radius;
     return radius > distance;
 }
 
 INLINE bool Circle::Intersects(const Circle &other) const {
-    Vec2f relPoint = other.origin - origin;
+    Vec2f relPoint = other.center - center;
     float distance = relPoint.Length() - other.radius;
     return radius >= distance;
 }
@@ -137,7 +128,7 @@ INLINE bool Circle::Intersects(const Circle &other) const {
 //===================
 
 INLINE bool Circle::Compare (const Circle &other) const {
-    return radius == radius && origin == origin;
+    return radius == radius && center == center;
 }
 
 INLINE bool Circle::Compare (const Circle &other, const float threshold) const {
@@ -145,7 +136,7 @@ INLINE bool Circle::Compare (const Circle &other, const float threshold) const {
         return false;
     }
 
-    return origin.Compare(other.origin, threshold);
+    return center.Compare(other.center, threshold);
 }
 
 INLINE bool Circle::operator== (const Circle &other) const {

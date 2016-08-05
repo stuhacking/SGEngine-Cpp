@@ -47,7 +47,7 @@ private:
  * Create an SDL Window with OpenGL context.
  */
 SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
-                      const bool fullScreen) {
+                            const bool fullScreen) {
     m_initialized = false;
     m_name = name;
     m_width = w;
@@ -67,9 +67,9 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
 
     u32 fullScreenFlag = (fullScreen) ? SDL_WINDOW_FULLSCREEN : 0;
     m_window = SDL_CreateWindow(m_name.c_str(),
-                              SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                              m_width, m_height,
-                              SDL_WINDOW_OPENGL | fullScreenFlag | SDL_WINDOW_SHOWN);
+                                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                m_width, m_height,
+                                SDL_WINDOW_OPENGL | fullScreenFlag | SDL_WINDOW_SHOWN);
     if (nullptr == m_window) {
         std::cerr << "Failed to create SDL window! SDL_Error: " << SDL_GetError() << "\n";
         return;
@@ -141,6 +141,11 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
     // Enabling Texturing
     glEnable(GL_TEXTURE_2D);
 
+    // For now, just stretch the renderer
+    int windowWidth, windowHeight;
+    SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
+    glViewport(0, 0, windowWidth, windowHeight);
+
     m_initialized = true;
 
     console.Print("Done initializing OpenGL.\n");
@@ -181,7 +186,7 @@ SGEWindow *window;
  * Initialize the context for a 3D application.
  */
 bool InitSGEApplication (const std::string name, const u32 width, const u32 height,
-    const bool fullScreen) {
+                         const bool fullScreen) {
     sdlWindow = std::make_unique<SGEWindowSDL>(name, width, height, fullScreen);
     window = sdlWindow.get();
 

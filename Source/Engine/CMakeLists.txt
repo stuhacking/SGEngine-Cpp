@@ -34,7 +34,7 @@ set(SOURCES
   )
 
 # Builds: SGEEngineLib
-add_library(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
 target_link_libraries(${PROJECT_NAME} SGECoreLib)
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
 if(NOT APPLE)

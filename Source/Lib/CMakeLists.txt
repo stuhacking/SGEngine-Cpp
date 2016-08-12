@@ -4,6 +4,8 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(SGECoreLib)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE True)
+
 set(SOURCES
   Math/Vector.cpp
   Math/Quaternion.cpp

@@ -152,11 +152,20 @@ public:
     /**
      * Clamp Vec4f within minimum and maximum bounds, given by other
      * Vec4f values.
+     *
+     * @param min Vec4f minimum bound
+     * @param max Vec4f maximum bound
+     */
+    Vec4f Clamp (const Vec4f &min, const Vec4f &max);
+
+    /**
+     * Clamp Vec4f within minimum and maximum bounds, given by other
+     * Vec4f values.
      * Destructive.
      * @param min Vec4f minimum bound
      * @param max Vec4f maximum bound
      */
-    void Clamp (const Vec4f &min, const Vec4f &max);
+    void ClampSelf (const Vec4f &min, const Vec4f &max);
 
     /**
      * Return a copy of this Vec4f with the components negated.
@@ -382,7 +391,14 @@ INLINE void Vec4f::ClampLengthSelf (const float min, const float max) {
     }
 }
 
-INLINE void Vec4f::Clamp (const Vec4f &min, const Vec4f &max) {
+INLINE Vec4f Vec4f::Clamp (const Vec4f &min, const Vec4f &max) {
+    return Vec4f(FMath::ClampFloat(x, min.x, max.x),
+                 FMath::ClampFloat(y, min.y, max.y),
+                 FMath::ClampFloat(z, min.z, max.z),
+                 FMath::ClampFloat(w, min.w, max.w));
+}
+
+INLINE void Vec4f::ClampSelf (const Vec4f &min, const Vec4f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
     z = FMath::ClampFloat(z, min.z, max.z);

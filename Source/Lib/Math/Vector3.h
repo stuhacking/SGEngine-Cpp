@@ -141,11 +141,20 @@ public:
     /**
      * Clamp Vec3f within minimum and maximum bounds, given by other
      * Vec3f values.
+     *
+     * @param min Vec3f minimum bound
+     * @param max Vec3f maximum bound
+     */
+    Vec3f Clamp (const Vec3f &min, const Vec3f &max);
+
+    /**
+     * Clamp Vec3f within minimum and maximum bounds, given by other
+     * Vec3f values.
      * Destructive.
      * @param min Vec3f minimum bound
      * @param max Vec3f maximum bound
      */
-    void Clamp (const Vec3f &min, const Vec3f &max);
+    void ClampSelf (const Vec3f &min, const Vec3f &max);
 
     /**
      * Return a copy of this Vec3f with the components negated.
@@ -417,7 +426,13 @@ INLINE void Vec3f::ClampLengthSelf (const float min, const float max) {
     }
 }
 
-INLINE void Vec3f::Clamp (const Vec3f &min, const Vec3f &max) {
+INLINE Vec3f Vec3f::Clamp (const Vec3f &min, const Vec3f &max) {
+    return Vec3f(FMath::ClampFloat(x, min.x, max.x),
+                 FMath::ClampFloat(y, min.y, max.y),
+                 FMath::ClampFloat(z, min.z, max.z));
+}
+
+INLINE void Vec3f::ClampSelf (const Vec3f &min, const Vec3f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
     z = FMath::ClampFloat(z, min.z, max.z);

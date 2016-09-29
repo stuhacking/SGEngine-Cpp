@@ -56,6 +56,28 @@ TEST (Vec4f_Test, ClampLength) {
     EXPECT_EQ(Vec4f(0.0f, 0.0f, 3.0f, 4.0f), v);
 }
 
+TEST (Vec4f_Test, Clamp) {
+    EXPECT_EQ(Vec4f(1.0f, 2.0f, 3.0f, 4.0f), Vec4f(2.0f, 2.0f, 2.0f, 2.0f).Clamp(Vec4f(0.0f, 0.0f, 3.0f, 4.0f), Vec4f(1.0f, 10.0f, 4.0f, 6.0f)));
+    EXPECT_EQ(Vec4f(2.0f, 2.0f, 2.0f, 2.0f), Vec4f(1.0f, 1.0f, 1.0f, 1.0f).Clamp(Vec4f(2.0f, 2.0f, 2.0f, 2.0f), Vec4f(4.0f, 5.0f, 6.0f, 7.0f)));
+    EXPECT_EQ(Vec4f(4.0f, 4.0f, 4.0f, 4.0f), Vec4f(4.0f, 4.0f, 4.0f, 4.0f).Clamp(Vec4f(1.0f, 2.0f, 3.0f, 4.0f), Vec4f(6.0f, 7.0f, 5.0f, 5.0f)));
+}
+
+TEST (Vec4f_Test, ClampSelf) {
+    Vec4f v = Vec4f(2.0f, 2.0f, 2.0f, 2.0f);
+    v.ClampSelf(Vec4f(0.0f, 0.0f, 3.0f, 4.0f), Vec4f(1.0f, 10.0f, 4.0f, 6.0f));
+
+    EXPECT_EQ(Vec4f(1.0f, 2.0f, 3.0f, 4.0f), v);
+
+    v = Vec4f(1.0f, 1.0f, 1.0f, 1.0f);
+    v.ClampSelf(Vec4f(2.0f, 2.0f, 2.0f, 2.0f), Vec4f(4.0f, 5.0f, 6.0f, 7.0f));
+
+    EXPECT_EQ(Vec4f(2.0f, 2.0f, 2.0f, 2.0f), v);
+
+    v = Vec4f(4.0f, 4.0f, 4.0f, 4.0f);
+    v.ClampSelf(Vec4f(1.0f, 2.0f, 3.0f, 4.0f), Vec4f(6.0f, 7.0f, 5.0f, 5.0f));
+
+    EXPECT_EQ(Vec4f(4.0f, 4.0f, 4.0f, 4.0f), v);
+}
 /*==========================
   Math Operator Tests
  ==========================*/

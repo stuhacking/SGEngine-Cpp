@@ -55,6 +55,29 @@ TEST (Vec3f_Test, ClampLength) {
     EXPECT_EQ(Vec3f(0.0f, 3.0f, 4.0f), v);
 }
 
+TEST (Vec3f_Test, Clamp) {
+    EXPECT_EQ(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(2.0f, 2.0f, 2.0f).Clamp(Vec3f(0.0f, 0.0f, 3.0f), Vec3f(1.0f, 10.0f, 4.0f)));
+    EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(1.0f, 1.0f, 1.0f).Clamp(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(4.0f, 5.0f, 6.0f)));
+    EXPECT_EQ(Vec3f(4.0f, 4.0f, 4.0f), Vec3f(4.0f, 4.0f, 4.0f).Clamp(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(6.0f, 7.0f, 5.0f)));
+}
+
+TEST (Vec3f_Test, ClampSelf) {
+    Vec3f v = Vec3f(2.0f, 2.0f, 2.0f);
+    v.ClampSelf(Vec3f(0.0f, 0.0f, 3.0f), Vec3f(1.0f, 10.0f, 4.0f));
+
+    EXPECT_EQ(Vec3f(1.0f, 2.0f, 3.0f), v);
+
+    v = Vec3f(1.0f, 1.0f, 1.0f);
+    v.ClampSelf(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(4.0f, 5.0f, 6.0f));
+
+    EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), v);
+
+    v = Vec3f(4.0f, 4.0f, 4.0f);
+    v.ClampSelf(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(6.0f, 7.0f, 5.0f));
+
+    EXPECT_EQ(Vec3f(4.0f, 4.0f, 4.0f), v);
+}
+
 /*==========================
   Math Operator Tests
  ==========================*/

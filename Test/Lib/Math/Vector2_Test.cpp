@@ -56,21 +56,24 @@ TEST (Vec2f_Test, ClampLength) {
 }
 
 TEST (Vec2f_Test, Clamp) {
-    Vec2f v = Vec2f(2.0f, 2.0f);
+    EXPECT_EQ(Vec2f(1.0f, 2.0f), Vec2f(2.0f, 2.0f).Clamp(Vec2f(0.0f, 0.0f), Vec2f(1.0f, 10.0f)));
+    EXPECT_EQ(Vec2f(2.0f, 2.0f), Vec2f(1.0f, 1.0f).Clamp(Vec2f(2.0f, 2.0f), Vec2f(4.0f, 5.0f)));
+    EXPECT_EQ(Vec2f(4.0f, 4.0f), Vec2f(4.0f, 4.0f).Clamp(Vec2f(1.0f, 2.0f), Vec2f(6.0f, 7.0f)));
+}
 
-    v.Clamp(Vec2f(0.0f, 0.0f), Vec2f(1.0f, 10.0f));
+TEST (Vec2f_Test, ClampSelf) {
+    Vec2f v = Vec2f(2.0f, 2.0f);
+    v.ClampSelf(Vec2f(0.0f, 0.0f), Vec2f(1.0f, 10.0f));
 
     EXPECT_EQ(Vec2f(1.0f, 2.0f), v);
 
     v = Vec2f(1.0f, 1.0f);
-
-    v.Clamp(Vec2f(2.0f, 2.0f), Vec2f(4.0f, 5.0f));
+    v.ClampSelf(Vec2f(2.0f, 2.0f), Vec2f(4.0f, 5.0f));
 
     EXPECT_EQ(Vec2f(2.0f, 2.0f), v);
 
     v = Vec2f(4.0f, 4.0f);
-
-    v.Clamp(Vec2f(1.0f, 2.0f), Vec2f(6.0f, 7.0f));
+    v.ClampSelf(Vec2f(1.0f, 2.0f), Vec2f(6.0f, 7.0f));
 
     EXPECT_EQ(Vec2f(4.0f, 4.0f), v);
 }

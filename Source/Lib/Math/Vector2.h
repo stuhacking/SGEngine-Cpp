@@ -138,13 +138,22 @@ public:
     void ClampLengthSelf (const float min, const float max);
 
     /**
+     * Return a new Vec2f Clamped between minimum and maximum
+     * bounds, given by other Vec2f values.
+     *
+     * @param min Vec2f minimum bound
+     * @param max Vec2f maximum bound
+     */
+    Vec2f Clamp (const Vec2f &min, const Vec2f &max);
+
+    /**
      * Clamp Vec2f within minimum and maximum bounds, given by other
      * Vec2f values.
      * Destructive.
      * @param min Vec2f minimum bound
      * @param max Vec2f maximum bound
      */
-    void Clamp (const Vec2f &min, const Vec2f &max);
+    void ClampSelf (const Vec2f &min, const Vec2f &max);
 
     /**
      * Return a copy of this Vec2f with the components negated.
@@ -382,7 +391,12 @@ INLINE void Vec2f::ClampLengthSelf (const float min, const float max) {
     }
 }
 
-INLINE void Vec2f::Clamp (const Vec2f &min, const Vec2f &max) {
+INLINE Vec2f Vec2f::Clamp (const Vec2f &min, const Vec2f &max) {
+    return Vec2f(FMath::ClampFloat(x, min.x, max.x),
+                 FMath::ClampFloat(y, min.y, max.y));
+}
+
+INLINE void Vec2f::ClampSelf (const Vec2f &min, const Vec2f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
 }

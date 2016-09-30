@@ -7,6 +7,6 @@ if [ ! -d './External/googletest' ] ; then
 fi
 
 # JSON Parser
-#if [ ! -d './External/rapidjson' ] ; then
-#    git clone https://github.com/miloyip/rapidjson.git ./External/rapidjson
-#fi
+if [ ! -d './External/rapidjson' ] ; then
+    git clone https://github.com/miloyip/rapidjson.git ./External/rapidjson
+fi

@@ -2,13 +2,99 @@
 // Game Implementation
 //
 #include "Game.h"
+#include "rapidjson/document.h"
 
+#include <cstdio>
 #include <iostream>
+#include <vector>
+
+using namespace rapidjson;
 
 static Transform view;
 static GLProjection proj{0.1f, 256.0f, 50.0f};
 
 static float CAM_SPEED = 0.5f;
+
+static u32 BLACK = 0;
+static u32 DGRAY = 1;
+static u32 LGRAY = 2;
+static u32 RED = 3;
+static u32 LRED = 4;
+static u32 GREEN = 5;
+static u32 LGREEN = 6;
+static u32 BLUE = 7;
+static u32 LBLUE = 8;
+static u32 BROWN = 9;
+static u32 MAGENTA = 10;
+static u32 LMAGENTA = 11;
+static u32 CYAN = 12;
+static u32 LCYAN = 13;
+static u32 YELLOW = 14;
+static u32 WHITE = 15;
+
+static std::vector<Color> colors;
+
+/** Read contents of file in a go. */
+static char * slurp (const char * const filename) {
+    FILE *fp = fopen(filename, "r");
+    if (!fp) {
+        std::cerr << "Error opening file: " << filename << "\n";
+        return nullptr;
+    }
+    fseek(fp, 0, SEEK_END);
+    size_t fileSize = (size_t)ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+    char *buf = new char[fileSize + 1];
+    size_t readLength = fread(buf, 1, fileSize, fp);
+    buf[readLength] = '\0';
+    fclose(fp);
+
+    return buf;
+}
+
+/** Parse out a color directive from json format { "color": [r, g, b] }. */
+static Color parseColor (const Document &d, const char * const color) {
+    assert(d.HasMember(color));
+    const Value &docColor = d[color];
+
+    return Color(docColor[0].GetInt(),
+                 docColor[1].GetInt(),
+                 docColor[2].GetInt());
+}
+
+/** Read a table of preset color values from a json file. */
+static void readColorTable (const char * const filename) {
+    char *buf = slurp(filename);
+    if (buf) {
+        Document d;
+
+        if (d.ParseInsitu(buf).HasParseError()) {
+            std::cerr << "Error parsing color table: " << filename << "\n";
+            goto cleanup;
+        }
+
+        colors.reserve(16);
+        colors.push_back(parseColor(d, "Black"));
+        colors.push_back(parseColor(d, "DGray"));
+        colors.push_back(parseColor(d, "LGray"));
+        colors.push_back(parseColor(d, "Red"));
+        colors.push_back(parseColor(d, "LRed"));
+        colors.push_back(parseColor(d, "Green"));
+        colors.push_back(parseColor(d, "LGreen"));
+        colors.push_back(parseColor(d, "Blue"));
+        colors.push_back(parseColor(d, "LBlue"));
+        colors.push_back(parseColor(d, "Brown"));
+        colors.push_back(parseColor(d, "Magenta"));
+        colors.push_back(parseColor(d, "LMagenta"));
+        colors.push_back(parseColor(d, "Cyan"));
+        colors.push_back(parseColor(d, "LCyan"));
+        colors.push_back(parseColor(d, "Yellow"));
+        colors.push_back(parseColor(d, "White"));
+
+        cleanup:
+        delete[] buf;
+    }
+}
 
 Game::Game (const u32 width, const u32 height) {
     m_width = width;
@@ -16,6 +102,12 @@ Game::Game (const u32 width, const u32 height) {
 }
 
 bool Game::Init () {
+    readColorTable("./data/colors.json");
+    if (colors.empty()) {
+        std::cerr << "No colors loaded.\n";
+        return false;
+    }
+
     m_objShader = GLSLProgram()
         .AddSource("./data/shader/obj.vs")
         .AddSource("./data/shader/obj.fs");
@@ -122,7 +214,7 @@ void Game::Render () {
 
 
     DebugGraphics dGraph = DebugGraphics();
-    dGraph.AddGrid(Vec3f::ZERO, 16, Color(255, 255, 255, 80));
+    dGraph.AddGrid(Vec3f::ZERO, 16, colors[MAGENTA]);
 
     // Show World Axis
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f),

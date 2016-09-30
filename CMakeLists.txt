@@ -24,6 +24,7 @@ execute_process(
 
 # Library Targets
 add_subdirectory(External/googletest/googletest)
+add_subdirectory(External/rapidjson)
 
 # Build Targets
 add_subdirectory(Source)

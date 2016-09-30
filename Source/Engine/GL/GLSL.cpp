@@ -5,13 +5,12 @@
 
 #include <iostream>
 #include <fstream>
-#include <sstream>
 
 namespace sge {
 
 static
 void printShaderInfoLog (const GLuint glslID) {
-    GLint maxLength = 0;
+    GLsizei maxLength = 0;
     glGetShaderiv(glslID, GL_INFO_LOG_LENGTH, &maxLength);
 
     // The maxLength includes the NULL character
@@ -118,20 +117,20 @@ std::string ReadShaderFile(const std::string &filename) {
 //======================
 
 bool GLSLProgram::Compile () {
-    GLint a_id = 0;
+    GLuint newId = 0;
 
     if (IsCompiled()) {
-        DEBUG( std::cerr << "Recompiling GLSL Program " << a_id << "\n"; );
+        DEBUG( std::cerr << "Recompiling GLSL Program " << newId << "\n"; );
     } else {
-        a_id = glCreateProgram();
+        newId = glCreateProgram();
     }
 
-    if (0 == a_id) {
+    if (0 == newId) {
         std::cerr << "Unable to assign GLSL Program ID.\n";
         return false;
     }
 
-    DEBUG( console.Printf("Compiling Program Sources (%d)\n", a_id); );
+    DEBUG( console.Printf("Compiling Program Sources (%d)\n", newId); );
 
     for (auto &shader : m_shaders) {
         bool compiled = shader.Compile();
@@ -139,24 +138,23 @@ bool GLSLProgram::Compile () {
         if (!compiled) {
             std::cerr << "Error compiling shader: " << shader.m_filename << "\n";
             Delete();
-            glDeleteProgram(a_id);
+            glDeleteProgram(newId);
             return false;
         }
 
-        glAttachShader(a_id, shader.m_id);
+        glAttachShader(newId, shader.m_id);
     }
 
-    glLinkProgram(a_id);
+    glLinkProgram(newId);
 
-    if (!checkLinkStatus(a_id)) {
+    if (!checkLinkStatus(newId)) {
         std::cerr << "Failed to Link Shader.\n";
         Delete();
-        glDeleteProgram(a_id);
-        a_id = 0;
+        glDeleteProgram(newId);
         return false;
     }
 
-    m_id = a_id;
+    m_id = newId;
 
     return true;
 }
@@ -289,7 +287,7 @@ GLSLShader::GLSLShader(const std::string &filename) {
 //======================================================================
 
 GLuint GLSLShader::Compile() {
-    GLuint a_id = 0;
+    GLuint newId = 0;
 
     std::string source = ReadShaderFile(m_filename);
     if (source.empty()) {
@@ -297,27 +295,27 @@ GLuint GLSLShader::Compile() {
         return 0;
     }
 
-    a_id = glCreateShader(m_type);
+    newId = glCreateShader(m_type);
 
-    if (a_id <= 0) {
+    if (newId <= 0) {
         std::cerr << " Unable to assign new Shader ID: " << m_filename << "\n";
         return 0;
     }
 
     console.Printf(" Compiling %s shader (%u): %s\n",
-                   ShaderTypeString(m_type), a_id, m_filename.c_str());
+                   ShaderTypeString(m_type), newId, m_filename.c_str());
 
     const char *src = source.c_str();
-    glShaderSource(a_id, 1, &src, nullptr);
-    glCompileShader(a_id);
+    glShaderSource(newId, 1, &src, nullptr);
+    glCompileShader(newId);
 
-    if (!checkCompileStatus(a_id)) {
+    if (!checkCompileStatus(newId)) {
         std::cerr << " Failed to compile shader: " << m_filename << "\n";
-        glDeleteShader(a_id);
+        glDeleteShader(newId);
         return 0;
     }
 
-    m_id = a_id;
+    m_id = newId;
 
     return m_id;
 }

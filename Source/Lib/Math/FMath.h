@@ -9,8 +9,8 @@
  *
  * @brief Implements simple math functions for floats
  */
-#ifndef __SGENGINE_FMath_H_
-#define __SGENGINE_FMath_H_
+#ifndef __SGELIB_FMATH_H_
+#define __SGELIB_FMATH_H_
 
 #include <cmath>
 
@@ -21,15 +21,15 @@ namespace sge {
 
 class FMath {
 public:
-    constexpr static const float PI = static_cast<float>(M_PI);
-    constexpr static const float TAU = PI * 2.0f;
-    constexpr static const float HALF_PI = PI * 0.5f;
+    static constexpr float PI = static_cast<float>(M_PI);
+    static constexpr float TAU = PI * 2.0f;
+    static constexpr float HALF_PI = PI * 0.5f;
 
-    constexpr static const float E = static_cast<float>(M_E);
-    constexpr static const float INFTY = static_cast<float>(INFINITY);
+    static constexpr float E = static_cast<float>(M_E);
+    static constexpr float INFTY = static_cast<float>(INFINITY);
 
-    constexpr static const float DEG2RAD = PI / 180.0f;
-    constexpr static const float RAD2DEG = 180.0f / PI;
+    static constexpr float DEG2RAD = PI / 180.0f;
+    static constexpr float RAD2DEG = 180.0f / PI;
 
     static float Min (const float a, const float b);
 
@@ -161,4 +161,4 @@ INLINE void FMath::SinCos (const float angle, float &s, float &c) {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_FMath_H_ */
+#endif /* __SGELIB_FMATH_H_ */

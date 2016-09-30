@@ -114,13 +114,13 @@ std::string BasePath (const std::string &path) {
 }
 
 std::vector<std::string> Split (const std::string &text, const char sep) {
-    std::vector<std::string> elems;
+    std::vector<std::string> tokens;
     std::stringstream ss(text);
     std::string item;
     while (std::getline(ss, item, sep)) {
-        elems.push_back(item);
+        tokens.push_back(item);
     }
-    return elems;
+    return tokens;
 }
 
 #if 0

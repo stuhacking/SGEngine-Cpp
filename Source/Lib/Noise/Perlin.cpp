@@ -7,7 +7,7 @@ namespace sge {
 
 float Noise::Perlin (const float x, const float y,
                     const float p_freq, const float p_amp,
-                    const float p_decay, const float p_oct) {
+                    const float p_decay, const u32 p_oct) {
     float t = 0.0f;
     float freq = p_freq;
     float amp = 1.0f;

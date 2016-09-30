@@ -26,7 +26,7 @@ public:
 
     static float Perlin (const float x, const float y,
                          const float p_freq = 1.0f, const float p_amp = 1.0f,
-                         const float p_decay = 1.0f, const float p_oct = 1);
+                         const float p_decay = 1.0f, const u32 p_oct = 1);
 
     static float Worley (const float x, const float y,
                          const float p_freq = 1.0f, const float p_amp = 1.0f);

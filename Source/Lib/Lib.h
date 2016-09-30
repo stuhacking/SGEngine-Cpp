@@ -10,9 +10,6 @@
 #ifndef __SGENGINE_LIB_H_
 #define __SGENGINE_LIB_H_
 
-#include <cstdint>
-#include <cmath>
-
 // - Miscellaneous Utilities ------------------------------------------------
 
 #ifndef NDEBUG
@@ -23,19 +20,9 @@
 
 #define INLINE inline
 
-// Unsigned aliases
-typedef uint8_t  u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-
-// Signed aliases
-typedef int8_t  s8;
-typedef int16_t s16;
-typedef int32_t s32;
-typedef int64_t s64;
-
 // --------------------------------------------------------------------------
+
+#include "System/Types.h"
 
 #include "Math/FMath.h"
 #include "Math/Vector2.h"

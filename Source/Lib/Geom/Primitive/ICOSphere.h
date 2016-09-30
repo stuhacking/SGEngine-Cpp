@@ -9,8 +9,8 @@
  * 
  * @brief Defines a primitive ico sphere mesh generator.
  */
-#ifndef __SGENGINE_ICOSPHERE_H_
-#define __SGENGINE_ICOSPHERE_H_
+#ifndef __SGE_ICOSPHERE_H
+#define __SGE_ICOSPHERE_H
 
 namespace sge {
 
@@ -35,4 +35,4 @@ private:
     
 } /* namespace sge */
 
-#endif /* __SGENGINE_ICOSPHERE_H_ */
+#endif /* __SGE_ICOSPHERE_H */

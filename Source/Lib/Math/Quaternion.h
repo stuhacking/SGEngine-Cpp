@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Quaternion type.
  */
-#ifndef __SGENGINE_QUATERNION_H_
-#define __SGENGINE_QUATERNION_H_
+#ifndef __SGE_QUATERNION_H
+#define __SGE_QUATERNION_H
 
 namespace sge {
 
@@ -329,4 +329,4 @@ INLINE bool Quat4f::operator!= (const Quat4f &rhs) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_QUATERNION_H_ */
+#endif /* __SGE_QUATERNION_H */

@@ -9,8 +9,8 @@
  *
  * @brief Defines a drawable Vertex class.
  */
-#ifndef __SGENGINE_VERTEX_H_
-#define __SGENGINE_VERTEX_H_
+#ifndef __SGE_VERTEX_H
+#define __SGE_VERTEX_H
 
 namespace sge {
 
@@ -79,4 +79,4 @@ INLINE bool Vertex::operator!= (const Vertex &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_VERTEX_H_ */
+#endif /* __SGE_VERTEX_H */

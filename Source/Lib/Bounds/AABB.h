@@ -9,8 +9,8 @@
  *
  * @brief Defines a 3D axis-aligned bounding box type.
  */
-#ifndef __SGENGINE_AABB_H_
-#define __SGENGINE_AABB_H_
+#ifndef __SGE_AABB_H
+#define __SGE_AABB_H
 
 #include <cmath> // fabsf
 
@@ -182,4 +182,4 @@ INLINE bool AABB::operator!= (const AABB &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_AABB_H_ */
+#endif /* __SGE_AABB_H */

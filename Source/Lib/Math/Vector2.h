@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level 2D Vector type.
  */
-#ifndef __SGENGINE_VECTOR2_H_
-#define __SGENGINE_VECTOR2_H_
+#ifndef __SGE_VECTOR2_H
+#define __SGE_VECTOR2_H
 
 namespace sge {
 
@@ -522,4 +522,4 @@ INLINE bool Vec2f::operator!= (const Vec2f &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_VECTOR2_H_ */
+#endif /* __SGE_VECTOR2_H */

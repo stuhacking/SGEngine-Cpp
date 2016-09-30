@@ -9,8 +9,8 @@
  *
  * @brief Implements Perspective and Orthographic projections.
  */
-#ifndef __SGENGINE_GLPROJECTION_H_
-#define __SGENGINE_GLPROJECTION_H_
+#ifndef __SGE_GLPROJECTION_H
+#define __SGE_GLPROJECTION_H
 
 namespace sge {
 
@@ -30,4 +30,4 @@ public:
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_GLPROJECTION_H_  */
+#endif /* __SGE_GLPROJECTION_H  */

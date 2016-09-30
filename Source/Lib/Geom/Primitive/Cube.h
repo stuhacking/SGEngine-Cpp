@@ -9,8 +9,8 @@
  * 
  * @brief Defines a primitive plane mesh generator.
  */
-#ifndef __SGENGINE_CUBE_H_
-#define __SGENGINE_CUBE_H_
+#ifndef __SGE_CUBE_H
+#define __SGE_CUBE_H
 
 namespace sge {
 
@@ -35,4 +35,4 @@ private:
     
 } /* namespace sge */
 
-#endif /* __SGENGINE_CUBE_H_ */
+#endif /* __SGE_CUBE_H */

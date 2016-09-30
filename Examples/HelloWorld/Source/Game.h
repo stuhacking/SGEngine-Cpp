@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#ifndef __SDLBASIC_GAME_H_
-#define __SDLBASIC_GAME_H_
+#ifndef __SDLBASIC_GAME_H
+#define __SDLBASIC_GAME_H
 
 #include <vector>
 
@@ -38,4 +38,4 @@ private:
     u32 m_height;
 };
 
-#endif /* __SDLBASIC_GAME_H_ */
+#endif /* __SDLBASIC_GAME_H */

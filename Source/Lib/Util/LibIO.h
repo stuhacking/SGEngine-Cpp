@@ -9,8 +9,8 @@
  *
  * @brief Define a bunch of << overloads for SGE types.
  */
-#ifndef __SGECORELIB_LIBIO_H_
-#define __SGECORELIB_LIBIO_H_
+#ifndef __SGE_LIBIO_H
+#define __SGE_LIBIO_H
 
 class ostream;
 
@@ -35,4 +35,4 @@ std::ostream& operator<< (std::ostream &os, const Clock &clock);
 
 } /* namespace sge */
 
-#endif /* __SGECORELIB_LIBIO_H_ */
+#endif /* __SGE_LIBIO_H */

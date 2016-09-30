@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Vec4 type.
  */
-#ifndef __SGENGINE_VECTOR4_H_
-#define __SGENGINE_VECTOR4_H_
+#ifndef __SGE_VECTOR4_H
+#define __SGE_VECTOR4_H
 
 namespace sge {
 
@@ -547,4 +547,4 @@ INLINE bool Vec4f::operator!= (const Vec4f &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_VECTOR4_H_ */
+#endif /* __SGE_VECTOR4_H */

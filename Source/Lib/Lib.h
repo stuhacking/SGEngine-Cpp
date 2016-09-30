@@ -7,8 +7,8 @@
  *
  * --------------------------------------------------------------------------
  */
-#ifndef __SGENGINE_LIB_H_
-#define __SGENGINE_LIB_H_
+#ifndef __SGE_LIB_H
+#define __SGE_LIB_H
 
 // - Miscellaneous Utilities ------------------------------------------------
 
@@ -56,4 +56,4 @@
 
 #include "Util/LibIO.h"
 
-#endif /* __SGENGINE_H_ */
+#endif /* __SGE_H */

@@ -9,8 +9,8 @@
  *
  * @brief A class for Input/Output not tied to stdout.
  */
-#ifndef __SGENGINE_CONSOLE_H_
-#define __SGENGINE_CONSOLE_H_
+#ifndef __SGE_CONSOLE_H
+#define __SGE_CONSOLE_H
 
 namespace sge {
 
@@ -44,4 +44,4 @@ extern Console console;
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_CONSOLE_H_ */
+#endif /* __SGE_CONSOLE_H */

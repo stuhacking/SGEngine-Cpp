@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Mat4 type.
  */
-#ifndef __SGENGINE_MATRIX4_H_
-#define __SGENGINE_MATRIX4_H_
+#ifndef __SGE_MATRIX4_H
+#define __SGE_MATRIX4_H
 
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
@@ -371,4 +371,4 @@ INLINE bool Mat4f::operator!= (const Mat4f &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_MATRIX4_H_ */
+#endif /* __SGE_MATRIX4_H */

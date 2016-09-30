@@ -9,8 +9,8 @@
  *
  * @brief Convenient utilities for std::strings.
  */
-#ifndef __SGENGINE_STRINGUTIL_H_
-#define __SGENGINE_STRINGUTIL_H_
+#ifndef __SGE_STRINGUTIL_H
+#define __SGE_STRINGUTIL_H
 
 #include <string>
 #include <regex>
@@ -131,4 +131,4 @@ std::vector<std::string> ReSplit (const std::string &text, const std::string &se
 
 }} /* namespace sge::str */
 
-#endif /* __SGENGINE_STRINGUTIL_H_ */
+#endif /* __SGE_STRINGUTIL_H */

@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Vec3 type.
  */
-#ifndef __SGENGINE_VECTOR3_H_
-#define __SGENGINE_VECTOR3_H_
+#ifndef __SGE_VECTOR3_H
+#define __SGE_VECTOR3_H
 
 namespace sge {
 
@@ -577,4 +577,4 @@ INLINE bool Vec3f::operator!= (const Vec3f &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_VECTOR3_H_ */
+#endif /* __SGE_VECTOR3_H */

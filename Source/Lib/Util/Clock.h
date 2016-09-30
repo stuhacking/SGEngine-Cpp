@@ -10,8 +10,8 @@
  * @brief Defines a Clock class and timing functions using
  *   the system's High Frequency Timer via std::chrono.
  */
-#ifndef __SGENGINE_CLOCK_H_
-#define __SGENGINE_CLOCK_H_
+#ifndef __SGE_CLOCK_H
+#define __SGE_CLOCK_H
 
 namespace sge {
 
@@ -125,4 +125,4 @@ INLINE u32 Clock::Delta (const Clock &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_CLOCK_H_ */
+#endif /* __SGE_CLOCK_H */

@@ -9,8 +9,8 @@
  *
  * @brief Defines a 2D Line Section for intersection tests.
  */
-#ifndef __SGENGINE_LINE2D_H_
-#define __SGENGINE_LINE2D_H_
+#ifndef __SGE_LINE2D_H
+#define __SGE_LINE2D_H
 
 namespace sge {
 
@@ -100,4 +100,4 @@ INLINE bool Line2D::operator!= (const Line2D &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_LINE2D_H_ */
+#endif /* __SGE_LINE2D_H */

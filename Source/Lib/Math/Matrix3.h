@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Mat3 type.
  */
-#ifndef __SGENGINE_MATRIX3_H_
-#define __SGENGINE_MATRIX3_H_
+#ifndef __SGE_MATRIX3_H
+#define __SGE_MATRIX3_H
 
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
@@ -399,4 +399,4 @@ INLINE bool Mat3f::operator!= (const Mat3f &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_MATRIX3_H_ */
+#endif /* __SGE_MATRIX3_H */

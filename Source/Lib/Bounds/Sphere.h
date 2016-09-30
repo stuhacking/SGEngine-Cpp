@@ -9,8 +9,8 @@
  *
  * @brief Defines a 3D bounding sphere type.
  */
-#ifndef __SGENGINE_SPHERE_H_
-#define __SGENGINE_SPHERE_H_
+#ifndef __SGE_SPHERE_H
+#define __SGE_SPHERE_H
 
 #include <cmath> // fabsf
 
@@ -149,4 +149,4 @@ INLINE bool Sphere::operator!= (const Sphere &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_SPHERE_H_ */
+#endif /* __SGE_SPHERE_H */

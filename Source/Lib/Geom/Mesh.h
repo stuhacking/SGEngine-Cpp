@@ -9,8 +9,8 @@
  * 
  * @brief Defines a Mesh class.
  */
-#ifndef __SGENGINE_MESH_H_
-#define __SGENGINE_MESH_H_
+#ifndef __SGE_MESH_H
+#define __SGE_MESH_H
 
 #include <vector>
 
@@ -103,4 +103,4 @@ INLINE u32 Mesh::FaceCount () const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_MESH_H_  */
+#endif /* __SGE_MESH_H  */

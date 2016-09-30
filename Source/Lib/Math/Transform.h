@@ -9,8 +9,8 @@
  *
  * @brief Implements 3D translation/rotate/scale transforms.
  */
-#ifndef __SGENGINE_TRANSFORM_H_
-#define __SGENGINE_TRANSFORM_H_
+#ifndef __SGE_TRANSFORM_H
+#define __SGE_TRANSFORM_H
 
 namespace sge {
 
@@ -151,4 +151,4 @@ INLINE Mat4f Transform::GetViewTransformationMatrix () const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_TRANSFORM_H_ */
+#endif /* __SGE_TRANSFORM_H */

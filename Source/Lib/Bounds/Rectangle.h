@@ -9,8 +9,8 @@
  *
  * @brief Defines a 2D axis aligned bounding rectangle type.
  */
-#ifndef __SGENGINE_RECTANGLE_H_
-#define __SGENGINE_RECTANGLE_H_
+#ifndef __SGE_RECTANGLE_H
+#define __SGE_RECTANGLE_H
 
 #include <cmath> // fabsf
 
@@ -180,4 +180,4 @@ INLINE bool Rectangle::operator!= (const Rectangle &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_RECTANGLE_H_ */
+#endif /* __SGE_RECTANGLE_H */

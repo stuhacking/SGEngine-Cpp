@@ -9,8 +9,8 @@
  *
  * @brief Implements simple math functions for floats
  */
-#ifndef __SGELIB_FMATH_H_
-#define __SGELIB_FMATH_H_
+#ifndef __SGE_FMATH_H
+#define __SGE_FMATH_H
 
 #include <cmath>
 
@@ -161,4 +161,4 @@ INLINE void FMath::SinCos (const float angle, float &s, float &c) {
 
 } /* namespace sge */
 
-#endif /* __SGELIB_FMATH_H_ */
+#endif /* __SGE_FMATH_H */

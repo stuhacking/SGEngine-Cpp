@@ -9,8 +9,8 @@
  *
  * @brief Define wrapper for querying keyboard and mouse state.
  */
-#ifndef __SGENGINE_INPUT_H_
-#define __SGENGINE_INPUT_H_
+#ifndef __SGE_INPUT_H
+#define __SGE_INPUT_H
 
 namespace sge {
 
@@ -152,4 +152,4 @@ public:
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_INPUT_H_ */
+#endif /* __SGE_INPUT_H */

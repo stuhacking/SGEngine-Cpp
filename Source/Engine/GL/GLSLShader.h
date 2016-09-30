@@ -9,8 +9,8 @@
  * 
  * @brief Defines a GLSL shader type which is part of a GLSLProgram.
  */
-#ifndef __SGENGINE_GLSLSHADER_H_
-#define __SGENGINE_GLSLSHADER_H_
+#ifndef __SGE_GLSLSHADER_H
+#define __SGE_GLSLSHADER_H
 
 #include <string>
 
@@ -40,4 +40,4 @@ INLINE bool GLSLShader::IsCompiled() const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_GLSLSHADER_H_ */
+#endif /* __SGE_GLSLSHADER_H */

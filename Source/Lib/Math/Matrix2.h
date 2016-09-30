@@ -9,8 +9,8 @@
  *
  * @brief Defines a low level Mat2 type.
  */
-#ifndef __SGENGINE_MATRIX2_H_
-#define __SGENGINE_MATRIX2_H_
+#ifndef __SGE_MATRIX2_H
+#define __SGE_MATRIX2_H
 
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
@@ -371,4 +371,4 @@ INLINE bool Mat2f::operator!= (const Mat2f &other) const {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_MATRIX2_H_ */
+#endif /* __SGE_MATRIX2_H */

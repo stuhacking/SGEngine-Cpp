@@ -10,8 +10,8 @@
  * @brief Defines a class for drawing simple line graphics for visually
  *    debugging a scene.
  */
-#ifndef __SGENGINE_DEBUGGRAPHICS_H_
-#define __SGENGINE_DEBUGGRAPHICS_H_
+#ifndef __SGE_DEBUGGRAPHICS_H
+#define __SGE_DEBUGGRAPHICS_H
 
 #define SPHERE_INCREMENT 12.0f
 
@@ -152,4 +152,4 @@ INLINE void DebugGraphics::AddBox (const Vec3f &p_min, const Vec3f &p_max) {
 
 } /* namespace sge */
 
-#endif /* __SGENGINE_DEBUGGRAPHICS_H_ */
+#endif /* __SGE_DEBUGGRAPHICS_H */

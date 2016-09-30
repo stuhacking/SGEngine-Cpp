@@ -11,20 +11,20 @@ namespace sge {
 // MATRIX 2x2
 //==================================
 
-const Mat2f Mat2f::ZERO(0.0f);
-const Mat2f Mat2f::ONE(1.0f);
-const Mat2f Mat2f::IDENTITY(1.0f, 0.0f,
-                            0.0f, 1.0f);
+const Mat2f Mat2f::ZERO{0.0f};
+const Mat2f Mat2f::ONE{1.0f};
+const Mat2f Mat2f::IDENTITY{1.0f, 0.0f,
+                            0.0f, 1.0f};
 
 //==================================
 // MATRIX 3x3
 //==================================
 
-const Mat3f Mat3f::ZERO(0.0f);
-const Mat3f Mat3f::ONE(1.0f);
-const Mat3f Mat3f::IDENTITY(1.0f, 0.0f, 0.0f,
+const Mat3f Mat3f::ZERO{0.0f};
+const Mat3f Mat3f::ONE{1.0f};
+const Mat3f Mat3f::IDENTITY{1.0f, 0.0f, 0.0f,
                             0.0f, 1.0f, 0.0f,
-                            0.0f, 0.0f, 1.0f);
+                            0.0f, 0.0f, 1.0f};
 
 
 Mat3f Mat3f::Inverse () const {
@@ -72,12 +72,12 @@ bool Mat3f::InverseSelf () {
 // MATRIX 4x4
 //==================================
 
-const Mat4f Mat4f::ZERO(0.0f);
-const Mat4f Mat4f::ONE(1.0f);
-const Mat4f Mat4f::IDENTITY(1.0f, 0.0f, 0.0f, 0.0f,
+const Mat4f Mat4f::ZERO{0.0f};
+const Mat4f Mat4f::ONE{1.0f};
+const Mat4f Mat4f::IDENTITY{1.0f, 0.0f, 0.0f, 0.0f,
                             0.0f, 1.0f, 0.0f, 0.0f,
                             0.0f, 0.0f, 1.0f, 0.0f,
-                            0.0f, 0.0f, 0.0f, 1.0f);
+                            0.0f, 0.0f, 0.0f, 1.0f};
 
 
 Mat4f Mat4f::Inverse () const {

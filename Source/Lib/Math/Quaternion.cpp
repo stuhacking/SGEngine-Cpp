@@ -5,7 +5,7 @@
 
 namespace sge {
 
-const Quat4f Quat4f::IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
+const Quat4f Quat4f::IDENTITY{0.0f, 0.0f, 0.0f, 1.0f};
 
 Quat4f Quat4f::AxisAngle (const Vec3f &axis, const float angle) {
     float sinHalf, cosHalf;

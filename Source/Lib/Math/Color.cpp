@@ -18,9 +18,9 @@ Vec4f Color::ToVec4f (const bool normalize) const {
 }
 
 Color Color::FromHSL (const float p_hue, const float p_sat, const float p_val) {
-    float chroma = (1.0f - fabsf(2.0f * p_val - 1.0f)) * p_sat;
-    float nHue = p_hue / HUE_STEP; // Normalize Hue
-    float x = chroma * (1.0f - fabsf(fmodf(nHue, 2.0f) - 1.0f));
+    const float chroma = (1.0f - fabsf(2.0f * p_val - 1.0f)) * p_sat;
+    const float nHue = p_hue / HUE_STEP; // Normalize Hue
+    const float x = chroma * (1.0f - fabsf(fmodf(nHue, 2.0f) - 1.0f));
     float r = 0.0f, g = 0.0f, b = 0.0f;
 
     if (nHue >= 0.0f && nHue < 1.0f) { // Red is chroma
@@ -56,48 +56,34 @@ Color Color::FromHSL (const float p_hue, const float p_sat, const float p_val) {
                  static_cast<u8>(FMath::Lerp(b + m, 0, 255)));
 }
 
-/**
- * <pre> code != nullptr
- */
-static char * expandColorCode (const char * const code, char result[9]) {
-    size_t len = strlen(code);
-
-    // Initialize result.
-    strncpy(result, "000000FF", 8);
-
-    if (len == 3) {
-        result[0] = result[1] = code[0];
-        result[2] = result[3] = code[1];
-        result[4] = result[5] = code[2];
-    } else if (len == 4) {
-        result[0] = result[1] = code[0];
-        result[2] = result[3] = code[1];
-        result[4] = result[5] = code[2];
-        result[6] = result[7] = code[3];
-    } else if (len == 6 || len == 8) {
-        strncpy(result, code, len);
-    }
-
-    return result;
-}
-
 // Parse a color code given as Hex string
-// Discard first character if #
+// Discard first character if '#'.
 // Valid string lengths are 3 (RGB), 4 (RGBA), 6 (RRGGBB) or 8 (RRGGBBAA)
 // Expand each of the first 3 options to match an 8 byte string and then
 // parse as Hex
 Color Color::FromHex (const char * const hex) {
-    char fullCode[9] = {0};
-    const char *dropHash = strchr(hex, '#');
+    // Initialize result.
+    char result[9]{0};
+    strncpy(result, "000000FF", 8);
 
-    if (nullptr != dropHash) {
-        ++dropHash;
-        expandColorCode(dropHash, fullCode);
-    } else {
-        expandColorCode(hex, fullCode);
+    if (nullptr != hex) {
+        const char *skipHash = (nullptr != strchr(hex, '#')) ? hex + sizeof(char) : hex;
+        const u32 len = static_cast<u32>(strlen(skipHash));
+
+        if (len == 3 || len == 4) {
+            result[0] = result[1] = skipHash[0];
+            result[2] = result[3] = skipHash[1];
+            result[4] = result[5] = skipHash[2];
+
+            if (len == 4) {
+                result[6] = result[7] = skipHash[3];
+            }
+        } else if (len == 6 || len == 8) {
+            strncpy(result, skipHash, len);
+        }
     }
 
-    u32 val = static_cast<u32>(strtoul(fullCode, nullptr, 16));
+    u32 val = static_cast<u32>(strtoul(result, nullptr, 16));
 
     return Color(val);
 }

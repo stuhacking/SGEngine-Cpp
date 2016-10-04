@@ -1,6 +1,6 @@
 # HelloWorld - A Demo app for SGEngine
 cmake_minimum_required(VERSION 2.8.11)
-project(Noise)
+project(VizTests)
 
 # Set up Compiler warnings for GCC/Clang
 if (CMAKE_CXX_COMPILER_ID STREQUAL GNU OR CMAKE_CXX_COMPILER_ID STREQUAL Clang)
@@ -8,6 +8,10 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL GNU OR CMAKE_CXX_COMPILER_ID STREQUAL Clang)
 endif()
 
 include_directories(../../Source/Lib)
+
+# Builds: Color - Draw color space.
+add_executable(Colors Source/Colors.cpp)
+target_link_libraries(Colors SGECoreLib)
 
 # Builds: Perlin - Perlin noise demo.
 add_executable(Perlin Source/Perlin.cpp)

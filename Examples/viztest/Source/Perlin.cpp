@@ -19,7 +19,7 @@ int main (int argc, char *argv[]) {
             for (int y = 0; y < 512; ++y) {
                 float z = Noise::Perlin(x / 512.0f + offset, y / 512.0f,
                                         2.0f, 1.0f, 0.6f, 8);
-                // float z = Noise::Worley(x / 512.0f + offset, y / 512.0f,
+                // float z = viztest::Worley(x / 512.0f + offset, y / 512.0f,
                 //                         12.0f, 1.0f);
 
                 output_file << (int)FMath::Fit(z, -1.0f, 1.0f, 0.0f, 255.0f) << " ";

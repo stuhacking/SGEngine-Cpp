@@ -32,4 +32,4 @@ add_subdirectory(Test)
 
 # Example Programs
 add_subdirectory(Examples/HelloWorld)
-add_subdirectory(Examples/Noise)
+add_subdirectory(Examples/viztest)

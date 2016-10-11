@@ -40,10 +40,10 @@ public:
     explicit Vec2f (const float xx, const float yy) : x(xx), y(yy) { }
 
     /** Value access by index. */
-    float operator[] (const u32 index) const;
+    float operator[] (const std::size_t index) const;
 
     /** Reference access by index. */
-    float &operator[] (const u32 index);
+    float &operator[] (const std::size_t index);
 
     /**
      * Set the values of x and y.
@@ -290,11 +290,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Vec2f::operator[] (const u32 index) const {
+INLINE float Vec2f::operator[] (const std::size_t index) const {
     return (&x)[index];
 }
 
-INLINE float &Vec2f::operator[] (const u32 index) {
+INLINE float &Vec2f::operator[] (const std::size_t index) {
     return (&x)[index];
 }
 

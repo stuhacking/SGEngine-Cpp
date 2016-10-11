@@ -90,9 +90,9 @@ public:
 
     bool IsIdentity () const;
 
-    const Vec3f &operator[] (const u32 index) const;
+    const Vec3f &operator[] (const std::size_t index) const;
 
-    Vec3f &operator[] (const u32 index);
+    Vec3f &operator[] (const std::size_t index);
 
     /**
      * Mat3f Scale.
@@ -264,11 +264,11 @@ INLINE bool Mat3f::IsIdentity () const {
     return Compare(Mat3f::IDENTITY);
 }
 
-INLINE const Vec3f &Mat3f::operator[] (const u32 index) const {
+INLINE const Vec3f &Mat3f::operator[] (const std::size_t index) const {
     return mat[index];
 }
 
-INLINE Vec3f &Mat3f::operator[] (const u32 index) {
+INLINE Vec3f &Mat3f::operator[] (const std::size_t index) {
     return mat[index];
 }
 

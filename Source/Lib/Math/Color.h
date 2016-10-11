@@ -77,8 +77,6 @@ public:
 
     bool Compare (const Color &other) const;
 
-    bool Compare (const Color &other, const u8 threshold) const;
-
     bool operator== (const Color &other) const;
 
     bool operator!= (const Color &other) const;
@@ -87,10 +85,10 @@ public:
 // --------------------------------------------------------------------------
 
 INLINE Color::Color (const u32 val) {
-    r = (val >> 24) & 0xFF;
-    g = (val >> 16) & 0xFF;
-    b = (val >> 8) & 0xFF;
-    a = val & 0xFF;
+    r = (val & 0xFF000000) >> 24;
+    g = (val & 0x00FF0000) >> 16;
+    b = (val & 0x0000FF00) >> 8;
+    a = (val & 0x000000FF);
 }
 
 INLINE bool Color::IsOpaque () const {
@@ -103,19 +101,6 @@ INLINE bool Color::IsHidden () const {
 
 INLINE bool Color::Compare (const Color &other) const {
     return r == other.r && g == other.g && b == other.b && a == other.a;
-}
-
-INLINE bool Color::Compare (const Color &other, const u8 threshold) const {
-    if (abs(r - other.r) > threshold)
-        return false;
-    if (abs(g - other.g) > threshold)
-        return false;
-    if (abs(b - other.b) > threshold)
-        return false;
-    if (abs(a - other.a) > threshold)
-        return false;
-
-    return true;
 }
 
 INLINE bool Color::operator== (const Color &other) const {

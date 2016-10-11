@@ -34,8 +34,8 @@ std::string Trim (const std::string &str) {
     return TrimLeft(TrimRight(str));
 }
 
-std::string PadLeft (const std::string &str, const size_t width, const char c) {
-    int padding = width - str.length();
+std::string PadLeft (const std::string &str, const int width, const char c) {
+    long padding = width - str.length();
 
     if (padding <= 0) {
         return str;
@@ -44,8 +44,8 @@ std::string PadLeft (const std::string &str, const size_t width, const char c) {
     return std::string(width, c).replace(0, str.length(), str);
 }
 
-std::string PadRight (const std::string &str, const size_t width, const char c) {
-    int padding = width - str.length();
+std::string PadRight (const std::string &str, const int width, const char c) {
+    long padding = width - str.length();
 
     if (padding <= 0) {
         return str;
@@ -54,8 +54,8 @@ std::string PadRight (const std::string &str, const size_t width, const char c) 
     return std::string(width, c).replace(padding, str.length(), str);
 }
 
-std::string PadCenter (const std::string &str, const size_t width, const char c) {
-    int padding = width - str.length();
+std::string PadCenter (const std::string &str, const int width, const char c) {
+    long padding = width - str.length();
 
     if (padding <= 0) {
         return str;
@@ -66,7 +66,7 @@ std::string PadCenter (const std::string &str, const size_t width, const char c)
     return std::string(width, c).replace(padding, str.length(), str);
 }
 
-std::string Truncate (const std::string &str, const size_t width) {
+std::string Truncate (const std::string &str, const int width) {
     if (width <= 0) {
         return "";
     }
@@ -78,7 +78,7 @@ std::string Truncate (const std::string &str, const size_t width) {
     return str.substr(0, width);
 }
 
-std::string TruncateEllipsis (const std::string &str, const size_t width) {
+std::string TruncateEllipsis (const std::string &str, const int width) {
     if (width <= 0) {
         return "";
     }
@@ -90,7 +90,7 @@ std::string TruncateEllipsis (const std::string &str, const size_t width) {
     return Truncate(str, width - 1) + continuation_char; // Ellipsis char
 }
 
-std::string SetWidth (const std::string &str, const size_t width) {
+std::string SetWidth (const std::string &str, const int width) {
     if (str.length() <= width) {
         return PadLeft(str, width);
     }

@@ -38,12 +38,12 @@ public:
      * Create a Random Number Generator with a
      * given seed.
      */
-    explicit Random (const s64 p_seed);
+    explicit Random (const i64 p_seed);
 
     /**
      * Set the seed value of this Random Number Generator.
      */
-    void SetSeed (const s64 p_seed);
+    void SetSeed (const i64 p_seed);
 
     /**
      * Return a random float value in the range 0..1.
@@ -63,17 +63,17 @@ public:
     /**
      * Return a random integer in the random 0..INT_MAX.
      */
-    s32 NextInt();
+    i32 NextInt();
 
     /**
      * Return a random integer in the range 0..max.
      */
-    s32 NextInt(const s32 max);
+    i32 NextInt(const i32 max);
 
     /**
      * Return a random integer in the given range min..max.
      */
-    s32 NextInt(const s32 min, const s32 max);
+    i32 NextInt(const i32 min, const i32 max);
 
 private:
     std::default_random_engine m_generator;
@@ -83,11 +83,11 @@ INLINE Random::Random() {
     SetSeed(time(nullptr));
 }
 
-INLINE Random::Random(const s64 p_seed) {
+INLINE Random::Random(const i64 p_seed) {
     SetSeed(p_seed);
 }
 
-INLINE void Random::SetSeed(const s64 p_seed) {
+INLINE void Random::SetSeed(const i64 p_seed) {
     m_generator.seed(p_seed);
 }
 
@@ -106,17 +106,17 @@ INLINE float Random::NextFloat(const float min, const float max) {
     return vals(m_generator);
 }
 
-INLINE s32 Random::NextInt() {
+INLINE i32 Random::NextInt() {
     std::uniform_int_distribution<int> vals(0, INT_MAX);
     return vals(m_generator);
 }
 
-INLINE s32 Random::NextInt(const s32 max) {
+INLINE i32 Random::NextInt(const i32 max) {
     std::uniform_int_distribution<int> vals(0, max);
     return vals(m_generator);
 }
 
-INLINE s32 Random::NextInt(const s32 min, const s32 max) {
+INLINE i32 Random::NextInt(const i32 min, const i32 max) {
     std::uniform_int_distribution<int> vals(min, max);
     return vals(m_generator);
 }

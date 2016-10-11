@@ -26,7 +26,6 @@ const Mat3f Mat3f::IDENTITY{1.0f, 0.0f, 0.0f,
                             0.0f, 1.0f, 0.0f,
                             0.0f, 0.0f, 1.0f};
 
-
 Mat3f Mat3f::Inverse () const {
     Mat3f inv = *this;
     bool success = inv.InverseSelf();
@@ -37,7 +36,6 @@ Mat3f Mat3f::Inverse () const {
 
     return inv;
 }
-
 
 bool Mat3f::InverseSelf () {
     float a[9];
@@ -79,7 +77,6 @@ const Mat4f Mat4f::IDENTITY{1.0f, 0.0f, 0.0f, 0.0f,
                             0.0f, 0.0f, 1.0f, 0.0f,
                             0.0f, 0.0f, 0.0f, 1.0f};
 
-
 Mat4f Mat4f::Inverse () const {
     Mat4f inv = *this;
     bool success = inv.InverseSelf();
@@ -90,7 +87,6 @@ Mat4f Mat4f::Inverse () const {
 
     return inv;
 }
-
 
 bool Mat4f::InverseSelf () {
     float a[16];

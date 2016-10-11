@@ -120,7 +120,7 @@ bool GLSLProgram::Compile () {
     GLuint newId = 0;
 
     if (IsCompiled()) {
-        DEBUG( std::cerr << "Recompiling GLSL Program " << newId << "\n"; );
+        IF_DEBUG( std::cerr << "Recompiling GLSL Program " << newId << "\n"; );
     } else {
         newId = glCreateProgram();
     }
@@ -130,7 +130,7 @@ bool GLSLProgram::Compile () {
         return false;
     }
 
-    DEBUG( console.Printf("Compiling Program Sources (%d)\n", newId); );
+    IF_DEBUG( console.Printf("Compiling Program Sources (%d)\n", newId); );
 
     for (auto &shader : m_shaders) {
         bool compiled = shader.Compile();

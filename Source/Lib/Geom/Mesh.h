@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a Mesh class.
  */
 #ifndef __SGE_MESH_H
@@ -28,7 +28,7 @@ public:
 
     void AutoQuadFace (const Vertex &v1, const Vertex &v2, const Vertex &v3,
                        const Vertex &v4);
-    
+
     u32 VertCount () const;
 
     u32 IndexCount () const;
@@ -36,7 +36,7 @@ public:
     u32 FaceCount () const;
 
     void PrintVertexInfo () const;
-    
+
     /**
      * Identify duplicate vertex data and fix indices to share a single instance.
      */
@@ -60,16 +60,16 @@ INLINE void Mesh::AddFace (const u32 a, const u32 b, const u32 c) {
 }
 
 //  v3---v2
-//   | /  
+//   | /
 //  v1
 INLINE void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
                                const Vertex &v3) {
     u32 size = VertCount();
-    
+
     AddVertex(v1);
     AddVertex(v2);
     AddVertex(v3);
-    
+
     AddFace(size, size + 1, size + 2);
 }
 
@@ -79,12 +79,12 @@ INLINE void Mesh::AutoTriFace (const Vertex &v1, const Vertex &v2,
 INLINE void Mesh::AutoQuadFace (const Vertex &v1, const Vertex &v2,
                                 const Vertex &v3, const Vertex &v4) {
     u32 size = VertCount();
-    
+
     AddVertex(v1);
     AddVertex(v2);
     AddVertex(v3);
     AddVertex(v4);
-    
+
     AddFace(size, size + 2, size + 3);
     AddFace(size, size + 1, size + 2);
 }

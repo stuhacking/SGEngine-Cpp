@@ -97,9 +97,9 @@ public:
      */
     bool IsIdentity () const;
 
-    const Vec4f &operator[] (const u32 index) const;
+    const Vec4f &operator[] (const std::size_t index) const;
 
-    Vec4f &operator[] (const u32 index);
+    Vec4f &operator[] (const std::size_t index);
 
     /** Mat4f operations. */
     Mat4f operator* (const float a) const;
@@ -221,11 +221,11 @@ INLINE bool Mat4f::IsIdentity () const {
     return Compare(Mat4f::IDENTITY);
 }
 
-INLINE const Vec4f &Mat4f::operator[] (const u32 index) const {
+INLINE const Vec4f &Mat4f::operator[] (const std::size_t index) const {
     return mat[index];
 }
 
-INLINE Vec4f &Mat4f::operator[] (const u32 index) {
+INLINE Vec4f &Mat4f::operator[] (const std::size_t index) {
     return mat[index];
 }
 

@@ -13,9 +13,9 @@
 // - Miscellaneous Utilities ------------------------------------------------
 
 #ifndef NDEBUG
- #define DEBUG(x) do { x } while(0)
+ #define IF_DEBUG(x) do { x } while(0)
 #else
- #define DEBUG(x) do { } while(0)
+ #define IF_DEBUG(x) do { } while(0)
 #endif /* NDEBUG */
 
 #define INLINE inline

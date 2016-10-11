@@ -50,13 +50,13 @@ public:
      * Read access to this Quat4f's components using
      *subscript notation.
      */
-    float operator[] (const u32 index) const;
+    float operator[] (const std::size_t index) const;
 
     /**
      * Reference/write access to this Quat4f's components using
      * subscript notation.
      */
-    float &operator[] (const u32 index);
+    float &operator[] (const std::size_t index);
 
     void Zero ();
 
@@ -154,11 +154,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Quat4f::operator[] (const u32 index) const {
+INLINE float Quat4f::operator[] (const std::size_t index) const {
     return (&i)[index];
 }
 
-INLINE float &Quat4f::operator[] (const u32 index) {
+INLINE float &Quat4f::operator[] (const std::size_t index) {
     return (&i)[index];
 }
 

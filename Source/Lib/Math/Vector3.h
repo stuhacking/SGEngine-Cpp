@@ -43,10 +43,10 @@ public:
         : x(xx), y(yy), z(zz) { }
 
     /** Value access using an index. */
-    float operator[] (const u32 index) const;
+    float operator[] (const std::size_t index) const;
 
     /** Reference access using an index. */
-    float &operator[] (const u32 index);
+    float &operator[] (const std::size_t index);
 
     /**
      * Set the values of x, y, and z.
@@ -321,11 +321,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Vec3f::operator[] (const u32 index) const {
+INLINE float Vec3f::operator[] (const std::size_t index) const {
     return (&x)[index];
 }
 
-INLINE float &Vec3f::operator[] (const u32 index) {
+INLINE float &Vec3f::operator[] (const std::size_t index) {
     return (&x)[index];
 }
 

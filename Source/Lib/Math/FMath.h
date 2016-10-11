@@ -43,7 +43,7 @@ public:
     /**
      * Clamp integer value within min/max boundaries.
      */
-    static s32 ClampInt (const s32 val, const s32 a, const s32 b);
+    static i32 ClampInt (const i32 val, const i32 a, const i32 b);
 
     /**
      * Return the first power of 2 that is not less than val.
@@ -103,7 +103,7 @@ INLINE float FMath::ClampFloat (const float val, const float a, const float b) {
     return FMath::Max(a, FMath::Min(b, val));
 }
 
-INLINE s32 FMath::ClampInt (const s32 val, const s32 a, const s32 b) {
+INLINE i32 FMath::ClampInt (const i32 val, const i32 a, const i32 b) {
     if (val < a)
         return a;
 

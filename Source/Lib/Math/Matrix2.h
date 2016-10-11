@@ -98,12 +98,12 @@ public:
     /**
      * Read access to the matrix columns using subscript notation.
      */
-    const Vec2f &operator[] (const u32 index) const;
+    const Vec2f &operator[] (const std::size_t index) const;
 
     /**
      * Reference/Write access to the matrix columns using subscript notation.
      */
-    Vec2f &operator[] (const u32 index);
+    Vec2f &operator[] (const std::size_t index);
 
     // Mat2f operators
 
@@ -259,11 +259,11 @@ INLINE bool Mat2f::IsIdentity () const {
     return Compare(Mat2f::IDENTITY);
 }
 
-INLINE const Vec2f &Mat2f::operator[] (const u32 index) const {
+INLINE const Vec2f &Mat2f::operator[] (const std::size_t index) const {
     return mat[index];
 }
 
-INLINE Vec2f &Mat2f::operator[] (const u32 index) {
+INLINE Vec2f &Mat2f::operator[] (const std::size_t index) {
     return mat[index];
 }
 

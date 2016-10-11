@@ -48,10 +48,10 @@ public:
     Vec4f (const Vec3f &vec, const float ww) : x(vec.x), y(vec.y), z(vec.z), w(ww) { }
 
     /** Value access using an index. */
-    float operator[] (const u32 index) const;
+    float operator[] (const std::size_t index) const;
 
     /** Reference access using an index. */
-    float &operator[] (const u32 index);
+    float &operator[] (const std::size_t index);
 
     /**
      * Set the values of x, y, z, and w.
@@ -287,11 +287,11 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Vec4f::operator[] (const u32 index) const {
+INLINE float Vec4f::operator[] (const std::size_t index) const {
     return (&x)[index];
 }
 
-INLINE float &Vec4f::operator[] (const u32 index) {
+INLINE float &Vec4f::operator[] (const std::size_t index) {
     return (&x)[index];
 }
 

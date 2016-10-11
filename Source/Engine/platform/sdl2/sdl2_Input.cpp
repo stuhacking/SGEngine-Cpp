@@ -65,7 +65,7 @@ void Input::Update () {
             keyMap[evt.key.keysym.sym] = false;
             break;
         case SDL_MOUSEMOTION:
-            s32 x, y, dx, dy;
+            i32 x, y, dx, dy;
 
             SDL_GetMouseState(&x, &y);
             SDL_GetRelativeMouseState(&dx, &dy);
@@ -121,7 +121,7 @@ bool Input::KeyReleased (const char keyCode) {
 
 
 void Input::LockMouse () {
-    s32 x, y;
+    i32 x, y;
     SDL_SetRelativeMouseMode(SDL_TRUE);
     // Throw away any current accumulated mouse delta. Avoids sudden
     // jerk when entering locked mouse state.

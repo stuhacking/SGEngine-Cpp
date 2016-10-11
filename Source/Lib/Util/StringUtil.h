@@ -56,7 +56,7 @@ std::string Trim (const std::string &str);
  * @param width Total width of output string
  * @param c Char to use for padding
  */
-std::string PadLeft (const std::string &str, const size_t width, const char c = ' ');
+std::string PadLeft (const std::string &str, const int width, const char c = ' ');
 
 /**
  * Pad a String with leading spaces if the input string is narrower than the desired width.
@@ -65,7 +65,7 @@ std::string PadLeft (const std::string &str, const size_t width, const char c = 
  * @param width Total width of output string
  * @param c Char to use for padding
  */
-std::string PadRight (const std::string &str, const size_t width, const char c = ' ');
+std::string PadRight (const std::string &str, const int width, const char c = ' ');
 
 /**
  * Pad a String with spaces either side if the input string is
@@ -75,7 +75,7 @@ std::string PadRight (const std::string &str, const size_t width, const char c =
  * @param width Total width of output string
  * @param c Char to use for padding
  */
-std::string PadCenter (const std::string &str, const size_t width, const char c = ' ');
+std::string PadCenter (const std::string &str, const int width, const char c = ' ');
 
 /**
  * Truncate a String if the length is greater than the
@@ -84,7 +84,7 @@ std::string PadCenter (const std::string &str, const size_t width, const char c 
  * @param str String to truncate
  * @param width Maximum width of output string
  */
-std::string Truncate (const std::string &str, const size_t width);
+std::string Truncate (const std::string &str, const int width);
 
 /**
  * Truncate a String if the length is greater than the
@@ -94,13 +94,13 @@ std::string Truncate (const std::string &str, const size_t width);
  * @param str String to truncate
  * @param width Maximum width of output string
  */
-std::string TruncateEllipsis (const std::string &str, const size_t width);
+std::string TruncateEllipsis (const std::string &str, const int width);
 
 /**
  * Truncate or PadLeft a string such that the resulting string's length
  * matches width.
  */
-std::string SetWidth (const std::string &str, const size_t width);
+std::string SetWidth (const std::string &str, const int width);
 
 /**
  * Return the extension of a filename (no leading point).

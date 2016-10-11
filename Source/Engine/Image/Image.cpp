@@ -13,7 +13,7 @@
 namespace sge {
 
 u32 Image::MaxTextureDimension () {
-    s32 result;
+    i32 result;
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &result);
 
@@ -174,7 +174,7 @@ bool LoadImageSDL(const std::string &filename) {
         return false;
     }
 
-    DEBUG( print_SDL_surface_info(filename, surface); );
+    IF_DEBUG( print_SDL_surface_info(filename, surface); );
 
     if (surface->format->BytesPerPixel == 4) {
         mode = GL_RGBA;

@@ -77,6 +77,8 @@ public:
 
 private:
     std::default_random_engine m_generator;
+    std::uniform_int_distribution<int> m_intVals;
+    std::uniform_real_distribution<float> m_floatVals;
 };
 
 INLINE Random::Random() {
@@ -92,33 +94,27 @@ INLINE void Random::SetSeed(const i64 p_seed) {
 }
 
 INLINE float Random::NextFloat() {
-    std::uniform_real_distribution<float> vals(0.0f, 1.0f);
-    return vals(m_generator);
+    return m_floatVals(m_generator, std::uniform_real_distribution<float>::param_type{0.0f, 1.0f});
 }
 
 INLINE float Random::NextFloat(const float max) {
-    std::uniform_real_distribution<float> vals(0.0f, max);
-    return vals(m_generator);
+    return m_floatVals(m_generator, std::uniform_real_distribution<float>::param_type{0.0f, max});
 }
 
 INLINE float Random::NextFloat(const float min, const float max) {
-    std::uniform_real_distribution<float> vals(min, max);
-    return vals(m_generator);
+    return m_floatVals(m_generator, std::uniform_real_distribution<float>::param_type{min, max});
 }
 
 INLINE i32 Random::NextInt() {
-    std::uniform_int_distribution<int> vals(0, INT_MAX);
-    return vals(m_generator);
+    return m_intVals(m_generator, std::uniform_int_distribution<int>::param_type{0, INT_MAX});
 }
 
 INLINE i32 Random::NextInt(const i32 max) {
-    std::uniform_int_distribution<int> vals(0, max);
-    return vals(m_generator);
+    return m_intVals(m_generator, std::uniform_int_distribution<int>::param_type{0, max});
 }
 
 INLINE i32 Random::NextInt(const i32 min, const i32 max) {
-    std::uniform_int_distribution<int> vals(min, max);
-    return vals(m_generator);
+    return m_intVals(m_generator, std::uniform_int_distribution<int>::param_type{min, max});
 }
 
 } /* namespace sge */

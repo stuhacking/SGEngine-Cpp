@@ -33,12 +33,12 @@ public:
      * Create a new RGBA Color value by converting from
      * Hue, Saturation, Lightness color space.
      *
-     * @param {float} p_hue Hue value in the range 0.0f..360.0f representing the
-     *          spectrum of Red -> Green -> Blue -> Red
-     * @param {float} p_sat Saturation value in range 0.0f..1.0f
-     * @param {float} p_val Lightness value in range 0.0f..1.0f such that 0
+     * @param p_hue Hue value in the range 0.0f..360.0f representing the
+     *        spectrum of Red -> Green -> Blue -> Red
+     * @param p_sat Saturation value in range 0.0f..1.0f
+     * @param p_val Lightness value in range 0.0f..1.0f such that 0
      *          is black, 0.5 is full color and 1 is white.
-     * @return {Color} Converted RGB Color value.
+     * @return Converted RGB Color value.
      */
     static Color FromHSL (const float p_hue,
                           const float p_sat = 1.0f,
@@ -85,10 +85,10 @@ public:
 // --------------------------------------------------------------------------
 
 INLINE Color::Color (const u32 val) {
-    r = (val & 0xFF000000) >> 24;
-    g = (val & 0x00FF0000) >> 16;
-    b = (val & 0x0000FF00) >> 8;
-    a = (val & 0x000000FF);
+    r = static_cast<u8>((val & 0xFF000000) >> 24);
+    g = static_cast<u8>((val & 0x00FF0000) >> 16);
+    b = static_cast<u8>((val & 0x0000FF00) >> 8);
+    a = static_cast<u8>((val & 0x000000FF));
 }
 
 INLINE bool Color::IsOpaque () const {

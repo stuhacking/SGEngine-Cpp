@@ -142,11 +142,11 @@ INLINE Mat4f Transform::GetScaleMatrix () const {
 }
 
 INLINE Mat4f Transform::GetTransformationMatrix () const {
-    return GetScaleMatrix() * GetOrientationMatrix() * GetTranslationMatrix();
+    return GetTranslationMatrix() * GetOrientationMatrix() * GetScaleMatrix();
 }
 
 INLINE Mat4f Transform::GetViewTransformationMatrix () const {
-    return (GetTranslationMatrix() * GetOrientationMatrix() * GetScaleMatrix()).Inverse();
+    return GetTransformationMatrix().Inverse();
 }
 
 } /* namespace sge */

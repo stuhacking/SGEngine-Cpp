@@ -34,6 +34,8 @@ static u32 WHITE = 15;
 
 static std::vector<Color> colors;
 
+static Transform boxTransform;
+
 /** Read contents of file in a go. */
 static char * slurp (const char * const filename) {
     FILE *fp = fopen(filename, "r");
@@ -109,8 +111,8 @@ bool Game::Init () {
     }
 
     m_objShader = GLSLProgram()
-        .AddSource("./data/shader/obj.vs")
-        .AddSource("./data/shader/obj.fs");
+        .AddSource("./data/shader/obj.vert")
+        .AddSource("./data/shader/obj.frag");
     m_objShader.Compile();
 
     if (!m_objShader.IsCompiled()) {
@@ -119,8 +121,8 @@ bool Game::Init () {
     }
 
     m_debugShader = GLSLProgram()
-        .AddSource("./data/shader/debug.vs")
-        .AddSource("./data/shader/debug.fs");
+        .AddSource("./data/shader/debug.vert")
+        .AddSource("./data/shader/debug.frag");
     m_debugShader.Compile();
 
     if (!m_debugShader.IsCompiled()) {
@@ -133,6 +135,11 @@ bool Game::Init () {
     Image i = Image("./data/HelloWorld_Tex.png");
 
     m_objects.emplace_back(m, i, Transform());
+
+    m = Cube(Vec3f::ZERO, 1.0f).ToMesh();
+    i = Image("./data/crate.png");
+
+    m_objects.emplace_back(m, i, Transform(Vec3f(5.0f, 0.5f, 2.0f)));
 
     for (auto &e : m_objects) {
         e.mr.Compile();
@@ -198,34 +205,36 @@ void Game::Input () {
 }
 
 void Game::Update (double deltaSeconds) {
+    Entity *box = &m_objects[1];
+    box->transform.Rotate(Vec3f::Y, 0.01f);
 }
 
 void Game::Render () {
-    Mat4f proj_view = proj.GetPerspectiveProjection(m_width, m_height) *
+    Mat4f viewMat = proj.GetPerspectiveProjection(m_width, m_height) *
         view.GetViewTransformationMatrix();
 
     // Custom drawing...
     m_objShader.Bind();
     for (const auto &e : m_objects) {
-        m_objShader.SetUniform("mvp", proj_view * e.transform.GetTransformationMatrix());
+        m_objShader.SetUniform("mvp", viewMat * e.transform.GetTransformationMatrix());
         e.texture.Bind();
         e.mr.Render();
     }
 
 
     DebugGraphics dGraph = DebugGraphics();
-    dGraph.AddGrid(Vec3f::ZERO, 16, colors[MAGENTA]);
+    dGraph.AddGrid(Vec3f::ZERO, 32, colors[MAGENTA]);
 
     // Show World Axis
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f),
-                   Color(0, 0, 255));
+                   colors[BLUE]);
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f),
-                   Color(255, 0, 0));
+                   colors[RED]);
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f),
-                   Color(0, 255, 0));
+                   colors[GREEN]);
 
     m_debugShader.Bind();
-    m_debugShader.SetUniform("mvp", proj_view);
+    m_debugShader.SetUniform("mvp", viewMat);
     dGraph.Render();
 
     dGraph.Clear();

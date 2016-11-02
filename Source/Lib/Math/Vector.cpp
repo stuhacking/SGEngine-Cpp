@@ -3,6 +3,8 @@
 //
 #include "../Lib.h"
 
+#include <random>
+
 namespace sge {
 
 //==================================
@@ -35,6 +37,21 @@ Vec3f Vec3f::Rotate (const float angle, const Vec3f &axis) const {
 
 void Vec3f::RotateSelf (const float angle, const Vec3f &axis) {
     *this = Quat4f::AxisAngle(axis, angle).Rotate(*this);
+}
+
+
+static std::default_random_engine e;
+static std::uniform_real_distribution<float> dist{0.0f, 1.0f};
+
+Vec3f Vec3f::Random (const i32 seed) {
+    e.seed(Noise::Hash(seed, 0));
+
+    float theta = FMath::TAU * dist(e);
+    float phi = acosf(2.0f * dist(e) - 1.0f);
+
+    return Vec3f(sinf(phi) * cosf(theta),
+                 sinf(phi) * sinf(theta),
+                 cosf(phi));
 }
 
 //==================================

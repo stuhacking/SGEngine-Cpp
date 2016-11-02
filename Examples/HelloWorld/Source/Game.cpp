@@ -34,6 +34,9 @@ static u32 WHITE = 15;
 
 static std::vector<Color> colors;
 
+static DebugGraphics dGraph;
+static int frame{0};
+
 static Transform boxTransform;
 
 /** Read contents of file in a go. */
@@ -221,21 +224,21 @@ void Game::Render () {
         e.mr.Render();
     }
 
+    dGraph.AddPoint(Vec3f::Random(++frame) * 12.0f, 0.1f, colors[YELLOW]);
 
-    DebugGraphics dGraph = DebugGraphics();
-    dGraph.AddGrid(Vec3f::ZERO, 32, colors[MAGENTA]);
+    //dGraph.AddGrid(Vec3f::ZERO, 32, colors[MAGENTA]);
 
     // Show World Axis
-    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f),
-                   colors[BLUE]);
-    dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f),
-                   colors[RED]);
-    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f),
-                   colors[GREEN]);
+    //dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f),
+    //               colors[BLUE]);
+    //dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f),
+    //               colors[RED]);
+    //dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f),
+    //               colors[GREEN]);
 
     m_debugShader.Bind();
     m_debugShader.SetUniform("mvp", viewMat);
     dGraph.Render();
 
-    dGraph.Clear();
+    //dGraph.Clear();
 }

@@ -285,6 +285,8 @@ public:
      */
     void RotateSelf (const float angle, const Vec3f &axis);
 
+    static Vec3f Random (const i32 seed);
+
     /** Swizzling */
     Vec2f xy () const;
 

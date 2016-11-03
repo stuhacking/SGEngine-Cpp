@@ -19,7 +19,7 @@ endif()
 # Automatically download/build External Dependencies
 execute_process(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMAND ./deps.sh
+    COMMAND ./deps.pl
 )
 
 # Library Targets

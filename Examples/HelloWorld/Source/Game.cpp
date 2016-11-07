@@ -15,31 +15,12 @@ static GLProjection proj{0.1f, 256.0f, 50.0f};
 
 static float CAM_SPEED = 0.5f;
 
-static u32 BLACK = 0;
-static u32 DGRAY = 1;
-static u32 LGRAY = 2;
-static u32 RED = 3;
-static u32 LRED = 4;
-static u32 GREEN = 5;
-static u32 LGREEN = 6;
-static u32 BLUE = 7;
-static u32 LBLUE = 8;
-static u32 BROWN = 9;
-static u32 MAGENTA = 10;
-static u32 LMAGENTA = 11;
-static u32 CYAN = 12;
-static u32 LCYAN = 13;
-static u32 YELLOW = 14;
-static u32 WHITE = 15;
-
-static std::vector<Color> colors;
-
 static DebugGraphics dGraph;
 static int frame{0};
 
 static Transform boxTransform;
 
-/** Read contents of file in a go. */
+/** Read contents of file in one go. */
 static char * slurp (const char * const filename) {
     FILE *fp = fopen(filename, "r");
     if (!fp) {
@@ -57,48 +38,34 @@ static char * slurp (const char * const filename) {
     return buf;
 }
 
-/** Parse out a color directive from json format { "color": [r, g, b] }. */
-static Color parseColor (const Document &d, const char * const color) {
-    assert(d.HasMember(color));
-    const Value &docColor = d[color];
-
-    return Color(docColor[0].GetInt(),
-                 docColor[1].GetInt(),
-                 docColor[2].GetInt());
-}
-
 /** Read a table of preset color values from a json file. */
-static void readColorTable (const char * const filename) {
+static bool readSceneData (Game &game, const char * const filename) {
     char *buf = slurp(filename);
     if (buf) {
         Document d;
 
         if (d.ParseInsitu(buf).HasParseError()) {
             std::cerr << "Error parsing color table: " << filename << "\n";
-            goto cleanup;
+            delete[] buf;
+            return false;
         }
 
-        colors.reserve(16);
-        colors.push_back(parseColor(d, "Black"));
-        colors.push_back(parseColor(d, "DGray"));
-        colors.push_back(parseColor(d, "LGray"));
-        colors.push_back(parseColor(d, "Red"));
-        colors.push_back(parseColor(d, "LRed"));
-        colors.push_back(parseColor(d, "Green"));
-        colors.push_back(parseColor(d, "LGreen"));
-        colors.push_back(parseColor(d, "Blue"));
-        colors.push_back(parseColor(d, "LBlue"));
-        colors.push_back(parseColor(d, "Brown"));
-        colors.push_back(parseColor(d, "Magenta"));
-        colors.push_back(parseColor(d, "LMagenta"));
-        colors.push_back(parseColor(d, "Cyan"));
-        colors.push_back(parseColor(d, "LCyan"));
-        colors.push_back(parseColor(d, "Yellow"));
-        colors.push_back(parseColor(d, "White"));
+        assert(d.HasMember("shaders"));
+        for (auto &shaderDef : d["shaders"].GetObject()) {
+            assert(shaderDef.value.IsArray());
+            GLSLProgram program;
+            for (auto &shaderFile : shaderDef.value.GetArray()) {
+                program.AddSource(shaderFile.GetString());
+            }
 
-        cleanup:
+            game.AddShader(shaderDef.name.GetString(), program);
+        }
+
         delete[] buf;
+        return true;
     }
+
+    return false;
 }
 
 Game::Game (const u32 width, const u32 height) {
@@ -107,30 +74,18 @@ Game::Game (const u32 width, const u32 height) {
 }
 
 bool Game::Init () {
-    readColorTable("./data/colors.json");
-    if (colors.empty()) {
-        std::cerr << "No colors loaded.\n";
+    if (!readSceneData(*this, "./data/scene.json")) {
+        std::cerr << "Failed to create scene.\n";
         return false;
     }
 
-    m_objShader = GLSLProgram()
-        .AddSource("./data/shader/obj.vert")
-        .AddSource("./data/shader/obj.frag");
-    m_objShader.Compile();
+    for (auto &shader : m_shaders) {
+        shader.second.Compile();
 
-    if (!m_objShader.IsCompiled()) {
-        std::cerr << "Error in Object Shader Compilation.\n";
-        return false;
-    }
-
-    m_debugShader = GLSLProgram()
-        .AddSource("./data/shader/debug.vert")
-        .AddSource("./data/shader/debug.frag");
-    m_debugShader.Compile();
-
-    if (!m_debugShader.IsCompiled()) {
-        std::cerr << "Error in Debug Shader Compilation.\n";
-        return false;
+        if (!shader.second.IsCompiled()) {
+            std::cerr << "Error in Shader Compilation.\n";
+            return false;
+        }
     }
 
     // Test Object
@@ -217,14 +172,18 @@ void Game::Render () {
         view.GetViewTransformationMatrix();
 
     // Custom drawing...
-    m_objShader.Bind();
+    auto shader = BindShader("obj");
     for (const auto &e : m_objects) {
-        m_objShader.SetUniform("mvp", viewMat * e.transform.GetTransformationMatrix());
+        shader->SetUniform("mvp", viewMat * e.transform.GetTransformationMatrix());
         e.texture.Bind();
         e.mr.Render();
     }
 
-    dGraph.AddPoint(Vec3f::Random(++frame) * 12.0f, 0.1f, colors[YELLOW]);
+    // Draw random walk.
+    static Vec3f vec;
+    Vec3f newVec = Vec3f::Random(++frame) * 0.2f + vec;
+    dGraph.AddEdge(vec, newVec, Color::FromHex("#FFFF00"));
+    vec = newVec;
 
     //dGraph.AddGrid(Vec3f::ZERO, 32, colors[MAGENTA]);
 
@@ -236,9 +195,16 @@ void Game::Render () {
     //dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f),
     //               colors[GREEN]);
 
-    m_debugShader.Bind();
-    m_debugShader.SetUniform("mvp", viewMat);
+    shader = BindShader("debug");
+    shader->SetUniform("mvp", viewMat);
     dGraph.Render();
 
     //dGraph.Clear();
+}
+
+GLSLProgram * Game::BindShader (const std::string &key) {
+    auto shader = &(m_shaders[key]);
+
+    shader->Bind();
+    return shader;
 }

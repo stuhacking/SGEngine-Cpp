@@ -1,3 +1,4 @@
+// Debug Shader for drawing colored lines.
 #version 330
 
 uniform mat4 mvp;

@@ -6,7 +6,7 @@
  * for details.
  *
  * --------------------------------------------------------------------------
- * 
+ *
  * @brief Defines a GLSL shader type which is part of a GLSLProgram.
  */
 #ifndef __SGE_GLSLSHADER_H
@@ -33,6 +33,8 @@ private:
     GLenum m_type;
     std::string m_filename;
 };
+
+// --------------------------------------------------------------------------
 
 INLINE bool GLSLShader::IsCompiled() const {
     return m_id > 0;

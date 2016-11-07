@@ -1,0 +1,32 @@
+{
+  "__doc__": "An example of storing a scene description in a parseable format.",
+  "shaders": {
+    "obj": [
+      "data/shader/obj.vert",
+      "data/shader/obj.frag"
+    ],
+    "debug": [
+      "data/shader/debug.vert",
+      "data/shader/debug.frag"
+    ]
+  },
+  "objects": [
+    {
+      "name": "hw_text",
+      "shader": "obj",
+      "mesh": "data/HelloWorld.obj",
+      "texture": "data/HelloWorld_Tex.png",
+      "location": [0, 0, 0]
+    },
+    {
+      "name": "crate",
+      "shader": "obj",
+      "primitive": {
+        "type": "cube",
+        "size": [1, 1, 1]
+      },
+      "texture": "data/crate.png",
+      "location": [5, 0.5, 2]
+    }
+  ]
+}

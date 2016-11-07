@@ -39,7 +39,7 @@ void Vec3f::RotateSelf (const float angle, const Vec3f &axis) {
     *this = Quat4f::AxisAngle(axis, angle).Rotate(*this);
 }
 
-
+// TODO: Is this an appropriate member func? Create a Library for producing procedural values.
 static std::default_random_engine e;
 static std::uniform_real_distribution<float> dist{0.0f, 1.0f};
 

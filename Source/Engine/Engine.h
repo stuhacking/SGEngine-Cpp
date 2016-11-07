@@ -32,6 +32,7 @@
 #include "GL/GLSLProgram.h"
 #include "GL/GLProjection.h"
 
+#include "Image/Bitmap.h"
 #include "Image/Image.h"
 
 #include "Model/Obj.h"

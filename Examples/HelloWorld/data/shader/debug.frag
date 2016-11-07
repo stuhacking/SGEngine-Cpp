@@ -1,3 +1,4 @@
+// Debug Fragment shader for drawing colored lines.
 #version 330
 
 in vec4 vertex_color0;

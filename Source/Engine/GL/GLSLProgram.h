@@ -36,12 +36,26 @@ public:
 
     GLSLProgram &AddSource (const std::string &filename);
 
+    /**
+     * Allocate a shader program ID for this program, and compile child shaders.
+     * Release all IDs if any component shader fails.
+     *
+     * @return true if compilation was successful, otherwise false.
+     */
     bool Compile();
 
     bool Validate () const;
 
+    /**
+     * Make this the active shader program.
+     */
     void Bind();
 
+    /**
+     * Check if this shader program is compiled.
+     *
+     * @return true if shader is compiled, otherwise false.
+     */
     bool IsCompiled() const;
 
     void Delete ();

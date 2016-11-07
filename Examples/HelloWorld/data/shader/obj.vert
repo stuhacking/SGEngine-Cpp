@@ -1,3 +1,4 @@
+// Basic Vertex Shader. Textured, Unshaded.
 #version 330
 
 uniform mat4 mvp;

@@ -4,6 +4,7 @@
 #include "../Engine.h"
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 
 namespace sge {

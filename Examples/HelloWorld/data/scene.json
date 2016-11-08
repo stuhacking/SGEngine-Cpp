@@ -16,17 +16,59 @@
       "shader": "obj",
       "mesh": "data/HelloWorld.obj",
       "texture": "data/HelloWorld_Tex.png",
-      "location": [0, 0, 0]
+      "transform": {
+        "location": [0, 2, 0],
+        "orientation": [0, 45, 30],
+        "size": [1, 4, 1]
+      }
     },
     {
       "name": "crate",
       "shader": "obj",
       "primitive": {
         "type": "cube",
-        "size": [1, 1, 1]
+        "size": [1, 2, 1]
       },
       "texture": "data/crate.png",
-      "location": [5, 0.5, 2]
+      "transform": {
+        "location": [0, -1, 0]
+      }
+    },
+    {
+      "name": "crate",
+      "shader": "obj",
+      "primitive": {
+        "type": "cube",
+        "size": [1, 2, 1]
+      },
+      "texture": "data/crate.png",
+      "transform": {
+        "location": [-2, -1, 0]
+      }
+    },
+    {
+      "name": "crate",
+      "shader": "obj",
+      "primitive": {
+        "type": "cube",
+        "size": [1, 2, 1]
+      },
+      "texture": "data/crate.png",
+      "transform": {
+        "location": [2, -1, 0]
+      }
+    },
+    {
+      "name": "floor",
+      "shader": "obj",
+      "primitive": {
+        "type": "plane",
+        "size": [10, 1, 10]
+      },
+      "texture": "data/crate.png",
+      "transform": {
+        "location": [0, -2, 0]
+      }
     }
   ]
 }

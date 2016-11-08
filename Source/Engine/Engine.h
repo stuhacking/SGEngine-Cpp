@@ -26,13 +26,13 @@
 // Useful macro for specifying buffer locations in GL calls.
 #define BUFFER_OFFSET(a) (GLvoid*)((a) * sizeof(GLfloat))
 
+#include "Data/jsonfile.h"
 #include "UI/Console.h"
 
 #include "GL/GLSLShader.h"
 #include "GL/GLSLProgram.h"
 #include "GL/GLProjection.h"
 
-#include "Image/Bitmap.h"
 #include "Image/Image.h"
 
 #include "Model/Obj.h"

@@ -2,66 +2,98 @@
 // Game Implementation
 //
 #include "Game.h"
-#include "rapidjson/document.h"
-
-#include <cstdio>
 #include <iostream>
-#include <vector>
+#include <cstring>
 
-using namespace rapidjson;
+// JSON Scene Keys.
+static constexpr auto SHADERS_KEY = "shaders";
+static constexpr auto OBJECTS_KEY = "objects";
+static constexpr auto NAME_KEY = "name";
 
+// View/Camera properties.
 static Transform view;
 static GLProjection proj{0.1f, 256.0f, 50.0f};
 
 static float CAM_SPEED = 0.5f;
 
+// Line drawing.
 static DebugGraphics dGraph;
-static int frame{0};
 
-static Transform boxTransform;
-
-/** Read contents of file in one go. */
-static char * slurp (const char * const filename) {
-    FILE *fp = fopen(filename, "r");
-    if (!fp) {
-        std::cerr << "Error opening file: " << filename << "\n";
-        return nullptr;
+static GLSLProgram readShaderData (const json::Value &json) {
+    assert(json.IsArray());
+    GLSLProgram program;
+    for (const auto &shaderFile : json.GetArray()) {
+        if (shaderFile.IsString()) {
+            program.AddSource(shaderFile.GetString());
+        }
     }
-    fseek(fp, 0, SEEK_END);
-    size_t fileSize = (size_t)ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-    char *buf = new char[fileSize + 1];
-    size_t readLength = fread(buf, 1, fileSize, fp);
-    buf[readLength] = '\0';
-    fclose(fp);
 
-    return buf;
+    return program;
+}
+
+static Mesh readMeshData (const json::Value &json) {
+    return meshFromObjDocument(json.GetString());
+}
+
+static Mesh readPrimitiveData (const json::Value &json) {
+    assert(json.HasMember("type"));
+    Mesh m;
+    Vec3f size = Vec3f::ONE;
+    Vec3f position = Vec3f::ZERO;
+
+    if (json.HasMember("size")) {
+        size = json::ReadVec3f(json["size"]);
+    }
+
+    if (json.HasMember("location")) {
+        position = json::ReadVec3f(json["location"]);
+    }
+
+    if (strncmp("cube", json["type"].GetString(), 4) == 0) {
+        m = Cube(position, size).ToMesh();
+    } else if (strncmp("plane", json["type"].GetString(), 5) == 0) {
+        m = Plane(position, size.xz()).ToMesh();
+    }
+
+    return m;
+}
+
+static Entity readObjectData (const json::Value &json) {
+    assert(json.HasMember("shader") && json.HasMember("texture") && json.HasMember("transform"));
+    Mesh m;
+
+    if (json.HasMember("mesh")) {
+        m = readMeshData(json["mesh"]);
+    } else if (json.HasMember("primitive")) {
+        m = readPrimitiveData(json["primitive"]);
+    } else {
+        console.Printf("WARNING: No drawable in object: %s\n", json[NAME_KEY].GetString());
+    }
+
+    Image i = Image(json["texture"].GetString());
+    Transform t = json::ReadTransform(json["transform"]);
+
+    return Entity(m, i, t, json["shader"].GetString());
 }
 
 /** Read a table of preset color values from a json file. */
 static bool readSceneData (Game &game, const char * const filename) {
-    char *buf = slurp(filename);
-    if (buf) {
-        Document d;
+    JSONFile file = JSONFile(filename);
+    const json::Document *d = file.GetRootDocument();
 
-        if (d.ParseInsitu(buf).HasParseError()) {
-            std::cerr << "Error parsing color table: " << filename << "\n";
-            delete[] buf;
-            return false;
-        }
-
-        assert(d.HasMember("shaders"));
-        for (auto &shaderDef : d["shaders"].GetObject()) {
-            assert(shaderDef.value.IsArray());
-            GLSLProgram program;
-            for (auto &shaderFile : shaderDef.value.GetArray()) {
-                program.AddSource(shaderFile.GetString());
-            }
-
+    if (!d->HasParseError()) {
+        assert(d->HasMember(SHADERS_KEY));
+        for (const auto &shaderDef : (*d)[SHADERS_KEY].GetObject()) {
+            GLSLProgram program = readShaderData(shaderDef.value);
             game.AddShader(shaderDef.name.GetString(), program);
         }
 
-        delete[] buf;
+        assert(d->HasMember(OBJECTS_KEY));
+        for (const auto &objectDef : (*d)[OBJECTS_KEY].GetArray()) {
+            Entity e = readObjectData(objectDef);
+            game.AddEntity(e);
+        }
+
         return true;
     }
 
@@ -75,7 +107,7 @@ Game::Game (const u32 width, const u32 height) {
 
 bool Game::Init () {
     if (!readSceneData(*this, "./data/scene.json")) {
-        std::cerr << "Failed to create scene.\n";
+        console.Print("ERROR: Failed to create scene.\n");
         return false;
     }
 
@@ -83,26 +115,15 @@ bool Game::Init () {
         shader.second.Compile();
 
         if (!shader.second.IsCompiled()) {
-            std::cerr << "Error in Shader Compilation.\n";
+            console.Printf("ERROR: Error compiling shader -- %s.\n", shader.first.c_str());
             return false;
         }
     }
 
-    // Test Object
-    Mesh m = meshFromObjDocument("./data/HelloWorld.obj");
-    Image i = Image("./data/HelloWorld_Tex.png");
-
-    m_objects.emplace_back(m, i, Transform());
-
-    m = Cube(Vec3f::ZERO, 1.0f).ToMesh();
-    i = Image("./data/crate.png");
-
-    m_objects.emplace_back(m, i, Transform(Vec3f(5.0f, 0.5f, 2.0f)));
-
     for (auto &e : m_objects) {
         e.mr.Compile();
         if (!e.mr.IsCompiled()) {
-            std::cerr << "Error compiling mesh.\n";
+            console.Print("ERROR: Error compiling mesh.\n");
             return false;
         }
     }
@@ -172,34 +193,26 @@ void Game::Render () {
         view.GetViewTransformationMatrix();
 
     // Custom drawing...
-    auto shader = BindShader("obj");
+    GLSLProgram *shader;
     for (const auto &e : m_objects) {
+        shader = BindShader(e.shader);
         shader->SetUniform("mvp", viewMat * e.transform.GetTransformationMatrix());
         e.texture.Bind();
         e.mr.Render();
     }
 
-    // Draw random walk.
-    static Vec3f vec;
-    Vec3f newVec = Vec3f::Random(++frame) * 0.2f + vec;
-    dGraph.AddEdge(vec, newVec, Color::FromHex("#FFFF00"));
-    vec = newVec;
-
-    //dGraph.AddGrid(Vec3f::ZERO, 32, colors[MAGENTA]);
+    dGraph.AddGrid(Vec3f::ZERO, 32, Color::FromHex("#DDD"));
 
     // Show World Axis
-    //dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f),
-    //               colors[BLUE]);
-    //dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f),
-    //               colors[RED]);
-    //dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f),
-    //               colors[GREEN]);
+    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f), Color::FromHex("#0000FF"));
+    dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f), Color::FromHex("#FF0000"));
+    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f), Color::FromHex("#00FF00"));
 
     shader = BindShader("debug");
     shader->SetUniform("mvp", viewMat);
     dGraph.Render();
 
-    //dGraph.Clear();
+    dGraph.Clear();
 }
 
 GLSLProgram * Game::BindShader (const std::string &key) {

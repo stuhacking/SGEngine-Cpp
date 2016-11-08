@@ -18,9 +18,12 @@ include_directories(${SDL2_INCLUDE_DIR})
 find_package(SDL2_image REQUIRED >= 2.0.0)
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
+include_directories(${RapidJSON_SOURCE_DIR}/include)
+
 include_directories(../Lib)
 
 set(SOURCES
+  Data/jsonfile.cpp
   GL/GLSL.cpp
   GL/GLProjection.cpp
   Image/Image.cpp

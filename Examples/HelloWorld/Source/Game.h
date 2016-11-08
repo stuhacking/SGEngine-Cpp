@@ -15,9 +15,10 @@ public:
     MeshRenderer mr;
     Image texture;
     Transform transform;
+    std::string shader;
 
-    Entity(const MeshRenderer &p_mr, const Image &p_tex, const Transform &p_t)
-        : mr(p_mr), texture(p_tex), transform(p_t) { }
+    Entity(const MeshRenderer &p_mr, const Image &p_tex, const Transform &p_t, const std::string &p_shader)
+        : mr(p_mr), texture(p_tex), transform(p_t), shader(p_shader) { }
 };
 
 class Game {
@@ -33,6 +34,7 @@ public:
     void AddShader (const std::string &name, const GLSLProgram &program);
     GLSLProgram * BindShader (const std::string &key);
 
+    void AddEntity (const Entity &e);
 private:
     std::vector<Entity> m_objects;
     std::unordered_map<std::string, GLSLProgram> m_shaders;
@@ -44,4 +46,9 @@ private:
 INLINE void Game::AddShader (const std::string &name, const GLSLProgram &program) {
     m_shaders.insert(std::pair<std::string, GLSLProgram>(name, program));
 }
+
+INLINE void Game::AddEntity (const Entity &e) {
+    m_objects.push_back(e);
+}
+
 #endif /* __SDLBASIC_GAME_H */

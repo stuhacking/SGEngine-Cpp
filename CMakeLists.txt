@@ -16,6 +16,17 @@ else()
   message(FATAL_ERROR "${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
 endif()
 
+# Generate Docs.
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+  add_custom_target(doc-all
+          ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+          WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+          COMMENT "Generating API documentation with Doxygen" VERBATIM
+          )
+endif(DOXYGEN_FOUND)
+
 # Automatically download/build External Dependencies
 execute_process(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}

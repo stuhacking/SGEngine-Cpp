@@ -1,0 +1,7 @@
+{
+  "__doc__": "Initial Configuration.",
+  "width": 1024,
+  "height": 600,
+  "fullscreen": false,
+  "fov": 70
+}

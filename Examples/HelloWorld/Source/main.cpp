@@ -11,10 +11,45 @@
 
 using namespace sge;
 
+struct AppSettings {
+    u32 width = 320;
+    u32 height = 240;
+    float fov = 50.0f;
+    bool fullscreen = false;
+};
+
+static AppSettings settings;
 static std::unique_ptr<Game> game;
 
+static bool ReadAppSettings () {
+    JSONFile initFile("data/init.json");
+    const json::Document &doc = *(initFile.GetRootDocument());
+
+    if (!doc.HasParseError()) {
+        for (const auto &prop : doc.GetObject()) {
+            if (strncmp("width", prop.name.GetString(), 5) == 0 && prop.value.IsInt()) {
+                settings.width = static_cast<u32>(prop.value.GetInt());
+            }
+            if (strncmp("height", prop.name.GetString(), 6) == 0 && prop.value.IsInt()) {
+                settings.height = static_cast<u32>(prop.value.GetInt());
+            }
+            if (strncmp("fullscreen", prop.name.GetString(), 10) == 0 && prop.value.IsBool()) {
+                settings.fullscreen = prop.value.GetBool();
+            }
+            if (strncmp("fov", prop.name.GetString(), 3) == 0 && prop.value.IsNumber()) {
+                settings.fov = prop.value.GetFloat();
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 int main (int argc, char *argv[]) {
-    InitSGEApplication("Test App", 1280, 800, false);
+    ReadAppSettings();
+    InitSGEApplication("Test App", settings.width, settings.height, settings.fullscreen);
 
     if (!window->IsInitialized()) {
         std::cerr << "Error initializing SGE Window.\n";

@@ -78,18 +78,18 @@ static Entity readObjectData (const json::Value &json) {
 
 /** Read a table of preset color values from a json file. */
 static bool readSceneData (Game &game, const char * const filename) {
-    JSONFile file = JSONFile(filename);
-    const json::Document *d = file.GetRootDocument();
+    JSONFile file(filename);
+    const json::Document &d = *(file.GetRootDocument());
 
-    if (!d->HasParseError()) {
-        assert(d->HasMember(SHADERS_KEY));
-        for (const auto &shaderDef : (*d)[SHADERS_KEY].GetObject()) {
+    if (!d.HasParseError()) {
+        assert(d.HasMember(SHADERS_KEY));
+        for (const auto &shaderDef : d[SHADERS_KEY].GetObject()) {
             GLSLProgram program = readShaderData(shaderDef.value);
             game.AddShader(shaderDef.name.GetString(), program);
         }
 
-        assert(d->HasMember(OBJECTS_KEY));
-        for (const auto &objectDef : (*d)[OBJECTS_KEY].GetArray()) {
+        assert(d.HasMember(OBJECTS_KEY));
+        for (const auto &objectDef : d[OBJECTS_KEY].GetArray()) {
             Entity e = readObjectData(objectDef);
             game.AddEntity(e);
         }

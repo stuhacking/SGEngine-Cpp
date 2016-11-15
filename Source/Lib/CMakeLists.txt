@@ -19,6 +19,7 @@ set(SOURCES
   Util/StringUtil.cpp
   Util/Clock.cpp
   Util/LibIO.cpp
+  System/Assert.cpp
   )
 
 # Builds: SGECoreLib

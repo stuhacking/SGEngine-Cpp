@@ -3,7 +3,6 @@
 //
 #include "Game.h"
 #include <iostream>
-#include <cstring>
 
 // JSON Scene Keys.
 static constexpr auto SHADERS_KEY = "shaders";
@@ -67,13 +66,13 @@ static Entity readObjectData (const json::Value &json) {
     } else if (json.HasMember("primitive")) {
         m = readPrimitiveData(json["primitive"]);
     } else {
-        console.Printf("WARNING: No drawable in object: %s\n", json[NAME_KEY].GetString());
+        console.Debugf("WARNING: No drawable in object: %s\n", json[NAME_KEY].GetString());
     }
 
     Image i = Image(json["texture"].GetString());
     Transform t = json::ReadTransform(json["transform"]);
 
-    return Entity(m, i, t, json["shader"].GetString());
+    return Entity(MeshRenderer(m), i, t, json["shader"].GetString());
 }
 
 /** Read a table of preset color values from a json file. */
@@ -82,16 +81,18 @@ static bool readSceneData (Game &game, const char * const filename) {
     const json::Document &d = *(file.GetRootDocument());
 
     if (!d.HasParseError()) {
-        assert(d.HasMember(SHADERS_KEY));
-        for (const auto &shaderDef : d[SHADERS_KEY].GetObject()) {
-            GLSLProgram program = readShaderData(shaderDef.value);
-            game.AddShader(shaderDef.name.GetString(), program);
+        if (d.HasMember(SHADERS_KEY)) {
+            for (const auto &shaderDef : d[SHADERS_KEY].GetObject()) {
+                GLSLProgram program = readShaderData(shaderDef.value);
+                game.AddShader(shaderDef.name.GetString(), program);
+            }
         }
 
-        assert(d.HasMember(OBJECTS_KEY));
-        for (const auto &objectDef : d[OBJECTS_KEY].GetArray()) {
-            Entity e = readObjectData(objectDef);
-            game.AddEntity(e);
+        if (d.HasMember(OBJECTS_KEY)) {
+            for (const auto &objectDef : d[OBJECTS_KEY].GetArray()) {
+                Entity e = readObjectData(objectDef);
+                game.AddEntity(e);
+            }
         }
 
         return true;
@@ -100,14 +101,9 @@ static bool readSceneData (Game &game, const char * const filename) {
     return false;
 }
 
-Game::Game (const u32 width, const u32 height) {
-    m_width = width;
-    m_height = height;
-}
-
 bool Game::Init () {
     if (!readSceneData(*this, "./data/scene.json")) {
-        console.Print("ERROR: Failed to create scene.\n");
+        console.Errorf("Failed to create scene.\n");
         return false;
     }
 
@@ -115,7 +111,7 @@ bool Game::Init () {
         shader.second.Compile();
 
         if (!shader.second.IsCompiled()) {
-            console.Printf("ERROR: Error compiling shader -- %s.\n", shader.first.c_str());
+            console.Errorf("Error compiling shader -- %s.\n", shader.first.c_str());
             return false;
         }
     }
@@ -123,7 +119,7 @@ bool Game::Init () {
     for (auto &e : m_objects) {
         e.mr.Compile();
         if (!e.mr.IsCompiled()) {
-            console.Print("ERROR: Error compiling mesh.\n");
+            console.Errorf("Error compiling mesh.\n");
             return false;
         }
     }
@@ -185,7 +181,7 @@ void Game::Input () {
 
 void Game::Update (double deltaSeconds) {
     Entity *box = &m_objects[1];
-    box->transform.Rotate(Vec3f::Y, 0.01f);
+    box->transform.Rotate(Vec3f::Y, TO_RADIANS(45.0f) * deltaSeconds); // One rotation in 8 seconds
 }
 
 void Game::Render () {
@@ -201,8 +197,11 @@ void Game::Render () {
         e.mr.Render();
     }
 
-    dGraph.AddGrid(Vec3f::ZERO, 32, Color::FromHex("#DDD"));
+    // draw grid centered under camera at height = 0.
+    Vec3f gridPosition = Vec3f(floorf(view.position.x), 0.0f, floorf(view.position.z));
+    dGraph.AddGrid(gridPosition, 64, Color::FromHex("#CCCCFF"));
 
+    dGraph.AddSphere(Vec3f::ZERO);
     // Show World Axis
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f), Color::FromHex("#0000FF"));
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f), Color::FromHex("#FF0000"));

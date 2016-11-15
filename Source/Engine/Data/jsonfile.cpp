@@ -28,11 +28,11 @@ JSONFile::JSONFile (const char *const filename) {
         file.close();
 
         if (doc.ParseInsitu(m_data.get()).HasParseError()) {
-            std::cerr << "Error parsing " << filename << "(" << doc.GetErrorOffset() << "): "
-                      << json::GetParseError_En(doc.GetParseError()) << "\n";
+            console.Errorf("Error parsing %s (%d): %s\n", filename, doc.GetErrorOffset(),
+                           json::GetParseError_En(doc.GetParseError()));
         }
     } else {
-        std::cerr << "Error opening file: " << filename << "\n";
+        console.Errorf("Error opening file: %s\n", filename);
     }
 }
 

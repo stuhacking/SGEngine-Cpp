@@ -22,7 +22,7 @@ public:
      * Initialize an SGE Window using SDL2 as the UI backend and
      * SDL2 OpenGL for rendering context.
      */
-    SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
+    SGEWindowSDL (const char * const name, const u32 w, const u32 h,
                   const bool fullScreen = false);
 
     ~SGEWindowSDL ();
@@ -46,22 +46,22 @@ private:
 /**
  * Create an SDL Window with OpenGL context.
  */
-SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
+SGEWindowSDL::SGEWindowSDL (const char * const name, const u32 w, const u32 h,
                             const bool fullScreen) {
     m_initialized = false;
     m_name = name;
     m_width = w;
     m_height = h;
 
-    console.Print("Initializing SDL...\n");
+    console.Debug("Initializing SDL...\n");
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        std::cerr << "Failed to initialize SDL! SDL_Error: " << SDL_GetError() << "\n";
+        console.Errorf("Failed to initialize SDL! SDL_Error: %s\n", SDL_GetError());
         return;
     }
 
     u32 imgFlags = IMG_INIT_PNG & IMG_INIT_JPG;
     if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
-        std::cerr << "Failed to initialize SDL_Image! SDL_Error: " << IMG_GetError() << "\n";
+        console.Errorf("Failed to initialize SDL_Image! SDL_Error: %s\n", IMG_GetError());
         return;
     }
 
@@ -71,12 +71,12 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
                                 m_width, m_height,
                                 SDL_WINDOW_OPENGL | fullScreenFlag | SDL_WINDOW_SHOWN);
     if (nullptr == m_window) {
-        std::cerr << "Failed to create SDL window! SDL_Error: " << SDL_GetError() << "\n";
+        console.Errorf("Failed to create SDL window! SDL_Error: %s\n", SDL_GetError());
         return;
     }
 
     // Create GL Context
-    console.Printf(" Request OpenGL Context [%d,%d]...\n", OGL_MAJOR, OGL_MINOR);
+    console.Debugf(" Request OpenGL Context [%d,%d]...\n", OGL_MAJOR, OGL_MINOR);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
@@ -84,41 +84,41 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     auto glContext = SDL_GL_CreateContext(m_window);
     if (nullptr == glContext) {
-        std::cerr << "Failed to create OpenGL context! SDL_Error: " << SDL_GetError() << "\n";
+        console.Errorf("Failed to create OpenGL context! SDL_Error: %s\n", SDL_GetError());
         return;
     }
 
-    console.Printf("  OpenGL Version: %s\n", glGetString(GL_VERSION));
-    console.Printf("  OpenGL Vender: %s\n", glGetString(GL_VENDOR));
-    console.Printf("  GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+    console.Debugf("  OpenGL Version: %s\n", glGetString(GL_VERSION));
+    console.Debugf("  OpenGL Vender: %s\n", glGetString(GL_VENDOR));
+    console.Debugf("  GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     if (SDL_GL_SetSwapInterval(1) != 0) {
-        std::cerr << "Warn: Unable to use VSync! SDL_Error: " << SDL_GetError() << "\n";
+        console.Errorf("Unable to use VSync! SDL_Error: %s\n", SDL_GetError());
         return;
     }
 
     // If using !Apple, need to initialize a GL Extension manager.
 #ifndef __APPLE__
-    console.Print(" Also initializing GL Extension Wrangler...\n");
+    console.Debug(" Also initializing GL Extension Wrangler...\n");
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK) {
-        std::cerr << "GLEW Error! -- " << glewGetErrorString(err) << "\n";
+        console.Errorf("GLEW Error! -- %s\n", glewGetErrorString(err));
         return;
     }
     if (!GLEW_VERSION_2_1) { // check that the machine supports the 2.1 API.
-        std::cerr << "GLEW Version not supported!\n";
+        console.Error("GLEW Version not supported. Requires 2.1.\n");
         return;
     }
 #endif
 
     // Done initializing SDL, OpenGL. Now setup Render Options.
-    // TODO Renderer class.
+    // TODO Split out Window/Platform initialisation from Rendering initialisation.
 
-    // Default Cyan Clear color.
-    SetClearColor(0.4f, 0.6f, 0.9f, 1.0f);
+    // Ugly default colour.
+    SetClearColor(0.8f, 0.2f, 0.8f, 1.0f);
 
-    //
+    // Turn on a bunch of GL options.
     glEnable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
@@ -138,9 +138,6 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
 
     glEnable(GL_DEPTH_CLAMP);
 
-    // Enabling Texturing
-    glEnable(GL_TEXTURE_2D);
-
     // For now, just stretch the renderer
     int windowWidth, windowHeight;
     SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
@@ -148,7 +145,7 @@ SGEWindowSDL::SGEWindowSDL (const std::string &name, const u32 w, const u32 h,
 
     m_initialized = true;
 
-    console.Print("Done initializing OpenGL.\n");
+    console.Debug("Done initializing OpenGL.\n");
 }
 
 SGEWindowSDL::~SGEWindowSDL () {
@@ -185,7 +182,7 @@ SGEWindow *window;
 /**
  * Initialize the context for a 3D application.
  */
-bool InitSGEApplication (const std::string name, const u32 width, const u32 height,
+bool InitSGEApplication (const char * const name, const u32 width, const u32 height,
                          const bool fullScreen) {
     sdlWindow = std::make_unique<SGEWindowSDL>(name, width, height, fullScreen);
     window = sdlWindow.get();

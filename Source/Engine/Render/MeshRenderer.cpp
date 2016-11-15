@@ -37,7 +37,7 @@ void MeshRenderer::Compile() {
 
 void MeshRenderer::Render() const {
     if (!IsCompiled()) {
-        std::cerr << "Error: Attempt to render mesh before compilation!\n";
+        IF_DEBUG(console.Error("Attempt to render mesh before compilation!\n"); );
         return;
     }
 

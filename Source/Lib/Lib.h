@@ -22,6 +22,7 @@
 
 // --------------------------------------------------------------------------
 
+#include "System/Assert.h"
 #include "System/Types.h"
 
 #include "Math/FMath.h"

@@ -23,7 +23,8 @@ public:
 
 class Game {
 public:
-    Game (const u32 width, const u32 height);
+    explicit Game (const u32 width, const u32 height)
+            : m_width{width}, m_height{height} { }
 
     bool Init ();
 

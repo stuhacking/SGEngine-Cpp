@@ -21,8 +21,8 @@ u32 Image::MaxTextureDimension () {
 }
 
 // Flags
-static u8 FLIP_VERTICAL = 0x1;
-static u8 FLIP_HORIZONTAL = 0x2;
+static constexpr u8 FLIP_VERTICAL   = 0x01;
+static constexpr u8 FLIP_HORIZONTAL = 0x02;
 
 // Read into the SDL_Surface->format struct and determine the attributes
 // for pixel width and ordering as a printable string.
@@ -80,32 +80,16 @@ std::string SDL_PixelFormat_String (const SDL_PixelFormat * const pf) {
     }
 }
 
-// Print Surface info for a loaded image. Useful for debugging the
+// Debug Surface info for a loaded image. Useful for debugging the
 // image resizing/flipping functions.
 static
-void print_SDL_surface_info (const std::string &filename, const SDL_Surface * const surface) {
-    console.Printf("SDL_Surface (%s), Size: %dx%d, Pitch: %d bytes, \
-PixelFormat: %u Bytes (%ubpp) %s\n",
-                    filename.c_str(),
-                    surface->w, surface->h, surface->pitch,
-                    (unsigned)surface->format->BytesPerPixel,
-                    (unsigned)surface->format->BitsPerPixel,
-                    SDL_PixelFormat_String(surface->format).c_str());
-}
-
-// TODO - These 2 functions need to respect PixelFormat!!
-static
-u32 getPixel32 (const SDL_Surface &surface, const u32 x, const u32 y) {
-    const u32 *pixels = reinterpret_cast<const u32*>(surface.pixels);
-
-    return pixels[(y * surface.w) + x];
-}
-
-static
-void putPixel32 (SDL_Surface &surface, const u32 x, const u32 y, const u32 pixel) {
-    u32 *pixels = reinterpret_cast<u32*>(surface.pixels);
-
-    pixels[(y * surface.w) + x] = pixel;
+void print_SDL_surface_info (const char * const filename, const SDL_Surface * const surface) {
+    console.Debugf("SDL_Surface (%s), Size: %dx%d, Pitch: %d bytes, PixelFormat: %u Bytes (%ubpp) %s\n",
+                   filename,
+                   surface->w, surface->h, surface->pitch,
+                   (unsigned) surface->format->BytesPerPixel,
+                   (unsigned) surface->format->BitsPerPixel,
+                   SDL_PixelFormat_String(surface->format).c_str());
 }
 
 // Copy the contents of an SDL_Surface to a new allocated
@@ -115,33 +99,22 @@ static
 bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const u8 flags = 0) {
 
     if (SDL_MUSTLOCK(src)) {
-        console.Print(" Locking input surface\n");
+        console.Debug("SDL_MUSTLOCK: Locking input surface\n");
         SDL_LockSurface(src);
     }
 
+    // Add palette reference for indexed surfaces.
     if (src->format->BytesPerPixel == 1) {
         SDL_SetSurfacePalette(dest, src->format->palette);
     }
 
-    if ((flags & FLIP_VERTICAL) && (flags & FLIP_HORIZONTAL)) {
-        // Complex pixel level case
-        for (u32 x = 0, xMax = dest->w, rx = dest->w - 1; x < xMax; x++, rx--) {
-            for (u32 y = 0, yMax = dest->h, ry = dest->h - 1; y < yMax; y++, ry--) {
-                putPixel32(*dest, rx, ry, getPixel32(*src, x, y));
-            }
-        }
-    } else if (flags & FLIP_HORIZONTAL) {
-        // Complex pixel level case
-        for (u32 x = 0, xMax = dest->w, rx = dest->w - 1; x < xMax; x++, rx--) {
-            for (u32 y = 0, yMax = dest->h; y < yMax; y++) {
-                putPixel32(*dest, rx, y, getPixel32(*src, x, y));
-            }
-        }
-    } else if (flags & FLIP_VERTICAL) {
-        // Just do Line level reordering of the pixel buffer
+    // FIXME [smh] Re-implement horizontal flipping with correct pixelformat.
+    if (flags & (FLIP_VERTICAL | FLIP_HORIZONTAL)) {
+        // Do Line level reordering of the pixel buffer
         u32 w = dest->pitch;
         u8 *src_buf = reinterpret_cast<u8*>(src->pixels);
         u8 *dst_buf = reinterpret_cast<u8*>(dest->pixels);
+
         for (u32 y = 0, yMax = dest->h, ry = dest->h - 1; y < yMax; y++, ry--) {
             std::memcpy(dst_buf + (y * w), src_buf + (ry * w), w);
         }
@@ -151,7 +124,7 @@ bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const u8 flags =
     }
 
     if (SDL_MUSTLOCK(src)) {
-        console.Print(" Unlocking input src\n");
+        console.Debug("SDL_MUSTLOCK: Unlocking input src\n");
         SDL_UnlockSurface(src);
     }
 
@@ -162,28 +135,29 @@ bool copy_surface (SDL_Surface * const src, SDL_Surface * dest, const u8 flags =
 // the provider.
 // This method always vertically flips the input file.
 static
-bool LoadImageSDL(const std::string &filename) {
+bool LoadImageSDL(const char * const filename) {
     SDL_Surface *surface, *flipped;
-    u32 mode;
+    u32 internalFormat, format;
 
-    console.Printf("Loading Image: %s\n", filename.c_str());
+    console.Debugf("Loading Image: %s\n", filename);
 
-    surface = IMG_Load(filename.c_str());
+    surface = IMG_Load(filename);
     if (nullptr == surface) {
-        std::cerr << "SDL Error: Unable to load image (" << filename << "): " << IMG_GetError() << "\n";
+        console.Errorf("SDL Error when loading image file. -- %s: %s\n", filename, IMG_GetError());
         return false;
     }
 
     IF_DEBUG( print_SDL_surface_info(filename, surface); );
 
     if (surface->format->BytesPerPixel == 4) {
-        mode = GL_RGBA;
+        internalFormat = GL_RGBA8;
+        format = GL_RGBA;
     } else {
-        mode = GL_RGB;
+        internalFormat = GL_RGB8;
+        format = GL_RGB;
     }
 
-    // TODO: I'd like to write the pixel data into a custom struct to
-    //   get away from using SDL more than necessary.
+    // TODO: Use internal pixel buffer structure, standardize pixel format after read.
     flipped = SDL_CreateRGBSurface(SDL_SWSURFACE,
                                    surface->w, surface->h,
                                    surface->format->BitsPerPixel,
@@ -191,22 +165,29 @@ bool LoadImageSDL(const std::string &filename) {
                                    surface->format->Bmask, surface->format->Amask);
 
     if (!flipped) {
-        std::cerr << " Error creating copy surface! " << IMG_GetError() << "\n";
+        console.Errorf("Unable to create copy surface. -- %s\n", IMG_GetError());
         return false;
     }
 
     bool success = copy_surface(surface, flipped, FLIP_VERTICAL);
     if (!success) {
-        std::cerr << "Error while copying surface.\n";
+        console.Error("Unable to write to surface copy. -- %s\n");
+        return false;
     }
 
     u32 w = FMath::Nearest2Pow(flipped->w);
     u32 h = FMath::Nearest2Pow(flipped->h);
     if (w != static_cast<u32>(flipped->w) || h != static_cast<u32>(flipped->h)) {
-        std::cerr << "Warning: Image dimensions are not powers of two which may cause issues.\n";
+        console.Debug("WARNING: Image dimensions are not powers of two which may cause issues.\n");
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, w, h, 0, mode, GL_UNSIGNED_BYTE,
+    // FIXME [smh] This doesn't seem to work on OS X now - Do better detection of pixelformat.
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,
+                 internalFormat,
+                 w, h, 0,
+                 format,
+                 GL_UNSIGNED_BYTE,
                  flipped->pixels);
 
     SDL_FreeSurface(surface);
@@ -219,7 +200,7 @@ bool LoadImageSDL(const std::string &filename) {
 // Image Methods
 //======================
 
-Image::Image(const std::string &filename) {
+Image::Image(const char * const filename) {
     m_repeat[0] = m_repeat[1] = GL_CLAMP_TO_BORDER;
     m_filter = GL_LINEAR;
 
@@ -227,7 +208,7 @@ Image::Image(const std::string &filename) {
     glBindTexture(GL_TEXTURE_2D, m_id);
 
     if (!LoadImageSDL(filename)) {
-        std::cerr << "Error occurred while loading image: " << filename << "!\n";
+        console.Errorf("Failed to load image file. -- %s\n", filename);
         glDeleteTextures(1, &m_id);
         m_id = 0;
     }

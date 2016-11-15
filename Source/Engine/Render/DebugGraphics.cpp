@@ -6,8 +6,8 @@
 namespace sge {
 
 //=====================================================
-// DebugGraphics will typically be cleared each frame
-// so roll compile into the render stage.
+// DebugGraphics will typically be cleared/modified
+// each frame so roll compile into the render stage.
 //=====================================================
 void DebugGraphics::Render () {
 
@@ -52,12 +52,14 @@ void DebugGraphics::AddPoint (const Vec3f &p, const float radius, const Color &c
 }
 
 void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius, const Color &col) {
-    float limit = TO_RADIANS(360.0f);
-    float step = limit / SPHERE_INCREMENT;
+    // Calculate circle resolution.
+    constexpr float limit = TO_RADIANS(360.0f);
+    constexpr float increment = limit / 12.0f;
+
     float x_ = radius * std::cos(0.0f);
     float y_ = radius * std::sin(0.0f);
 
-    for (float theta = step, thetaMax = limit+step; theta <= thetaMax; theta += step) {
+    for (float theta = increment, thetaMax = limit + increment; theta <= thetaMax; theta += increment) {
         float x = radius * std::cos(theta);
         float y = radius * std::sin(theta);
 
@@ -83,16 +85,19 @@ void DebugGraphics::AddGrid (const Vec3f &p_center, const u32 size, const Color 
 }
 
 void DebugGraphics::AddBox (const Vec3f &p_min, const Vec3f &p_max, const Color &col) {
+    // Bottom Square
     AddEdge(Vec3f(p_min.x, p_min.y, p_min.z), Vec3f(p_max.x, p_min.y, p_min.z), col);
     AddEdge(Vec3f(p_min.x, p_min.y, p_max.z), Vec3f(p_max.x, p_min.y, p_max.z), col);
     AddEdge(Vec3f(p_min.x, p_min.y, p_min.z), Vec3f(p_min.x, p_min.y, p_max.z), col);
     AddEdge(Vec3f(p_max.x, p_min.y, p_min.z), Vec3f(p_max.x, p_min.y, p_max.z), col);
 
+    // Top Square
     AddEdge(Vec3f(p_min.x, p_max.y, p_min.z), Vec3f(p_max.x, p_max.y, p_min.z), col);
     AddEdge(Vec3f(p_min.x, p_max.y, p_max.z), Vec3f(p_max.x, p_max.y, p_max.z), col);
     AddEdge(Vec3f(p_min.x, p_max.y, p_min.z), Vec3f(p_min.x, p_max.y, p_max.z), col);
     AddEdge(Vec3f(p_max.x, p_max.y, p_min.z), Vec3f(p_max.x, p_max.y, p_max.z), col);
 
+    // Vertical edges
     AddEdge(Vec3f(p_min.x, p_min.y, p_min.z), Vec3f(p_min.x, p_max.y, p_min.z), col);
     AddEdge(Vec3f(p_min.x, p_min.y, p_max.z), Vec3f(p_min.x, p_max.y, p_max.z), col);
     AddEdge(Vec3f(p_max.x, p_min.y, p_min.z), Vec3f(p_max.x, p_max.y, p_min.z), col);

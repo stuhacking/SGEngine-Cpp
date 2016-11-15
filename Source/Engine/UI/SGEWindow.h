@@ -20,7 +20,7 @@ namespace sge {
  * Initialize the context for an application using SGEngine. This must
  * be called to initialize the back-end graphics system.
  */
-bool InitSGEApplication (const std::string name, const u32 width, const u32 height,
+bool InitSGEApplication (const char * const name, const u32 width, const u32 height,
                       const bool fullScreen = false);
 
 class SGEWindow {

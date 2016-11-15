@@ -11,16 +11,31 @@ Console console;
 
 // -----------------------------------------------
 
-#ifndef NDEBUG
-
-void Console::Print (const char *msg) {
-    printf("%s", msg);
+void Console::Error (const char *msg) {
+    fputs("ERROR: ", stderr);
+    fprintf(stderr, "%s", msg);
 }
 
-void Console::Printf (const char *fmt, ...) {
+void Console::Errorf (const char * const fmt, ...) {
     va_list args;
     va_start (args, fmt);
-    vprintf(fmt, args);
+    fputs("ERROR: ", stderr);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+}
+
+#ifndef NDEBUG
+
+void Console::Debug (const char *msg) {
+    fputs("DEBUG: ", stdout);
+    fprintf(stdout, "%s", msg);
+}
+
+void Console::Debugf (const char *fmt, ...) {
+    va_list args;
+    va_start (args, fmt);
+    fputs("DEBUG: ", stdout);
+    vfprintf(stdout, fmt, args);
     va_end(args);
 }
 

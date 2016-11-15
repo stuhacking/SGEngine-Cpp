@@ -71,8 +71,7 @@ GLuint DetectShaderType (const std::string &filename) {
     } else if ("fs" == ext || "frag" == ext) {
         return GL_FRAGMENT_SHADER;
     } else {
-        std::cerr << "GLSL Error: Unrecognized shader extension -- "
-                  << filename << "\nDefaulting to Vertex Shader.\n";
+        console.Errorf("Unrecognized shader extension -- %s. Defaulting to vertex shader.\n", filename);
         return GL_VERTEX_SHADER;
     }
 }
@@ -98,7 +97,7 @@ static
 std::string ReadShaderFile(const std::string &filename) {
     std::ifstream input(filename);
     if (!input) {
-        std::cerr << "Unable to find source file: " << filename << "\n";
+        console.Errorf("Unable to find source file: ", filename);
         return "";
     }
 
@@ -121,23 +120,23 @@ bool GLSLProgram::Compile () {
     GLuint newId = 0;
 
     if (IsCompiled()) {
-        IF_DEBUG( std::cerr << "Recompiling GLSL Program " << newId << "\n"; );
+        IF_DEBUG( console.Errorf("Recompiling GLSL Program %s\n", newId); );
     } else {
         newId = glCreateProgram();
     }
 
     if (0 == newId) {
-        std::cerr << "Unable to assign GLSL Program ID.\n";
+        console.Error("Unable to assign GLSL Program ID.\n");
         return false;
     }
 
-    IF_DEBUG( console.Printf("Compiling Program Sources (%d)\n", newId); );
+    console.Debugf("Compiling Program Sources (%d)\n", newId);
 
     for (auto &shader : m_shaders) {
         bool compiled = shader.Compile();
 
         if (!compiled) {
-            std::cerr << "Error compiling shader: " << shader.m_filename << "\n";
+            console.Errorf("Error compiling shader: %s\n", shader.m_filename);
             Delete();
             glDeleteProgram(newId);
             return false;
@@ -149,7 +148,7 @@ bool GLSLProgram::Compile () {
     glLinkProgram(newId);
 
     if (!checkLinkStatus(newId)) {
-        std::cerr << "Failed to Link Shader.\n";
+        console.Error("Failed to Link Shader.\n");
         Delete();
         glDeleteProgram(newId);
         return false;
@@ -165,7 +164,7 @@ bool GLSLProgram::Validate () const {
 
     if (!checkValidateStatus(m_id))
     {
-      std::cerr << "Failed to Validate Shader Program (" << m_id << ")\n";
+        console.Errorf("Failed to Validate Shader Program (%u)\n", m_id);
         return false;
     }
 
@@ -174,7 +173,7 @@ bool GLSLProgram::Validate () const {
 
 void GLSLProgram::Bind () {
     if (!IsCompiled()) {
-        std::cerr << "Warning: Attempted to use an uncompiled shader: " << m_id << "\n";
+        console.Debugf("Warning: Attempted to use an uncompiled shader: %u\n", m_id);
         Compile();
     }
 
@@ -201,7 +200,7 @@ GLint GLSLProgram::GetUniform (const std::string &name) {
     GLint uniformLocation = glGetUniformLocation(m_id, name.c_str());
 
     if (uniformLocation < 0) {
-        std::cerr << "Uniform location does not exist: " << name << "\n";
+        console.Errorf("Uniform location does not exist: %s\n", name);
     } else {
         m_uniforms[name] = uniformLocation;
     }
@@ -292,18 +291,18 @@ GLuint GLSLShader::Compile() {
 
     std::string source = ReadShaderFile(m_filename);
     if (source.empty()) {
-        std::cerr << " Shader source is empty: " << m_filename << "\n";
+        console.Errorf(" Shader source is empty: %s\n", m_filename);
         return 0;
     }
 
     newId = glCreateShader(m_type);
 
     if (newId <= 0) {
-        std::cerr << " Unable to assign new Shader ID: " << m_filename << "\n";
+        console.Errorf(" Unable to assign new Shader ID: %s\n", m_filename);
         return 0;
     }
 
-    console.Printf(" Compiling %s shader (%u): %s\n",
+    console.Debugf(" Compiling %s shader (%u): %s\n",
                    ShaderTypeString(m_type), newId, m_filename.c_str());
 
     const char *src = source.c_str();
@@ -311,7 +310,7 @@ GLuint GLSLShader::Compile() {
     glCompileShader(newId);
 
     if (!checkCompileStatus(newId)) {
-        std::cerr << " Failed to compile shader: " << m_filename << "\n";
+        console.Errorf(" Failed to compile shader: %s\n", m_filename);
         glDeleteShader(newId);
         return 0;
     }

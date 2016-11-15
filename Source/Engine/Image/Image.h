@@ -25,7 +25,7 @@ public:
     static u32 MaxTextureDimension ();
 
 public:
-    Image(const std::string &filename);
+    Image(const char * const filename);
 
     /**
      * Make this the active texture.

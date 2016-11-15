@@ -43,7 +43,7 @@ public:
     std::vector<ObjGroup> groups;
 
 public:
-    ObjDocument (const std::string &filename);
+    ObjDocument (const char * const filename);
 
     bool HasNormals () const { return m_hasNormals; }
     bool HasTextures () const { return m_hasTexture; }
@@ -64,7 +64,7 @@ private:
     bool m_hasTexture;
     bool m_isValid;
 
-    bool readFromFile (const std::string &filename);
+    bool readFromFile (const char * const filename);
     bool parseName (const std::vector<std::string> &tokens);
     bool parseGroup (const std::vector<std::string> &tokens);
     bool parsePosition (const std::vector<std::string> &tokens);
@@ -75,7 +75,7 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE ObjDocument::ObjDocument (const std::string &filename) {
+INLINE ObjDocument::ObjDocument (const char * const filename) {
     name = "untitled_obj";
 
     groups.reserve(DEFAULT_GROUP_SIZE);
@@ -101,7 +101,7 @@ Mesh meshFromObjDocument (const ObjDocument &doc);
  * Convert an ObjDocument stored in a file resource
  * to a Mesh.
  */
-Mesh meshFromObjDocument (const std::string &filename);
+Mesh meshFromObjDocument (const char * const filename);
 
 } /* namespace sge */
 

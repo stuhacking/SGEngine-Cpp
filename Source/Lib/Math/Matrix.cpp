@@ -28,11 +28,7 @@ const Mat3f Mat3f::IDENTITY{1.0f, 0.0f, 0.0f,
 
 Mat3f Mat3f::Inverse () const {
     Mat3f inv = *this;
-    bool success = inv.InverseSelf();
-
-    if (!success) {
-        std::cerr << "ERROR -- Matrix3 has no Inverse: " << inv << "\n";
-    }
+    verify(inv.InverseSelf());
 
     return inv;
 }
@@ -79,11 +75,7 @@ const Mat4f Mat4f::IDENTITY{1.0f, 0.0f, 0.0f, 0.0f,
 
 Mat4f Mat4f::Inverse () const {
     Mat4f inv = *this;
-    bool success = inv.InverseSelf();
-
-    if (!success) {
-        std::cerr << "ERROR: Matrix4 has no inverse: " << inv << "\n";
-    }
+    verify(inv.InverseSelf());
 
     return inv;
 }

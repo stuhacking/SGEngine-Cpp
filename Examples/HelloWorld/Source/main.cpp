@@ -52,13 +52,13 @@ int main (int argc, char *argv[]) {
     InitSGEApplication("Test App", settings.width, settings.height, settings.fullscreen);
 
     if (!window->IsInitialized()) {
-        std::cerr << "Error initializing SGE Window.\n";
+        console.Error("Error initializing SGE Window.\n");
         return 1;
     }
 
     game = std::unique_ptr<Game>(new Game(window->GetWidth(), window->GetHeight()));
     if (!game->Init()) {
-        std::cerr << "Failure during game init!\n";
+        console.Error("Failure during game init!\n");
         return 1;
     }
 

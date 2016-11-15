@@ -10,13 +10,13 @@ namespace sge {
 
 static INLINE
 void logParseError (const std::string &file, const u32 line, const std::string &el) {
-    std::cerr << "Malformed " << el << " in " << file << "on line " << line << "\n";
+    console.Errorf("Malformed %s in %s at line: %u.\n", el, file, line);
 }
 
-bool ObjDocument::readFromFile (const std::string &filename) {
+bool ObjDocument::readFromFile (const char * const filename) {
     std::ifstream input(filename);
     if (!input) {
-        std::cerr << "Unable to find mesh file: " << filename << "\n";
+        console.Errorf("File not found -- %s.\n", filename);
         return false;
     }
 
@@ -32,26 +32,32 @@ bool ObjDocument::readFromFile (const std::string &filename) {
             if (tokens[0] == "o") {
                 if (!parseName(tokens)) {
                     logParseError(filename, lineNumber, "object name");
+                    return false;
                 }
             } else if (tokens[0] == "g") {
                 if (!parseGroup(tokens)) {
                     logParseError(filename, lineNumber, "group name");
+                    return false;
                 }
             } else if (tokens[0] == "v") {
                 if (!parsePosition(tokens)) {
                     logParseError(filename, lineNumber, "vertex position");
+                    return false;
                 }
             } else if (tokens[0] == "vn") {
                 if (!parseNormal(tokens)) {
                     logParseError(filename, lineNumber, "normal");
+                    return false;
                 }
             } else if (tokens[0] == "vt") {
                 if (!parseTexCoord(tokens)) {
                     logParseError(filename, lineNumber, "texture coordinate");
+                    return false;
                 }
             } else if (tokens[0] == "f") {
                 if (!parseFace(tokens)) {
                     logParseError(filename, lineNumber, "face");
+                    return false;
                 }
             }
         }
@@ -213,13 +219,13 @@ Mesh meshFromObjDocument (const ObjDocument &doc) {
         }
 
     } else {
-        std::cerr << "ObjDocument appears to be invalid: " << doc.name << "\n";
+        console.Errorf("ObjDocument is invalid -- %s\n", doc.name);
     }
 
     return m;
 }
 
-Mesh meshFromObjDocument (const std::string &filename) {
+Mesh meshFromObjDocument (const char * const filename) {
     ObjDocument doc = ObjDocument(filename);
     return meshFromObjDocument(doc);
 }

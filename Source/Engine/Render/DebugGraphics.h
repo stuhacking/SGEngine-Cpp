@@ -13,7 +13,6 @@
 #ifndef __SGE_DEBUGGRAPHICS_H
 #define __SGE_DEBUGGRAPHICS_H
 
-#define SPHERE_INCREMENT 12.0f
 
 #include <cmath> // cos, sin
 

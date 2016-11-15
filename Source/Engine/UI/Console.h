@@ -14,30 +14,35 @@
 
 namespace sge {
 
-#ifndef NDEBUG
-
 class Console {
 public:
+
+    /**
+     * Log an error.
+     */
+    void Error (const char *msg);
+
+    /**
+     * Log a formatted error.
+     */
+    void Errorf (const char * const fmt, ...);
+
+#ifndef NDEBUG
     /**
      * Print a simple string.
      */
-    void Print (const char *msg);
+    void Debug (const char *msg);
 
     /**
      * Print a formatted string.
      */
-    void Printf (const char *fmt, ...);
-};
-
+    void Debugf (const char * const fmt, ...);
 #else
-
-class Console {
-public:
-    void Print (const char *msg) {}
-    void Printf (const char *fmt, ...) {}
-};
-
+    void Debug (const char *msg) {}
+    void Debugf (const char * const fmt, ...) {}
 #endif /* !NDEBUG */
+
+};
 
 // Global console
 extern Console console;

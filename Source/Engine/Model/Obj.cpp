@@ -10,7 +10,7 @@ namespace sge {
 
 static INLINE
 void logParseError (const std::string &file, const u32 line, const std::string &el) {
-    console.Errorf("Malformed %s in %s at line: %u.\n", el, file, line);
+    console.Errorf("Malformed %s in %s at line: %u.\n", el.c_str(), file.c_str(), line);
 }
 
 bool ObjDocument::readFromFile (const char * const filename) {
@@ -219,7 +219,7 @@ Mesh meshFromObjDocument (const ObjDocument &doc) {
         }
 
     } else {
-        console.Errorf("ObjDocument is invalid -- %s\n", doc.name);
+        console.Errorf("ObjDocument is invalid -- %s\n", doc.name.c_str());
     }
 
     return m;

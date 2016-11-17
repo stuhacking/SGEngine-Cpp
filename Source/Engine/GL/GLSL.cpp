@@ -71,7 +71,7 @@ GLuint DetectShaderType (const std::string &filename) {
     } else if ("fs" == ext || "frag" == ext) {
         return GL_FRAGMENT_SHADER;
     } else {
-        console.Errorf("Unrecognized shader extension -- %s. Defaulting to vertex shader.\n", filename);
+        console.Errorf("Unrecognized shader extension -- %s. Defaulting to vertex shader.\n", filename.c_str());
         return GL_VERTEX_SHADER;
     }
 }
@@ -97,7 +97,7 @@ static
 std::string ReadShaderFile(const std::string &filename) {
     std::ifstream input(filename);
     if (!input) {
-        console.Errorf("Unable to find source file: ", filename);
+        console.Errorf("Unable to find source file: ", filename.c_str());
         return "";
     }
 
@@ -136,7 +136,7 @@ bool GLSLProgram::Compile () {
         bool compiled = shader.Compile();
 
         if (!compiled) {
-            console.Errorf("Error compiling shader: %s\n", shader.m_filename);
+            console.Errorf("Error compiling shader: %s\n", shader.m_filename.c_str());
             Delete();
             glDeleteProgram(newId);
             return false;
@@ -200,7 +200,7 @@ GLint GLSLProgram::GetUniform (const std::string &name) {
     GLint uniformLocation = glGetUniformLocation(m_id, name.c_str());
 
     if (uniformLocation < 0) {
-        console.Errorf("Uniform location does not exist: %s\n", name);
+        console.Errorf("Uniform location does not exist: %s\n", name.c_str());
     } else {
         m_uniforms[name] = uniformLocation;
     }
@@ -291,14 +291,14 @@ GLuint GLSLShader::Compile() {
 
     std::string source = ReadShaderFile(m_filename);
     if (source.empty()) {
-        console.Errorf(" Shader source is empty: %s\n", m_filename);
+        console.Errorf(" Shader source is empty: %s\n", m_filename.c_str());
         return 0;
     }
 
     newId = glCreateShader(m_type);
 
     if (newId <= 0) {
-        console.Errorf(" Unable to assign new Shader ID: %s\n", m_filename);
+        console.Errorf(" Unable to assign new Shader ID: %s\n", m_filename.c_str());
         return 0;
     }
 
@@ -310,7 +310,7 @@ GLuint GLSLShader::Compile() {
     glCompileShader(newId);
 
     if (!checkCompileStatus(newId)) {
-        console.Errorf(" Failed to compile shader: %s\n", m_filename);
+        console.Errorf(" Failed to compile shader: %s\n", m_filename.c_str());
         glDeleteShader(newId);
         return 0;
     }

@@ -78,6 +78,7 @@ Release/
 build/
 bin/
 out/
+cmake-build-*/
 
 ### CMake ###
 CMakeCache.txt

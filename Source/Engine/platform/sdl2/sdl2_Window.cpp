@@ -59,12 +59,6 @@ SGEWindowSDL::SGEWindowSDL (const char * const name, const u32 w, const u32 h,
         return;
     }
 
-    u32 imgFlags = IMG_INIT_PNG & IMG_INIT_JPG;
-    if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
-        console.Errorf("Failed to initialize SDL_Image! SDL_Error: %s\n", IMG_GetError());
-        return;
-    }
-
     u32 fullScreenFlag = (fullScreen) ? SDL_WINDOW_FULLSCREEN : 0;
     m_window = SDL_CreateWindow(m_name.c_str(),
                                 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -153,7 +147,6 @@ SGEWindowSDL::~SGEWindowSDL () {
         SDL_DestroyWindow(m_window);
     }
 
-    IMG_Quit();
     SDL_Quit();
 }
 

@@ -15,10 +15,8 @@ endif()
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-find_package(SDL2_image REQUIRED >= 2.0.0)
-include_directories(${SDL2_IMAGE_INCLUDE_DIR})
-
 include_directories(${RapidJSON_SOURCE_DIR}/include)
+include_directories(${SOIL_SOURCE_DIR}/include)
 
 include_directories(../Lib)
 
@@ -37,10 +35,11 @@ set(SOURCES
   )
 
 # Builds: SGEEngineLib
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
+add_library(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} SGECoreLib)
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
 if(NOT APPLE)
     target_link_libraries(${PROJECT_NAME} ${GLEW_LIBRARY})
 endif()
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
+target_link_libraries(${PROJECT_NAME} SOIL)

@@ -30,12 +30,13 @@ endif(DOXYGEN_FOUND)
 # Automatically download/build External Dependencies
 execute_process(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMAND ./deps.pl
+    COMMAND perl ./deps.pl
 )
 
 # Library Targets
 add_subdirectory(External/googletest/googletest)
 add_subdirectory(External/rapidjson)
+add_subdirectory(External/soil)
 
 # Build Targets
 add_subdirectory(Source)

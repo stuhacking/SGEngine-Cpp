@@ -6,6 +6,7 @@ use warnings;
 
 # External dependencies (key will be used in path.)
 my %deps = (
+    soil => 'https://github.com/stuhacking/soil.git',
     googletest => 'https://github.com/google/googletest.git',
     rapidjson => 'https://github.com/miloyip/rapidjson.git'
     );

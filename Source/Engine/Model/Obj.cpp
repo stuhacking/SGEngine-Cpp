@@ -29,36 +29,24 @@ bool ObjDocument::readFromFile (const char * const filename) {
 
             std::vector<std::string> tokens = str::Split(str::Trim(line));
 
-            if (tokens[0] == "o") {
-                if (!parseName(tokens)) {
-                    logParseError(filename, lineNumber, "object name");
-                    return false;
-                }
-            } else if (tokens[0] == "g") {
-                if (!parseGroup(tokens)) {
-                    logParseError(filename, lineNumber, "group name");
-                    return false;
-                }
-            } else if (tokens[0] == "v") {
-                if (!parsePosition(tokens)) {
-                    logParseError(filename, lineNumber, "vertex position");
-                    return false;
-                }
-            } else if (tokens[0] == "vn") {
-                if (!parseNormal(tokens)) {
-                    logParseError(filename, lineNumber, "normal");
-                    return false;
-                }
-            } else if (tokens[0] == "vt") {
-                if (!parseTexCoord(tokens)) {
-                    logParseError(filename, lineNumber, "texture coordinate");
-                    return false;
-                }
-            } else if (tokens[0] == "f") {
-                if (!parseFace(tokens)) {
-                    logParseError(filename, lineNumber, "face");
-                    return false;
-                }
+            if ("o" == tokens[0] && !parseName(tokens)) {
+                logParseError(filename, lineNumber, "object name");
+                return false;
+            } else if ("g" == tokens[0] && !parseGroup(tokens)) {
+                logParseError(filename, lineNumber, "group name");
+                return false;
+            } else if ("v" == tokens[0] && !parsePosition(tokens)) {
+                logParseError(filename, lineNumber, "vertex position");
+                return false;
+            } else if ("vn" == tokens[0] && !parseNormal(tokens)) {
+                logParseError(filename, lineNumber, "normal");
+                return false;
+            } else if ("vt" == tokens[0] && !parseTexCoord(tokens)) {
+                logParseError(filename, lineNumber, "texture coordinate");
+                return false;
+            } else if ("f" == tokens[0] && !parseFace(tokens)) {
+                logParseError(filename, lineNumber, "face");
+                return false;
             }
         }
 
@@ -151,37 +139,30 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
         return false;
     }
 
-    // The object group stores the indices back into the .obj data.
-    ObjGroup *currentGroup = &groups.back();
+    // Add new faces to the most recent group.
+    ObjGroup *curGroup = &groups.back();
 
     // Convert n-sided faces to tris as we go.
-    for (u32 k = 3, kMax = tokens.size(); k < kMax; ++k) {
+    for (std::vector<std::string>::size_type k = 3, kMax = tokens.size(); k < kMax; ++k) {
         std::vector<std::string> indices[3];
         indices[0] = str::Split(tokens[1], '/');
         indices[1] = str::Split(tokens[k - 1], '/');
         indices[2] = str::Split(tokens[k], '/');
 
-        currentGroup->positionIndex.emplace_back(std::stoi(indices[0][0]) - 1);
-        currentGroup->positionIndex.emplace_back(std::stoi(indices[1][0]) - 1);
-        currentGroup->positionIndex.emplace_back(std::stoi(indices[2][0]) - 1);
+        curGroup->positionIndex.emplace_back(std::stoi(indices[0][0]) - 1);
+        curGroup->positionIndex.emplace_back(std::stoi(indices[1][0]) - 1);
+        curGroup->positionIndex.emplace_back(std::stoi(indices[2][0]) - 1);
 
-        u32 idx;
         if (m_hasTexture) {
-            idx = indices[0][1].empty() ? 0 : std::stoi(indices[0][1]) - 1;
-            currentGroup->textureIndex.emplace_back(idx);
-            idx = indices[1][1].empty() ? 0 : std::stoi(indices[1][1]) - 1;
-            currentGroup->textureIndex.emplace_back(idx);
-            idx = indices[2][1].empty() ? 0 : std::stoi(indices[2][1]) - 1;
-            currentGroup->textureIndex.emplace_back(idx);
+            curGroup->textureIndex.emplace_back(indices[0][1].empty() ? 0 : std::stoi(indices[0][1]) - 1);
+            curGroup->textureIndex.emplace_back(indices[1][1].empty() ? 0 : std::stoi(indices[1][1]) - 1);
+            curGroup->textureIndex.emplace_back(indices[2][1].empty() ? 0 : std::stoi(indices[2][1]) - 1);
         }
 
         if (m_hasNormals) {
-            idx = indices[0][2].empty() ? 0 : std::stoi(indices[0][2]) - 1;
-            currentGroup->normalIndex.emplace_back(idx);
-            idx = indices[1][2].empty() ? 0 : std::stoi(indices[1][2]) - 1;
-            currentGroup->normalIndex.emplace_back(idx);
-            idx = indices[2][2].empty() ? 0 : std::stoi(indices[2][2]) - 1;
-            currentGroup->normalIndex.emplace_back(idx);
+            curGroup->normalIndex.emplace_back(indices[0][2].empty() ? 0 : std::stoi(indices[0][2]) - 1);
+            curGroup->normalIndex.emplace_back(indices[1][2].empty() ? 0 : std::stoi(indices[1][2]) - 1);
+            curGroup->normalIndex.emplace_back(indices[2][2].empty() ? 0 : std::stoi(indices[2][2]) - 1);
         }
     }
 
@@ -197,7 +178,7 @@ Mesh meshFromObjDocument (const ObjDocument &doc) {
 
         for (const auto &g : doc.groups) {
 
-            for (u32 k = 2, kMax = g.Size(); k < kMax; k += 3) {
+            for (u32 k = 2, kMax = g.VertexCount(); k < kMax; k += 3) {
                 Vertex v1 = doc.Position(g.positionIndex[k - 2]);
                 Vertex v2 = doc.Position(g.positionIndex[k - 1]);
                 Vertex v3 = doc.Position(g.positionIndex[k]);

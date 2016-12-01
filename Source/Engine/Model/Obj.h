@@ -21,6 +21,11 @@
 
 namespace sge {
 
+/**
+ * The Object document stores lists of Vec2f and Vec3f for the position,
+ * normal and texture data. Faces are represented by storing indexes into
+ * the global lists.
+ */
 class ObjGroup {
 public:
     std::string name;
@@ -31,7 +36,11 @@ public:
 public:
     ObjGroup (const std::string &p_name = "") : name(p_name) { }
 
-    u32 Size () const { return positionIndex.size(); }
+    /** @return The number of vertices in this group. */
+    size_t VertexCount () const { return positionIndex.size(); }
+
+    /** @return The number of faces in the group. */
+    size_t FaceCount () const { return positionIndex.size() / 3; }
 };
 
 /**
@@ -43,12 +52,26 @@ public:
     std::vector<ObjGroup> groups;
 
 public:
-    ObjDocument (const char * const filename);
+    explicit ObjDocument (const char * const filename);
 
+    /** @return True if this .obj document uses normals. */
     bool HasNormals () const { return m_hasNormals; }
+
+    /** @return True is this .obj document uses textures. */
     bool HasTextures () const { return m_hasTexture; }
 
-    size_t Size () const { return m_positions.size(); }
+    /** @return The number of vertices in this .obj document. */
+    size_t VertexCount () const;
+
+    /**
+     * Count the faces in this .obj document as the sum of the facecounts of
+     * each object group.
+     *
+     * @return The number of faces in this .obj document.
+     */
+    size_t FaceCount () const;
+
+    /** @return True is this .obj document was parsed successfully. */
     bool IsValid () const { return m_isValid; }
 
     Vec3f Position (const i32 index) const { return m_positions[index]; }
@@ -88,6 +111,20 @@ INLINE ObjDocument::ObjDocument (const char * const filename) {
     m_isValid = false;
 
     m_isValid = readFromFile(filename);
+}
+
+INLINE size_t ObjDocument::VertexCount () const {
+    return m_positions.size();
+}
+
+INLINE size_t ObjDocument::FaceCount () const {
+    size_t result = 0;
+
+    for (const auto &group : groups) {
+        result += group.FaceCount();
+    }
+
+    return result;
 }
 
 // --------------------------------------------------------------------------

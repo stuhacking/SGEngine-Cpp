@@ -1,5 +1,5 @@
 //
-// A Basic Test that SDL2 + OpenGL is working.
+// A Basic Test that simple engine features are working.
 //
 #include <SDL2/SDL.h>
 #include <memory>

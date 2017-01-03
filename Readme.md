@@ -12,7 +12,7 @@ Code under the `Source/Lib` directory is mostly stand-alone math utilities that 
 dependencies, so they can be pulled out and used elsewhere with little modification.
 
 - Math: 2D/3D Vectors, Quaternion, Square Matrices
-- Bounds Testing: Circles, Rectangles, Spheres, Axis Aligned Boxes
+- Bounds Testing: Circles, Rectangles, Spheres, Axis-Aligned Boxes
 - 2D Noise: Perlin, Worley
 - Geometry: Vertex, Mesh
 - String utilities
@@ -22,12 +22,12 @@ Engine Library
 
 Code under the `Source/Engine` directory currently depends on OpenGL, SDL2, and SDL2_image. If you're running
 on Linux it will also require GLEW to manage GL extensions. Development happens on OS X and Linux; Windows
-support is untested, it probably doesn't work.
+support is untested, it probably won't work.
 
 - Rendering:
   - GLSL Shader support
-  - Texturing (via SDL2_image)
+  - Texturing (via SOIL)
   - Mesh Rendering, Wavefront .obj importer
-  - Debug Graphics: Simple Line drawing
+  - Debug Graphics: Simple Line drawing commands
 - UI:
   - Window Creation and Input Handling (via SDL2)

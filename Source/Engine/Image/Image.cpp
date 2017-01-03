@@ -1,8 +1,6 @@
 //
 // Image loader.
 //
-// FIXME: Support for Indexed files or files that aren't 3-4 Bytes per pixel.
-//
 #include "../Engine.h"
 
 #include <SOIL.h>
@@ -35,7 +33,9 @@ Image::Image(const char * const filename) {
                                  SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
     if (0 == m_id) {
-        console.Errorf("SOIL loading error: '%s'\n", SOIL_last_result());
+        console.Errorf("Error loading image '%s': '%s'\n", filename, SOIL_last_result());
+    } else {
+        console.Debugf("Loaded image '%s' to texture %u\n", filename, m_id);
     }
 }
 

@@ -8,13 +8,14 @@ Use CMake and prefer building out of the source tree. i.e:
     project/build$ cmake ..
     project/build$ make
 
-The CMake command will automatically download GoogleTest into the External folder at configuration time.
+The CMake command will run deps.pl and install dependencies to the External/ dir
+at configuration time.
 
 To run tests after build:
 
-    project/build$ ./SGEngine/Test/SGEngineTest
+    project/build$ make tests
 
-To run test application:
+To run demo application:
 
     project/build$ ln -sf ../Examples/HelloWorld/data data
     project/build$ ./Examples/HelloWorld/HelloWorld

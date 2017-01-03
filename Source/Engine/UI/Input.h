@@ -1,4 +1,4 @@
-/*---  Input.h - Realtime Input Header  ---------------------------*- C++ -*---
+/*---  Input.h - Real-time Input Header  --------------------------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *
@@ -144,8 +144,7 @@ public:
     static bool MouseReleased (const u32 button);
 
     /**
-     * Check if the user has sent an SDL_QUIT event by clicking
-     * the window close button.
+     * Check if the window manager has sent a QUIT event.
      */
     static bool SignalQuit ();
 };

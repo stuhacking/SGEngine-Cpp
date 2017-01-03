@@ -26,26 +26,14 @@ bool InitSGEApplication (const char * const name, const u32 width, const u32 hei
 class SGEWindow {
 public:
 
+    /** Check if window and graphics context are ready. */
     bool IsInitialized () const;
 
+    /** Get current window width. */
     u32 GetWidth () const;
 
+    /** Get current window height. */
     u32 GetHeight () const;
-
-    virtual void Update () const = 0;
-
-    virtual void Delay (u32 period) const = 0;
-
-    /**
-     * Set the clear color of the rendering back-end.
-     */
-    virtual void SetClearColor (const float r, const float g, const float b,
-                        const float a = 1.0f) const = 0;
-
-    /**
-     * Clear contents of the panel using the rendering back-end.
-     */
-    virtual void Clear () const = 0;
 
     /**
      * Get the center of this window in window coordinates
@@ -53,11 +41,29 @@ public:
      */
     Vec2f Center () const;
 
+    /**
+     * Tell graphics backend to update window contents.
+     */
+    virtual void Update () const = 0;
+
+    /**
+     * Tell graphics backend to wait for a period of time
+     * in milliseconds.
+     *
+     * @param period Duration of wait in milliseconds.
+     */
+    virtual void Delay (u32 period) const = 0;
+
+    /**
+     * Tell graphics backend to clear the window contents.
+     */
+    virtual void Clear () const = 0;
+
 protected:
-    bool m_initialized;
+    std::string m_name;
     u32 m_width;
     u32 m_height;
-    std::string m_name;
+    bool m_initialized; /** False if the window is unusable. */
 };
 
 // Global Window

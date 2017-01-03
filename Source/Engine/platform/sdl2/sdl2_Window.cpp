@@ -9,9 +9,9 @@
 #include <iostream>
 #include <memory>
 
-#define OGL_MAJOR 3
-#define OGL_MINOR 3
-#define OGL_PROFILE SDL_GL_CONTEXT_PROFILE_CORE
+static constexpr GLint oglMajorVersion = 3;
+static constexpr GLint oglMinorVersion = 3;
+static constexpr GLint oglProfile = SDL_GL_CONTEXT_PROFILE_CORE;
 
 namespace sge {
 
@@ -30,9 +30,6 @@ public:
     virtual void Update () const;
 
     virtual void Delay (const u32 period) const;
-
-    virtual void SetClearColor (const float r, const float g, const float b,
-                                const float a = 1.0f) const;
 
     virtual void Clear () const;
 
@@ -60,30 +57,33 @@ SGEWindowSDL::SGEWindowSDL (const char * const name, const u32 w, const u32 h,
     }
 
     u32 fullScreenFlag = (fullScreen) ? SDL_WINDOW_FULLSCREEN : 0;
-    m_window = SDL_CreateWindow(m_name.c_str(),
+    m_window = SDL_CreateWindow(name,
                                 SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                m_width, m_height,
+                                w, h,
                                 SDL_WINDOW_OPENGL | fullScreenFlag | SDL_WINDOW_SHOWN);
+
     if (nullptr == m_window) {
         console.Errorf("Failed to create SDL window! SDL_Error: %s\n", SDL_GetError());
         return;
     }
 
     // Create GL Context
-    console.Debugf(" Request OpenGL Context [%d,%d]...\n", OGL_MAJOR, OGL_MINOR);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR);
+    console.Debugf(" Create OpenGL Context (%d,%d)...\n", oglMajorVersion, oglMinorVersion);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, oglMajorVersion);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, oglMinorVersion);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, OGL_PROFILE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, oglProfile);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     auto glContext = SDL_GL_CreateContext(m_window);
+
     if (nullptr == glContext) {
         console.Errorf("Failed to create OpenGL context! SDL_Error: %s\n", SDL_GetError());
         return;
     }
 
+    console.Debug(" Got:\n");
     console.Debugf("  OpenGL Version: %s\n", glGetString(GL_VERSION));
-    console.Debugf("  OpenGL Vender: %s\n", glGetString(GL_VENDOR));
+    console.Debugf("  OpenGL Vendor: %s\n", glGetString(GL_VENDOR));
     console.Debugf("  GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     if (SDL_GL_SetSwapInterval(1) != 0) {
@@ -91,9 +91,10 @@ SGEWindowSDL::SGEWindowSDL (const char * const name, const u32 w, const u32 h,
         return;
     }
 
-    // If using !Apple, need to initialize a GL Extension manager.
+    // Apple's OpenGL framework provides an extension manager. If not using Apple,
+    // initialize GLEW.
 #ifndef __APPLE__
-    console.Debug(" Also initializing GL Extension Wrangler...\n");
+    console.Debug(" Initializing GL Extension Wrangler...\n");
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK) {
@@ -107,10 +108,10 @@ SGEWindowSDL::SGEWindowSDL (const char * const name, const u32 w, const u32 h,
 #endif
 
     // Done initializing SDL, OpenGL. Now setup Render Options.
-    // TODO Split out Window/Platform initialisation from Rendering initialisation.
+    // TODO Split out Window/Platform initialization from Rendering initialization.
 
-    // Ugly default colour.
-    SetClearColor(0.8f, 0.2f, 0.8f, 1.0f);
+    // Ugly undrawn colour.
+    glClearColor(0.8f, 0.2f, 0.8f, 1.0f);
 
     // Turn on a bunch of GL options.
     glEnable(GL_LINE_SMOOTH);
@@ -137,9 +138,9 @@ SGEWindowSDL::SGEWindowSDL (const char * const name, const u32 w, const u32 h,
     SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
     glViewport(0, 0, windowWidth, windowHeight);
 
-    m_initialized = true;
-
     console.Debug("Done initializing OpenGL.\n");
+
+    m_initialized = true;
 }
 
 SGEWindowSDL::~SGEWindowSDL () {
@@ -156,10 +157,6 @@ void SGEWindowSDL::Update () const {
 
 void SGEWindowSDL::Delay (u32 period) const {
     SDL_Delay(period);
-}
-
-void SGEWindowSDL::SetClearColor (const float r, const float g, const float b, const float a) const {
-    glClearColor(r, g, b, a);
 }
 
 void SGEWindowSDL::Clear () const {

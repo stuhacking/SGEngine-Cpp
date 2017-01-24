@@ -41,7 +41,7 @@ public:
     /**
      * Test if this Line2D intersects another Line2D.
      */
-    bool Intersects (const Line2D &rhs) const;
+    friend bool Intersects (const Line2D &a, const Line2D &b);
 
     /**
      * Return the point at which this Line2D intersects
@@ -72,29 +72,29 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE float Line2D::Length () const {
+inline float Line2D::Length () const {
     return (m_end - m_start).Length();
 }
 
-INLINE Vec2f Line2D::Extrapolate (const float t) const {
+inline Vec2f Line2D::Extrapolate (const float t) const {
     return m_start + (m_end - m_start) * t;
 }
 
-INLINE bool Line2D::Compare (const Line2D &other) const {
+inline bool Line2D::Compare (const Line2D &other) const {
     return m_start.Compare(other.m_start) &&
         m_end.Compare(other.m_end);
 }
 
-INLINE bool Line2D::Compare (const Line2D &other, const float threshold) const {
+inline bool Line2D::Compare (const Line2D &other, const float threshold) const {
     return m_start.Compare(other.m_start, threshold) &&
         m_end.Compare(other.m_end, threshold);
 }
 
-INLINE bool Line2D::operator== (const Line2D &other) const {
+inline bool Line2D::operator== (const Line2D &other) const {
     return Compare(other);
 }
 
-INLINE bool Line2D::operator!= (const Line2D &other) const {
+inline bool Line2D::operator!= (const Line2D &other) const {
     return !Compare(other);
 }
 

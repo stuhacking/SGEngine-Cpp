@@ -84,30 +84,30 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE Color::Color (const u32 val) {
+inline Color::Color (const u32 val) {
     r = static_cast<u8>((val & 0xFF000000) >> 24);
     g = static_cast<u8>((val & 0x00FF0000) >> 16);
     b = static_cast<u8>((val & 0x0000FF00) >> 8);
     a = static_cast<u8>((val & 0x000000FF));
 }
 
-INLINE bool Color::IsOpaque () const {
+inline bool Color::IsOpaque () const {
     return a == 255;
 }
 
-INLINE bool Color::IsHidden () const {
+inline bool Color::IsHidden () const {
     return a == 0;
 }
 
-INLINE bool Color::Compare (const Color &other) const {
+inline bool Color::Compare (const Color &other) const {
     return r == other.r && g == other.g && b == other.b && a == other.a;
 }
 
-INLINE bool Color::operator== (const Color &other) const {
+inline bool Color::operator== (const Color &other) const {
     return Compare(other);
 }
 
-INLINE bool Color::operator!= (const Color &other) const {
+inline bool Color::operator!= (const Color &other) const {
     return !Compare(other);
 }
 

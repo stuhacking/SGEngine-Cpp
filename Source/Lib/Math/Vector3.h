@@ -145,7 +145,7 @@ public:
      * @param min Vec3f minimum bound
      * @param max Vec3f maximum bound
      */
-    Vec3f Clamp (const Vec3f &min, const Vec3f &max);
+    Vec3f Clamp (const Vec3f &min, const Vec3f &max) const;
 
     /**
      * Clamp Vec3f within minimum and maximum bounds, given by other
@@ -323,21 +323,21 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Vec3f::operator[] (const std::size_t index) const {
+inline float Vec3f::operator[] (const std::size_t index) const {
     return (&x)[index];
 }
 
-INLINE float &Vec3f::operator[] (const std::size_t index) {
+inline float &Vec3f::operator[] (const std::size_t index) {
     return (&x)[index];
 }
 
-INLINE void Vec3f::Set (const float xx, const float yy, const float zz) {
+inline void Vec3f::Set (const float xx, const float yy, const float zz) {
     x = xx;
     y = yy;
     z = zz;
 }
 
-INLINE void Vec3f::Zero () {
+inline void Vec3f::Zero () {
     x = 0.0f;
     y = 0.0f;
     z = 0.0f;
@@ -347,15 +347,15 @@ INLINE void Vec3f::Zero () {
 // Vec3f Length Operators
 //==========================
 
-INLINE float Vec3f::LengthSqr () const {
+inline float Vec3f::LengthSqr () const {
     return x * x + y * y + z * z;
 }
 
-INLINE float Vec3f::Length () const {
+inline float Vec3f::Length () const {
     return sqrt(x * x + y * y + z * z);
 }
 
-INLINE Vec3f Vec3f::SetLength (const float length) const {
+inline Vec3f Vec3f::SetLength (const float length) const {
     float currMag = Length();
     if (currMag == 0.0f) {
         return Vec3f(*this);
@@ -364,7 +364,7 @@ INLINE Vec3f Vec3f::SetLength (const float length) const {
     }
 }
 
-INLINE void Vec3f::SetLengthSelf (const float length) {
+inline void Vec3f::SetLengthSelf (const float length) {
     float currMag = Length();
     if (currMag != 0.0f) {
         *this *= (length / currMag);
@@ -372,7 +372,7 @@ INLINE void Vec3f::SetLengthSelf (const float length) {
 
 }
 
-INLINE Vec3f Vec3f::Normalize () const {
+inline Vec3f Vec3f::Normalize () const {
     float currMag = Length();
     if (currMag == 0.0f) {
         return Vec3f(*this);
@@ -381,14 +381,14 @@ INLINE Vec3f Vec3f::Normalize () const {
     }
 }
 
-INLINE void Vec3f::NormalizeSelf () {
+inline void Vec3f::NormalizeSelf () {
     float currMag = Length();
     if (currMag != 0.0f) {
         *this /= currMag;
     }
 }
 
-INLINE Vec3f Vec3f::ClampLength (const float max) const {
+inline Vec3f Vec3f::ClampLength (const float max) const {
     if (LengthSqr() > (max * max)) {
         return SetLength(max);
     }
@@ -396,7 +396,7 @@ INLINE Vec3f Vec3f::ClampLength (const float max) const {
     return Vec3f(*this);
 }
 
-INLINE Vec3f Vec3f::ClampLength (const float min, const float max) const {
+inline Vec3f Vec3f::ClampLength (const float min, const float max) const {
     float ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -410,13 +410,13 @@ INLINE Vec3f Vec3f::ClampLength (const float min, const float max) const {
     return Vec3f(*this);
 }
 
-INLINE void Vec3f::ClampLengthSelf (const float max) {
+inline void Vec3f::ClampLengthSelf (const float max) {
     if (LengthSqr() > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-INLINE void Vec3f::ClampLengthSelf (const float min, const float max) {
+inline void Vec3f::ClampLengthSelf (const float min, const float max) {
     float ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -428,13 +428,13 @@ INLINE void Vec3f::ClampLengthSelf (const float min, const float max) {
     }
 }
 
-INLINE Vec3f Vec3f::Clamp (const Vec3f &min, const Vec3f &max) {
+inline Vec3f Vec3f::Clamp (const Vec3f &min, const Vec3f &max) const {
     return Vec3f(FMath::ClampFloat(x, min.x, max.x),
                  FMath::ClampFloat(y, min.y, max.y),
                  FMath::ClampFloat(z, min.z, max.z));
 }
 
-INLINE void Vec3f::ClampSelf (const Vec3f &min, const Vec3f &max) {
+inline void Vec3f::ClampSelf (const Vec3f &min, const Vec3f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
     z = FMath::ClampFloat(z, min.z, max.z);
@@ -444,36 +444,36 @@ INLINE void Vec3f::ClampSelf (const Vec3f &min, const Vec3f &max) {
 // Vec3f Operators
 //==========================
 
-INLINE Vec3f Vec3f::operator- () const {
+inline Vec3f Vec3f::operator- () const {
     return Vec3f(-x, -y, -z);
 }
 
-INLINE Vec3f Vec3f::operator* (const float rhs) const {
+inline Vec3f Vec3f::operator* (const float rhs) const {
     return Vec3f(x * rhs, y * rhs, z * rhs);
 }
 
-INLINE Vec3f operator* (const float a, const Vec3f &rhs) {
+inline Vec3f operator* (const float a, const Vec3f &rhs) {
     return Vec3f(a * rhs.x, a * rhs.y, a * rhs.z);
 }
 
-INLINE Vec3f Vec3f::operator* (const Vec3f &rhs) const {
+inline Vec3f Vec3f::operator* (const Vec3f &rhs) const {
     return Vec3f(x * rhs.x, y * rhs.y, z * rhs.z);
 }
 
-INLINE Vec3f Vec3f::operator+ (const Vec3f &rhs) const {
+inline Vec3f Vec3f::operator+ (const Vec3f &rhs) const {
     return Vec3f(x + rhs.x, y + rhs.y, z + rhs.z);
 }
 
-INLINE Vec3f Vec3f::operator- (const Vec3f &rhs) const {
+inline Vec3f Vec3f::operator- (const Vec3f &rhs) const {
     return Vec3f(x - rhs.x, y - rhs.y, z - rhs.z);
 }
 
-INLINE Vec3f Vec3f::operator/ (const float a) const {
+inline Vec3f Vec3f::operator/ (const float a) const {
     float inva = 1.0f / a;
     return Vec3f(x * inva, y * inva, z * inva);
 }
 
-INLINE Vec3f &Vec3f::operator*= (const float a) {
+inline Vec3f &Vec3f::operator*= (const float a) {
     x *= a;
     y *= a;
     z *= a;
@@ -481,7 +481,7 @@ INLINE Vec3f &Vec3f::operator*= (const float a) {
     return *this;
 }
 
-INLINE Vec3f &Vec3f::operator*= (const Vec3f &rhs) {
+inline Vec3f &Vec3f::operator*= (const Vec3f &rhs) {
     x *= rhs.x;
     y *= rhs.y;
     z *= rhs.z;
@@ -489,7 +489,7 @@ INLINE Vec3f &Vec3f::operator*= (const Vec3f &rhs) {
     return *this;
 }
 
-INLINE Vec3f &Vec3f::operator+= (const Vec3f &rhs) {
+inline Vec3f &Vec3f::operator+= (const Vec3f &rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -497,7 +497,7 @@ INLINE Vec3f &Vec3f::operator+= (const Vec3f &rhs) {
     return *this;
 }
 
-INLINE Vec3f &Vec3f::operator-= (const Vec3f &rhs) {
+inline Vec3f &Vec3f::operator-= (const Vec3f &rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -505,7 +505,7 @@ INLINE Vec3f &Vec3f::operator-= (const Vec3f &rhs) {
     return *this;
 }
 
-INLINE Vec3f &Vec3f::operator/= (const float a) {
+inline Vec3f &Vec3f::operator/= (const float a) {
     float inva = 1.0f / a;
     x *= inva;
     y *= inva;
@@ -514,7 +514,7 @@ INLINE Vec3f &Vec3f::operator/= (const float a) {
     return *this;
 }
 
-INLINE Vec3f &Vec3f::operator/= (const Vec3f &rhs) {
+inline Vec3f &Vec3f::operator/= (const Vec3f &rhs) {
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -523,28 +523,28 @@ INLINE Vec3f &Vec3f::operator/= (const Vec3f &rhs) {
 }
 
 // Dot product.
-INLINE float Vec3f::Dot (const Vec3f &rhs) const {
+inline float Vec3f::Dot (const Vec3f &rhs) const {
     return x * rhs.x + y * rhs.y + z * rhs.z;
 }
 
 // Vec3f Cross Product.
-INLINE Vec3f Vec3f::Cross (const Vec3f &rhs) const {
+inline Vec3f Vec3f::Cross (const Vec3f &rhs) const {
     return Vec3f(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
 }
 
-INLINE Vec3f Vec3f::Mirror (const Vec3f &axis) const {
+inline Vec3f Vec3f::Mirror (const Vec3f &axis) const {
     return 2.0f * this->Dot(axis) * axis - *this;
 }
 
-INLINE Vec2f Vec3f::xy () const {
+inline Vec2f Vec3f::xy () const {
     return Vec2f(x, y);
 }
 
-INLINE Vec2f Vec3f::xz () const {
+inline Vec2f Vec3f::xz () const {
     return Vec2f(x, z);
 }
 
-INLINE Vec2f Vec3f::yz () const {
+inline Vec2f Vec3f::yz () const {
     return Vec2f(y, z);
 }
 
@@ -554,11 +554,11 @@ INLINE Vec2f Vec3f::yz () const {
 
 // This comparison may be inaccurate, prefer Compare(val, threshold)
 // where possible.
-INLINE bool Vec3f::Compare (const Vec3f &other) const {
+inline bool Vec3f::Compare (const Vec3f &other) const {
     return x == other.x && y == other.y && z == other.z;
 }
 
-INLINE bool Vec3f::Compare (const Vec3f &other, const float threshold) const {
+inline bool Vec3f::Compare (const Vec3f &other, const float threshold) const {
     if (fabs(x - other.x) > threshold)
         return false;
     if (fabs(y - other.y) > threshold)
@@ -569,11 +569,11 @@ INLINE bool Vec3f::Compare (const Vec3f &other, const float threshold) const {
     return true;
 }
 
-INLINE bool Vec3f::operator== (const Vec3f &other) const {
+inline bool Vec3f::operator== (const Vec3f &other) const {
     return Compare(other);
 }
 
-INLINE bool Vec3f::operator!= (const Vec3f &other) const {
+inline bool Vec3f::operator!= (const Vec3f &other) const {
     return !Compare(other);
 }
 

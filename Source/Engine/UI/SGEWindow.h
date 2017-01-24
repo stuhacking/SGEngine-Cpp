@@ -71,19 +71,19 @@ extern SGEWindow *window;
 
 // --------------------------------------------------------------------------
 
-INLINE bool SGEWindow::IsInitialized () const {
+inline bool SGEWindow::IsInitialized () const {
     return m_initialized;
 }
 
-INLINE u32 SGEWindow::GetWidth () const {
+inline u32 SGEWindow::GetWidth () const {
     return m_width;
 }
 
-INLINE u32 SGEWindow::GetHeight () const {
+inline u32 SGEWindow::GetHeight () const {
     return m_height;
 }
 
-INLINE Vec2f SGEWindow::Center () const {
+inline Vec2f SGEWindow::Center () const {
     return Vec2f(m_width / 2, m_height / 2);
 }
 

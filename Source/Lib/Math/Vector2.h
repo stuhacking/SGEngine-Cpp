@@ -144,7 +144,7 @@ public:
      * @param min Vec2f minimum bound
      * @param max Vec2f maximum bound
      */
-    Vec2f Clamp (const Vec2f &min, const Vec2f &max);
+    Vec2f Clamp (const Vec2f &min, const Vec2f &max) const;
 
     /**
      * Clamp Vec2f within minimum and maximum bounds, given by other
@@ -290,20 +290,20 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Vec2f::operator[] (const std::size_t index) const {
+inline float Vec2f::operator[] (const std::size_t index) const {
     return (&x)[index];
 }
 
-INLINE float &Vec2f::operator[] (const std::size_t index) {
+inline float &Vec2f::operator[] (const std::size_t index) {
     return (&x)[index];
 }
 
-INLINE void Vec2f::Set (const float xx, const float yy) {
+inline void Vec2f::Set (const float xx, const float yy) {
     x = xx;
     y = yy;
 }
 
-INLINE void Vec2f::Zero () {
+inline void Vec2f::Zero () {
     x = y = 0.0f;
 }
 
@@ -311,15 +311,15 @@ INLINE void Vec2f::Zero () {
 // Vec2f Length Operators
 //==========================
 
-INLINE float Vec2f::LengthSqr () const {
+inline float Vec2f::LengthSqr () const {
     return x * x + y * y;
 }
 
-INLINE float Vec2f::Length () const {
+inline float Vec2f::Length () const {
     return sqrt(x * x + y * y);
 }
 
-INLINE Vec2f Vec2f::SetLength (const float length) const {
+inline Vec2f Vec2f::SetLength (const float length) const {
     float currMag = Length();
     if (currMag == 0.0f) {
         return Vec2f(*this);
@@ -328,14 +328,14 @@ INLINE Vec2f Vec2f::SetLength (const float length) const {
     }
 }
 
-INLINE void Vec2f::SetLengthSelf (const float length) {
+inline void Vec2f::SetLengthSelf (const float length) {
     float currMag = Length();
     if (currMag != 0.0f) {
         *this *= (length / currMag);
     }
 }
 
-INLINE Vec2f Vec2f::Normalize () const {
+inline Vec2f Vec2f::Normalize () const {
     float currMag = Length();
     if (currMag == 0.0f) {
         return Vec2f(*this);
@@ -344,14 +344,14 @@ INLINE Vec2f Vec2f::Normalize () const {
     }
 }
 
-INLINE void Vec2f::NormalizeSelf () {
+inline void Vec2f::NormalizeSelf () {
     float currMag = Length();
     if (currMag != 0.0f) {
         *this /= currMag;
     }
 }
 
-INLINE Vec2f Vec2f::ClampLength (const float max) const {
+inline Vec2f Vec2f::ClampLength (const float max) const {
     if (LengthSqr() > (max * max)) {
         return SetLength(max);
     }
@@ -359,7 +359,7 @@ INLINE Vec2f Vec2f::ClampLength (const float max) const {
     return Vec2f(*this);
 }
 
-INLINE Vec2f Vec2f::ClampLength (const float min, const float max) const {
+inline Vec2f Vec2f::ClampLength (const float min, const float max) const {
     float ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -373,13 +373,13 @@ INLINE Vec2f Vec2f::ClampLength (const float min, const float max) const {
     return Vec2f(*this);
 }
 
-INLINE void Vec2f::ClampLengthSelf (const float max) {
+inline void Vec2f::ClampLengthSelf (const float max) {
     if (LengthSqr() > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-INLINE void Vec2f::ClampLengthSelf (const float min, const float max) {
+inline void Vec2f::ClampLengthSelf (const float min, const float max) {
     float ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -391,12 +391,12 @@ INLINE void Vec2f::ClampLengthSelf (const float min, const float max) {
     }
 }
 
-INLINE Vec2f Vec2f::Clamp (const Vec2f &min, const Vec2f &max) {
+inline Vec2f Vec2f::Clamp (const Vec2f &min, const Vec2f &max) const {
     return Vec2f(FMath::ClampFloat(x, min.x, max.x),
                  FMath::ClampFloat(y, min.y, max.y));
 }
 
-INLINE void Vec2f::ClampSelf (const Vec2f &min, const Vec2f &max) {
+inline void Vec2f::ClampSelf (const Vec2f &min, const Vec2f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
 }
@@ -405,68 +405,68 @@ INLINE void Vec2f::ClampSelf (const Vec2f &min, const Vec2f &max) {
 // Vec2f Operators
 //==========================
 
-INLINE Vec2f Vec2f::operator- () const {
+inline Vec2f Vec2f::operator- () const {
     return Vec2f(-x, -y);
 }
 
-INLINE Vec2f Vec2f::operator* (const float rhs) const {
+inline Vec2f Vec2f::operator* (const float rhs) const {
     return Vec2f(x * rhs, y * rhs);
 }
 
-INLINE Vec2f operator* (const float a, const Vec2f &rhs) {
+inline Vec2f operator* (const float a, const Vec2f &rhs) {
     return Vec2f(a * rhs.x, a * rhs.y);
 }
 
-INLINE Vec2f Vec2f::operator* (const Vec2f &rhs) const {
+inline Vec2f Vec2f::operator* (const Vec2f &rhs) const {
     return Vec2f(x * rhs.x, y * rhs.y);
 }
 
-INLINE Vec2f Vec2f::operator+ (const Vec2f &rhs) const {
+inline Vec2f Vec2f::operator+ (const Vec2f &rhs) const {
     return Vec2f(x + rhs.x, y + rhs.y);
 }
 
-INLINE Vec2f Vec2f::operator- (const Vec2f &rhs) const {
+inline Vec2f Vec2f::operator- (const Vec2f &rhs) const {
     return Vec2f(x - rhs.x, y - rhs.y);
 }
 
-INLINE Vec2f Vec2f::operator/ (const float a) const {
+inline Vec2f Vec2f::operator/ (const float a) const {
     float inva = 1.0f / a;
     return Vec2f(x * inva, y * inva);
 }
 
-INLINE Vec2f Vec2f::operator/ (const Vec2f &rhs) const {
+inline Vec2f Vec2f::operator/ (const Vec2f &rhs) const {
     return Vec2f(x / rhs.x, y / rhs.y);
 }
 
-INLINE Vec2f &Vec2f::operator*= (const float a) {
+inline Vec2f &Vec2f::operator*= (const float a) {
     x *= a;
     y *= a;
 
     return *this;
 }
 
-INLINE Vec2f &Vec2f::operator*= (const Vec2f &rhs) {
+inline Vec2f &Vec2f::operator*= (const Vec2f &rhs) {
     x *= rhs.x;
     y *= rhs.y;
 
     return *this;
 }
 
-INLINE Vec2f &Vec2f::operator+= (const Vec2f &rhs) {
+inline Vec2f &Vec2f::operator+= (const Vec2f &rhs) {
     x += rhs.x;
     y += rhs.y;
 
     return *this;
 }
 
-INLINE Vec2f &Vec2f::operator-= (const Vec2f &rhs) {
+inline Vec2f &Vec2f::operator-= (const Vec2f &rhs) {
     x -= rhs.x;
     y -= rhs.y;
 
     return *this;
 }
 
-INLINE Vec2f &Vec2f::operator/= (const float a) {
+inline Vec2f &Vec2f::operator/= (const float a) {
     float inva = 1.0f / a;
     x *= inva;
     y *= inva;
@@ -474,22 +474,22 @@ INLINE Vec2f &Vec2f::operator/= (const float a) {
     return *this;
 }
 
-INLINE Vec2f &Vec2f::operator/= (const Vec2f &rhs) {
+inline Vec2f &Vec2f::operator/= (const Vec2f &rhs) {
     x /= rhs.x;
     y /= rhs.y;
 
     return *this;
 }
 
-INLINE float Vec2f::Dot (const Vec2f &rhs) const {
+inline float Vec2f::Dot (const Vec2f &rhs) const {
     return x * rhs.x + y * rhs.y;
 }
 
-INLINE float Vec2f::Cross (const Vec2f &rhs) const {
+inline float Vec2f::Cross (const Vec2f &rhs) const {
     return x * rhs.y - y * rhs.x;
 }
 
-INLINE Vec2f Vec2f::Mirror (const Vec2f &axis) const {
+inline Vec2f Vec2f::Mirror (const Vec2f &axis) const {
     return 2.0f * this->Dot(axis) * axis - *this;
 }
 
@@ -499,11 +499,11 @@ INLINE Vec2f Vec2f::Mirror (const Vec2f &axis) const {
 
 // This comparison may be inaccurate, prefer Compare(val, threshold)
 // where possible.
-INLINE bool Vec2f::Compare (const Vec2f &other) const {
+inline bool Vec2f::Compare (const Vec2f &other) const {
     return x == other.x && y == other.y;
 }
 
-INLINE bool Vec2f::Compare (const Vec2f &other, const float threshold) const {
+inline bool Vec2f::Compare (const Vec2f &other, const float threshold) const {
     if (fabsf(x - other.x) > threshold)
         return false;
     if (fabsf(y - other.y) > threshold)
@@ -512,11 +512,11 @@ INLINE bool Vec2f::Compare (const Vec2f &other, const float threshold) const {
     return true;
 }
 
-INLINE bool Vec2f::operator== (const Vec2f &other) const {
+inline bool Vec2f::operator== (const Vec2f &other) const {
     return Compare(other);
 }
 
-INLINE bool Vec2f::operator!= (const Vec2f &other) const {
+inline bool Vec2f::operator!= (const Vec2f &other) const {
     return !Compare(other);
 }
 

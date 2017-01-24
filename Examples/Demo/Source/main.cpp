@@ -49,7 +49,7 @@ static bool ReadAppSettings () {
 
 int main (int argc, char *argv[]) {
     ReadAppSettings();
-    InitSGEApplication("Test App", settings.width, settings.height, settings.fullscreen);
+    InitSGEApplication("Lighting Demo", settings.width, settings.height, settings.fullscreen);
 
     if (!window->IsInitialized()) {
         console.Error("Error initializing SGE Window.\n");

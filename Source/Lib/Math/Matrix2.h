@@ -205,65 +205,65 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE Mat2f::Mat2f (const float f) {
+inline Mat2f::Mat2f (const float f) {
     mat[0].x = mat[0].y = mat[1].x = mat[1].y = f;
 }
 
-INLINE Mat2f::Mat2f (const float aa, const float ab, const float ba, const float bb) {
+inline Mat2f::Mat2f (const float aa, const float ab, const float ba, const float bb) {
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
 }
 
-INLINE Mat2f::Mat2f (const Vec2f &col1, const Vec2f &col2) {
+inline Mat2f::Mat2f (const Vec2f &col1, const Vec2f &col2) {
     mat[0].x = col1.x; mat[0].y = col1.y;
     mat[1].x = col2.x; mat[1].y = col2.y;
 }
 
-INLINE Mat2f::Mat2f (const float data[4]) {
+inline Mat2f::Mat2f (const float data[4]) {
     std::memcpy(mat, data, 4 * sizeof(float));
 }
 
-INLINE Mat2f::Mat2f (const float data[2][2]) {
+inline Mat2f::Mat2f (const float data[2][2]) {
     std::memcpy(mat, data, 2 * 2 * sizeof(float));
 }
 
-INLINE void Mat2f::Columns (Vec2f &col1, Vec2f &col2) const {
+inline void Mat2f::Columns (Vec2f &col1, Vec2f &col2) const {
     col1 = mat[0];
     col2 = mat[1];
 }
 
-INLINE void Mat2f::Set (const float aa, const float ab, const float ba, const float bb) {
+inline void Mat2f::Set (const float aa, const float ab, const float ba, const float bb) {
     mat[0].x = aa; mat[0].y = ab;
     mat[1].x = ba; mat[1].y = bb;
 }
 
-INLINE void Mat2f::Set (const Vec2f &col1, const Vec2f &col2) {
+inline void Mat2f::Set (const Vec2f &col1, const Vec2f &col2) {
     mat[0] = col1;
     mat[1] = col2;
 }
 
-INLINE void Mat2f::Set (const float data[4]) {
+inline void Mat2f::Set (const float data[4]) {
     std::memcpy(mat, data, 4 * sizeof(float));
 }
 
-INLINE void Mat2f::Set (const float data[2][2]) {
+inline void Mat2f::Set (const float data[2][2]) {
     std::memcpy(mat, data, 2 * 2 * sizeof(float));
 }
 
-INLINE void Mat2f::Zero () {
+inline void Mat2f::Zero () {
     mat[0].Zero();
     mat[1].Zero();
 }
 
-INLINE bool Mat2f::IsIdentity () const {
+inline bool Mat2f::IsIdentity () const {
     return Compare(Mat2f::IDENTITY);
 }
 
-INLINE const Vec2f &Mat2f::operator[] (const std::size_t index) const {
+inline const Vec2f &Mat2f::operator[] (const std::size_t index) const {
     return mat[index];
 }
 
-INLINE Vec2f &Mat2f::operator[] (const std::size_t index) {
+inline Vec2f &Mat2f::operator[] (const std::size_t index) {
     return mat[index];
 }
 
@@ -271,15 +271,15 @@ INLINE Vec2f &Mat2f::operator[] (const std::size_t index) {
 // Mat2f Operators
 //=======================
 
-INLINE Mat2f Mat2f::operator* (const float a) const {
+inline Mat2f Mat2f::operator* (const float a) const {
     return Mat2f(mat[0] * a, mat[1] * a);
 }
 
-INLINE Mat2f operator* (const float a, const Mat2f &rhs) {
+inline Mat2f operator* (const float a, const Mat2f &rhs) {
     return rhs * a;
 }
 
-INLINE Mat2f Mat2f::operator* (const Mat2f &rhs) const {
+inline Mat2f Mat2f::operator* (const Mat2f &rhs) const {
     return Mat2f(mat[0].x * rhs[0].x + mat[0].y * rhs[1].x,
                      mat[0].x * rhs[0].y + mat[0].y * rhs[1].y,
 
@@ -287,22 +287,22 @@ INLINE Mat2f Mat2f::operator* (const Mat2f &rhs) const {
                      mat[1].x * rhs[0].y + mat[1].y * rhs[1].y);
 }
 
-INLINE Mat2f Mat2f::operator+ (const Mat2f &rhs) const {
+inline Mat2f Mat2f::operator+ (const Mat2f &rhs) const {
     return Mat2f(mat[0] + rhs[0], mat[1] + rhs[1]);
 }
 
-INLINE Mat2f Mat2f::operator- (const Mat2f &rhs) const {
+inline Mat2f Mat2f::operator- (const Mat2f &rhs) const {
     return Mat2f(mat[0] - rhs[0], mat[1] - rhs[1]);
 }
 
-INLINE Mat2f &Mat2f::operator*= (const float a) {
+inline Mat2f &Mat2f::operator*= (const float a) {
     mat[0] *= a;
     mat[1] *= a;
 
     return *this;
 }
 
-INLINE Mat2f &Mat2f::operator*= (const Mat2f &rhs) {
+inline Mat2f &Mat2f::operator*= (const Mat2f &rhs) {
     float aa, ab, ba, bb;
     aa = mat[0].x * rhs[0].x + mat[0].y * rhs[1].x;
     ab = mat[0].x * rhs[0].y + mat[0].y * rhs[1].y;
@@ -315,33 +315,33 @@ INLINE Mat2f &Mat2f::operator*= (const Mat2f &rhs) {
     return *this;
 }
 
-INLINE Mat2f &Mat2f::operator+= (const Mat2f &rhs) {
+inline Mat2f &Mat2f::operator+= (const Mat2f &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
 
     return *this;
 }
 
-INLINE Mat2f &Mat2f::operator-= (const Mat2f &rhs) {
+inline Mat2f &Mat2f::operator-= (const Mat2f &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
 
     return *this;
 }
 
-INLINE float Mat2f::Determinant () const {
+inline float Mat2f::Determinant () const {
     return mat[0].x * mat[1].y - mat[0].y * mat[1].x;
 }
 
-INLINE bool Mat2f::HasInverse () const {
+inline bool Mat2f::HasInverse () const {
     return 0 != Determinant();
 }
 
-INLINE Mat2f Mat2f::Transpose () const {
+inline Mat2f Mat2f::Transpose () const {
     return Mat2f(mat[0].x, mat[1].x, mat[0].y, mat[1].y);
 }
 
-INLINE Mat2f &Mat2f::TransposeSelf () {
+inline Mat2f &Mat2f::TransposeSelf () {
     std::swap(mat[0].y, mat[1].x);
 
     return *this;
@@ -351,21 +351,21 @@ INLINE Mat2f &Mat2f::TransposeSelf () {
 // Mat2f Comparisons
 //=======================
 
-INLINE bool Mat2f::Compare (const Mat2f &other) const {
+inline bool Mat2f::Compare (const Mat2f &other) const {
     return mat[0].Compare(other.mat[0]) &&
         mat[1].Compare(other.mat[1]);
 }
 
-INLINE bool Mat2f::Compare (const Mat2f &other, const float threshold) const {
+inline bool Mat2f::Compare (const Mat2f &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold);
 }
 
-INLINE bool Mat2f::operator== (const Mat2f &other) const {
+inline bool Mat2f::operator== (const Mat2f &other) const {
     return Compare(other);
 }
 
-INLINE bool Mat2f::operator!= (const Mat2f &other) const {
+inline bool Mat2f::operator!= (const Mat2f &other) const {
     return !Compare(other);
 }
 

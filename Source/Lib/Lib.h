@@ -18,8 +18,6 @@
  #define IF_DEBUG(x) do { } while(0)
 #endif /* NDEBUG */
 
-#define INLINE inline
-
 // --------------------------------------------------------------------------
 
 #include "System/Assert.h"
@@ -43,8 +41,10 @@
 #include "Bounds/Line2D.h"
 #include "Bounds/Rectangle.h"
 #include "Bounds/Circle.h"
+#include "Bounds/Ray3D.h"
 #include "Bounds/AABB.h"
 #include "Bounds/Sphere.h"
+#include "Bounds/Intersection.h"
 
 #include "Noise/Noise.h"
 

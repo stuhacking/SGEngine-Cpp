@@ -2,6 +2,7 @@
 // Game Implementation
 //
 #include "Game.h"
+#include "ImageManager.h"
 #include <iostream>
 
 // JSON Scene Keys.
@@ -14,6 +15,8 @@ static Transform view;
 static GLProjection proj{0.1f, 256.0f, 50.0f};
 
 static float CAM_SPEED = 0.5f;
+
+static ImageManager imageManager;
 
 // Line drawing.
 static DebugGraphics dGraph;
@@ -58,8 +61,9 @@ static Mesh readPrimitiveData (const json::Value &json) {
 }
 
 static Entity readObjectData (const json::Value &json) {
-    assert(json.HasMember("shader") && json.HasMember("texture") && json.HasMember("transform"));
+    assert(json.HasMember("shader") && json.HasMember("texture"));
     Mesh m;
+    Transform t;
 
     if (json.HasMember("mesh")) {
         m = readMeshData(json["mesh"]);
@@ -69,10 +73,14 @@ static Entity readObjectData (const json::Value &json) {
         console.Debugf("WARNING: No drawable in object: %s\n", json[NAME_KEY].GetString());
     }
 
-    Image i = Image(json["texture"].GetString());
-    Transform t = json::ReadTransform(json["transform"]);
+    std::string imagePath = json["texture"].GetString();
+    imageManager.Load(imagePath);
 
-    return Entity(MeshRenderer(m), i, t, json["shader"].GetString());
+    if (json.HasMember("transform")) {
+        t = json::ReadTransform(json["transform"]);
+    }
+
+    return Entity(MeshRenderer(m), imagePath, t, json["shader"].GetString());
 }
 
 /** Read a table of preset color values from a json file. */
@@ -140,6 +148,10 @@ void Game::Input () {
         proj.fov -= 1.0f;
     }
 
+    if (Input::KeyReleased('r')) {
+        imageManager.Reload();
+    }
+
     if (Input::KeyDown('a')) {
         view.position += view.Right() * -CAM_SPEED;
     }
@@ -170,18 +182,18 @@ void Game::Input () {
         bool rotY = deltaPos.x != 0;
 
         if (rotX) {
-            view.Rotate(Vec3f::X, -deltaPos.y * sensitivity);
+            view.RotateL(Vec3f::X, -deltaPos.y * sensitivity);
         }
 
         if (rotY) {
-            view.Rotate(Vec3f::Y, -deltaPos.x * sensitivity);
+            view.RotateW(Vec3f::Y, -deltaPos.x * sensitivity);
         }
     }
 }
 
 void Game::Update (double deltaSeconds) {
-    Entity *box = &m_objects[1];
-    box->transform.Rotate(Vec3f::Y, TO_RADIANS(45.0f) * deltaSeconds); // One rotation in 8 seconds
+    Entity *obj = &m_objects[2];
+    obj->transform.RotateL(Vec3f::Y, TO_RADIANS(18.0f) * deltaSeconds); // One rotation in 20 seconds
 }
 
 void Game::Render () {
@@ -193,19 +205,23 @@ void Game::Render () {
     for (const auto &e : m_objects) {
         shader = BindShader(e.shader);
         shader->SetUniform("mvp", viewMat * e.transform.GetTransformationMatrix());
-        e.texture.Bind();
+        //shader->SetUniform("view", view.GetViewTransformationMatrix());
+        shader->SetUniform("model", e.transform.GetViewTransformationMatrix());
+        shader->SetUniform("eyePos", view.position);
+
+        Image *i = imageManager.Get(e.texture);
+        i->Bind();
+
         e.mr.Render();
     }
 
-    // draw grid centered under camera at height = 0.
-    Vec3f gridPosition = Vec3f(floorf(view.position.x), 0.0f, floorf(view.position.z));
-    dGraph.AddGrid(gridPosition, 64, Color::FromHex("#CCCCFF"));
-
-    dGraph.AddSphere(Vec3f::ZERO);
     // Show World Axis
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f), Color::FromHex("#0000FF"));
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f), Color::FromHex("#FF0000"));
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f), Color::FromHex("#00FF00"));
+
+    // Test Light positions
+    dGraph.AddPoint(Vec3f(-3, 5, -5), 0.2f, Color(255, 255, 0));
 
     shader = BindShader("debug");
     shader->SetUniform("mvp", viewMat);

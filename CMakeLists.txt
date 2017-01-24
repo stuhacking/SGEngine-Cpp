@@ -43,5 +43,5 @@ add_subdirectory(Source)
 add_subdirectory(Test)
 
 # Example Programs
-add_subdirectory(Examples/HelloWorld)
 add_subdirectory(Examples/viztest)
+add_subdirectory(Examples/Demo)

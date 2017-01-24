@@ -54,19 +54,19 @@ public:
     /**
      * Test if this Circle contains point.
      */
-    bool Contains(const Vec2f &point) const;
+    friend bool Contains(const Circle &circle, const Vec2f &point);
 
     /**
      * Test if this Circle fully encloses another
      * Circle.
      */
-    bool Contains(const Circle &other) const;
+    friend bool Contains(const Circle &a, const Circle &b);
 
     /**
      * Test if this Circle intersects another
      * Circle.
      */
-    bool Intersects(const Circle &other) const;
+    friend bool Intersects (const Circle &a, const Circle &b);
 
     /**
      * Test if two Circles are equivalent.
@@ -92,46 +92,29 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE void Circle::Clear() {
+inline void Circle::Clear() {
     radius = -FMath::INFTY;
     center = Vec2f(0.0f, 0.0f);
 }
 
-INLINE void Circle::Maximize() {
+inline void Circle::Maximize() {
     radius = FMath::INFTY;
     center.x = center.y = 0.0f;
 }
 
-INLINE float Circle::Area() const {
+inline float Circle::Area() const {
     return radius * radius * FMath::PI;
-}
-
-INLINE bool Circle::Contains(const Vec2f &point) const {
-    Vec2f relPoint = point - center;
-    return (radius * radius) >= relPoint.LengthSqr();
-}
-
-INLINE bool Circle::Contains(const Circle &other) const {
-    Vec2f relPoint = other.center - center;
-    float distance = relPoint.Length() + other.radius;
-    return radius > distance;
-}
-
-INLINE bool Circle::Intersects(const Circle &other) const {
-    Vec2f relPoint = other.center - center;
-    float distance = relPoint.Length() - other.radius;
-    return radius >= distance;
 }
 
 //===================
 // Circle Comparison
 //===================
 
-INLINE bool Circle::Compare (const Circle &other) const {
+inline bool Circle::Compare (const Circle &other) const {
     return radius == radius && center == center;
 }
 
-INLINE bool Circle::Compare (const Circle &other, const float threshold) const {
+inline bool Circle::Compare (const Circle &other, const float threshold) const {
     if (fabsf(radius - other.radius) > threshold) {
         return false;
     }
@@ -139,11 +122,11 @@ INLINE bool Circle::Compare (const Circle &other, const float threshold) const {
     return center.Compare(other.center, threshold);
 }
 
-INLINE bool Circle::operator== (const Circle &other) const {
+inline bool Circle::operator== (const Circle &other) const {
     return Compare(other);
 }
 
-INLINE bool Circle::operator!= (const Circle &other) const {
+inline bool Circle::operator!= (const Circle &other) const {
     return !Compare(other);
 }
 

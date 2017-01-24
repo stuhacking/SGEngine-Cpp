@@ -1,0 +1,48 @@
+{
+  "__doc__": "An example of storing a scene description in a parseable format.",
+  "shaders": {
+    "phong": [
+      "data/shader/Phong.vs",
+      "data/shader/Phong.fs"
+    ],
+    "obj": [
+      "data/shader/obj.vs",
+      "data/shader/obj.fs"
+    ],
+    "debug": [
+      "data/shader/debug.vs",
+      "data/shader/debug.fs"
+    ]
+  },
+  "objects": [
+    {
+      "name": "Structure",
+      "shader": "phong",
+      "mesh": "data/Structural_Example.obj",
+      "texture": "data/Structural_Diffuse.png",
+      "transform": {
+        "location": [0, 0, 0],
+        "size": [1, 1, 1]
+      }
+    },
+    {
+      "name": "angel",
+      "shader": "phong",
+      "mesh": "data/Winged_Victory.obj",
+      "texture": "data/WV_AO.png",
+      "transform": {
+        "location": [-3, 2, -8],
+        "orientation": [0, -45, 0]
+      }
+    },
+    {
+      "name": "sphere",
+      "shader": "phong",
+      "mesh": "data/sphere.obj",
+      "texture": "data/sphere_tex.png",
+      "transform": {
+        "location": [36, 5, 15]
+      }
+    }
+  ]
+}

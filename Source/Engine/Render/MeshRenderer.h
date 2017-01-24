@@ -49,7 +49,7 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE bool MeshRenderer::IsCompiled() const {
+inline bool MeshRenderer::IsCompiled() const {
     return (m_glVaoId > 0 && m_buffers[0] > 0 && m_buffers[1] > 0);
 }
 

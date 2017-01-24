@@ -22,7 +22,7 @@ TEST (Rectangle_Test, Clear) {
     r.Clear();
 
     EXPECT_FLOAT_EQ(FMath::INFTY, r.Area());
-    EXPECT_FALSE(r.Contains(sge::Vec2f::ZERO));
+    EXPECT_FALSE(sge::Contains(r, Vec2f::ZERO));
 }
 
 // Basic Tests
@@ -52,37 +52,6 @@ static const Rectangle E = Rectangle(1.0f, 5.0f, 2.0f, 6.0f);
 static const Rectangle F = Rectangle(3.0f, 6.0f, 4.0f, 7.0f);
 static const Rectangle G = Rectangle(5.0f, 5.0f, 8.0f, 8.0f);
 static const Rectangle H = Rectangle(6.0f, 6.0f, 7.0f, 7.0f);
-
-TEST (Rectangle_Test, Intersects) {
-    EXPECT_TRUE(A.Intersects(A));
-    EXPECT_TRUE(A.Intersects(B));
-    EXPECT_TRUE(B.Intersects(A));
-    EXPECT_TRUE(B.Intersects(C));
-    EXPECT_TRUE(C.Intersects(B));
-    EXPECT_TRUE(B.Intersects(D));
-    EXPECT_TRUE(F.Intersects(C));
-    EXPECT_TRUE(C.Intersects(F));
-    EXPECT_TRUE(C.Intersects(G));
-    EXPECT_TRUE(G.Intersects(H));
-    EXPECT_TRUE(H.Intersects(G));
-
-    EXPECT_FALSE(E.Intersects(A));
-    EXPECT_FALSE(A.Intersects(E));
-}
-
-TEST (Rectangle_Test, Contains_Point) {
-    EXPECT_TRUE(A.Contains(Vec2f(2.0f, 2.0f)));
-    EXPECT_TRUE(C.Contains(Vec2f(5.0f, 6.0f)));
-
-    EXPECT_FALSE(E.Contains(Vec2f(0.0f, 0.0f)));
-}
-
-TEST (Rectangle_Test, Contains_Rectangle) {
-    EXPECT_TRUE(G.Contains(H));
-
-    EXPECT_FALSE(H.Contains(G));
-    EXPECT_FALSE(A.Contains(B));
-}
 
 TEST (Rectangle_Test, Center) {
     EXPECT_EQ(Vec2f(2.0f, 2.0f), A.Center());

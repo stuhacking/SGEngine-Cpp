@@ -124,28 +124,28 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE void DebugGraphics::AddEdge (const Vec3f &v1, const Vec3f &v2) {
+inline void DebugGraphics::AddEdge (const Vec3f &v1, const Vec3f &v2) {
     AddEdge(v1, v2, color);
 }
 
-INLINE void DebugGraphics::AddEdge (const Vec3f &v1, const Vec3f &v2, const Color &col) {
+inline void DebugGraphics::AddEdge (const Vec3f &v1, const Vec3f &v2, const Color &col) {
     m_vertices.emplace_back(v1, col);
     m_vertices.emplace_back(v2, col);
 }
 
-INLINE void DebugGraphics::AddPoint (const Vec3f &p, const float radius) {
+inline void DebugGraphics::AddPoint (const Vec3f &p, const float radius) {
     AddPoint(p, radius, color);
 }
 
-INLINE void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius) {
+inline void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius) {
     AddSphere(p_center, radius, color);
 }
 
-INLINE void DebugGraphics::AddGrid (const Vec3f &p_center, const u32 size) {
+inline void DebugGraphics::AddGrid (const Vec3f &p_center, const u32 size) {
     AddGrid(p_center, size, color);
 }
 
-INLINE void DebugGraphics::AddBox (const Vec3f &p_min, const Vec3f &p_max) {
+inline void DebugGraphics::AddBox (const Vec3f &p_min, const Vec3f &p_max) {
     AddBox(p_min, p_max, color);
 }
 

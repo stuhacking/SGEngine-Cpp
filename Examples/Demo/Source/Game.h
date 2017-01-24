@@ -13,11 +13,11 @@ using namespace sge;
 class Entity {
 public:
     MeshRenderer mr;
-    Image texture;
+    std::string texture;
     Transform transform;
     std::string shader;
 
-    Entity(const MeshRenderer &p_mr, const Image &p_tex, const Transform &p_t, const std::string &p_shader)
+    Entity(const MeshRenderer &p_mr, const std::string &p_tex, const Transform &p_t, const std::string &p_shader)
         : mr(p_mr), texture(p_tex), transform(p_t), shader(p_shader) { }
 };
 
@@ -44,11 +44,11 @@ private:
     u32 m_height;
 };
 
-INLINE void Game::AddShader (const std::string &name, const GLSLProgram &program) {
+inline void Game::AddShader (const std::string &name, const GLSLProgram &program) {
     m_shaders.insert(std::pair<std::string, GLSLProgram>(name, program));
 }
 
-INLINE void Game::AddEntity (const Entity &e) {
+inline void Game::AddEntity (const Entity &e) {
     m_objects.push_back(e);
 }
 

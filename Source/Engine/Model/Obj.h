@@ -98,7 +98,7 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE ObjDocument::ObjDocument (const char * const filename) {
+inline ObjDocument::ObjDocument (const char * const filename) {
     name = "untitled_obj";
 
     groups.reserve(DEFAULT_GROUP_SIZE);
@@ -113,11 +113,11 @@ INLINE ObjDocument::ObjDocument (const char * const filename) {
     m_isValid = readFromFile(filename);
 }
 
-INLINE size_t ObjDocument::VertexCount () const {
+inline size_t ObjDocument::VertexCount () const {
     return m_positions.size();
 }
 
-INLINE size_t ObjDocument::FaceCount () const {
+inline size_t ObjDocument::FaceCount () const {
     size_t result = 0;
 
     for (const auto &group : groups) {

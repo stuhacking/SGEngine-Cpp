@@ -30,12 +30,20 @@ Image::Image(const char * const filename) {
     m_id = SOIL_load_OGL_texture(filename,
                                  SOIL_LOAD_AUTO,
                                  SOIL_CREATE_NEW_ID,
-                                 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+                                 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
+                                 SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
     if (0 == m_id) {
         console.Errorf("Error loading image '%s': '%s'\n", filename, SOIL_last_result());
     } else {
         console.Debugf("Loaded image '%s' to texture %u\n", filename, m_id);
+    }
+}
+
+Image::~Image () {
+    console.Debugf("Deleting image: %u\n", m_id);
+    if (m_id > 0) {
+        glDeleteTextures(1, &m_id);
     }
 }
 

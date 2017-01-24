@@ -26,6 +26,10 @@ public:
 
 public:
     explicit Image (const char * const filename);
+             Image (const Image &copy) = delete;
+             Image (Image &&move) = default;
+
+    ~Image ();
 
     /**
      * Make this the active texture.

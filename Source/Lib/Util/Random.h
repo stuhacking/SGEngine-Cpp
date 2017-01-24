@@ -81,39 +81,39 @@ private:
     std::uniform_real_distribution<float> m_floatVals;
 };
 
-INLINE Random::Random() {
+inline Random::Random() {
     SetSeed(time(nullptr));
 }
 
-INLINE Random::Random(const i64 p_seed) {
+inline Random::Random(const i64 p_seed) {
     SetSeed(p_seed);
 }
 
-INLINE void Random::SetSeed(const i64 p_seed) {
+inline void Random::SetSeed(const i64 p_seed) {
     m_generator.seed(p_seed);
 }
 
-INLINE float Random::NextFloat() {
+inline float Random::NextFloat() {
     return m_floatVals(m_generator, std::uniform_real_distribution<float>::param_type{0.0f, 1.0f});
 }
 
-INLINE float Random::NextFloat(const float max) {
+inline float Random::NextFloat(const float max) {
     return m_floatVals(m_generator, std::uniform_real_distribution<float>::param_type{0.0f, max});
 }
 
-INLINE float Random::NextFloat(const float min, const float max) {
+inline float Random::NextFloat(const float min, const float max) {
     return m_floatVals(m_generator, std::uniform_real_distribution<float>::param_type{min, max});
 }
 
-INLINE i32 Random::NextInt() {
+inline i32 Random::NextInt() {
     return m_intVals(m_generator, std::uniform_int_distribution<int>::param_type{0, INT_MAX});
 }
 
-INLINE i32 Random::NextInt(const i32 max) {
+inline i32 Random::NextInt(const i32 max) {
     return m_intVals(m_generator, std::uniform_int_distribution<int>::param_type{0, max});
 }
 
-INLINE i32 Random::NextInt(const i32 min, const i32 max) {
+inline i32 Random::NextInt(const i32 min, const i32 max) {
     return m_intVals(m_generator, std::uniform_int_distribution<int>::param_type{min, max});
 }
 

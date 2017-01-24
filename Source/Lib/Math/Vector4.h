@@ -156,7 +156,7 @@ public:
      * @param min Vec4f minimum bound
      * @param max Vec4f maximum bound
      */
-    Vec4f Clamp (const Vec4f &min, const Vec4f &max);
+    Vec4f Clamp (const Vec4f &min, const Vec4f &max) const;
 
     /**
      * Clamp Vec4f within minimum and maximum bounds, given by other
@@ -287,22 +287,22 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Vec4f::operator[] (const std::size_t index) const {
+inline float Vec4f::operator[] (const std::size_t index) const {
     return (&x)[index];
 }
 
-INLINE float &Vec4f::operator[] (const std::size_t index) {
+inline float &Vec4f::operator[] (const std::size_t index) {
     return (&x)[index];
 }
 
-INLINE void Vec4f::Set (const float xx, const float yy, const float zz, const float ww) {
+inline void Vec4f::Set (const float xx, const float yy, const float zz, const float ww) {
     x = xx;
     y = yy;
     z = zz;
     w = ww;
 }
 
-INLINE void Vec4f::Zero () {
+inline void Vec4f::Zero () {
     x = y = z = w = 0.0f;
 }
 
@@ -310,15 +310,15 @@ INLINE void Vec4f::Zero () {
 // Vec4f Length Operators
 //==========================
 
-INLINE float Vec4f::LengthSqr () const {
+inline float Vec4f::LengthSqr () const {
     return x * x + y * y + z * z + w * w;
 }
 
-INLINE float Vec4f::Length () const {
+inline float Vec4f::Length () const {
     return sqrt(x * x + y * y + z * z + w * w);
 }
 
-INLINE Vec4f Vec4f::SetLength (const float length) const {
+inline Vec4f Vec4f::SetLength (const float length) const {
     float currMag = Length();
     if (currMag == 0.0f) {
         return Vec4f(*this);
@@ -327,7 +327,7 @@ INLINE Vec4f Vec4f::SetLength (const float length) const {
     }
 }
 
-INLINE void Vec4f::SetLengthSelf (const float length) {
+inline void Vec4f::SetLengthSelf (const float length) {
     float currMag = Length();
     if (currMag != 0.0f) {
         *this *= (length / currMag);
@@ -335,7 +335,7 @@ INLINE void Vec4f::SetLengthSelf (const float length) {
 
 }
 
-INLINE Vec4f Vec4f::Normalize () const {
+inline Vec4f Vec4f::Normalize () const {
     float currMag = Length();
     if (currMag == 0.0f) {
         return Vec4f(*this);
@@ -344,14 +344,14 @@ INLINE Vec4f Vec4f::Normalize () const {
     }
 }
 
-INLINE void Vec4f::NormalizeSelf () {
+inline void Vec4f::NormalizeSelf () {
     float currMag = Length();
     if (currMag != 0.0f) {
         *this /= currMag;
     }
 }
 
-INLINE Vec4f Vec4f::ClampLength (const float max) const {
+inline Vec4f Vec4f::ClampLength (const float max) const {
     if (LengthSqr() > (max * max)) {
         return SetLength(max);
     }
@@ -359,7 +359,7 @@ INLINE Vec4f Vec4f::ClampLength (const float max) const {
     return Vec4f(*this);
 }
 
-INLINE Vec4f Vec4f::ClampLength (const float min, const float max) const {
+inline Vec4f Vec4f::ClampLength (const float min, const float max) const {
     float ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -373,13 +373,13 @@ INLINE Vec4f Vec4f::ClampLength (const float min, const float max) const {
     return Vec4f(*this);
 }
 
-INLINE void Vec4f::ClampLengthSelf (const float max) {
+inline void Vec4f::ClampLengthSelf (const float max) {
     if (LengthSqr() > (max * max)) {
         SetLengthSelf(max);
     }
 }
 
-INLINE void Vec4f::ClampLengthSelf (const float min, const float max) {
+inline void Vec4f::ClampLengthSelf (const float min, const float max) {
     float ls = LengthSqr();
 
     if (ls < (min * min)) {
@@ -391,21 +391,21 @@ INLINE void Vec4f::ClampLengthSelf (const float min, const float max) {
     }
 }
 
-INLINE Vec4f Vec4f::Clamp (const Vec4f &min, const Vec4f &max) {
+inline Vec4f Vec4f::Clamp (const Vec4f &min, const Vec4f &max) const {
     return Vec4f(FMath::ClampFloat(x, min.x, max.x),
                  FMath::ClampFloat(y, min.y, max.y),
                  FMath::ClampFloat(z, min.z, max.z),
                  FMath::ClampFloat(w, min.w, max.w));
 }
 
-INLINE void Vec4f::ClampSelf (const Vec4f &min, const Vec4f &max) {
+inline void Vec4f::ClampSelf (const Vec4f &min, const Vec4f &max) {
     x = FMath::ClampFloat(x, min.x, max.x);
     y = FMath::ClampFloat(y, min.y, max.y);
     z = FMath::ClampFloat(z, min.z, max.z);
     w = FMath::ClampFloat(w, min.w, max.w);
 }
 
-INLINE Vec4f Vec4f::operator- () const {
+inline Vec4f Vec4f::operator- () const {
     return Vec4f(-x, -y, -z, -w);
 }
 
@@ -413,32 +413,32 @@ INLINE Vec4f Vec4f::operator- () const {
 // Vec4f Operators
 //==========================
 
-INLINE Vec4f Vec4f::operator* (const float rhs) const {
+inline Vec4f Vec4f::operator* (const float rhs) const {
     return Vec4f(x * rhs, y * rhs, z * rhs, w * rhs);
 }
 
-INLINE Vec4f operator* (const float a, const Vec4f &rhs) {
+inline Vec4f operator* (const float a, const Vec4f &rhs) {
     return Vec4f(a * rhs.x, a * rhs.y, a * rhs.z, a * rhs.w);
 }
 
-INLINE Vec4f Vec4f::operator* (const Vec4f &rhs) const {
+inline Vec4f Vec4f::operator* (const Vec4f &rhs) const {
     return Vec4f(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
 }
 
-INLINE Vec4f Vec4f::operator+ (const Vec4f &rhs) const {
+inline Vec4f Vec4f::operator+ (const Vec4f &rhs) const {
     return Vec4f(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
 }
 
-INLINE Vec4f Vec4f::operator- (const Vec4f &rhs) const {
+inline Vec4f Vec4f::operator- (const Vec4f &rhs) const {
     return Vec4f(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
 }
 
-INLINE Vec4f Vec4f::operator/ (const float a) const {
+inline Vec4f Vec4f::operator/ (const float a) const {
     float inva = 1.0f / a;
     return Vec4f(x * inva, y * inva, z * inva, w * inva);
 }
 
-INLINE Vec4f &Vec4f::operator*= (const float a) {
+inline Vec4f &Vec4f::operator*= (const float a) {
     x *= a;
     y *= a;
     z *= a;
@@ -447,7 +447,7 @@ INLINE Vec4f &Vec4f::operator*= (const float a) {
     return *this;
 }
 
-INLINE Vec4f &Vec4f::operator*= (const Vec4f &rhs) {
+inline Vec4f &Vec4f::operator*= (const Vec4f &rhs) {
     x *= rhs.x;
     y *= rhs.y;
     z *= rhs.z;
@@ -456,7 +456,7 @@ INLINE Vec4f &Vec4f::operator*= (const Vec4f &rhs) {
     return *this;
 }
 
-INLINE Vec4f &Vec4f::operator+= (const Vec4f &rhs) {
+inline Vec4f &Vec4f::operator+= (const Vec4f &rhs) {
     x += rhs.x;
     y += rhs.y;
     z += rhs.z;
@@ -465,7 +465,7 @@ INLINE Vec4f &Vec4f::operator+= (const Vec4f &rhs) {
     return *this;
 }
 
-INLINE Vec4f &Vec4f::operator-= (const Vec4f &rhs) {
+inline Vec4f &Vec4f::operator-= (const Vec4f &rhs) {
     x -= rhs.x;
     y -= rhs.y;
     z -= rhs.z;
@@ -474,7 +474,7 @@ INLINE Vec4f &Vec4f::operator-= (const Vec4f &rhs) {
     return *this;
 }
 
-INLINE Vec4f &Vec4f::operator/= (const float a) {
+inline Vec4f &Vec4f::operator/= (const float a) {
     float inva = 1.0f / a;
     x *= inva;
     y *= inva;
@@ -484,7 +484,7 @@ INLINE Vec4f &Vec4f::operator/= (const float a) {
     return *this;
 }
 
-INLINE Vec4f &Vec4f::operator/= (const Vec4f &rhs) {
+inline Vec4f &Vec4f::operator/= (const Vec4f &rhs) {
     x /= rhs.x;
     y /= rhs.y;
     z /= rhs.z;
@@ -494,23 +494,23 @@ INLINE Vec4f &Vec4f::operator/= (const Vec4f &rhs) {
 }
 
 // Dot product.
-INLINE float Vec4f::Dot (const Vec4f &rhs) const {
+inline float Vec4f::Dot (const Vec4f &rhs) const {
     return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
 }
 
-INLINE Vec3f Vec4f::xyz () const {
+inline Vec3f Vec4f::xyz () const {
     return Vec3f(x, y, z);
 }
 
-INLINE Vec2f Vec4f::xy () const {
+inline Vec2f Vec4f::xy () const {
     return Vec2f(x, y);
 }
 
-INLINE Vec2f Vec4f::xz () const {
+inline Vec2f Vec4f::xz () const {
     return Vec2f(x, z);
 }
 
-INLINE Vec2f Vec4f::yz () const {
+inline Vec2f Vec4f::yz () const {
     return Vec2f(y, z);
 }
 
@@ -520,11 +520,11 @@ INLINE Vec2f Vec4f::yz () const {
 
 // This comparison may be inaccurate, prefer Compare(val, threshold)
 // where possible.
-INLINE bool Vec4f::Compare (const Vec4f &other) const {
+inline bool Vec4f::Compare (const Vec4f &other) const {
     return x == other.x && y == other.y && z == other.z && w == other.w;
 }
 
-INLINE bool Vec4f::Compare (const Vec4f &other, const float threshold) const {
+inline bool Vec4f::Compare (const Vec4f &other, const float threshold) const {
     if (fabs(x - other.x) > threshold)
         return false;
     if (fabs(y - other.y) > threshold)
@@ -537,11 +537,11 @@ INLINE bool Vec4f::Compare (const Vec4f &other, const float threshold) const {
     return true;
 }
 
-INLINE bool Vec4f::operator== (const Vec4f &other) const {
+inline bool Vec4f::operator== (const Vec4f &other) const {
     return Compare(other);
 }
 
-INLINE bool Vec4f::operator!= (const Vec4f &other) const {
+inline bool Vec4f::operator!= (const Vec4f &other) const {
     return !Compare(other);
 }
 

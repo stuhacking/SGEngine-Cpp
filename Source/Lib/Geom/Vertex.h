@@ -62,18 +62,18 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE bool Vertex::Compare (const Vertex &other) const {
+inline bool Vertex::Compare (const Vertex &other) const {
     return position == other.position &&
         normal == other.normal &&
         texCoord == other.texCoord &&
         color == other.color;
 }
 
-INLINE bool Vertex::operator== (const Vertex &other) const {
+inline bool Vertex::operator== (const Vertex &other) const {
     return Compare(other);
 }
 
-INLINE bool Vertex::operator!= (const Vertex &other) const {
+inline bool Vertex::operator!= (const Vertex &other) const {
     return !Compare(other);
 }
 

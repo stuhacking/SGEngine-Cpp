@@ -111,15 +111,15 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE void Clock::SetScale (const float scale) {
+inline void Clock::SetScale (const float scale) {
     m_scale = FMath::ClampFloat(scale, 0.0f, 100.0f);
 }
 
-INLINE float Clock::DeltaSeconds () const {
+inline float Clock::DeltaSeconds () const {
     return NanoTimeToSeconds(m_delta);
 }
 
-INLINE u32 Clock::Delta (const Clock &other) const {
+inline u32 Clock::Delta (const Clock &other) const {
     return m_elapsed - other.m_elapsed;
 }
 

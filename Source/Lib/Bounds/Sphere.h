@@ -54,19 +54,19 @@ public:
     /**
      * Test if this Sphere contains point.
      */
-    bool Contains (const Vec3f &point) const;
+    friend bool Contains (const Sphere &sphere, const Vec3f &point);
 
     /**
      * Test if this Sphere fully encloses another
      * Sphere.
      */
-    bool Contains (const Sphere &other) const;
+    friend bool Contains (const Sphere &a, const Sphere &b);
 
     /**
      * Test if this Sphere intersects another
      * Sphere.
      */
-    bool Intersects (const Sphere &other) const;
+    friend bool Intersects (const Sphere &a, const Sphere &b);
 
     /**
      * Test if two Spheres are equivalent.
@@ -92,46 +92,29 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE void Sphere::Clear () {
+inline void Sphere::Clear () {
     radius = -FMath::INFTY;
     center = Vec3f(0.0f);
 }
 
-INLINE void Sphere::Maximize () {
+inline void Sphere::Maximize () {
     radius = FMath::INFTY;
     center.x = center.y = 0.0f;
 }
 
-INLINE float Sphere::Volume () const {
+inline float Sphere::Volume () const {
     return 4.0f / 3.0f * FMath::PI * (radius * radius * radius);
-}
-
-INLINE bool Sphere::Contains (const Vec3f &point) const {
-    Vec3f relPoint = point - center;
-    return (radius * radius) >= relPoint.LengthSqr();
-}
-
-INLINE bool Sphere::Contains (const Sphere &other) const {
-    Vec3f relPoint = other.center - center;
-    float distance = relPoint.Length() + other.radius;
-    return radius > distance;
-}
-
-INLINE bool Sphere::Intersects (const Sphere &other) const {
-    Vec3f relPoint = other.center - center;
-    float distance = relPoint.Length() - other.radius;
-    return radius >= distance;
 }
 
 //===================
 // Sphere Comparison
 //===================
 
-INLINE bool Sphere::Compare (const Sphere &other) const {
+inline bool Sphere::Compare (const Sphere &other) const {
     return radius == radius && center == center;
 }
 
-INLINE bool Sphere::Compare (const Sphere &other, const float threshold) const {
+inline bool Sphere::Compare (const Sphere &other, const float threshold) const {
     if (fabsf(radius - other.radius) > threshold) {
         return false;
     }
@@ -139,11 +122,11 @@ INLINE bool Sphere::Compare (const Sphere &other, const float threshold) const {
     return center.Compare(other.center, threshold);
 }
 
-INLINE bool Sphere::operator== (const Sphere &other) const {
+inline bool Sphere::operator== (const Sphere &other) const {
     return Compare(other);
 }
 
-INLINE bool Sphere::operator!= (const Sphere &other) const {
+inline bool Sphere::operator!= (const Sphere &other) const {
     return !Compare(other);
 }
 

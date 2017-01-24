@@ -36,7 +36,7 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE bool GLSLShader::IsCompiled() const {
+inline bool GLSLShader::IsCompiled() const {
     return m_id > 0;
 }
 

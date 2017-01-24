@@ -80,16 +80,16 @@ public:
     void ExpandSelf (const float val);
 
     /** Test if rectangle contains point. */
-    bool Contains (const Vec2f &point) const;
+    friend bool Contains (const Rectangle &rect, const Vec2f &point);
 
     /** Test if rectangle entirely contains other rectangle. */
-    bool Contains (const Rectangle &other) const;
+    friend bool Contains (const Rectangle &a, const Rectangle &b);
 
     /**
      * Test if this Rectangle partially (or fully) intersects
      * another Rectangle.
      */
-    bool Intersects (const Rectangle &other) const;
+    friend bool Intersects (const Rectangle &a, const Rectangle &b);
 
     /**
      * Test whether two Rectangles are equivalent.
@@ -115,50 +115,37 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE void Rectangle::Clear () {
+inline void Rectangle::Clear () {
     min.x = min.y = FMath::INFTY;
     max.x = max.y = -FMath::INFTY;
 }
 
-INLINE void Rectangle::Maximize () {
+inline void Rectangle::Maximize () {
     min.x = min.y = -FMath::INFTY;
     max.x = max.y = FMath::INFTY;
 }
 
-INLINE Vec2f Rectangle::Center () const {
+inline Vec2f Rectangle::Center () const {
     return (min + max) * 0.5f;
 }
 
-INLINE float Rectangle::Area () const {
+inline float Rectangle::Area () const {
     return fabsf((max.x - min.x) * (max.y - min.y));
 }
 
-INLINE Rectangle Rectangle::Expand (const float val) const {
+inline Rectangle Rectangle::Expand (const float val) const {
     return Rectangle(min.x - val, min.y - val, max.x + val, max.y + val);
 }
 
-INLINE void Rectangle::ExpandSelf (const float val) {
+inline void Rectangle::ExpandSelf (const float val) {
     min.x -= val;
     min.y -= val;
     max.x += val;
     max.y += val;
 }
 
-INLINE bool Rectangle::Contains (const Vec2f &point) const {
-    return point.x >= min.x && point.x <= max.x &&
-        point.y >= min.y && point.y <= max.y;
-}
 
-INLINE bool Rectangle::Contains (const Rectangle &other) const {
-    return Contains(other.min) && Contains(other.max);
-}
-
-INLINE bool Rectangle::Intersects (const Rectangle &other) const {
-    return (other.max.x >= min.x && other.max.y >= min.y &&
-            other.min.x <= max.x && other.min.y <= max.y);
-}
-
-INLINE bool Rectangle::Compare (const Rectangle &other) const {
+inline bool Rectangle::Compare (const Rectangle &other) const {
     return min == other.min && max == other.max;
 }
 
@@ -166,15 +153,15 @@ INLINE bool Rectangle::Compare (const Rectangle &other) const {
 // Rectangle Comparison
 //======================
 
-INLINE bool Rectangle::Compare (const Rectangle &other, const float threshold) const {
+inline bool Rectangle::Compare (const Rectangle &other, const float threshold) const {
     return min.Compare(other.min, threshold) && max.Compare(other.max, threshold);
 }
 
-INLINE bool Rectangle::operator== (const Rectangle &other) const {
+inline bool Rectangle::operator== (const Rectangle &other) const {
     return Compare(other);
 }
 
-INLINE bool Rectangle::operator!= (const Rectangle &other) const {
+inline bool Rectangle::operator!= (const Rectangle &other) const {
     return !Compare(other);
 }
 

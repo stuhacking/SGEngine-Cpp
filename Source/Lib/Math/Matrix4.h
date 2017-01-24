@@ -151,14 +151,14 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE Mat4f::Mat4f (const float f) {
+inline Mat4f::Mat4f (const float f) {
     mat[0].x = f; mat[0].y = f; mat[0].z = f; mat[0].w = f;
     mat[1].x = f; mat[1].y = f; mat[1].z = f; mat[1].w = f;
     mat[2].x = f; mat[2].y = f; mat[2].z = f; mat[2].w = f;
     mat[3].x = f; mat[3].y = f; mat[3].z = f; mat[3].w = f;
 }
 
-INLINE Mat4f::Mat4f (const float aa, const float ab, const float ac, const float ad,
+inline Mat4f::Mat4f (const float aa, const float ab, const float ac, const float ad,
                           const float ba, const float bb, const float bc, const float bd,
                           const float ca, const float cb, const float cc, const float cd,
                           const float da, const float db, const float dc, const float dd) {
@@ -168,7 +168,7 @@ INLINE Mat4f::Mat4f (const float aa, const float ab, const float ac, const float
     mat[3].x = da; mat[3].y = db; mat[3].z = dc; mat[3].w = dd;
 }
 
-INLINE Mat4f::Mat4f (const Vec4f &col1, const Vec4f &col2,
+inline Mat4f::Mat4f (const Vec4f &col1, const Vec4f &col2,
                           const Vec4f &col3, const Vec4f &col4) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z; mat[0].w = col1.w;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z; mat[1].w = col2.w;
@@ -176,15 +176,15 @@ INLINE Mat4f::Mat4f (const Vec4f &col1, const Vec4f &col2,
     mat[3].x = col4.x; mat[3].y = col4.y; mat[3].z = col4.z; mat[3].w = col4.w;
 }
 
-INLINE Mat4f::Mat4f (const float data[16]) {
+inline Mat4f::Mat4f (const float data[16]) {
     std::memcpy(mat, data, 16 * sizeof(float));
 }
 
-INLINE Mat4f::Mat4f (const float data[4][4]) {
+inline Mat4f::Mat4f (const float data[4][4]) {
     std::memcpy(mat, data, 4 * 4 * sizeof(float));
 }
 
-INLINE void Mat4f::Set (const float aa, const float ab, const float ac, const float ad,
+inline void Mat4f::Set (const float aa, const float ab, const float ac, const float ad,
                             const float ba, const float bb, const float bc, const float bd,
                             const float ca, const float cb, const float cc, const float cd,
                             const float da, const float db, const float dc, const float dd) {
@@ -194,7 +194,7 @@ INLINE void Mat4f::Set (const float aa, const float ab, const float ac, const fl
     mat[3].x = da; mat[3].y = db; mat[3].z = dc; mat[3].w = dd;
 }
 
-INLINE void Mat4f::Set (const Vec4f &col1, const Vec4f &col2,
+inline void Mat4f::Set (const Vec4f &col1, const Vec4f &col2,
                             const Vec4f &col3, const Vec4f &col4) {
     mat[0].x = col1.x; mat[0].y = col1.y; mat[0].z = col1.z; mat[0].w = col1.w;
     mat[1].x = col2.x; mat[1].y = col2.y; mat[1].z = col2.z; mat[1].w = col2.w;
@@ -202,30 +202,30 @@ INLINE void Mat4f::Set (const Vec4f &col1, const Vec4f &col2,
     mat[3].x = col4.x; mat[3].y = col4.y; mat[3].z = col4.z; mat[3].w = col4.w;
 }
 
-INLINE void Mat4f::Set (const float data[16]) {
+inline void Mat4f::Set (const float data[16]) {
     std::memcpy(mat, data, 16 * sizeof(float));
 }
 
-INLINE void Mat4f::Set (const float data[4][4]) {
+inline void Mat4f::Set (const float data[4][4]) {
     std::memcpy(mat, data, 4 * 4 * sizeof(float));
 }
 
-INLINE void Mat4f::Zero () {
+inline void Mat4f::Zero () {
     mat[0].Zero();
     mat[1].Zero();
     mat[2].Zero();
     mat[3].Zero();
 }
 
-INLINE bool Mat4f::IsIdentity () const {
+inline bool Mat4f::IsIdentity () const {
     return Compare(Mat4f::IDENTITY);
 }
 
-INLINE const Vec4f &Mat4f::operator[] (const std::size_t index) const {
+inline const Vec4f &Mat4f::operator[] (const std::size_t index) const {
     return mat[index];
 }
 
-INLINE Vec4f &Mat4f::operator[] (const std::size_t index) {
+inline Vec4f &Mat4f::operator[] (const std::size_t index) {
     return mat[index];
 }
 
@@ -233,15 +233,15 @@ INLINE Vec4f &Mat4f::operator[] (const std::size_t index) {
 // Mat4f Operations
 //=======================
 
-INLINE Mat4f Mat4f::operator* (const float a) const {
+inline Mat4f Mat4f::operator* (const float a) const {
     return Mat4f(mat[0] * a, mat[1] * a, mat[2] * a, mat[3] * a);
 }
 
-INLINE Mat4f operator* (const float a, const Mat4f &rhs) {
+inline Mat4f operator* (const float a, const Mat4f &rhs) {
     return rhs * a;
 }
 
-INLINE Mat4f Mat4f::operator* (const Mat4f &rhs) const {
+inline Mat4f Mat4f::operator* (const Mat4f &rhs) const {
     Mat4f lhs = Transpose();
 
     return Mat4f(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
@@ -250,26 +250,26 @@ INLINE Mat4f Mat4f::operator* (const Mat4f &rhs) const {
                      lhs[0].Dot(rhs[3]), lhs[1].Dot(rhs[3]), lhs[2].Dot(rhs[3]), lhs[3].Dot(rhs[3]));
 }
 
-INLINE Vec4f Mat4f::operator* (const Vec4f &rhs) const {
+inline Vec4f Mat4f::operator* (const Vec4f &rhs) const {
     return Vec4f(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z + mat[3].x * rhs.w,
                      mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z + mat[3].y * rhs.w,
                      mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z + mat[3].z * rhs.w,
                      mat[0].w * rhs.x + mat[1].w * rhs.y + mat[2].w * rhs.z + mat[3].w * rhs.w);
 }
 
-INLINE Vec4f operator* (const Vec4f &lhs, const Mat4f &rhs) {
+inline Vec4f operator* (const Vec4f &lhs, const Mat4f &rhs) {
     return rhs * lhs;
 }
 
-INLINE Mat4f Mat4f::operator+ (const Mat4f &rhs) const {
+inline Mat4f Mat4f::operator+ (const Mat4f &rhs) const {
     return Mat4f(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2], mat[3] + rhs[3]);
 }
 
-INLINE Mat4f Mat4f::operator- (const Mat4f &rhs) const {
+inline Mat4f Mat4f::operator- (const Mat4f &rhs) const {
     return Mat4f(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2], mat[3] - rhs[3]);
 }
 
-INLINE Mat4f &Mat4f::operator*= (const float a) {
+inline Mat4f &Mat4f::operator*= (const float a) {
     mat[0] *= a;
     mat[1] *= a;
     mat[2] *= a;
@@ -278,7 +278,7 @@ INLINE Mat4f &Mat4f::operator*= (const float a) {
     return *this;
 }
 
-INLINE Mat4f &Mat4f::operator*= (const Mat4f &rhs) {
+inline Mat4f &Mat4f::operator*= (const Mat4f &rhs) {
     Mat4f lhs = Transpose();
 
     Set(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
@@ -289,7 +289,7 @@ INLINE Mat4f &Mat4f::operator*= (const Mat4f &rhs) {
     return *this;
 }
 
-INLINE Mat4f &Mat4f::operator+= (const Mat4f &rhs) {
+inline Mat4f &Mat4f::operator+= (const Mat4f &rhs) {
     mat[0] += rhs[0];
     mat[1] += rhs[1];
     mat[2] += rhs[2];
@@ -298,7 +298,7 @@ INLINE Mat4f &Mat4f::operator+= (const Mat4f &rhs) {
     return *this;
 }
 
-INLINE Mat4f &Mat4f::operator-= (const Mat4f &rhs) {
+inline Mat4f &Mat4f::operator-= (const Mat4f &rhs) {
     mat[0] -= rhs[0];
     mat[1] -= rhs[1];
     mat[2] -= rhs[2];
@@ -307,7 +307,7 @@ INLINE Mat4f &Mat4f::operator-= (const Mat4f &rhs) {
     return *this;
 }
 
-INLINE float Mat4f::Determinant () const {
+inline float Mat4f::Determinant () const {
     float a, b, c, d;
 
     a = Mat3f(mat[1].y, mat[2].y, mat[3].y, mat[1].z, mat[2].z, mat[3].z, mat[1].w, mat[2].w, mat[3].w)
@@ -322,18 +322,18 @@ INLINE float Mat4f::Determinant () const {
     return mat[0].x * a - mat[0].y * b + mat[0].z * c - mat[0].w * d;
 }
 
-INLINE bool Mat4f::HasInverse () const {
+inline bool Mat4f::HasInverse () const {
     return 0 != Determinant();
 }
 
-INLINE Mat4f Mat4f::Transpose () const {
+inline Mat4f Mat4f::Transpose () const {
     return Mat4f(mat[0].x, mat[1].x, mat[2].x, mat[3].x,
                      mat[0].y, mat[1].y, mat[2].y, mat[3].y,
                      mat[0].z, mat[1].z, mat[2].z, mat[3].z,
                      mat[0].w, mat[1].w, mat[2].w, mat[3].w);
 }
 
-INLINE Mat4f &Mat4f::TransposeSelf () {
+inline Mat4f &Mat4f::TransposeSelf () {
 
     std::swap(mat[0].y, mat[1].x);
     std::swap(mat[0].z, mat[2].x);
@@ -349,23 +349,23 @@ INLINE Mat4f &Mat4f::TransposeSelf () {
 // Mat4f Comparisons
 //=======================
 
-INLINE bool Mat4f::Compare (const Mat4f &other) const {
+inline bool Mat4f::Compare (const Mat4f &other) const {
     return mat[0].Compare(other.mat[0]) && mat[1].Compare(other.mat[1]) && mat[2].Compare(other.mat[2]) &&
         mat[3].Compare(other.mat[3]);
 }
 
-INLINE bool Mat4f::Compare (const Mat4f &other, const float threshold) const {
+inline bool Mat4f::Compare (const Mat4f &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
         mat[1].Compare(other.mat[1], threshold) &&
         mat[2].Compare(other.mat[2], threshold) &&
         mat[3].Compare(other.mat[3], threshold);
 }
 
-INLINE bool Mat4f::operator== (const Mat4f &other) const {
+inline bool Mat4f::operator== (const Mat4f &other) const {
     return Compare(other);
 }
 
-INLINE bool Mat4f::operator!= (const Mat4f &other) const {
+inline bool Mat4f::operator!= (const Mat4f &other) const {
     return !Compare(other);
 }
 

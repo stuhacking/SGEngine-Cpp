@@ -8,7 +8,7 @@
 
 namespace sge {
 
-static INLINE
+static inline
 void logParseError (const std::string &file, const u32 line, const std::string &el) {
     console.Errorf("Malformed %s in %s at line: %u.\n", el.c_str(), file.c_str(), line);
 }

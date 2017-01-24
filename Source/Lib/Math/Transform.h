@@ -52,10 +52,17 @@ public:
 
     /**
      * Rotate this transform by angles in radians about
-     * axis.
+     * an axis in Local Space.
      * Destructive.
      */
-    void Rotate (const Vec3f &axis, const float angle);
+    void RotateL (const Vec3f &axis, const float angle);
+
+    /**
+     * Rotate this transform by angles in radians about
+     * an axis in World Space.
+     * Destructive.
+     */
+    void RotateW (const Vec3f &axis, const float angle);
 
     /**
      * Return a Mat4f representing the translation component
@@ -91,37 +98,42 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE void Transform::Clear () {
+inline void Transform::Clear () {
     position = Vec3f::ZERO;
     orientation = Quat4f::IDENTITY;
     scale = Vec3f::ONE;
 }
 
-INLINE Vec3f Transform::Up () const {
+inline Vec3f Transform::Up () const {
     return orientation.Rotate(Vec3f::Y);
 }
 
-INLINE Vec3f Transform::Forward () const {
+inline Vec3f Transform::Forward () const {
     return orientation.Rotate(Vec3f::Z);
 }
 
-INLINE Vec3f Transform::Right () const {
+inline Vec3f Transform::Right () const {
     return orientation.Rotate(Vec3f::X);
 }
 
-INLINE void Transform::Rotate (const Vec3f &axis, const float angle) {
+inline void Transform::RotateL (const Vec3f &axis, const float angle) {
     orientation *= Quat4f::AxisAngle(axis, angle);
     orientation.NormalizeSelf();
 }
 
-INLINE Mat4f Transform::GetTranslationMatrix () const {
+inline void Transform::RotateW (const Vec3f &axis, const float angle) {
+    orientation = Quat4f::AxisAngle(axis, angle) * orientation;
+    orientation.NormalizeSelf();
+}
+
+inline Mat4f Transform::GetTranslationMatrix () const {
     return Mat4f(1.0f,       0.0f,       0.0f,       0.0f,
                  0.0f,       1.0f,       0.0f,       0.0f,
                  0.0f,       0.0f,       1.0f,       0.0f,
                  position.x, position.y, position.z, 1.0f);
 }
 
-INLINE Mat4f Transform::GetOrientationMatrix () const {
+inline Mat4f Transform::GetOrientationMatrix () const {
     Vec3f u = Up();
     Vec3f f = Forward();
     Vec3f r = Right();
@@ -134,18 +146,18 @@ INLINE Mat4f Transform::GetOrientationMatrix () const {
         );
 }
 
-INLINE Mat4f Transform::GetScaleMatrix () const {
+inline Mat4f Transform::GetScaleMatrix () const {
     return Mat4f(scale.x, 0.0f,    0.0f,    0.0f,
                  0.0f,    scale.y, 0.0f,    0.0f,
                  0.0f,    0.0f,    scale.z, 0.0f,
                  0.0f,    0.0f,    0.0f,    1.0f);
 }
 
-INLINE Mat4f Transform::GetTransformationMatrix () const {
+inline Mat4f Transform::GetTransformationMatrix () const {
     return GetTranslationMatrix() * GetOrientationMatrix() * GetScaleMatrix();
 }
 
-INLINE Mat4f Transform::GetViewTransformationMatrix () const {
+inline Mat4f Transform::GetViewTransformationMatrix () const {
     return GetTransformationMatrix().Inverse();
 }
 

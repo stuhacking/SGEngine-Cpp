@@ -154,27 +154,27 @@ public:
 
 // --------------------------------------------------------------------------
 
-INLINE float Quat4f::operator[] (const std::size_t index) const {
+inline float Quat4f::operator[] (const std::size_t index) const {
     return (&i)[index];
 }
 
-INLINE float &Quat4f::operator[] (const std::size_t index) {
+inline float &Quat4f::operator[] (const std::size_t index) {
     return (&i)[index];
 }
 
-INLINE void Quat4f::Zero () {
+inline void Quat4f::Zero () {
     i = j = k = w = 0.0f;
 }
 
-INLINE float Quat4f::LengthSqr () const {
+inline float Quat4f::LengthSqr () const {
     return i * i + j * j + k * k + w * w;
 }
 
-INLINE float Quat4f::Length () const {
+inline float Quat4f::Length () const {
     return sqrt(i * i + j * j + k * k + w * w);
 }
 
-INLINE Quat4f Quat4f::Normalize () const {
+inline Quat4f Quat4f::Normalize () const {
     float length = Length();
     if (length == 0) {
         return Quat4f(*this);
@@ -183,30 +183,30 @@ INLINE Quat4f Quat4f::Normalize () const {
     }
 }
 
-INLINE void Quat4f::NormalizeSelf () {
+inline void Quat4f::NormalizeSelf () {
     float length = Length();
     if (length != 0.0f) {
         *this /= length;
     }
 }
 
-INLINE bool Quat4f::IsIdentity () const {
+inline bool Quat4f::IsIdentity () const {
     return *this == Quat4f::IDENTITY;
 }
 
-INLINE bool Quat4f::IsUnit () const {
+inline bool Quat4f::IsUnit () const {
     return 1 == LengthSqr();
 }
 
-INLINE Quat4f Quat4f::Conjugate () const {
+inline Quat4f Quat4f::Conjugate () const {
     return Quat4f(-i, -j, -k, w);
 }
 
-INLINE float Quat4f::Dot (const Quat4f &rhs) const {
+inline float Quat4f::Dot (const Quat4f &rhs) const {
     return i * rhs.i + j * rhs.j + k * rhs.k;
 }
 
-INLINE Quat4f Quat4f::Cross (const Quat4f &rhs) const {
+inline Quat4f Quat4f::Cross (const Quat4f &rhs) const {
     return Quat4f(j * rhs.k - k * rhs.j,
                       k * rhs.i - i * rhs.k,
                       i * rhs.j - j * rhs.i,
@@ -217,42 +217,42 @@ INLINE Quat4f Quat4f::Cross (const Quat4f &rhs) const {
 // Quat4f Operators
 //======================
 
-INLINE Quat4f Quat4f::operator* (const float a) const {
+inline Quat4f Quat4f::operator* (const float a) const {
     return Quat4f(i * a, j * a, k * a, w * a);
 }
 
-INLINE Quat4f operator* (const float a, const Quat4f &rhs) {
+inline Quat4f operator* (const float a, const Quat4f &rhs) {
     return Quat4f(a * rhs.i, a * rhs.j, a * rhs.k, a * rhs.w);
 }
 
-INLINE Quat4f Quat4f::operator* (const Quat4f &rhs) const {
+inline Quat4f Quat4f::operator* (const Quat4f &rhs) const {
     return Quat4f(i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j,
                       j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k,
                       k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i,
                       w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k);
 }
 
-INLINE Quat4f Quat4f::operator* (const Vec3f &rhs) const {
+inline Quat4f Quat4f::operator* (const Vec3f &rhs) const {
     return Quat4f(w * rhs.x + j * rhs.z - k * rhs.y,
                       w * rhs.y + k * rhs.x - i * rhs.z,
                       w * rhs.z + i * rhs.y - j * rhs.x,
                       -i * rhs.x - j * rhs.y - k * rhs.z);
 }
 
-INLINE Quat4f Quat4f::operator+ (const Quat4f &rhs) const {
+inline Quat4f Quat4f::operator+ (const Quat4f &rhs) const {
     return Quat4f(i + rhs.i, j + rhs.j, k + rhs.k, w + rhs.w);
 }
 
-INLINE Quat4f Quat4f::operator- (const Quat4f &rhs) const {
+inline Quat4f Quat4f::operator- (const Quat4f &rhs) const {
     return Quat4f(i - rhs.i, j - rhs.j, k - rhs.k, w - rhs.w);
 }
 
-INLINE Quat4f Quat4f::operator/ (const float a) const {
+inline Quat4f Quat4f::operator/ (const float a) const {
     float inva = 1.0f / a;
     return Quat4f(i * inva, j * inva, k * inva, w * inva);
 }
 
-INLINE Quat4f &Quat4f::operator*= (const float a) {
+inline Quat4f &Quat4f::operator*= (const float a) {
     i *= a;
     j *= a;
     k *= a;
@@ -261,7 +261,7 @@ INLINE Quat4f &Quat4f::operator*= (const float a) {
     return *this;
 }
 
-INLINE Quat4f &Quat4f::operator*= (const Quat4f &rhs) {
+inline Quat4f &Quat4f::operator*= (const Quat4f &rhs) {
     i = i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j;
     j = j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k;
     k = k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i;
@@ -270,7 +270,7 @@ INLINE Quat4f &Quat4f::operator*= (const Quat4f &rhs) {
     return *this;
 }
 
-INLINE Quat4f &Quat4f::operator+= (const Quat4f &rhs) {
+inline Quat4f &Quat4f::operator+= (const Quat4f &rhs) {
     i += rhs.i;
     j += rhs.j;
     k += rhs.k;
@@ -279,7 +279,7 @@ INLINE Quat4f &Quat4f::operator+= (const Quat4f &rhs) {
     return *this;
 }
 
-INLINE Quat4f &Quat4f::operator-= (const Quat4f &rhs) {
+inline Quat4f &Quat4f::operator-= (const Quat4f &rhs) {
     i -= rhs.i;
     j -= rhs.j;
     k -= rhs.k;
@@ -288,7 +288,7 @@ INLINE Quat4f &Quat4f::operator-= (const Quat4f &rhs) {
     return *this;
 }
 
-INLINE Quat4f &Quat4f::operator/= (const float a) {
+inline Quat4f &Quat4f::operator/= (const float a) {
     float inva = 1.0f / a;
 
     i *= inva;
@@ -303,11 +303,11 @@ INLINE Quat4f &Quat4f::operator/= (const float a) {
 // Quat4f Comparison
 //=======================
 
-INLINE bool Quat4f::Compare (const Quat4f &rhs) const {
+inline bool Quat4f::Compare (const Quat4f &rhs) const {
     return i == rhs.i && j == rhs.j && k == rhs.k && w == rhs.w;
 }
 
-INLINE bool Quat4f::Compare (const Quat4f &rhs, const float threshold) const {
+inline bool Quat4f::Compare (const Quat4f &rhs, const float threshold) const {
     if (fabsf(i - rhs.i) > threshold)
         return false;
     if (fabsf(j - rhs.j) > threshold)
@@ -319,11 +319,11 @@ INLINE bool Quat4f::Compare (const Quat4f &rhs, const float threshold) const {
     return true;
 }
 
-INLINE bool Quat4f::operator== (const Quat4f &rhs) const {
+inline bool Quat4f::operator== (const Quat4f &rhs) const {
     return Compare(rhs);
 }
 
-INLINE bool Quat4f::operator!= (const Quat4f &rhs) const {
+inline bool Quat4f::operator!= (const Quat4f &rhs) const {
     return !Compare(rhs);
 }
 

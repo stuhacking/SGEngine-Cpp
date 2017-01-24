@@ -122,13 +122,13 @@ private:
 
 // --------------------------------------------------------------------------
 
-INLINE GLSLProgram &GLSLProgram::AddSource (const std::string &filename) {
+inline GLSLProgram &GLSLProgram::AddSource (const std::string &filename) {
     m_shaders.emplace_back(filename);
 
     return *this;
 }
 
-INLINE bool GLSLProgram::IsCompiled() const {
+inline bool GLSLProgram::IsCompiled() const {
     return m_id > 0;
 }
 

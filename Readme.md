@@ -20,7 +20,7 @@ dependencies, so they can be pulled out and used elsewhere with little modificat
 Engine Library
 --------------
 
-Code under the `Source/Engine` directory currently depends on OpenGL, SDL2, and SDL2_image. If you're running
+Code under the `Source/Engine` directory currently depends on OpenGL, SDL2, and SOIL. If you're running
 on Linux it will also require GLEW to manage GL extensions. Development happens on OS X and Linux; Windows
 support is untested, it probably won't work.
 

@@ -17,5 +17,5 @@ To run tests after build:
 
 To run demo application:
 
-    project/build$ ln -sf ../Examples/HelloWorld/data data
-    project/build$ ./Examples/HelloWorld/HelloWorld
+    project/build$ ln -sf ../Examples/Demo/lighting_data data
+    project/build$ ./Examples/Demo/Demo

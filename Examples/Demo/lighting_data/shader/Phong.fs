@@ -19,8 +19,7 @@ struct Attenuation {
 };
 
 struct Light_Info {
-    vec3 color;
-    float intensity;
+    vec3 albedo;
     Attenuation atten;
     vec3 position;
     vec3 direction;
@@ -75,7 +74,7 @@ vec3 calculateLight (Light_Info light, vec3 direction, vec3 normal) {
 
 
     if (diffuseF > 0) {
-        diffuseCol = light.color * light.intensity * diffuseF;
+        diffuseCol = light.albedo * diffuseF;
 
         vec3 dirToEye = normalize(eyePos - worldPos0);
         vec3 reflectDirection = normalize(reflect(-direction, normal));
@@ -84,7 +83,7 @@ vec3 calculateLight (Light_Info light, vec3 direction, vec3 normal) {
         specFactor = pow(specFactor, specularExponent);
 
         if (specFactor > 0) {
-            specCol = light.color * specularIntensity * specFactor;
+            specCol = light.albedo * specularIntensity * specFactor;
         }
     }
 
@@ -92,7 +91,7 @@ vec3 calculateLight (Light_Info light, vec3 direction, vec3 normal) {
 }
 
 vec3 calculateAmbientLight (Light_Info light) {
-    return light.color * light.intensity;
+    return light.albedo;
 }
 
 /**
@@ -135,18 +134,15 @@ vec4 calculateLightColor (vec3 normal) {
         lightColor += calculateAmbientLight(lights[k]);
 #endif
     }
-
     for (kMax = lightOffsets[1]; k < kMax; ++k) {
 #if ENABLE_DIRECTIONAL
         lightColor += calculateDirectionalLight(lights[k], normal);
 #endif
     }
-
     for (kMax = lightOffsets[2]; k < kMax; ++k) {
 #if ENABLE_SPOT
 #endif
     }
-
     for (kMax = lightOffsets[3]; k < kMax; ++k) {
 #if ENABLE_POINT
         lightColor += calculatePointLight(lights[k], normal);
@@ -160,10 +156,10 @@ void main () {
     specularIntensity = 0.7;
     specularExponent = 0.8;
 
-    lights[0] = Light_Info(vec3(0.2, 0.2, 0.4), 0.05, Attenuation(1.0, 0.5, 0.2), vec3(0, 4, 0), vec3(0, -1, 0), 10.0);
-    lights[1] = Light_Info(vec3(0.9, 0.9, 0.8), 1.5, Attenuation(1.0, 0.5, 0.2), vec3(0, 4, 0), vec3(0, -1, 0), 10.0);
-    lights[2] = Light_Info(vec3(0.3, 0.3, 0.5), 0.3, Attenuation(1.0, 0.5, 0.2), vec3(0, -4, 0), vec3(0, 1, 0), 5.0);
-    lights[3] = Light_Info(vec3(1.0, 1.0, 0.0), 1.0, Attenuation(0.2, 1.0, 1.0), vec3(-3, 5, -5), vec3(0, 0, -1), 10.0);
+    lights[0] = Light_Info(vec3(0.05, 0.05, 0.2), Attenuation(1.0, 0.5, 0.2), vec3(0, 4, 0), vec3(0, -1, 0), 0.0);
+    lights[1] = Light_Info(vec3(1.5, 1.5, 1.2), Attenuation(1.0, 0.5, 0.2), vec3(0, 4, 0), vec3(0, -1, 0), 0.0);
+    lights[2] = Light_Info(vec3(0.3, 0.3, 0.5), Attenuation(1.0, 0.5, 0.2), vec3(0, -4, 0), vec3(0, 1, 0), 0.0);
+    lights[3] = Light_Info(vec3(1.0, 1.0, 0.0), Attenuation(1, 1, 1), vec3(-3, 5, -5), vec3(0, 0, -1), 10.0);
 
     lightOffsets[0] = 1;
     lightOffsets[1] = 3;

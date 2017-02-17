@@ -14,7 +14,7 @@ static constexpr auto NAME_KEY = "name";
 static Transform view;
 static GLProjection proj{0.1f, 256.0f, 50.0f};
 
-static float CAM_SPEED = 0.5f;
+static float CAM_SPEED = 0.1f;
 
 static ImageManager imageManager;
 

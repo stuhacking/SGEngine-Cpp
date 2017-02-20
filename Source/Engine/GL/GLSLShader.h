@@ -29,7 +29,7 @@ public:
     void Delete ();
 
 private:
-    GLuint m_id; // 0 == error/uninitialized
+    GLuint m_id = 0; // 0 == error/uninitialized
     GLenum m_type;
     std::string m_filename;
 };

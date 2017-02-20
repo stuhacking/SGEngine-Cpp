@@ -120,7 +120,8 @@ bool GLSLProgram::Compile () {
     GLuint newId = 0;
 
     if (IsCompiled()) {
-        IF_DEBUG( console.Errorf("Recompiling GLSL Program %s\n", newId); );
+        IF_DEBUG( console.Errorf("Recompiling GLSL Program %u\n", m_id); );
+        newId = m_id;
     } else {
         newId = glCreateProgram();
     }
@@ -272,6 +273,17 @@ void GLSLProgram::SetUniform (const std::string &name, const Mat4f &value) {
     }
 }
 
+void GLSLProgram::BindUniformBuffer (const std::string &name, const GLuint buffer, const GLuint bindingPoint) {
+    GLuint blockIdx = glGetUniformBlockIndex(m_id, name.c_str());
+    if (GL_INVALID_INDEX == blockIdx) {
+        std::cerr << "Invalid Uniform Buffer Block: " << name << "\n";
+        return;
+    }
+
+    glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, buffer);
+    glUniformBlockBinding(m_id, blockIdx, bindingPoint);
+}
+
 //======================
 // GLSLShader
 //======================
@@ -295,7 +307,11 @@ GLuint GLSLShader::Compile() {
         return 0;
     }
 
-    newId = glCreateShader(m_type);
+    if (IsCompiled()) {
+        newId = m_id;
+    } else {
+        newId = glCreateShader(m_type);
+    }
 
     if (newId <= 0) {
         console.Errorf(" Unable to assign new Shader ID: %s\n", m_filename.c_str());

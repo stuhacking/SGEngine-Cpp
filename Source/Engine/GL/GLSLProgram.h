@@ -114,6 +114,14 @@ public:
      */
     void SetUniform (const std::string &name, const Mat4f &value);
 
+    /**
+     * Bind a Uniform Buffer Object as data for this shader.
+     * @param name Name of the Interface Block in the shader source.
+     * @param buffer ID of the buffer object to bind.
+     * @param bindingPoint Slot to store the interface and buffer binding.
+     */
+    void BindUniformBuffer (const std::string &name, const GLuint buffer, const GLuint bindingPoint = 1);
+
 private:
     GLuint m_id; // 0 == error/uninitialized
     std::vector<GLSLShader> m_shaders;

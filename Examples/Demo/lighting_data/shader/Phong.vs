@@ -1,11 +1,13 @@
 // VERTEX SHADER - Phong Lighting
 #version 330
 
-// Frame Uniforms.
+// Draw Uniforms.
 
-uniform mat4 mvp;
-uniform mat4 view;
-uniform mat4 model;
+layout (std140) uniform MatrixBlock {
+    mat4 model;
+    mat4 view;
+    mat4 mvp;
+} matrices;
 
 // Draw Inputs.
 
@@ -22,10 +24,10 @@ out vec3 normal0;
 out vec4 vertColor0;
 
 void main () {
-    worldPos0 = (model * vec4(position, 1.0)).xyz;
-    normal0 = normal; //normalize(inverse(mat3(model)) * normal);
+    worldPos0 = (matrices.model * vec4(position, 1.0)).xyz;
+    normal0 = normalize(mat3(matrices.model) * normal);
     texCoord0 = texCoord;
     vertColor0 = vertColor;
 
-    gl_Position = mvp * vec4(position, 1.0);
+    gl_Position = matrices.mvp * vec4(position, 1.0);
 }

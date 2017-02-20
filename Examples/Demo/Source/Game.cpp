@@ -21,6 +21,9 @@ static ImageManager imageManager;
 // Line drawing.
 static DebugGraphics dGraph;
 
+static GLuint matBuffer;
+static GLuint lightBuffer;
+
 static GLSLProgram readShaderData (const json::Value &json) {
     assert(json.IsArray());
     GLSLProgram program;
@@ -109,6 +112,20 @@ static bool readSceneData (Game &game, const char * const filename) {
     return false;
 }
 
+struct matrix_data_t {
+    Mat4f model;
+    Mat4f view;
+    Mat4f mvp;
+};
+
+struct light_data_t {
+    int offsets[4];
+    GLSLLight lights[16];
+};
+
+static matrix_data_t matrixData;
+static light_data_t lightData;
+
 bool Game::Init () {
     if (!readSceneData(*this, "./data/scene.json")) {
         console.Errorf("Failed to create scene.\n");
@@ -136,6 +153,26 @@ bool Game::Init () {
     view = Transform();
     view.position = Vec3f(0.0f, 3.0f, 18.0f);
 
+    lightData.lights[0] = GLSLLight(Vec3f(0.12f, 0.01f, 0.02f),  Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[1] = GLSLLight(Vec3f(0.45f, 0.45f, 0.5f),     Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[2] = GLSLLight(Vec3f(0.08f, 0.08f, 0.07f),     Vec3f(0.0f, -4.0f, 0.0f),   Vec3f(0.0f, 1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[3] = GLSLLight(Vec3f(2.0f, 2.0f, 0.0f),     Vec3f(-3.0f, 7.0f, -5.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 10.0f);
+    lightData.lights[4] = GLSLLight(Vec3f(0.0f, 0.0f, 3.0f),     Vec3f(-10.0f, 4.0f, 0.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 10.0f);
+    lightData.offsets[0] = 1;
+    lightData.offsets[1] = 3;
+    lightData.offsets[2] = 3;
+    lightData.offsets[3] = 5;
+
+    glGenBuffers(1, &matBuffer);
+    glBindBuffer(GL_UNIFORM_BUFFER, matBuffer);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(matrix_data_t), &matrixData, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+    glGenBuffers(1, &lightBuffer);
+    glBindBuffer(GL_UNIFORM_BUFFER, lightBuffer);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(light_data_t), &lightData, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
     return true;
 }
 
@@ -150,6 +187,9 @@ void Game::Input () {
 
     if (Input::KeyReleased('r')) {
         imageManager.Reload();
+        for (auto &shader : m_shaders) {
+            shader.second.Compile();
+        }
     }
 
     if (Input::KeyDown('a')) {
@@ -192,22 +232,47 @@ void Game::Input () {
 }
 
 void Game::Update (double deltaSeconds) {
-    Entity *obj = &m_objects[2];
+    static double t;
+    Entity *obj = &m_objects[1];
     obj->transform.RotateL(Vec3f::Y, TO_RADIANS(18.0f) * deltaSeconds); // One rotation in 20 seconds
+
+    t += deltaSeconds;
+    lightData.lights[3].position.y = sinf(t) * 5.0f + 5.0f;
+    lightData.lights[4].position.x += 0.02f;
 }
 
 void Game::Render () {
     Mat4f viewMat = proj.GetPerspectiveProjection(m_width, m_height) *
         view.GetViewTransformationMatrix();
 
+    glBindBuffer(GL_UNIFORM_BUFFER, lightBuffer);
+    GLvoid* p = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+    memcpy(p, &lightData, sizeof(light_data_t));
+    glUnmapBuffer(GL_UNIFORM_BUFFER);
+
     // Custom drawing...
     GLSLProgram *shader;
     for (const auto &e : m_objects) {
         shader = BindShader(e.shader);
-        shader->SetUniform("mvp", viewMat * e.transform.GetTransformationMatrix());
-        //shader->SetUniform("view", view.GetViewTransformationMatrix());
-        shader->SetUniform("model", e.transform.GetViewTransformationMatrix());
-        shader->SetUniform("eyePos", view.position);
+
+        // TODO [smh] Uniform buffer for transformations.
+        // TODO [smh] Begin Frame...
+        // Setup Matrix Data for Draw.
+        matrixData.model = e.transform.GetTransformationMatrix();
+        matrixData.view = view.GetViewTransformationMatrix();
+        matrixData.mvp = viewMat * e.transform.GetTransformationMatrix();
+
+        glBindBuffer(GL_UNIFORM_BUFFER, matBuffer);
+        p = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+        memcpy(p, &matrixData, sizeof(matrix_data_t));
+        glUnmapBuffer(GL_UNIFORM_BUFFER);
+
+        shader->BindUniformBuffer("MatrixBlock", matBuffer, 1);
+        shader->BindUniformBuffer("LightingBlock", lightBuffer, 2);
+
+        // TODO [smh] Uniform buffer for current material.
+        shader->SetUniform("material.specIntensity", 0.75f);
+        shader->SetUniform("material.specExponent", 0.3f);
 
         Image *i = imageManager.Get(e.texture);
         i->Bind();
@@ -215,13 +280,16 @@ void Game::Render () {
         e.mr.Render();
     }
 
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
     // Show World Axis
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f), Color::FromHex("#0000FF"));
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f), Color::FromHex("#FF0000"));
     dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f), Color::FromHex("#00FF00"));
 
-    // Test Light positions
-    dGraph.AddPoint(Vec3f(-3, 5, -5), 0.2f, Color(255, 255, 0));
+    // Test Point Light positions
+    dGraph.AddPoint(lightData.lights[3].position, 0.1f, Color(255, 255, 0));
+    dGraph.AddPoint(lightData.lights[4].position, 0.1f, Color(0, 0, 255));
 
     shader = BindShader("debug");
     shader->SetUniform("mvp", viewMat);

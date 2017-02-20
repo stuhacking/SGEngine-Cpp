@@ -34,4 +34,4 @@ private:
     std::map<std::string, std::unique_ptr<sge::Image>> images;
 };
 
-#endif /* __SGENGINE_IMAGEMANAGER_H_H */
+#endif /* __SGENGINE_IMAGEMANAGER_H */

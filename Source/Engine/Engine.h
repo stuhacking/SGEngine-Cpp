@@ -29,6 +29,7 @@
 #include "Data/jsonfile.h"
 #include "UI/Console.h"
 
+#include "GL/GLSLLight.h"
 #include "GL/GLSLShader.h"
 #include "GL/GLSLProgram.h"
 #include "GL/GLProjection.h"

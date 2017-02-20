@@ -5,10 +5,6 @@
       "data/shader/Phong.vs",
       "data/shader/Phong.fs"
     ],
-    "obj": [
-      "data/shader/obj.vs",
-      "data/shader/obj.fs"
-    ],
     "debug": [
       "data/shader/debug.vs",
       "data/shader/debug.fs"
@@ -32,7 +28,7 @@
       "texture": "data/WV_AO.png",
       "transform": {
         "location": [-3, 2, -8],
-        "orientation": [0, -45, 0]
+        "orientation": [0, -0, 0]
       }
     },
     {

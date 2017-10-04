@@ -1,4 +1,4 @@
-/*---  Assert.h - Debugging and assertion macros  -----------------*- C++ -*---
+/*---  Assert.h - Debugging and assertion macros  ------------------*- C++ -*---
 *
 *                           Stuart's Game Engine
 *

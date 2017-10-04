@@ -15,8 +15,6 @@
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
 
-namespace sge {
-
 /**
  * 4x4 Matrix. Implements math operations for 4x4 Matrices stored in
  * column major form.
@@ -100,29 +98,6 @@ public:
     const Vec4f &operator[] (const std::size_t index) const;
 
     Vec4f &operator[] (const std::size_t index);
-
-    /** Mat4f operations. */
-    Mat4f operator* (const float a) const;
-
-    friend Mat4f operator* (const float a, const Mat4f &rhs);
-
-    Mat4f operator* (const Mat4f &rhs) const;
-
-    Vec4f operator* (const Vec4f &rhs) const;
-
-    friend Vec4f operator* (const Vec4f &lhs, const Mat4f &rhs);
-
-    Mat4f operator+ (const Mat4f &rhs) const;
-
-    Mat4f operator- (const Mat4f &rhs) const;
-
-    Mat4f &operator*= (const float a);
-
-    Mat4f &operator*= (const Mat4f &rhs);
-
-    Mat4f &operator+= (const Mat4f &rhs);
-
-    Mat4f &operator-= (const Mat4f &rhs);
 
     float Determinant () const;
 
@@ -233,78 +208,78 @@ inline Vec4f &Mat4f::operator[] (const std::size_t index) {
 // Mat4f Operations
 //=======================
 
-inline Mat4f Mat4f::operator* (const float a) const {
-    return Mat4f(mat[0] * a, mat[1] * a, mat[2] * a, mat[3] * a);
+inline Mat4f operator* (const Mat4f &m, const float a) {
+    return Mat4f(m[0] * a, m[1] * a, m[2] * a, m[3] * a);
 }
 
 inline Mat4f operator* (const float a, const Mat4f &rhs) {
     return rhs * a;
 }
 
-inline Mat4f Mat4f::operator* (const Mat4f &rhs) const {
-    Mat4f lhs = Transpose();
+inline Mat4f operator* (const Mat4f &a, const Mat4f &b) {
+    Mat4f tmp = a.Transpose();
 
-    return Mat4f(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
-                     lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]), lhs[3].Dot(rhs[1]),
-                     lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]), lhs[3].Dot(rhs[2]),
-                     lhs[0].Dot(rhs[3]), lhs[1].Dot(rhs[3]), lhs[2].Dot(rhs[3]), lhs[3].Dot(rhs[3]));
+    return Mat4f(tmp[0].Dot(b[0]), tmp[1].Dot(b[0]), tmp[2].Dot(b[0]), tmp[3].Dot(b[0]),
+                 tmp[0].Dot(b[1]), tmp[1].Dot(b[1]), tmp[2].Dot(b[1]), tmp[3].Dot(b[1]),
+                 tmp[0].Dot(b[2]), tmp[1].Dot(b[2]), tmp[2].Dot(b[2]), tmp[3].Dot(b[2]),
+                 tmp[0].Dot(b[3]), tmp[1].Dot(b[3]), tmp[2].Dot(b[3]), tmp[3].Dot(b[3]));
 }
 
-inline Vec4f Mat4f::operator* (const Vec4f &rhs) const {
-    return Vec4f(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z + mat[3].x * rhs.w,
-                     mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z + mat[3].y * rhs.w,
-                     mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z + mat[3].z * rhs.w,
-                     mat[0].w * rhs.x + mat[1].w * rhs.y + mat[2].w * rhs.z + mat[3].w * rhs.w);
+inline Vec4f operator* (const Mat4f &m, const Vec4f &v) {
+    return Vec4f(m[0].x * v.x + m[1].x * v.y + m[2].x * v.z + m[3].x * v.w,
+                 m[0].y * v.x + m[1].y * v.y + m[2].y * v.z + m[3].y * v.w,
+                 m[0].z * v.x + m[1].z * v.y + m[2].z * v.z + m[3].z * v.w,
+                 m[0].w * v.x + m[1].w * v.y + m[2].w * v.z + m[3].w * v.w);
 }
 
 inline Vec4f operator* (const Vec4f &lhs, const Mat4f &rhs) {
     return rhs * lhs;
 }
 
-inline Mat4f Mat4f::operator+ (const Mat4f &rhs) const {
-    return Mat4f(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2], mat[3] + rhs[3]);
+inline Mat4f operator+ (const Mat4f &a, const Mat4f &b) {
+    return Mat4f(a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]);
 }
 
-inline Mat4f Mat4f::operator- (const Mat4f &rhs) const {
-    return Mat4f(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2], mat[3] - rhs[3]);
+inline Mat4f operator- (const Mat4f &a, const Mat4f &b) {
+    return Mat4f(a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]);
 }
 
-inline Mat4f &Mat4f::operator*= (const float a) {
-    mat[0] *= a;
-    mat[1] *= a;
-    mat[2] *= a;
-    mat[3] *= a;
+inline Mat4f& operator*= (Mat4f &m, const float a) {
+    m[0] *= a;
+    m[1] *= a;
+    m[2] *= a;
+    m[3] *= a;
 
-    return *this;
+    return m;
 }
 
-inline Mat4f &Mat4f::operator*= (const Mat4f &rhs) {
-    Mat4f lhs = Transpose();
+inline Mat4f& operator*= (Mat4f &a, const Mat4f &b) {
+    Mat4f tmp = a.Transpose();
 
-    Set(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]), lhs[3].Dot(rhs[0]),
-        lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]), lhs[3].Dot(rhs[1]),
-        lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]), lhs[3].Dot(rhs[2]),
-        lhs[0].Dot(rhs[3]), lhs[1].Dot(rhs[3]), lhs[2].Dot(rhs[3]), lhs[3].Dot(rhs[3]));
+    a.Set(tmp[0].Dot(b[0]), tmp[1].Dot(b[0]), tmp[2].Dot(b[0]), tmp[3].Dot(b[0]),
+          tmp[0].Dot(b[1]), tmp[1].Dot(b[1]), tmp[2].Dot(b[1]), tmp[3].Dot(b[1]),
+          tmp[0].Dot(b[2]), tmp[1].Dot(b[2]), tmp[2].Dot(b[2]), tmp[3].Dot(b[2]),
+          tmp[0].Dot(b[3]), tmp[1].Dot(b[3]), tmp[2].Dot(b[3]), tmp[3].Dot(b[3]));
 
-    return *this;
+    return a;
 }
 
-inline Mat4f &Mat4f::operator+= (const Mat4f &rhs) {
-    mat[0] += rhs[0];
-    mat[1] += rhs[1];
-    mat[2] += rhs[2];
-    mat[3] += rhs[3];
+inline Mat4f& operator+= (Mat4f &a, const Mat4f &b) {
+    a[0] += b[0];
+    a[1] += b[1];
+    a[2] += b[2];
+    a[3] += b[3];
 
-    return *this;
+    return a;
 }
 
-inline Mat4f &Mat4f::operator-= (const Mat4f &rhs) {
-    mat[0] -= rhs[0];
-    mat[1] -= rhs[1];
-    mat[2] -= rhs[2];
-    mat[3] -= rhs[3];
+inline Mat4f& operator-= (Mat4f &a, const Mat4f &b) {
+    a[0] -= b[0];
+    a[1] -= b[1];
+    a[2] -= b[2];
+    a[3] -= b[3];
 
-    return *this;
+    return a;
 }
 
 inline float Mat4f::Determinant () const {
@@ -351,14 +326,14 @@ inline Mat4f &Mat4f::TransposeSelf () {
 
 inline bool Mat4f::Compare (const Mat4f &other) const {
     return mat[0].Compare(other.mat[0]) && mat[1].Compare(other.mat[1]) && mat[2].Compare(other.mat[2]) &&
-        mat[3].Compare(other.mat[3]);
+           mat[3].Compare(other.mat[3]);
 }
 
 inline bool Mat4f::Compare (const Mat4f &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
-        mat[1].Compare(other.mat[1], threshold) &&
-        mat[2].Compare(other.mat[2], threshold) &&
-        mat[3].Compare(other.mat[3], threshold);
+           mat[1].Compare(other.mat[1], threshold) &&
+           mat[2].Compare(other.mat[2], threshold) &&
+           mat[3].Compare(other.mat[3], threshold);
 }
 
 inline bool Mat4f::operator== (const Mat4f &other) const {
@@ -368,7 +343,5 @@ inline bool Mat4f::operator== (const Mat4f &other) const {
 inline bool Mat4f::operator!= (const Mat4f &other) const {
     return !Compare(other);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_MATRIX4_H */

@@ -4,8 +4,6 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::FMath;
-using sge::Vec2f;
 using sge::Rectangle;
 
 TEST (Rectangle_Test, Constructors) {

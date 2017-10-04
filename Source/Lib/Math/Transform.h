@@ -12,8 +12,6 @@
 #ifndef __SGE_TRANSFORM_H
 #define __SGE_TRANSFORM_H
 
-namespace sge {
-
 class Transform {
 public:
     Vec3f position;
@@ -160,7 +158,5 @@ inline Mat4f Transform::GetTransformationMatrix () const {
 inline Mat4f Transform::GetViewTransformationMatrix () const {
     return GetTransformationMatrix().Inverse();
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_TRANSFORM_H */

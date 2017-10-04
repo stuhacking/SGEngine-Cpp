@@ -3,8 +3,6 @@
 //
 #include "../Lib.h"
 
-namespace sge {
-
 const Quat4f Quat4f::IDENTITY{0.0f, 0.0f, 0.0f, 1.0f};
 
 Quat4f Quat4f::AxisAngle (const Vec3f &axis, const float angle) {
@@ -21,5 +19,3 @@ Vec3f Quat4f::Rotate (const Vec3f &vec) const {
 
     return Vec3f(result.i, result.j, result.k);
 }
-
-} /* namespace sge */

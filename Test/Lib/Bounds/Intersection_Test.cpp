@@ -4,8 +4,6 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vec2f;
-using sge::Vec3f;
 using sge::Line2D;
 using sge::Rectangle;
 using sge::Circle;

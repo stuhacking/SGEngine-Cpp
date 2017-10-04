@@ -14,8 +14,6 @@
 
 #include "../Lib.h"
 
-namespace sge {
-
 class Noise {
 public:
     /**
@@ -107,7 +105,5 @@ inline float Noise::SmoothNoise (const float x, const float y) {
 
     return FMath::Lerp(yFrac, v1, v2);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_NOISE_H */

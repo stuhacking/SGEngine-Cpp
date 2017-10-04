@@ -14,8 +14,6 @@
 
 #include <cstdlib> // abs
 
-namespace sge {
-
 class Color {
 public:
     /** Color components. */
@@ -110,7 +108,5 @@ inline bool Color::operator== (const Color &other) const {
 inline bool Color::operator!= (const Color &other) const {
     return !Compare(other);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_COLOR_H  */

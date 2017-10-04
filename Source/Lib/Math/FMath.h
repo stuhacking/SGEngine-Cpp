@@ -13,11 +13,10 @@
 #define __SGE_FMATH_H
 
 #include <cmath>
+#include <cfloat>
 
 #define TO_RADIANS(a) ((a) * FMath::DEG2RAD)
 #define TO_DEGREES(a) ((a) * FMath::RAD2DEG)
-
-namespace sge {
 
 class FMath {
 public:
@@ -159,6 +158,13 @@ inline void FMath::SinCos (const float angle, float &s, float &c) {
     c = cosf(angle);
 }
 
-} /* namespace sge */
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Vector2i.h"
+#include "Quaternion.h"
+#include "Matrix2.h"
+#include "Matrix3.h"
+#include "Matrix4.h"
 
 #endif /* __SGE_FMATH_H */

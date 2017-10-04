@@ -4,8 +4,6 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::FMath;
-using sge::Vec3f;
 using sge::Sphere;
 
 TEST (Sphere_Test, Constructors) {

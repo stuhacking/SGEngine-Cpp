@@ -15,8 +15,6 @@
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
 
-namespace sge {
-
 /**
  * 2x2 Matrix. Implements math operations for 2x2 Matrices stored in
  * Column Major.
@@ -104,58 +102,6 @@ public:
      * Reference/Write access to the matrix columns using subscript notation.
      */
     Vec2f &operator[] (const std::size_t index);
-
-    // Mat2f operators
-
-    /**
-     * Mat2f Uniform Scale.
-     */
-    Mat2f operator* (const float a) const;
-
-    /**
-     * Mat2f Uniform Scale.
-     * Reversed operands.
-     */
-    friend Mat2f operator* (const float a, const Mat2f &rhs);
-
-    /**
-     * Mat2f Multiplication.
-     */
-    Mat2f operator* (const Mat2f &rhs) const;
-
-    /**
-     * Mat2f Addition.
-     */
-    Mat2f operator+ (const Mat2f &rhs) const;
-
-    /**
-     * Mat2f Subtraction.
-     */
-    Mat2f operator- (const Mat2f &rhs) const;
-
-    /**
-     * Mat2f Uniform Scale in place.
-     * Destructive.
-     */
-    Mat2f &operator*= (const float a);
-
-    /**
-     * Mat2f Multiplication in place.
-     * Destructive.
-     */
-    Mat2f &operator*= (const Mat2f &rhs);
-
-    /**
-     * Mat2f Addition in place.
-     * Destructive.
-     */
-    Mat2f &operator+= (const Mat2f &rhs);
-
-    /**
-     * Mat2f Subtraction in place.
-     * Destructive.
-     */
-    Mat2f &operator-= (const Mat2f &rhs);
 
     /**
      * Get the determinant of this Mat2f
@@ -271,63 +217,66 @@ inline Vec2f &Mat2f::operator[] (const std::size_t index) {
 // Mat2f Operators
 //=======================
 
-inline Mat2f Mat2f::operator* (const float a) const {
-    return Mat2f(mat[0] * a, mat[1] * a);
+inline Mat2f operator* (const Mat2f &m, const float a) {
+    return Mat2f(m[0] * a, m[1] * a);
 }
 
-inline Mat2f operator* (const float a, const Mat2f &rhs) {
-    return rhs * a;
+inline Mat2f operator* (const float a, const Mat2f &m) {
+    return Mat2f(m[0] * a, m[1] * a);
 }
 
-inline Mat2f Mat2f::operator* (const Mat2f &rhs) const {
-    return Mat2f(mat[0].x * rhs[0].x + mat[0].y * rhs[1].x,
-                     mat[0].x * rhs[0].y + mat[0].y * rhs[1].y,
+inline Mat2f operator* (const Mat2f &a, const Mat2f &b) {
+    return Mat2f(a[0].x * b[0].x + a[0].y * b[1].x,
+                 a[0].x * b[0].y + a[0].y * b[1].y,
 
-                     mat[1].x * rhs[0].x + mat[1].y * rhs[1].x,
-                     mat[1].x * rhs[0].y + mat[1].y * rhs[1].y);
+                 a[1].x * b[0].x + a[1].y * b[1].x,
+                 a[1].x * b[0].y + a[1].y * b[1].y);
 }
 
-inline Mat2f Mat2f::operator+ (const Mat2f &rhs) const {
-    return Mat2f(mat[0] + rhs[0], mat[1] + rhs[1]);
+inline Mat2f operator+ (const Mat2f &a, const Mat2f &b) {
+    return Mat2f(a[0] + b[0], a[1] + b[1]);
 }
 
-inline Mat2f Mat2f::operator- (const Mat2f &rhs) const {
-    return Mat2f(mat[0] - rhs[0], mat[1] - rhs[1]);
+inline Mat2f operator- (const Mat2f &a, const Mat2f &b) {
+    return Mat2f(a[0] - b[0], a[1] - b[1]);
 }
 
-inline Mat2f &Mat2f::operator*= (const float a) {
-    mat[0] *= a;
-    mat[1] *= a;
+inline Mat2f& operator*= (Mat2f &m, const float a) {
+    m[0] *= a;
+    m[1] *= a;
 
-    return *this;
+    return m;
 }
 
-inline Mat2f &Mat2f::operator*= (const Mat2f &rhs) {
-    float aa, ab, ba, bb;
-    aa = mat[0].x * rhs[0].x + mat[0].y * rhs[1].x;
-    ab = mat[0].x * rhs[0].y + mat[0].y * rhs[1].y;
-    ba = mat[1].x * rhs[0].x + mat[1].y * rhs[1].x;
-    bb = mat[1].x * rhs[0].y + mat[1].y * rhs[1].y;
+inline Mat2f& operator*= (Mat2f &a, const Mat2f &b) {
+    float tmp[4];
 
-    mat[0].x = aa; mat[0].y = ab;
-    mat[1].x = ba; mat[1].y = bb;
+    tmp[0] = a[0].x * b[0].x + a[0].y * b[1].x;
+    tmp[1] = a[0].x * b[0].y + a[0].y * b[1].y;
+    tmp[2] = a[1].x * b[0].x + a[1].y * b[1].x;
+    tmp[3] = a[1].x * b[0].y + a[1].y * b[1].y;
 
-    return *this;
+    a[0].x = tmp[0]; a[0].y = tmp[1];
+    a[1].x = tmp[2]; a[1].y = tmp[3];
+
+    return a;
 }
 
-inline Mat2f &Mat2f::operator+= (const Mat2f &rhs) {
-    mat[0] += rhs[0];
-    mat[1] += rhs[1];
+inline Mat2f& operator+= (Mat2f &a, const Mat2f &b) {
+    a[0] += b[0];
+    a[1] += b[1];
 
-    return *this;
+    return a;
 }
 
-inline Mat2f &Mat2f::operator-= (const Mat2f &rhs) {
-    mat[0] -= rhs[0];
-    mat[1] -= rhs[1];
+inline Mat2f& operator-= (Mat2f &a, const Mat2f &b) {
+    a[0] -= b[0];
+    a[1] -= b[1];
 
-    return *this;
+    return a;
 }
+
+// --------------------------------------------------------------------------
 
 inline float Mat2f::Determinant () const {
     return mat[0].x * mat[1].y - mat[0].y * mat[1].x;
@@ -352,13 +301,12 @@ inline Mat2f &Mat2f::TransposeSelf () {
 //=======================
 
 inline bool Mat2f::Compare (const Mat2f &other) const {
-    return mat[0].Compare(other.mat[0]) &&
-        mat[1].Compare(other.mat[1]);
+    return mat[0] == other.mat[0] && mat[1] == other.mat[1];
 }
 
 inline bool Mat2f::Compare (const Mat2f &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
-        mat[1].Compare(other.mat[1], threshold);
+           mat[1].Compare(other.mat[1], threshold);
 }
 
 inline bool Mat2f::operator== (const Mat2f &other) const {
@@ -368,7 +316,5 @@ inline bool Mat2f::operator== (const Mat2f &other) const {
 inline bool Mat2f::operator!= (const Mat2f &other) const {
     return !Compare(other);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_MATRIX2_H */

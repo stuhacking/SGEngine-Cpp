@@ -81,13 +81,12 @@ inline Vec2f Line2D::Extrapolate (const float t) const {
 }
 
 inline bool Line2D::Compare (const Line2D &other) const {
-    return m_start.Compare(other.m_start) &&
-        m_end.Compare(other.m_end);
+    return m_start == other.m_start && m_end == other.m_end;
 }
 
 inline bool Line2D::Compare (const Line2D &other, const float threshold) const {
     return m_start.Compare(other.m_start, threshold) &&
-        m_end.Compare(other.m_end, threshold);
+           m_end.Compare(other.m_end, threshold);
 }
 
 inline bool Line2D::operator== (const Line2D &other) const {

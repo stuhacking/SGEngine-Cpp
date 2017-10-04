@@ -13,7 +13,7 @@
 // - Miscellaneous Utilities ------------------------------------------------
 
 #ifndef NDEBUG
- #define IF_DEBUG(x) do { x } while(0)
+ #define IF_DEBUG(x) do { x } while(false)
 #else
  #define IF_DEBUG(x) do { } while(0)
 #endif /* NDEBUG */
@@ -24,13 +24,6 @@
 #include "System/Types.h"
 
 #include "Math/FMath.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Vector4.h"
-#include "Math/Quaternion.h"
-#include "Math/Matrix2.h"
-#include "Math/Matrix3.h"
-#include "Math/Matrix4.h"
 #include "Math/Color.h"
 #include "Math/Transform.h"
 
@@ -55,6 +48,7 @@
 #include "Geom/Primitive/Cube.h"
 #include "Geom/Primitive/ICOSphere.h"
 
+#include "Containers/Grid.h"
 #include "Util/LibIO.h"
 
 #endif /* __SGE_H */

@@ -3,8 +3,6 @@
 //
 #include "../Lib.h"
 
-namespace sge {
-
 float Noise::Perlin (const float x, const float y,
                     const float p_freq, const float p_amp,
                     const float p_decay, const u32 p_oct) {
@@ -20,5 +18,3 @@ float Noise::Perlin (const float x, const float y,
 
     return t * p_amp;
 }
-
-} /* namespace sge */

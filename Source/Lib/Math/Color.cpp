@@ -6,8 +6,6 @@
 #include <cstdlib> // strtoul
 #include <cstring> // strncpy, strchr
 
-namespace sge {
-
 static constexpr float HUE_MAX = 360.0f;
 static constexpr float HUE_STEP = HUE_MAX / 6.0f;
 
@@ -87,5 +85,3 @@ Color Color::FromHex (const char * const hex) {
 
     return Color(val);
 }
-
-} /* namespace sge */

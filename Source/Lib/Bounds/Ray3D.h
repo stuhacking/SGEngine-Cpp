@@ -82,8 +82,7 @@ inline Vec3f Ray3D::Extrapolate (const float t) const {
 }
 
 inline bool Ray3D::Compare (const Ray3D &other) const {
-    return start.Compare(other.start) &&
-        end.Compare(other.end);
+    return start == other.start && end == other.end;
 }
 
 inline bool Ray3D::Compare (const Ray3D &other, const float threshold) const {

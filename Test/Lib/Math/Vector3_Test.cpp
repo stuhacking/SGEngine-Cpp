@@ -6,10 +6,6 @@
 
 #include "Lib.h"
 
-using sge::FMath;
-using sge::Vec2f;
-using sge::Vec3f;
-
 /*==========================
   Vector property Tests
  ==========================*/
@@ -126,7 +122,7 @@ TEST (Vec3f_Test, Scale_Equals) {
 }
 
 TEST (Vec3f_Test, NonUniformScale) {
-    EXPECT_EQ(Vec3f(0.0f), Vec3f(2.0f) * sge::Vec3f::ZERO);
+    EXPECT_EQ(Vec3f(0.0f), Vec3f(2.0f) * Vec3f::ZERO);
     EXPECT_EQ(Vec3f(2.0f, 4.0f, 6.0f), Vec3f(2.0f) * Vec3f(1.0f, 2.0f, 3.0f));
     EXPECT_EQ(Vec3f(4.0f, 2.0f, 0.0f), Vec3f(2.0f, 4.0f, 5.0f) * Vec3f(2.0f, 0.5f, 0.0f));
 }

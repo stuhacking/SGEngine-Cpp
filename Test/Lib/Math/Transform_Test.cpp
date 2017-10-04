@@ -5,11 +5,6 @@
 
 #include "Lib.h"
 
-using sge::Vec3f;
-using sge::Vec4f;
-using sge::Mat4f;
-using sge::Transform;
-
 // Helper: Apply transform to position vector3
 static Vec3f apply_transform_position (const Transform &tr, const Vec3f &v_in) {
     Mat4f M = tr.GetTransformationMatrix();
@@ -49,22 +44,22 @@ TEST (Transform_Test, Scale_Matrix) {
 }
 
 TEST (Transform_Test, No_Transform) {
-    Vec3f v = sge::Vec3f::ZERO;
+    Vec3f v = Vec3f::ZERO;
 
     EXPECT_EQ(v, apply_transform_position(Transform(), v));
     EXPECT_EQ(v, apply_transform_direction(Transform(), v));
 }
 
 TEST (Transform_Test, Clear_Transform) {
-    Vec3f v = sge::Vec3f::ZERO;
+    Vec3f v = Vec3f::ZERO;
     Transform t = Transform();
     t.position += Vec3f(2.0f, 2.0f, 2.0f);
 
     EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), apply_transform_position(t, v));
-    EXPECT_EQ(sge::Vec3f::ZERO, apply_transform_direction(t, v));
+    EXPECT_EQ(Vec3f::ZERO, apply_transform_direction(t, v));
 
     t.Clear();
 
-    EXPECT_EQ(sge::Vec3f::ZERO, apply_transform_position(t, v));
-    EXPECT_EQ(sge::Vec3f::ZERO, apply_transform_direction(t, v));
+    EXPECT_EQ(Vec3f::ZERO, apply_transform_position(t, v));
+    EXPECT_EQ(Vec3f::ZERO, apply_transform_direction(t, v));
 }

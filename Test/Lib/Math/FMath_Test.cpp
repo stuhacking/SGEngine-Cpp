@@ -6,8 +6,6 @@
 
 #include "Lib.h"
 
-using sge::FMath;
-
 TEST (FMath_Test, Min) {
     EXPECT_EQ(1.0f, FMath::Min(1.0f, 2.0f));
     EXPECT_EQ(-2.0f, FMath::Min(1.0f, -2.0f));

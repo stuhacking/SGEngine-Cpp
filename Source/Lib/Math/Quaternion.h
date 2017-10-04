@@ -12,8 +12,6 @@
 #ifndef __SGE_QUATERNION_H
 #define __SGE_QUATERNION_H
 
-namespace sge {
-
 /**
  * Quat4f. Implements math operators and Quat->Vect
  * multiplication/rotation
@@ -79,53 +77,6 @@ public:
     Quat4f Cross (const Quat4f &rhs) const;
 
     /**
-     * Scale quaternion.
-     */
-    Quat4f operator* (const float a) const;
-
-    /**
-     * Scale quaternion, reversed operands.
-     */
-    friend Quat4f operator* (const float a, const Quat4f &rhs);
-
-    /**
-     * Quat4f multiplication.
-     */
-    Quat4f operator* (const Quat4f &rhs) const;
-
-    /**
-     * Quat4f x Vector multiplication.
-     */
-    Quat4f operator* (const Vec3f &rhs) const;
-
-    /**
-     * Quat4f Addition.
-     */
-    Quat4f operator+ (const Quat4f &rhs) const;
-
-    /**
-     * Quat4f subraction.
-     */
-    Quat4f operator- (const Quat4f &rhs) const;
-
-    /**
-     * Quat4f division.
-     */
-    Quat4f operator/ (const float a) const;
-
-    Quat4f &operator*= (const float a);
-
-    Quat4f &operator*= (const Quat4f &rhs);
-
-    Quat4f &operator+= (const Quat4f &rhs);
-
-    Quat4f &operator-= (const Quat4f &rhs);
-
-    Quat4f &operator/= (const float a);
-
-    Quat4f &operator/= (const Quat4f &rhs);
-
-    /**
      * Apply the rotation in this quaternion to a Vec3f.
      */
     Vec3f Rotate (const Vec3f &vec) const;
@@ -164,6 +115,114 @@ inline float &Quat4f::operator[] (const std::size_t index) {
 
 inline void Quat4f::Zero () {
     i = j = k = w = 0.0f;
+}
+
+//======================
+// Quat4f Operators
+//======================
+
+/** Multiply by scalar. */
+inline Quat4f operator* (const Quat4f &q, const float a) {
+    return Quat4f(a * q.i, a * q.j, a * q.k, a * q.w);
+}
+
+/** Multiply by scalar. */
+inline Quat4f operator* (const float a, const Quat4f &q) {
+    return Quat4f(a * q.i, a * q.j, a * q.k, a * q.w);
+}
+
+/** Multiply by quaternion. */
+inline Quat4f operator* (const Quat4f &a, const Quat4f &b) {
+    return Quat4f(a.i * b.w + a.w * b.i + a.j * b.k - a.k * b.j,
+                  a.j * b.w + a.w * b.j + a.k * b.i - a.i * b.k,
+                  a.k * b.w + a.w * b.k + a.i * b.j - a.j * b.i,
+                  a.w * b.w - a.i * b.i - a.j * b.j - a.k * b.k);
+}
+
+/** Multiply by Vector3. */
+inline Quat4f operator* (const Quat4f &a, const Vec3f &b) {
+    return Quat4f(a.w * b.x + a.j * b.z - a.k * b.y,
+                  a.w * b.y + a.k * b.x - a.i * b.z,
+                  a.w * b.z + a.i * b.y - a.j * b.x,
+                  -a.i * b.x - a.j * b.y - a.k * b.z);
+}
+
+/** Addition. */
+inline Quat4f operator+ (const Quat4f &a, const Quat4f &b) {
+    return Quat4f(a.i + b.i, a.j + b.j, a.k + b.k, a.w + b.w);
+}
+
+/** Subtraction. */
+inline Quat4f operator- (const Quat4f &a, const Quat4f &b) {
+    return Quat4f(a.i - b.i, a.j - b.j, a.k - b.k, a.w - b.w);
+}
+
+/** Division */
+inline Quat4f operator/ (const Quat4f &q, const float a) {
+    float inva = 1.0f / a;
+    return Quat4f(q.i * inva, q.j * inva, q.k * inva, q.w * inva);
+}
+
+/** Multiply by scalar in place. */
+inline Quat4f& operator*= (Quat4f &q, const float a) {
+    q.i *= a;
+    q.j *= a;
+    q.k *= a;
+    q.w *= a;
+
+    return q;
+}
+
+/** Multiply by quaternion in place. */
+inline Quat4f& operator*= (Quat4f &a, const Quat4f &b) {
+    a.i = a.i * b.w + a.w * b.i + a.j * b.k - a.k * b.j;
+    a.j = a.j * b.w + a.w * b.j + a.k * b.i - a.i * b.k;
+    a.k = a.k * b.w + a.w * b.k + a.i * b.j - a.j * b.i;
+    a.w = a.w * b.w - a.i * b.i - a.j * b.j - a.k * b.k;
+
+    return a;
+}
+
+/** Multiply by Vector3 in place. */
+inline Quat4f& operator* (Quat4f &a, const Vec3f &b) {
+    a.i = a.w * b.x + a.j * b.z - a.k * b.y;
+    a.j = a.w * b.y + a.k * b.x - a.i * b.z;
+    a.k = a.w * b.z + a.i * b.y - a.j * b.x;
+    a.w = -a.i * b.x - a.j * b.y - a.k * b.z;
+
+    return a;
+}
+
+/** Addition in place. */
+inline Quat4f& operator+= (Quat4f &a, const Quat4f &b) {
+    a.i += b.i;
+    a.j += b.j;
+    a.k += b.k;
+    a.w += b.w;
+
+    return a;
+}
+
+/** Subtraction in place. */
+inline Quat4f& operator-= (Quat4f &a, const Quat4f &b) {
+    a.i -= b.i;
+    a.j -= b.j;
+    a.k -= b.k;
+    a.w -= b.w;
+
+    return a;
+}
+
+/** Division in place. */
+inline Quat4f& operator/= (Quat4f &q, const float a) {
+    float inva = 1.0f / a;
+
+    q.i *= inva;
+    q.j *= inva;
+    q.k *= inva;
+    q.w *= inva;
+
+    return q;
 }
 
 inline float Quat4f::LengthSqr () const {
@@ -213,91 +272,6 @@ inline Quat4f Quat4f::Cross (const Quat4f &rhs) const {
                       w);
 }
 
-//======================
-// Quat4f Operators
-//======================
-
-inline Quat4f Quat4f::operator* (const float a) const {
-    return Quat4f(i * a, j * a, k * a, w * a);
-}
-
-inline Quat4f operator* (const float a, const Quat4f &rhs) {
-    return Quat4f(a * rhs.i, a * rhs.j, a * rhs.k, a * rhs.w);
-}
-
-inline Quat4f Quat4f::operator* (const Quat4f &rhs) const {
-    return Quat4f(i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j,
-                      j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k,
-                      k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i,
-                      w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k);
-}
-
-inline Quat4f Quat4f::operator* (const Vec3f &rhs) const {
-    return Quat4f(w * rhs.x + j * rhs.z - k * rhs.y,
-                      w * rhs.y + k * rhs.x - i * rhs.z,
-                      w * rhs.z + i * rhs.y - j * rhs.x,
-                      -i * rhs.x - j * rhs.y - k * rhs.z);
-}
-
-inline Quat4f Quat4f::operator+ (const Quat4f &rhs) const {
-    return Quat4f(i + rhs.i, j + rhs.j, k + rhs.k, w + rhs.w);
-}
-
-inline Quat4f Quat4f::operator- (const Quat4f &rhs) const {
-    return Quat4f(i - rhs.i, j - rhs.j, k - rhs.k, w - rhs.w);
-}
-
-inline Quat4f Quat4f::operator/ (const float a) const {
-    float inva = 1.0f / a;
-    return Quat4f(i * inva, j * inva, k * inva, w * inva);
-}
-
-inline Quat4f &Quat4f::operator*= (const float a) {
-    i *= a;
-    j *= a;
-    k *= a;
-    w *= a;
-
-    return *this;
-}
-
-inline Quat4f &Quat4f::operator*= (const Quat4f &rhs) {
-    i = i * rhs.w + w * rhs.i + j * rhs.k - k * rhs.j;
-    j = j * rhs.w + w * rhs.j + k * rhs.i - i * rhs.k;
-    k = k * rhs.w + w * rhs.k + i * rhs.j - j * rhs.i;
-    w = w * rhs.w - i * rhs.i - j * rhs.j - k * rhs.k;
-
-    return *this;
-}
-
-inline Quat4f &Quat4f::operator+= (const Quat4f &rhs) {
-    i += rhs.i;
-    j += rhs.j;
-    k += rhs.k;
-    w += rhs.w;
-
-    return *this;
-}
-
-inline Quat4f &Quat4f::operator-= (const Quat4f &rhs) {
-    i -= rhs.i;
-    j -= rhs.j;
-    k -= rhs.k;
-    w -= rhs.w;
-
-    return *this;
-}
-
-inline Quat4f &Quat4f::operator/= (const float a) {
-    float inva = 1.0f / a;
-
-    i *= inva;
-    j *= inva;
-    k *= inva;
-    w *= inva;
-
-    return *this;
-}
 
 //=======================
 // Quat4f Comparison
@@ -326,7 +300,5 @@ inline bool Quat4f::operator== (const Quat4f &rhs) const {
 inline bool Quat4f::operator!= (const Quat4f &rhs) const {
     return !Compare(rhs);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_QUATERNION_H */

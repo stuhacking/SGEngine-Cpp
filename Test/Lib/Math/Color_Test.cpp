@@ -4,9 +4,6 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vec4f;
-using sge::Color;
-
 TEST (Color_Test, FromHexString) {
     EXPECT_EQ(Color(0, 0, 0, 255), Color::FromHex("000"));
     EXPECT_EQ(Color(0, 0, 0, 255), Color::FromHex("#000"));

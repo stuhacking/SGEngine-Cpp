@@ -15,8 +15,6 @@
 #include <utility> // std::swap
 #include <cstring> // std::memcpy
 
-namespace sge {
-
 /**
  * 3x3 Matrix. Implements math operations for 3x3 Matrices stored in
  * Column Major form.
@@ -93,63 +91,6 @@ public:
     const Vec3f &operator[] (const std::size_t index) const;
 
     Vec3f &operator[] (const std::size_t index);
-
-    /**
-     * Mat3f Scale.
-     */
-    Mat3f operator* (const float a) const;
-
-    /**
-     * Mat3f Scale, reversed operands.
-     */
-    friend Mat3f operator* (const float a, const Mat3f &rhs);
-
-    /**
-     * Mat3f Multiplication.
-     */
-    Mat3f operator* (const Mat3f &rhs) const;
-
-    /**
-     * Mat3f x Vec3f multiplication.
-     */
-    Vec3f operator* (const Vec3f &rhs) const;
-
-    /**
-     * Vec3f x Mat3f multiplication.
-     */
-    friend Vec3f operator* (const Vec3f &lhs, const Mat3f &rhs);
-
-    /**
-     * Mat3f Addition.
-     */
-    Mat3f operator+ (const Mat3f &rhs) const;
-
-    /**
-     * Mat3f Subtraction.
-     */
-    Mat3f operator- (const Mat3f &rhs) const;
-
-    /**
-     * Mat3f Scale in place.
-     * Destructive.
-     */
-    Mat3f &operator*= (const float a);
-
-    /**
-     * Mat3f Multiplication in place.
-     * Destructive.
-     */
-    Mat3f &operator*= (const Mat3f &rhs);
-
-    /**
-     * Mat3f Addition in place.
-     */
-    Mat3f &operator+= (const Mat3f &rhs);
-
-    /**
-     * Mat3f Subtraction in place.
-     */
-    Mat3f &operator-= (const Mat3f &rhs);
 
     /**
      * Get the determinant of this Mat3f.
@@ -276,72 +217,72 @@ inline Vec3f &Mat3f::operator[] (const std::size_t index) {
 // Mat3f Operations
 //=======================
 
-inline Mat3f Mat3f::operator* (const float a) const {
-    return Mat3f(mat[0] * a, mat[1] * a, mat[2] * a);
+inline Mat3f operator* (const Mat3f &m, const float a) {
+    return Mat3f(m[0] * a, m[1] * a, m[2] * a);
 }
 
 inline Mat3f operator* (const float a, const Mat3f &rhs) {
     return rhs * a;
 }
 
-inline Mat3f Mat3f::operator* (const Mat3f &rhs) const {
-    Mat3f lhs = Transpose();
+inline Mat3f operator* (const Mat3f &a, const Mat3f &b) {
+    Mat3f tmp = a.Transpose();
 
-    return Mat3f(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
-                     lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]),
-                     lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]));
+    return Mat3f(tmp[0].Dot(b[0]), tmp[1].Dot(b[0]), tmp[2].Dot(b[0]),
+                 tmp[0].Dot(b[1]), tmp[1].Dot(b[1]), tmp[2].Dot(b[1]),
+                 tmp[0].Dot(b[2]), tmp[1].Dot(b[2]), tmp[2].Dot(b[2]));
 }
 
-inline Vec3f Mat3f::operator* (const Vec3f &rhs) const {
-    return Vec3f(mat[0].x * rhs.x + mat[1].x * rhs.y + mat[2].x * rhs.z,
-                     mat[0].y * rhs.x + mat[1].y * rhs.y + mat[2].y * rhs.z,
-                     mat[0].z * rhs.x + mat[1].z * rhs.y + mat[2].z * rhs.z);
+inline Vec3f operator* (const Mat3f &m, const Vec3f &v) {
+    return Vec3f(m[0].x * v.x + m[1].x * v.y + m[2].x * v.z,
+                 m[0].y * v.x + m[1].y * v.y + m[2].y * v.z,
+                 m[0].z * v.x + m[1].z * v.y + m[2].z * v.z);
 }
 
 inline Vec3f operator* (const Vec3f &lhs, const Mat3f &rhs) {
     return rhs * lhs;
 }
 
-inline Mat3f Mat3f::operator+ (const Mat3f &rhs) const {
-    return Mat3f(mat[0] + rhs[0], mat[1] + rhs[1], mat[2] + rhs[2]);
+inline Mat3f operator+ (const Mat3f &a, const Mat3f &b) {
+    return Mat3f(a[0] + b[0], a[1] + b[1], a[2] + b[2]);
 }
 
-inline Mat3f Mat3f::operator- (const Mat3f &rhs) const {
-    return Mat3f(mat[0] - rhs[0], mat[1] - rhs[1], mat[2] - rhs[2]);
+inline Mat3f operator- (const Mat3f &a, const Mat3f &b) {
+    return Mat3f(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
 }
 
-inline Mat3f &Mat3f::operator*= (const float a) {
-    mat[0] *= a;
-    mat[1] *= a;
-    mat[2] *= a;
+inline Mat3f& operator*= (Mat3f &m, const float a) {
+    m[0] *= a;
+    m[1] *= a;
+    m[2] *= a;
 
-    return *this;
+    return m;
 }
 
-inline Mat3f &Mat3f::operator*= (const Mat3f &rhs) {
-    Mat3f lhs = Transpose();
+inline Mat3f& operator*= (Mat3f &a, const Mat3f &b) {
+    Mat3f tmp = a.Transpose();
 
-    Set(lhs[0].Dot(rhs[0]), lhs[1].Dot(rhs[0]), lhs[2].Dot(rhs[0]),
-        lhs[0].Dot(rhs[1]), lhs[1].Dot(rhs[1]), lhs[2].Dot(rhs[1]),
-        lhs[0].Dot(rhs[2]), lhs[1].Dot(rhs[2]), lhs[2].Dot(rhs[2]));
+    a.Set(tmp[0].Dot(b[0]), tmp[1].Dot(b[0]), tmp[2].Dot(b[0]),
+          tmp[0].Dot(b[1]), tmp[1].Dot(b[1]), tmp[2].Dot(b[1]),
+          tmp[0].Dot(b[2]), tmp[1].Dot(b[2]), tmp[2].Dot(b[2]));
 
-    return *this;
+    return a;
 }
 
-inline Mat3f &Mat3f::operator+= (const Mat3f &rhs) {
-    mat[0] += rhs[0];
-    mat[1] += rhs[1];
-    mat[2] += rhs[2];
+inline Mat3f& operator+= (Mat3f &a, const Mat3f &b) {
+    a[0] += b[0];
+    a[1] += b[1];
+    a[2] += b[2];
 
-    return *this;
+    return a;
 }
 
-inline Mat3f &Mat3f::operator-= (const Mat3f &rhs) {
-    mat[0] -= rhs[0];
-    mat[1] -= rhs[1];
-    mat[2] -= rhs[2];
+inline Mat3f& operator-= (Mat3f &a, const Mat3f &b) {
+    a[0] -= b[0];
+    a[1] -= b[1];
+    a[2] -= b[2];
 
-    return *this;
+    return a;
 }
 
 inline float Mat3f::Determinant () const {
@@ -351,8 +292,8 @@ inline float Mat3f::Determinant () const {
     // y |1 4 7|
     // z |2 5 8|
     return mat[0].x * (mat[1].y * mat[2].z - mat[2].y * mat[1].z) -
-        mat[0].y * (mat[1].x * mat[2].z - mat[2].x * mat[1].z) +
-        mat[0].z * (mat[1].x * mat[2].y - mat[2].x * mat[1].y);
+           mat[0].y * (mat[1].x * mat[2].z - mat[2].x * mat[1].z) +
+           mat[0].z * (mat[1].x * mat[2].y - mat[2].x * mat[1].y);
 }
 
 inline bool Mat3f::HasInverse () const {
@@ -361,8 +302,8 @@ inline bool Mat3f::HasInverse () const {
 
 inline Mat3f Mat3f::Transpose () const {
     return Mat3f(mat[0].x, mat[1].x, mat[2].x,
-                     mat[0].y, mat[1].y, mat[2].y,
-                     mat[0].z, mat[1].z, mat[2].z);
+                 mat[0].y, mat[1].y, mat[2].y,
+                 mat[0].z, mat[1].z, mat[2].z);
 }
 
 inline Mat3f &Mat3f::TransposeSelf () {
@@ -378,15 +319,15 @@ inline Mat3f &Mat3f::TransposeSelf () {
 //=======================
 
 inline bool Mat3f::Compare (const Mat3f &other) const {
-    return mat[0].Compare(other.mat[0]) &&
-        mat[1].Compare(other.mat[1]) &&
-        mat[2].Compare(other.mat[2]);
+    return mat[0] == other.mat[0] &&
+           mat[1] == other.mat[1] &&
+           mat[2] == other.mat[2];
 }
 
 inline bool Mat3f::Compare (const Mat3f &other, const float threshold) const {
     return mat[0].Compare(other.mat[0], threshold) &&
-        mat[1].Compare(other.mat[1], threshold) &&
-        mat[2].Compare(other.mat[2], threshold);
+           mat[1].Compare(other.mat[1], threshold) &&
+           mat[2].Compare(other.mat[2], threshold);
 }
 
 inline bool Mat3f::operator== (const Mat3f &other) const {
@@ -396,7 +337,5 @@ inline bool Mat3f::operator== (const Mat3f &other) const {
 inline bool Mat3f::operator!= (const Mat3f &other) const {
     return !Compare(other);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_MATRIX3_H */

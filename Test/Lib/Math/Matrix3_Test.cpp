@@ -4,9 +4,6 @@
 #include <gtest/gtest.h>
 #include "Lib.h"
 
-using sge::Vec3f;
-using sge::Mat3f;
-
 TEST (Mat3f_Test, Constructors) {
     EXPECT_EQ(Mat3f(0.0f, 0.0f, 0.0f,
                     0.0f, 0.0f, 0.0f,

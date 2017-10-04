@@ -12,16 +12,13 @@
 #ifndef __SGE_VECTOR2_H
 #define __SGE_VECTOR2_H
 
-namespace sge {
-
 /**
  * 2D Vector. Implement math operations for 2D geometry vectors.
  */
 class Vec2f {
 public:
-    /** Vec2f components. */
-    float x = 0.0f;
-    float y = 0.0f;
+    float x = 0; /**< x coordinate. */
+    float y = 0; /**< y coordinate. */
 
 public:
     static const Vec2f ZERO;
@@ -62,12 +59,14 @@ public:
 
     /**
      * Get the squared length of this Vec2f.
+     *
      * @return The Vector's Length squared
      */
     float LengthSqr () const;
 
     /**
      * Get the length of this Vec2f.
+     *
      * @return The Vector's length
      */
     float Length () const;
@@ -76,6 +75,7 @@ public:
      * Set the length of this Vec2f, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess.
      * Destructive.
+     *
      * @param length The desired new length
      */
     void SetLengthSelf (const float length);
@@ -84,6 +84,7 @@ public:
      * Set the length of a Vec2f, maintaining direction. If the
      * length is currently 0.0f then we don't attempt to guess. Returns
      * a new Vec2f.
+     *
      * @param length The desired new length
      * @return New Vec2f with adjusted length
      */
@@ -93,6 +94,7 @@ public:
      * Set the length of a Vec2f to 1.0f, maintaining direction. If
      * the current length is 0.0f then we don't attempt to guess. Returns
      * a new Vec2f.
+     *
      * @return New normalized Vec2f
      */
     Vec2f Normalize () const;
@@ -107,6 +109,7 @@ public:
     /**
      * Return a new Vec2f which has been truncated if its length
      * exceeds the limit.
+     *
      * @param max Maximum length of Vec2f
      * @return New clamped Vec2f
      */
@@ -115,6 +118,7 @@ public:
     /**
      * Return a new Vec2f which has been extended or truncated
      * if its length falls outside the limits.
+     *
      * @param min Minimum length of Vec2f
      * @param max Maximum length of Vec2f
      * @return New clamped Vec2f
@@ -124,6 +128,7 @@ public:
     /**
      * Truncate this Vec2f if its length exceeds the limit.
      * Destructive.
+     *
      * @param max Maximum length of Vec2f
      */
     void ClampLengthSelf (const float max);
@@ -132,6 +137,7 @@ public:
      * Truncate or extend this Vec2f if its length is outside
      * the limits.
      * Destructive.
+     *
      * @param min Minimum length of Vec2f
      * @param max Maximum length of Vec2f
      */
@@ -150,125 +156,44 @@ public:
      * Clamp Vec2f within minimum and maximum bounds, given by other
      * Vec2f values.
      * Destructive.
+     *
      * @param min Vec2f minimum bound
      * @param max Vec2f maximum bound
      */
     void ClampSelf (const Vec2f &min, const Vec2f &max);
 
     /**
-     * Return a copy of this Vec2f with the components negated.
-     */
-    Vec2f operator- () const;
-
-    /**
-     * Return a scaled copy of this Vec2f.
-     * @param a Scale factor
-     */
-    Vec2f operator* (const float a) const;
-
-    /**
-     * Return a scaled copy of a Vec2f, reversed operands.
-     * @param a Scale Factor
-     * @param rhs Vec2f to be scaled
-     */
-    friend Vec2f operator* (const float a, const Vec2f &rhs);
-
-    /**
-     * Multiply this Vec2f by another Vec2f componentwise.
-     * @return Result of Vec2f multiplication
-     */
-    Vec2f operator* (const Vec2f &rhs) const;
-
-    /**
-     * Add this Vec2f to another Vec2f.
-     * @return Result of Vec2f addition
-     */
-    Vec2f operator+ (const Vec2f &rhs) const;
-
-    /**
-     * Subtract another Vec2f from this Vec2f.
-     * @return Result of Vec2f subtraction
-     */
-    Vec2f operator- (const Vec2f &rhs) const;
-
-    /**
-     * Divide this Vec2f by a scalar value.
-     * @param a Divisor
-     * @return Result of Vec2f division
-     */
-    Vec2f operator/ (const float a) const;
-
-    /**
-     * Divide this Vec2f componenetwise by another Vec2f.
-     * @param rhs Divisor
-     * @return Result of Vec2f division
-     */
-    Vec2f operator/ (const Vec2f &rhs) const;
-
-    /**
-     * Multiply and mutate this Vec2f with a scalar value.
-     * Destructive.
-     * @param Scale Factor
-     */
-    Vec2f &operator*= (const float a);
-
-    /**
-     * Multiply and mutate this Vec2f componentwise with another Vec2f.
-     * Destructive.
-     */
-    Vec2f &operator*= (const Vec2f &rhs);
-
-    /**
-     * Add and mutate this Vec2f with another Vec2f.
-     * Destructive.
-     */
-    Vec2f &operator+= (const Vec2f &rhs);
-
-    /**
-     * Subtract and mutate this Vec2f with another Vec2f.
-     * Destructive.
-     */
-    Vec2f &operator-= (const Vec2f &rhs);
-
-    /**
-     * Divide and mutate this Vec2f by a scalar value.
-     * Destructive.
-     */
-    Vec2f &operator/= (const float a);
-
-    /**
-     * Divide and mutate this Vec2f componentwise with another Vec2f.
-     * Destructive.
-     */
-    Vec2f &operator/= (const Vec2f &rhs);
-
-    /**
      * Return the dot product of this Vec2f and another Vec2f.
+     *
      * @return Vec2f Dot Product
      */
     float Dot (const Vec2f &rhs) const;
 
     /**
      * Return the cross product of this Vec2f and another Vec2f.
+     *
      * @return Vec2f Cross Product
      */
     float Cross (const Vec2f &rhs) const;
 
     /**
      * Return the mirror of this Vec2f about an arbitrary axis.
+     *
      * @param axis The axis of symmetry
      * @return Result of mirroring this Vec2f about axis
      */
     Vec2f Mirror (const Vec2f &axis) const;
 
     /**
-     * Compare this Vec2f against another Vec2f exactly.
-     * @return true if this Vec2f exactly equals the other, false otherwise
+     * Compare this Vec2f against another Vec2f.
+     *
+     * @return true if this Vec2f equals the other, false otherwise.
      */
     bool Compare (const Vec2f &other) const;
 
     /**
      * Compare this Vec2f against another Vec2f within a given tolerance.
+     *
      * @param threshold Tolerance within which Vec2f are considered equal
      * @return true if this Vec2f equals the other within given
      *         tolerance, false otherwise
@@ -277,12 +202,14 @@ public:
 
     /**
      * Compare this Vec2f against another Vec2f exactly.
+     *
      * @return true if this Vec2f exactly equals the other, false otherwise
      */
     bool operator== (const Vec2f &other) const;
 
     /**
      * Compare this Vec2f against another Vec2f exactly.
+     *
      * @return true if this Vec2f does not equal the other, false otherwise
      */
     bool operator!= (const Vec2f &other) const;
@@ -304,7 +231,96 @@ inline void Vec2f::Set (const float xx, const float yy) {
 }
 
 inline void Vec2f::Zero () {
-    x = y = 0.0f;
+    x = y = 0;
+}
+
+//==========================
+// Vec2f Operators
+//==========================
+
+/** Negate. */
+inline Vec2f operator- (const Vec2f &v) {
+    return Vec2f(-v.x, -v.y);
+}
+
+/** Multiply by scalar. */
+inline Vec2f operator* (const Vec2f &v, const float a) {
+    return Vec2f(a * v.x, a * v.y);
+}
+
+/** Multiply by scalar. */
+inline Vec2f operator* (const float a, const Vec2f &v) {
+    return Vec2f(a * v.x, a * v.y);
+}
+
+/** Piecewise multiplication. */
+inline Vec2f operator* (const Vec2f &a, const Vec2f &b) {
+    return Vec2f(a.x * b.x, a.y * b.y);
+}
+
+/** Addition. */
+inline Vec2f operator+ (const Vec2f &a, const Vec2f &b) {
+    return Vec2f(a.x + b.x, a.y + b.y);
+}
+
+/** Subtraction. */
+inline Vec2f operator- (const Vec2f &a, const Vec2f &b) {
+    return Vec2f(a.x - b.x, a.y - b.y);
+}
+
+/** Division. */
+inline Vec2f operator/ (const Vec2f &v, const float a) {
+    float inva = 1.0f / a;
+    return Vec2f(v.x * inva, v.y * inva);
+}
+
+/** Multiply by scalar in place. */
+inline Vec2f& operator*= (Vec2f &v, const float a) {
+    v.x *= a;
+    v.y *= a;
+
+    return v;
+}
+
+/** Piecewise multiplication in place. */
+inline Vec2f& operator*= (Vec2f &a, const Vec2f &b) {
+    a.x *= b.x;
+    a.y *= b.y;
+
+    return a;
+}
+
+/** Addition in place. */
+inline Vec2f& operator+= (Vec2f &a, const Vec2f &b) {
+    a.x += b.x;
+    a.y += b.y;
+
+    return a;
+}
+
+/** Subtraction in place. */
+inline Vec2f& operator-= (Vec2f &a, const Vec2f &b) {
+    a.x -= b.x;
+    a.y -= b.y;
+
+    return a;
+}
+
+/** Division in place. */
+inline Vec2f& operator/= (Vec2f &v, const float a) {
+    float inva = 1.0f / a;
+    v.x *= inva;
+    v.y *= inva;
+
+    return v;
+}
+
+/** Piecewise division in place. */
+inline Vec2f& operator/= (Vec2f &a, const Vec2f &b) {
+    a.x /= b.x;
+    a.y /= b.y;
+
+    return a;
 }
 
 //==========================
@@ -322,10 +338,10 @@ inline float Vec2f::Length () const {
 inline Vec2f Vec2f::SetLength (const float length) const {
     float currMag = Length();
     if (currMag == 0.0f) {
-        return Vec2f(*this);
-    } else {
-        return *this * (length / currMag);
+        return *this;
     }
+
+    return *this * (length / currMag);
 }
 
 inline void Vec2f::SetLengthSelf (const float length) {
@@ -338,10 +354,10 @@ inline void Vec2f::SetLengthSelf (const float length) {
 inline Vec2f Vec2f::Normalize () const {
     float currMag = Length();
     if (currMag == 0.0f) {
-        return Vec2f(*this);
-    } else {
-        return *this / currMag;
+        return *this;
     }
+
+    return *this / currMag;
 }
 
 inline void Vec2f::NormalizeSelf () {
@@ -356,7 +372,7 @@ inline Vec2f Vec2f::ClampLength (const float max) const {
         return SetLength(max);
     }
 
-    return Vec2f(*this);
+    return *this;
 }
 
 inline Vec2f Vec2f::ClampLength (const float min, const float max) const {
@@ -370,7 +386,7 @@ inline Vec2f Vec2f::ClampLength (const float min, const float max) const {
         return SetLength(max);
     }
 
-    return Vec2f(*this);
+    return *this;
 }
 
 inline void Vec2f::ClampLengthSelf (const float max) {
@@ -401,86 +417,6 @@ inline void Vec2f::ClampSelf (const Vec2f &min, const Vec2f &max) {
     y = FMath::ClampFloat(y, min.y, max.y);
 }
 
-//==========================
-// Vec2f Operators
-//==========================
-
-inline Vec2f Vec2f::operator- () const {
-    return Vec2f(-x, -y);
-}
-
-inline Vec2f Vec2f::operator* (const float rhs) const {
-    return Vec2f(x * rhs, y * rhs);
-}
-
-inline Vec2f operator* (const float a, const Vec2f &rhs) {
-    return Vec2f(a * rhs.x, a * rhs.y);
-}
-
-inline Vec2f Vec2f::operator* (const Vec2f &rhs) const {
-    return Vec2f(x * rhs.x, y * rhs.y);
-}
-
-inline Vec2f Vec2f::operator+ (const Vec2f &rhs) const {
-    return Vec2f(x + rhs.x, y + rhs.y);
-}
-
-inline Vec2f Vec2f::operator- (const Vec2f &rhs) const {
-    return Vec2f(x - rhs.x, y - rhs.y);
-}
-
-inline Vec2f Vec2f::operator/ (const float a) const {
-    float inva = 1.0f / a;
-    return Vec2f(x * inva, y * inva);
-}
-
-inline Vec2f Vec2f::operator/ (const Vec2f &rhs) const {
-    return Vec2f(x / rhs.x, y / rhs.y);
-}
-
-inline Vec2f &Vec2f::operator*= (const float a) {
-    x *= a;
-    y *= a;
-
-    return *this;
-}
-
-inline Vec2f &Vec2f::operator*= (const Vec2f &rhs) {
-    x *= rhs.x;
-    y *= rhs.y;
-
-    return *this;
-}
-
-inline Vec2f &Vec2f::operator+= (const Vec2f &rhs) {
-    x += rhs.x;
-    y += rhs.y;
-
-    return *this;
-}
-
-inline Vec2f &Vec2f::operator-= (const Vec2f &rhs) {
-    x -= rhs.x;
-    y -= rhs.y;
-
-    return *this;
-}
-
-inline Vec2f &Vec2f::operator/= (const float a) {
-    float inva = 1.0f / a;
-    x *= inva;
-    y *= inva;
-
-    return *this;
-}
-
-inline Vec2f &Vec2f::operator/= (const Vec2f &rhs) {
-    x /= rhs.x;
-    y /= rhs.y;
-
-    return *this;
-}
-
 inline float Vec2f::Dot (const Vec2f &rhs) const {
     return x * rhs.x + y * rhs.y;
 }
@@ -497,19 +433,13 @@ inline Vec2f Vec2f::Mirror (const Vec2f &axis) const {
 // Vec2f Comparisons
 //==========================
 
-// This comparison may be inaccurate, prefer Compare(val, threshold)
-// where possible.
 inline bool Vec2f::Compare (const Vec2f &other) const {
     return x == other.x && y == other.y;
 }
 
 inline bool Vec2f::Compare (const Vec2f &other, const float threshold) const {
-    if (fabsf(x - other.x) > threshold)
-        return false;
-    if (fabsf(y - other.y) > threshold)
-        return false;
-
-    return true;
+    return (fabsf(x - other.x) <= threshold) &&
+           (fabsf(y - other.y) <= threshold);
 }
 
 inline bool Vec2f::operator== (const Vec2f &other) const {
@@ -519,7 +449,5 @@ inline bool Vec2f::operator== (const Vec2f &other) const {
 inline bool Vec2f::operator!= (const Vec2f &other) const {
     return !Compare(other);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_VECTOR2_H */

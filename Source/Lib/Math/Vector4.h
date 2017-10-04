@@ -12,8 +12,6 @@
 #ifndef __SGE_VECTOR4_H
 #define __SGE_VECTOR4_H
 
-namespace sge {
-
 /**
  * 4D Vector. Implement math operations for 4D geometry vectors.
  */
@@ -167,86 +165,6 @@ public:
      */
     void ClampSelf (const Vec4f &min, const Vec4f &max);
 
-    /**
-     * Return a copy of this Vec4f with the components negated.
-     */
-    Vec4f operator- () const;
-
-    /**
-     * Return a scaled copy of this Vec4f.
-     * @param a Scale factor
-     */
-    Vec4f operator* (const float a) const;
-
-    /**
-     * Return a scaled copy of a Vec4f, reversed operands.
-     * @param a Scale Factor
-     * @param rhs Vec4f to be scaled
-     */
-    friend Vec4f operator* (const float a, const Vec4f &rhs);
-
-    /**
-     * Multiply this Vec4f by another Vec4f componentwise.
-     * @return Result of Vec4f multiplication
-     */
-    Vec4f operator* (const Vec4f &rhs) const;
-
-    /**
-     * Add this Vec4f to another Vec4f.
-     * @return Result of Vec4f addition
-     */
-    Vec4f operator+ (const Vec4f &rhs) const;
-
-    /**
-     * Subtract another Vec4f from this Vec4f.
-     * @return Result of Vec4f subtraction
-     */
-    Vec4f operator- (const Vec4f &rhs) const;
-
-    /**
-     * Divide this Vec4f by a scalar value.
-     * @param a Divisor
-     * @return Result of Vec4f division
-     */
-    Vec4f operator/ (const float a) const;
-
-    /**
-     * Multiply and mutate this Vec4f with a scalar value.
-     * Destructive.
-     * @param Scale Factor
-     */
-    Vec4f &operator*= (const float a);
-
-    /**
-     * Multiply and mutate this Vec4f componentwise with another Vec4f.
-     * Destructive.
-     */
-    Vec4f &operator*= (const Vec4f &rhs);
-
-    /**
-     * Add and mutate this Vec4f with another Vec4f.
-     * Destructive.
-     */
-    Vec4f &operator+= (const Vec4f &rhs);
-
-    /**
-     * Subtract and mutate this Vec4f with another Vec4f.
-     * Destructive.
-     */
-    Vec4f &operator-= (const Vec4f &rhs);
-
-    /**
-     * Divide and mutate this Vec4f by a scalar value.
-     * Destructive.
-     */
-    Vec4f &operator/= (const float a);
-
-    /**
-     * Divide and mutate this Vec4f componentwise with another Vec4f.
-     * Destructive.
-     */
-    Vec4f &operator/= (const Vec4f &rhs);
-
     float Dot (const Vec4f &rhs) const;
 
     /** Swizzling */
@@ -260,12 +178,14 @@ public:
 
     /**
      * Compare this Vec4f against another Vec4f exactly.
+     *
      * @return true if this Vec4f exactly equals the other, false otherwise
      */
     bool Compare (const Vec4f &other) const;
 
     /**
      * Compare this Vec4f against another Vec4f within a given tolerance.
+     *
      * @param threshold Tolerance within which Vec4f are considered equal
      * @return true if this Vec4f equals the other within given
      *         tolerance, false otherwise
@@ -304,6 +224,107 @@ inline void Vec4f::Set (const float xx, const float yy, const float zz, const fl
 
 inline void Vec4f::Zero () {
     x = y = z = w = 0.0f;
+}
+
+//==========================
+// Vec4f Operators
+//==========================
+
+/** Negate. */
+inline Vec4f operator- (const Vec4f &v) {
+    return Vec4f(-v.x, -v.y, -v.z, -v.w);
+}
+
+/** Multiply by scalar. */
+inline Vec4f operator* (const Vec4f &v, const float a) {
+    return Vec4f(a * v.x, a * v.y, a * v.z, a * v.w);
+}
+
+/** Multiply by scalar. */
+inline Vec4f operator* (const float a, const Vec4f &v) {
+    return Vec4f(a * v.x, a * v.y, a * v.z, a * v.w);
+}
+
+/** Piecewise multiplication. */
+inline Vec4f operator* (const Vec4f &a, const Vec4f &b) {
+    return Vec4f(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
+}
+
+/** Addition. */
+inline Vec4f operator+ (const Vec4f &a, const Vec4f &b) {
+    return Vec4f(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+}
+
+/** Subtraction. */
+inline Vec4f operator- (const Vec4f &a, const Vec4f &b) {
+    return Vec4f(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+}
+
+/** Division. */
+inline Vec4f operator/ (const Vec4f &v, const float a) {
+    float inva = 1.0f / a;
+    return Vec4f(v.x * inva, v.y * inva, v.z * inva, v.w * inva);
+}
+
+/** Multiply by scalar in place. */
+inline Vec4f& operator*= (Vec4f &v, const float a) {
+    v.x *= a;
+    v.y *= a;
+    v.z *= a;
+    v.w *= a;
+
+    return v;
+}
+
+/** Piecewise multiplication in place. */
+inline Vec4f& operator*= (Vec4f &a, const Vec4f &b) {
+    a.x *= b.x;
+    a.y *= b.y;
+    a.z *= b.z;
+    a.w *= b.w;
+
+    return a;
+}
+
+/** Addition in place. */
+inline Vec4f& operator+= (Vec4f &a, const Vec4f &b) {
+    a.x += b.x;
+    a.y += b.y;
+    a.z += b.z;
+    a.w += b.w;
+
+    return a;
+}
+
+/** Subtraction in place. */
+inline Vec4f& operator-= (Vec4f &a, const Vec4f &b) {
+    a.x -= b.x;
+    a.y -= b.y;
+    a.z -= b.z;
+    a.w -= b.w;
+
+    return a;
+}
+
+/** Division in place. */
+inline Vec4f& operator/= (Vec4f &v, const float a) {
+    float inva = 1.0f / a;
+    v.x *= inva;
+    v.y *= inva;
+    v.z *= inva;
+    v.w *= inva;
+
+    return v;
+}
+
+/** Piecewise division in place. */
+inline Vec4f& operator/= (Vec4f &a, const Vec4f &b) {
+    a.x /= b.x;
+    a.y /= b.y;
+    a.z /= b.z;
+    a.w /= b.w;
+
+    return a;
 }
 
 //==========================
@@ -405,94 +426,6 @@ inline void Vec4f::ClampSelf (const Vec4f &min, const Vec4f &max) {
     w = FMath::ClampFloat(w, min.w, max.w);
 }
 
-inline Vec4f Vec4f::operator- () const {
-    return Vec4f(-x, -y, -z, -w);
-}
-
-//==========================
-// Vec4f Operators
-//==========================
-
-inline Vec4f Vec4f::operator* (const float rhs) const {
-    return Vec4f(x * rhs, y * rhs, z * rhs, w * rhs);
-}
-
-inline Vec4f operator* (const float a, const Vec4f &rhs) {
-    return Vec4f(a * rhs.x, a * rhs.y, a * rhs.z, a * rhs.w);
-}
-
-inline Vec4f Vec4f::operator* (const Vec4f &rhs) const {
-    return Vec4f(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
-}
-
-inline Vec4f Vec4f::operator+ (const Vec4f &rhs) const {
-    return Vec4f(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
-}
-
-inline Vec4f Vec4f::operator- (const Vec4f &rhs) const {
-    return Vec4f(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
-}
-
-inline Vec4f Vec4f::operator/ (const float a) const {
-    float inva = 1.0f / a;
-    return Vec4f(x * inva, y * inva, z * inva, w * inva);
-}
-
-inline Vec4f &Vec4f::operator*= (const float a) {
-    x *= a;
-    y *= a;
-    z *= a;
-    w *= a;
-
-    return *this;
-}
-
-inline Vec4f &Vec4f::operator*= (const Vec4f &rhs) {
-    x *= rhs.x;
-    y *= rhs.y;
-    z *= rhs.z;
-    w *= rhs.w;
-
-    return *this;
-}
-
-inline Vec4f &Vec4f::operator+= (const Vec4f &rhs) {
-    x += rhs.x;
-    y += rhs.y;
-    z += rhs.z;
-    w += rhs.w;
-
-    return *this;
-}
-
-inline Vec4f &Vec4f::operator-= (const Vec4f &rhs) {
-    x -= rhs.x;
-    y -= rhs.y;
-    z -= rhs.z;
-    w -= rhs.w;
-
-    return *this;
-}
-
-inline Vec4f &Vec4f::operator/= (const float a) {
-    float inva = 1.0f / a;
-    x *= inva;
-    y *= inva;
-    z *= inva;
-    w *= inva;
-
-    return *this;
-}
-
-inline Vec4f &Vec4f::operator/= (const Vec4f &rhs) {
-    x /= rhs.x;
-    y /= rhs.y;
-    z /= rhs.z;
-    w /= rhs.w;
-
-    return *this;
-}
-
 // Dot product.
 inline float Vec4f::Dot (const Vec4f &rhs) const {
     return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
@@ -525,16 +458,10 @@ inline bool Vec4f::Compare (const Vec4f &other) const {
 }
 
 inline bool Vec4f::Compare (const Vec4f &other, const float threshold) const {
-    if (fabs(x - other.x) > threshold)
-        return false;
-    if (fabs(y - other.y) > threshold)
-        return false;
-    if (fabs(z - other.z) > threshold)
-        return false;
-    if (fabs(w - other.w) > threshold)
-        return false;
-
-    return true;
+    return fabsf(x - other.x) <= threshold &&
+           fabsf(y - other.y) <= threshold &&
+           fabsf(z - other.z) <= threshold &&
+           fabsf(w - other.w) <= threshold;
 }
 
 inline bool Vec4f::operator== (const Vec4f &other) const {
@@ -544,7 +471,5 @@ inline bool Vec4f::operator== (const Vec4f &other) const {
 inline bool Vec4f::operator!= (const Vec4f &other) const {
     return !Compare(other);
 }
-
-} /* namespace sge */
 
 #endif /* __SGE_VECTOR4_H */

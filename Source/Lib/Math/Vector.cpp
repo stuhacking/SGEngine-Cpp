@@ -5,8 +5,6 @@
 
 #include <random>
 
-namespace sge {
-
 //==================================
 // VECTOR 2
 //==================================
@@ -64,5 +62,3 @@ const Vec4f Vec4f::X{1.0f, 0.0f, 0.0f, 0.0f};
 const Vec4f Vec4f::Y{0.0f, 1.0f, 0.0f, 0.0f};
 const Vec4f Vec4f::Z{0.0f, 0.0f, 1.0f, 0.0f};
 const Vec4f Vec4f::W{0.0f, 0.0f, 0.0f, 1.0f};
-
-} /* namespace sge */

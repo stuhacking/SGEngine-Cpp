@@ -5,8 +5,6 @@
 
 #include <iostream>
 
-namespace sge {
-
 //==================================
 // MATRIX 2x2
 //==================================
@@ -117,5 +115,3 @@ bool Mat4f::InverseSelf () {
 
     return true;
 }
-
-} /* namespace sge */

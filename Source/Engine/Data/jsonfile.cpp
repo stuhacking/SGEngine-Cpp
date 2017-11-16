@@ -80,12 +80,12 @@ Quat4f ReadOrientation (const json::Value &json) {
         throw std::invalid_argument(std::string("ReadOrientation expected list of 3 elements but got ") + FormatJSONValue(json));
     }
     auto values = json.GetArray();
-    Quat4f quat = Quat4f::IDENTITY;
+    Quat4f quat = Quat4f_Identity;
 
-    quat *= Quat4f::AxisAngle(Vec3f::X, values[0].GetFloat());
-    quat *= Quat4f::AxisAngle(Vec3f::Z, values[2].GetFloat());
-    quat *= Quat4f::AxisAngle(Vec3f::Y, values[1].GetFloat());
-    quat.NormalizeSelf();
+    quat *= Quat4f(values[0].GetFloat(), Vec3f_X);
+    quat *= Quat4f(values[2].GetFloat(), Vec3f_Z);
+    quat *= Quat4f(values[1].GetFloat(), Vec3f_Y);
+    quat.normalizeSelf();
 
     return quat;
 }

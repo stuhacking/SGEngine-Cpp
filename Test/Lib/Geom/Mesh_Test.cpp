@@ -2,7 +2,7 @@
 // Created by Stuart Hacking on 13/08/2015.
 //
 #include <gtest/gtest.h>
-#include "Lib.h"
+#include "lib.h"
 
 using sge::Mesh;
 using sge::Vertex;

@@ -9,7 +9,7 @@ namespace sge {
 
 Mat4f GLProjection::GetPerspectiveProjection(const u32 w, const u32 h) const {
     float aspect = static_cast<float>(w) / static_cast<float>(h);
-    float size = near * static_cast<float>(tanf(TO_RADIANS(fov)) / 2.0f);
+    float size = near * static_cast<float>(tanf(math::rad(fov)) / 2.0f);
     float l = -size;
     float r = size;
     float t = size / aspect;
@@ -24,7 +24,7 @@ Mat4f GLProjection::GetPerspectiveProjection(const u32 w, const u32 h) const {
 
 Mat4f GLProjection::GetOrthographicProjection(const u32 w, const u32 h) const {
     float aspect = static_cast<float>(w) / static_cast<float>(h);
-    float size = FMath::Min(w / 2.0f, h / 2.0f);
+    float size = math::min(w / 2.0f, h / 2.0f);
     float l = -size;
     float r = size;
     float t = size / aspect;

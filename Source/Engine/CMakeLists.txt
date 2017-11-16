@@ -18,7 +18,7 @@ include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${RapidJSON_SOURCE_DIR}/include)
 include_directories(${SOIL_SOURCE_DIR}/include)
 
-include_directories(../Lib)
+include_directories(../lib)
 
 set(SOURCES
   Data/jsonfile.cpp

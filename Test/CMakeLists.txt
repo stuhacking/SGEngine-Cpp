@@ -6,7 +6,7 @@ project(sgetest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # Test includes:
-include_directories(../Source/Lib)
+include_directories(../Source/lib)
 
 # Source Files (Any .cpp file under Test/ will be included.)
 file(GLOB_RECURSE SOURCES *.cpp .)

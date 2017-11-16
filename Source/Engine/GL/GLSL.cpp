@@ -62,7 +62,7 @@ bool checkValidateStatus(const GLuint glslID) {
  */
 static
 GLuint DetectShaderType (const std::string &filename) {
-    std::string ext = str::FileExtension(filename);
+    std::string ext = str::fileExt(filename);
 
     if ("vs" == ext || "vert" == ext) {
         return GL_VERTEX_SHADER;

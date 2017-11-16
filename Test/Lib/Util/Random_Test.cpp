@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-#include "Lib.h"
+#include "lib.h"
 
 using sge::Random;
 
@@ -15,12 +15,12 @@ TEST (Random_Test, same_seed_same_sequence) {
     Random r2 = Random(1);
 
     for (int k = 0; k < nrolls; ++k) {
-        EXPECT_EQ(r1.NextInt(), r2.NextInt());
-        EXPECT_EQ(r1.NextInt(10), r2.NextInt(10));
-        EXPECT_EQ(r1.NextInt(20, 50), r2.NextInt(20, 50));
-        EXPECT_FLOAT_EQ(r1.NextFloat(), r2.NextFloat());
-        EXPECT_FLOAT_EQ(r1.NextFloat(2.0f), r2.NextFloat(2.0f));
-        EXPECT_FLOAT_EQ(r1.NextFloat(-4.0f, 4.0f), r2.NextFloat(-4.0f, 4.0f));
+        EXPECT_EQ(r1.nextInt(), r2.nextInt());
+        EXPECT_EQ(r1.nextInt(10), r2.nextInt(10));
+        EXPECT_EQ(r1.nextInt(20, 50), r2.nextInt(20, 50));
+        EXPECT_FLOAT_EQ(r1.nextFloat(), r2.nextFloat());
+        EXPECT_FLOAT_EQ(r1.nextFloat(2.0f), r2.nextFloat(2.0f));
+        EXPECT_FLOAT_EQ(r1.nextFloat(-4.0f, 4.0f), r2.nextFloat(-4.0f, 4.0f));
     }
 }
 
@@ -30,12 +30,12 @@ TEST (Random_Test, diff_seed_diff_sequence) {
 
     bool allMatch = true;
     for (int k = 0; k < nrolls; ++k) {
-        allMatch = r1.NextInt() == r2.NextInt();
-        allMatch = r1.NextInt(10) == r2.NextInt(10);
-        allMatch = r1.NextInt(20, 50) == r2.NextInt(20, 50);
-        allMatch = r1.NextFloat() == r2.NextFloat(20, 50);
-        allMatch = r1.NextFloat(2.0f) == r2.NextFloat(2.0f);
-        allMatch = r1.NextFloat(-4.0f, 4.0f) == r2.NextFloat(-4.0f, 4.0f);
+        allMatch = r1.nextInt() == r2.nextInt();
+        allMatch = r1.nextInt(10) == r2.nextInt(10);
+        allMatch = r1.nextInt(20, 50) == r2.nextInt(20, 50);
+        allMatch = r1.nextFloat() == r2.nextFloat(20, 50);
+        allMatch = r1.nextFloat(2.0f) == r2.nextFloat(2.0f);
+        allMatch = r1.nextFloat(-4.0f, 4.0f) == r2.nextFloat(-4.0f, 4.0f);
     }
 
     EXPECT_FALSE(allMatch);
@@ -46,21 +46,21 @@ TEST (Random_Test, set_seed_same) {
     Random r2 = Random(3);
 
     for (int k = 0; k < 30; ++k) {
-        r1.NextInt();
+        r1.nextInt();
 
-        if (k % 3 == 0) r2.NextInt();
+        if (k % 3 == 0) r2.nextInt();
     }
 
     r1.SetSeed(10);
     r2.SetSeed(10);
 
     for (int k = 0; k < nrolls; ++k) {
-        EXPECT_EQ(r1.NextInt(), r2.NextInt());
-        EXPECT_EQ(r1.NextInt(10), r2.NextInt(10));
-        EXPECT_EQ(r1.NextInt(20, 50), r2.NextInt(20, 50));
-        EXPECT_FLOAT_EQ(r1.NextFloat(), r2.NextFloat());
-        EXPECT_FLOAT_EQ(r1.NextFloat(2.0f), r2.NextFloat(2.0f));
-        EXPECT_FLOAT_EQ(r1.NextFloat(-4.0f, 4.0f), r2.NextFloat(-4.0f, 4.0f));
+        EXPECT_EQ(r1.nextInt(), r2.nextInt());
+        EXPECT_EQ(r1.nextInt(10), r2.nextInt(10));
+        EXPECT_EQ(r1.nextInt(20, 50), r2.nextInt(20, 50));
+        EXPECT_FLOAT_EQ(r1.nextFloat(), r2.nextFloat());
+        EXPECT_FLOAT_EQ(r1.nextFloat(2.0f), r2.nextFloat(2.0f));
+        EXPECT_FLOAT_EQ(r1.nextFloat(-4.0f, 4.0f), r2.nextFloat(-4.0f, 4.0f));
     }
 }
 
@@ -69,8 +69,8 @@ TEST (Random_Test, set_seed_diff_sequence) {
     Random r2 = Random(3);
 
     for (int k = 0; k < 30; ++k) {
-        r1.NextInt();
-        r2.NextInt();
+        r1.nextInt();
+        r2.nextInt();
     }
 
     r1.SetSeed(12);
@@ -78,12 +78,12 @@ TEST (Random_Test, set_seed_diff_sequence) {
 
     bool allMatch = true;
     for (int k = 0; k < nrolls; ++k) {
-        allMatch = r1.NextInt() == r2.NextInt();
-        allMatch = r1.NextInt(10) == r2.NextInt(10);
-        allMatch = r1.NextInt(20, 50) == r2.NextInt(20, 50);
-        allMatch = r1.NextFloat() == r2.NextFloat(20, 50);
-        allMatch = r1.NextFloat(2.0f) == r2.NextFloat(2.0f);
-        allMatch = r1.NextFloat(-4.0f, 4.0f) == r2.NextFloat(-4.0f, 4.0f);
+        allMatch = r1.nextInt() == r2.nextInt();
+        allMatch = r1.nextInt(10) == r2.nextInt(10);
+        allMatch = r1.nextInt(20, 50) == r2.nextInt(20, 50);
+        allMatch = r1.nextFloat() == r2.nextFloat(20, 50);
+        allMatch = r1.nextFloat(2.0f) == r2.nextFloat(2.0f);
+        allMatch = r1.nextFloat(-4.0f, 4.0f) == r2.nextFloat(-4.0f, 4.0f);
     }
 
     EXPECT_FALSE(allMatch);
@@ -97,12 +97,12 @@ TEST (Random_Test, Uniform_Int_Distribution) {
 
     for (int k = 0; k < nrolls; ++k) {
         // This is the actual roll
-        results[r1.NextInt(max)]++;
+        results[r1.nextInt(max)]++;
 
         // What if there's something else using the rng...
         // The distribution should be resilient against that.
-        r1.NextFloat();
-        r1.NextInt(2, 12);
+        r1.nextFloat();
+        r1.nextInt(2, 12);
     }
 
     // Histogram.

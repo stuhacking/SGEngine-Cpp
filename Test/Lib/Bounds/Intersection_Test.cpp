@@ -1,27 +1,27 @@
 //
-// Intersection Tests
+// intersection Tests
 //
 #include <gtest/gtest.h>
-#include "Lib.h"
+#include "lib.h"
 
 using sge::Line2D;
-using sge::Rectangle;
+using sge::Rect;
 using sge::Circle;
 using sge::Ray3D;
-using sge::AABB;
+using sge::Aabb;
 using sge::Sphere;
 
-TEST (Intersection_Test, Lines_Should_Intersect) {
+TEST (intersection_Test, Lines_Should_intersect) {
     Line2D l1 = Line2D(0.0f, 0.0f, 10.0f, 10.0f);
     Line2D l2 = Line2D(0.0f, 1.0f, 10.0f, 11.0f);
     Line2D l3 = Line2D(2.0f, 0.0f, 2.0f, 10.0f);
 
-    EXPECT_FALSE(sge::Intersects(l1, l2));
-    EXPECT_TRUE(sge::Intersects(l1, l3));
-    EXPECT_TRUE(sge::Intersects(l2, l3));
+    EXPECT_FALSE(sge::intersects(l1, l2));
+    EXPECT_TRUE(sge::intersects(l1, l3));
+    EXPECT_TRUE(sge::intersects(l2, l3));
 }
 
-// Basic Rectangle Tests.
+// Basic Rect Tests.
 //     8                        +--------------+
 //                              |              |
 //     7              +----+    |    +----+    |
@@ -40,44 +40,44 @@ TEST (Intersection_Test, Lines_Should_Intersect) {
 //
 //     0    1    2    3    4    5    6    7    8
 //
-static const Rectangle rA = Rectangle(1.0f, 1.0f, 3.0f, 3.0f);
-static const Rectangle rB = Rectangle(2.0f, 2.0f, 7.0f, 4.0f);
-static const Rectangle rC = Rectangle(4.0f, 1.0f, 5.0f, 6.0f);
-static const Rectangle rD = Rectangle(6.0f, 1.0f, 8.0f, 3.0f);
-static const Rectangle rE = Rectangle(1.0f, 5.0f, 2.0f, 6.0f);
-static const Rectangle rF = Rectangle(3.0f, 6.0f, 4.0f, 7.0f);
-static const Rectangle rG = Rectangle(5.0f, 5.0f, 8.0f, 8.0f);
-static const Rectangle rH = Rectangle(6.0f, 6.0f, 7.0f, 7.0f);
+static const Rect rA = Rect(1.0f, 1.0f, 3.0f, 3.0f);
+static const Rect rB = Rect(2.0f, 2.0f, 7.0f, 4.0f);
+static const Rect rC = Rect(4.0f, 1.0f, 5.0f, 6.0f);
+static const Rect rD = Rect(6.0f, 1.0f, 8.0f, 3.0f);
+static const Rect rE = Rect(1.0f, 5.0f, 2.0f, 6.0f);
+static const Rect rF = Rect(3.0f, 6.0f, 4.0f, 7.0f);
+static const Rect rG = Rect(5.0f, 5.0f, 8.0f, 8.0f);
+static const Rect rH = Rect(6.0f, 6.0f, 7.0f, 7.0f);
 
-TEST (Intersection_Test, Rectangles_Should_Intersect) {
-    EXPECT_TRUE(sge::Intersects(rA, rA));
-    EXPECT_TRUE(sge::Intersects(rA, rB));
-    EXPECT_TRUE(sge::Intersects(rB, rA));
-    EXPECT_TRUE(sge::Intersects(rB, rC));
-    EXPECT_TRUE(sge::Intersects(rC, rB));
-    EXPECT_TRUE(sge::Intersects(rB, rD));
-    EXPECT_TRUE(sge::Intersects(rF, rC));
-    EXPECT_TRUE(sge::Intersects(rC, rF));
-    EXPECT_TRUE(sge::Intersects(rC, rG));
-    EXPECT_TRUE(sge::Intersects(rG, rH));
-    EXPECT_TRUE(sge::Intersects(rH, rG));
+TEST (intersection_Test, Rects_Should_intersect) {
+    EXPECT_TRUE(sge::intersects(rA, rA));
+    EXPECT_TRUE(sge::intersects(rA, rB));
+    EXPECT_TRUE(sge::intersects(rB, rA));
+    EXPECT_TRUE(sge::intersects(rB, rC));
+    EXPECT_TRUE(sge::intersects(rC, rB));
+    EXPECT_TRUE(sge::intersects(rB, rD));
+    EXPECT_TRUE(sge::intersects(rF, rC));
+    EXPECT_TRUE(sge::intersects(rC, rF));
+    EXPECT_TRUE(sge::intersects(rC, rG));
+    EXPECT_TRUE(sge::intersects(rG, rH));
+    EXPECT_TRUE(sge::intersects(rH, rG));
 
-    EXPECT_FALSE(sge::Intersects(rE, rA));
-    EXPECT_FALSE(sge::Intersects(rA, rE));
+    EXPECT_FALSE(sge::intersects(rE, rA));
+    EXPECT_FALSE(sge::intersects(rA, rE));
 }
 
-TEST (Intersection_Test, Rectangles_Should_Contain_Points) {
-    EXPECT_TRUE(sge::Contains(rA, Vec2f(2.0f, 2.0f)));
-    EXPECT_TRUE(sge::Contains(rC, Vec2f(5.0f, 6.0f)));
+TEST (intersection_Test, Rects_Should_Contain_Points) {
+    EXPECT_TRUE(sge::contains(rA, Vec2f(2.0f, 2.0f)));
+    EXPECT_TRUE(sge::contains(rC, Vec2f(5.0f, 6.0f)));
 
-    EXPECT_FALSE(sge::Contains(rE, Vec2f(0.0f, 0.0f)));
+    EXPECT_FALSE(sge::contains(rE, Vec2f(0.0f, 0.0f)));
 }
 
-TEST (Intersection_Test, Rectangles_Should_Contain_Rectangles) {
-    EXPECT_TRUE(sge::Contains(rG, rH));
+TEST (intersection_Test, Rects_Should_Contain_Rects) {
+    EXPECT_TRUE(sge::contains(rG, rH));
 
-    EXPECT_FALSE(sge::Contains(rH, rG));
-    EXPECT_FALSE(sge::Contains(rA, rB));
+    EXPECT_FALSE(sge::contains(rH, rG));
+    EXPECT_FALSE(sge::contains(rA, rB));
 }
 
 // Basic Circle Tests.
@@ -105,44 +105,44 @@ static const Circle cC = Circle(Vec2f(7.0f, 7.0f), 0.5f);
 static const Circle cD = Circle(Vec2f(2.0f, 3.0f), 4.0f);
 static const Circle cE = Circle();
 
-TEST (Intersection_Test, Circles_Should_Intersect) {
-    EXPECT_TRUE(sge::Intersects(cA, cB));
-    EXPECT_TRUE(sge::Intersects(cB, cA));
-    EXPECT_TRUE(sge::Intersects(cB, cD));
-    EXPECT_TRUE(sge::Intersects(cD, cB));
-    EXPECT_TRUE(sge::Intersects(cB, cA));
-    EXPECT_TRUE(sge::Intersects(cA, cD));
+TEST (intersection_Test, Circles_Should_intersect) {
+    EXPECT_TRUE(sge::intersects(cA, cB));
+    EXPECT_TRUE(sge::intersects(cB, cA));
+    EXPECT_TRUE(sge::intersects(cB, cD));
+    EXPECT_TRUE(sge::intersects(cD, cB));
+    EXPECT_TRUE(sge::intersects(cB, cA));
+    EXPECT_TRUE(sge::intersects(cA, cD));
 
-    EXPECT_FALSE(sge::Intersects(cA, cC));
-    EXPECT_FALSE(sge::Intersects(cC, cD));
+    EXPECT_FALSE(sge::intersects(cA, cC));
+    EXPECT_FALSE(sge::intersects(cC, cD));
 
-    EXPECT_FALSE(sge::Intersects(cE, cA));
-    EXPECT_FALSE(sge::Intersects(cE, cB));
-    EXPECT_FALSE(sge::Intersects(cE, cC));
-    EXPECT_FALSE(sge::Intersects(cE, cD));
+    EXPECT_FALSE(sge::intersects(cE, cA));
+    EXPECT_FALSE(sge::intersects(cE, cB));
+    EXPECT_FALSE(sge::intersects(cE, cC));
+    EXPECT_FALSE(sge::intersects(cE, cD));
 }
 
-TEST (Intersection_Test, Circles_Should_Contains_Points) {
-    EXPECT_TRUE(sge::Contains(cA, Vec2f(2.0f, 3.0f)));
-    EXPECT_TRUE(sge::Contains(cC, Vec2f(6.8f, 7.0f)));
+TEST (intersection_Test, Circles_Should_contains_Points) {
+    EXPECT_TRUE(sge::contains(cA, Vec2f(2.0f, 3.0f)));
+    EXPECT_TRUE(sge::contains(cC, Vec2f(6.8f, 7.0f)));
 
-    EXPECT_FALSE(sge::Contains(cB, Vec2f(2.0f, 6.0f)));
+    EXPECT_FALSE(sge::contains(cB, Vec2f(2.0f, 6.0f)));
 }
 
-TEST (Intersection_Test, Circles_Should_Contain_Circles) {
-    EXPECT_TRUE(sge::Contains(cD, cA));
-    EXPECT_FALSE(sge::Contains(cD, cC));
-    EXPECT_FALSE(sge::Contains(cD, cB));
-    EXPECT_FALSE(sge::Contains(cA, cD));
+TEST (intersection_Test, Circles_Should_Contain_Circles) {
+    EXPECT_TRUE(sge::contains(cD, cA));
+    EXPECT_FALSE(sge::contains(cD, cC));
+    EXPECT_FALSE(sge::contains(cD, cB));
+    EXPECT_FALSE(sge::contains(cA, cD));
 
-    EXPECT_TRUE(sge::Contains(cA, cE));
-    EXPECT_TRUE(sge::Contains(cB, cE));
-    EXPECT_TRUE(sge::Contains(cC, cE));
+    EXPECT_TRUE(sge::contains(cA, cE));
+    EXPECT_TRUE(sge::contains(cB, cE));
+    EXPECT_TRUE(sge::contains(cC, cE));
 
-    EXPECT_FALSE(sge::Contains(cE, cA));
-    EXPECT_FALSE(sge::Contains(cE, cB));
-    EXPECT_FALSE(sge::Contains(cE, cC));
-    EXPECT_FALSE(sge::Contains(cE, cD));
+    EXPECT_FALSE(sge::contains(cE, cA));
+    EXPECT_FALSE(sge::contains(cE, cB));
+    EXPECT_FALSE(sge::contains(cE, cC));
+    EXPECT_FALSE(sge::contains(cE, cD));
 }
 
 // Basic Axis-aligned Box Tests
@@ -164,44 +164,44 @@ TEST (Intersection_Test, Circles_Should_Contain_Circles) {
 //
 //     0    1    2    3    4    5    6    7    8
 //
-static const AABB bA = AABB(1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 3.0f);
-static const AABB bB = AABB(2.0f, 2.0f, 2.0f, 7.0f, 4.0f, 7.0f);
-static const AABB bC = AABB(4.0f, 1.0f, 3.0f, 5.0f, 6.0f, 5.0f);
-static const AABB bD = AABB(6.0f, 1.0f, 5.0f, 8.0f, 3.0f, 8.0f);
-static const AABB bE = AABB(1.0f, 5.0f, 3.0f, 2.0f, 6.0f, 4.0f);
-static const AABB bF = AABB(3.0f, 6.0f, 5.0f, 4.0f, 7.0f, 7.0f);
-static const AABB bG = AABB(5.0f, 5.0f, 2.0f, 8.0f, 8.0f, 5.0f);
-static const AABB bH = AABB(6.0f, 6.0f, 3.0f, 7.0f, 7.0f, 4.0f);
+static const Aabb bA = Aabb(1.0f, 1.0f, 1.0f, 3.0f, 3.0f, 3.0f);
+static const Aabb bB = Aabb(2.0f, 2.0f, 2.0f, 7.0f, 4.0f, 7.0f);
+static const Aabb bC = Aabb(4.0f, 1.0f, 3.0f, 5.0f, 6.0f, 5.0f);
+static const Aabb bD = Aabb(6.0f, 1.0f, 5.0f, 8.0f, 3.0f, 8.0f);
+static const Aabb bE = Aabb(1.0f, 5.0f, 3.0f, 2.0f, 6.0f, 4.0f);
+static const Aabb bF = Aabb(3.0f, 6.0f, 5.0f, 4.0f, 7.0f, 7.0f);
+static const Aabb bG = Aabb(5.0f, 5.0f, 2.0f, 8.0f, 8.0f, 5.0f);
+static const Aabb bH = Aabb(6.0f, 6.0f, 3.0f, 7.0f, 7.0f, 4.0f);
 
-TEST (Intersection_Test, AABBs_Should_Intersect) {
-    EXPECT_TRUE(sge::Intersects(bA, bA));
-    EXPECT_TRUE(sge::Intersects(bA, bB));
-    EXPECT_TRUE(sge::Intersects(bB, bA));
-    EXPECT_TRUE(sge::Intersects(bB, bC));
-    EXPECT_TRUE(sge::Intersects(bC, bB));
-    EXPECT_TRUE(sge::Intersects(bB, bD));
-    EXPECT_TRUE(sge::Intersects(bF, bC));
-    EXPECT_TRUE(sge::Intersects(bC, bF));
-    EXPECT_TRUE(sge::Intersects(bC, bG));
-    EXPECT_TRUE(sge::Intersects(bG, bH));
-    EXPECT_TRUE(sge::Intersects(bH, bG));
+TEST (intersection_Test, Aabbs_Should_intersect) {
+    EXPECT_TRUE(sge::intersects(bA, bA));
+    EXPECT_TRUE(sge::intersects(bA, bB));
+    EXPECT_TRUE(sge::intersects(bB, bA));
+    EXPECT_TRUE(sge::intersects(bB, bC));
+    EXPECT_TRUE(sge::intersects(bC, bB));
+    EXPECT_TRUE(sge::intersects(bB, bD));
+    EXPECT_TRUE(sge::intersects(bF, bC));
+    EXPECT_TRUE(sge::intersects(bC, bF));
+    EXPECT_TRUE(sge::intersects(bC, bG));
+    EXPECT_TRUE(sge::intersects(bG, bH));
+    EXPECT_TRUE(sge::intersects(bH, bG));
 
-    EXPECT_FALSE(sge::Intersects(bE, bA));
-    EXPECT_FALSE(sge::Intersects(bA, bE));
+    EXPECT_FALSE(sge::intersects(bE, bA));
+    EXPECT_FALSE(sge::intersects(bA, bE));
 }
 
-TEST (Intersection_Test, AABBs_Should_Contain_Points) {
-    EXPECT_TRUE(sge::Contains(bA, Vec3f(2.0f, 2.0f, 2.0f)));
-    EXPECT_TRUE(sge::Contains(bC, Vec3f(5.0f, 6.0f, 5.0f)));
+TEST (intersection_Test, Aabbs_Should_Contain_Points) {
+    EXPECT_TRUE(sge::contains(bA, Vec3f(2.0f, 2.0f, 2.0f)));
+    EXPECT_TRUE(sge::contains(bC, Vec3f(5.0f, 6.0f, 5.0f)));
 
-    EXPECT_FALSE(sge::Contains(bE, Vec3f(0.0f, 0.0f, 0.0f)));
+    EXPECT_FALSE(sge::contains(bE, Vec3f(0.0f, 0.0f, 0.0f)));
 }
 
-TEST (Intersection_Test, AABBs_Should_Contain_AABBs) {
-    EXPECT_TRUE(sge::Contains(bG, bH));
+TEST (intersection_Test, Aabbs_Should_Contain_Aabbs) {
+    EXPECT_TRUE(sge::contains(bG, bH));
 
-    EXPECT_FALSE(sge::Contains(bH, bG));
-    EXPECT_FALSE(sge::Contains(bA, bB));
+    EXPECT_FALSE(sge::contains(bH, bG));
+    EXPECT_FALSE(sge::contains(bA, bB));
 }
 
 // Basic Sphere Tests.
@@ -229,42 +229,42 @@ static const Sphere sC = Sphere(Vec3f(7.0f, 7.0f, 7.0f), 0.5f);
 static const Sphere sD = Sphere(Vec3f(2.0f, 3.0f, 4.0f), 4.0f);
 static const Sphere sE = Sphere();
 
-TEST (Intersection_Test, Spheres_Should_Intersect) {
-    EXPECT_TRUE(sge::Intersects(sA, sB));
-    EXPECT_TRUE(sge::Intersects(sB, sA));
-    EXPECT_TRUE(sge::Intersects(sB, sD));
-    EXPECT_TRUE(sge::Intersects(sD, sB));
-    EXPECT_TRUE(sge::Intersects(sB, sA));
-    EXPECT_TRUE(sge::Intersects(sA, sD));
+TEST (intersection_Test, Spheres_Should_intersect) {
+    EXPECT_TRUE(sge::intersects(sA, sB));
+    EXPECT_TRUE(sge::intersects(sB, sA));
+    EXPECT_TRUE(sge::intersects(sB, sD));
+    EXPECT_TRUE(sge::intersects(sD, sB));
+    EXPECT_TRUE(sge::intersects(sB, sA));
+    EXPECT_TRUE(sge::intersects(sA, sD));
 
-    EXPECT_FALSE(sge::Intersects(sA, sC));
-    EXPECT_FALSE(sge::Intersects(sC, sD));
+    EXPECT_FALSE(sge::intersects(sA, sC));
+    EXPECT_FALSE(sge::intersects(sC, sD));
 
-    EXPECT_FALSE(sge::Intersects(sE, sA));
-    EXPECT_FALSE(sge::Intersects(sE, sB));
-    EXPECT_FALSE(sge::Intersects(sE, sC));
-    EXPECT_FALSE(sge::Intersects(sE, sD));
+    EXPECT_FALSE(sge::intersects(sE, sA));
+    EXPECT_FALSE(sge::intersects(sE, sB));
+    EXPECT_FALSE(sge::intersects(sE, sC));
+    EXPECT_FALSE(sge::intersects(sE, sD));
 }
 
-TEST (Intersection_Test, Spheres_Should_Contain_Points) {
-    EXPECT_TRUE(sge::Contains(sA, Vec3f(2.0f, 3.0f, 3.0f)));
-    EXPECT_TRUE(sge::Contains(sC, Vec3f(6.8f, 7.0f, 7.2f)));
+TEST (intersection_Test, Spheres_Should_Contain_Points) {
+    EXPECT_TRUE(sge::contains(sA, Vec3f(2.0f, 3.0f, 3.0f)));
+    EXPECT_TRUE(sge::contains(sC, Vec3f(6.8f, 7.0f, 7.2f)));
 
-    EXPECT_FALSE(sge::Contains(sB, Vec3f(2.0f, 6.0f, 6.0f)));
+    EXPECT_FALSE(sge::contains(sB, Vec3f(2.0f, 6.0f, 6.0f)));
 }
 
-TEST (Intersection_Test, Spheres_Should_Contain_Spheres) {
-    EXPECT_TRUE(sge::Contains(sD, sA));
-    EXPECT_FALSE(sge::Contains(sD, sC));
-    EXPECT_FALSE(sge::Contains(sD, sB));
-    EXPECT_FALSE(sge::Contains(sA, sD));
+TEST (intersection_Test, Spheres_Should_Contain_Spheres) {
+    EXPECT_TRUE(sge::contains(sD, sA));
+    EXPECT_FALSE(sge::contains(sD, sC));
+    EXPECT_FALSE(sge::contains(sD, sB));
+    EXPECT_FALSE(sge::contains(sA, sD));
 
-    EXPECT_TRUE(sge::Contains(sA, sE));
-    EXPECT_TRUE(sge::Contains(sB, sE));
-    EXPECT_TRUE(sge::Contains(sC, sE));
+    EXPECT_TRUE(sge::contains(sA, sE));
+    EXPECT_TRUE(sge::contains(sB, sE));
+    EXPECT_TRUE(sge::contains(sC, sE));
 
-    EXPECT_FALSE(sge::Contains(sE, sA));
-    EXPECT_FALSE(sge::Contains(sE, sB));
-    EXPECT_FALSE(sge::Contains(sE, sC));
-    EXPECT_FALSE(sge::Contains(sE, sD));
+    EXPECT_FALSE(sge::contains(sE, sA));
+    EXPECT_FALSE(sge::contains(sE, sB));
+    EXPECT_FALSE(sge::contains(sE, sC));
+    EXPECT_FALSE(sge::contains(sE, sD));
 }

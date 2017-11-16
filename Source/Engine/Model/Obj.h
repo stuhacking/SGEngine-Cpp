@@ -74,9 +74,9 @@ public:
     /** @return True is this .obj document was parsed successfully. */
     bool IsValid () const { return m_isValid; }
 
-    Vec3f Position (const i32 index) const { return m_positions[index]; }
-    Vec3f Normal (const i32 index) const { return m_normals[index]; }
-    Vec2f TexCoord (const i32 index) const { return m_texCoords[index]; }
+    Vec3f Position (const s32 index) const { return m_positions[index]; }
+    Vec3f Normal (const s32 index) const { return m_normals[index]; }
+    Vec2f TexCoord (const s32 index) const { return m_texCoords[index]; }
 
 private:
     std::vector<Vec3f> m_positions;

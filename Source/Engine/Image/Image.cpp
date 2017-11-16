@@ -13,7 +13,7 @@
 namespace sge {
 
 u32 Image::MaxTextureDimension () {
-    i32 result;
+    s32 result;
 
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &result);
 

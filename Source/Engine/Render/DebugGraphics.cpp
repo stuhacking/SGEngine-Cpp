@@ -53,7 +53,7 @@ void DebugGraphics::AddPoint (const Vec3f &p, const float radius, const Color &c
 
 void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius, const Color &col) {
     // Calculate circle resolution.
-    constexpr float limit = TO_RADIANS(360.0f);
+    constexpr float limit = math::rad(360.0f);
     constexpr float increment = limit / 12.0f;
 
     float x_ = radius * std::cos(0.0f);
@@ -74,11 +74,11 @@ void DebugGraphics::AddSphere (const Vec3f &p_center, const float radius, const 
 
 void DebugGraphics::AddGrid (const Vec3f &p_center, const u32 size, const Color &col) {
     float hSize = size * 0.5f;
-    i32 xMin = static_cast<i32>(p_center.x) - hSize;
-    i32 zMin = static_cast<i32>(p_center.z) - hSize;
+    s32 xMin = static_cast<s32>(p_center.x) - hSize;
+    s32 zMin = static_cast<s32>(p_center.z) - hSize;
 
     for (u32 i = 0; i <= size; ++i) {
-        i32 offset = static_cast<i32>(i);
+        s32 offset = static_cast<s32>(i);
         AddEdge(Vec3f(xMin, p_center.y, zMin + offset), Vec3f(xMin + size, p_center.y, zMin + offset), col);
         AddEdge(Vec3f(xMin + offset, p_center.y, zMin), Vec3f(xMin + offset, p_center.y, zMin + size), col);
     }

@@ -25,9 +25,9 @@ bool ObjDocument::readFromFile (const char * const filename) {
 
     while (std::getline(input, line)) {
         // Skip comments & blank lines
-        if (line.size() > 1 && !str::StartsWith(line, "#")) {
+        if (line.size() > 1 && !str::startsWith(line, "#")) {
 
-            std::vector<std::string> tokens = str::Split(str::Trim(line));
+            std::vector<std::string> tokens = str::split(str::trim(line));
 
             if ("o" == tokens[0] && !parseName(tokens)) {
                 logParseError(filename, lineNumber, "object name");
@@ -145,9 +145,9 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
     // Convert n-sided faces to tris as we go.
     for (std::vector<std::string>::size_type k = 3, kMax = tokens.size(); k < kMax; ++k) {
         std::vector<std::string> indices[3];
-        indices[0] = str::Split(tokens[1], '/');
-        indices[1] = str::Split(tokens[k - 1], '/');
-        indices[2] = str::Split(tokens[k], '/');
+        indices[0] = str::split(tokens[1], '/');
+        indices[1] = str::split(tokens[k - 1], '/');
+        indices[2] = str::split(tokens[k], '/');
 
         curGroup->positionIndex.emplace_back(std::stoi(indices[0][0]) - 1);
         curGroup->positionIndex.emplace_back(std::stoi(indices[1][0]) - 1);

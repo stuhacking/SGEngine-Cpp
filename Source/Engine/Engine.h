@@ -21,7 +21,7 @@
 
 // --------------------------------------------------------------------------
 
-#include "Lib.h"
+#include "lib.h"
 
 // Useful macro for specifying buffer locations in GL calls.
 #define BUFFER_OFFSET(a) (GLvoid*)((a) * sizeof(GLfloat))

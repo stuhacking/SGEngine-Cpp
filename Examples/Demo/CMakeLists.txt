@@ -19,7 +19,7 @@ endif()
 
 include_directories(${RapidJSON_SOURCE_DIR}/include)
 
-include_directories(../../Source/Lib)
+include_directories(../../Source/lib)
 include_directories(../../Source/Engine)
 
 set(SOURCES

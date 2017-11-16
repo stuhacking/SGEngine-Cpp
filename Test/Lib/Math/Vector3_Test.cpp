@@ -4,72 +4,72 @@
 #include <gtest/gtest.h>
 #include <cfloat>
 
-#include "Lib.h"
+#include "lib.h"
 
 /*==========================
   Vector property Tests
  ==========================*/
 
 TEST (Vec3f_Test, Length) {
-    EXPECT_FLOAT_EQ(5.0f, Vec3f(3.0f, 0.0f, 4.0f).Length());
+    EXPECT_FLOAT_EQ(5.0f, Vec3f(3.0f, 0.0f, 4.0f).mag());
 }
 
 TEST (Vec3f_Test, Zero) {
     Vec3f v = Vec3f(10.0f, 10.0f, 10.0f);
 
-    v.Zero();
-    EXPECT_FLOAT_EQ(0.0f, v.Length());
+    v.zero();
+    EXPECT_FLOAT_EQ(0.0f, v.mag());
 }
 
 TEST (Vec3f_Test, Normalize) {
     Vec3f v = Vec3f(10.0f, 10.0f, 10.0f);
 
-    EXPECT_FLOAT_EQ(1.0f, v.Normalize().Length());
+    EXPECT_FLOAT_EQ(1.0f, v.normalize().mag());
 
-    v.NormalizeSelf();
-    EXPECT_FLOAT_EQ(1.0f, v.Length());
+    v.normalizeSelf();
+    EXPECT_FLOAT_EQ(1.0f, v.mag());
 }
 
 TEST (Vec3f_Test, ClampLength) {
-    EXPECT_EQ(Vec3f(3.0f, 4.0f, 0.0f), Vec3f(6.0f, 8.0f, 0.0f).ClampLength(5.0f));
-    EXPECT_EQ(Vec3f(3.0f, 0.0f, 4.0f), Vec3f(1.5f, 0.0f, 2.0f).ClampLength(5.0f, 10.0f));
-    EXPECT_EQ(Vec3f(0.0f, 3.0f, 4.0f), Vec3f(0.0f, 3.0f, 4.0f).ClampLength(2.0f, 8.0f));
+    EXPECT_EQ(Vec3f(3.0f, 4.0f, 0.0f), Vec3f(6.0f, 8.0f, 0.0f).clampMag(5.0f));
+    EXPECT_EQ(Vec3f(3.0f, 0.0f, 4.0f), Vec3f(1.5f, 0.0f, 2.0f).clampMag(5.0f, 10.0f));
+    EXPECT_EQ(Vec3f(0.0f, 3.0f, 4.0f), Vec3f(0.0f, 3.0f, 4.0f).clampMag(2.0f, 8.0f));
 
     Vec3f v = Vec3f(6.0f, 8.0f, 0.0f);
-    v.ClampLengthSelf(5.0f);
+    v.clampMagSelf(5.0f);
 
     EXPECT_EQ(Vec3f(3.0f, 4.0f, 0.0f), v);
 
     v = Vec3f(1.5f, 0.0f, 2.0f);
-    v.ClampLengthSelf(5.0f, 10.0f);
+    v.clampMagSelf(5.0f, 10.0f);
 
     EXPECT_EQ(Vec3f(3.0f, 0.0f, 4.0f), v);
 
     v = Vec3f(0.0f, 3.0f, 4.0f);
-    v.ClampLengthSelf(2.0f, 6.0f);
+    v.clampMagSelf(2.0f, 6.0f);
 
     EXPECT_EQ(Vec3f(0.0f, 3.0f, 4.0f), v);
 }
 
 TEST (Vec3f_Test, Clamp) {
-    EXPECT_EQ(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(2.0f, 2.0f, 2.0f).Clamp(Vec3f(0.0f, 0.0f, 3.0f), Vec3f(1.0f, 10.0f, 4.0f)));
-    EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(1.0f, 1.0f, 1.0f).Clamp(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(4.0f, 5.0f, 6.0f)));
-    EXPECT_EQ(Vec3f(4.0f, 4.0f, 4.0f), Vec3f(4.0f, 4.0f, 4.0f).Clamp(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(6.0f, 7.0f, 5.0f)));
+    EXPECT_EQ(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(2.0f, 2.0f, 2.0f).clamp(Vec3f(0.0f, 0.0f, 3.0f), Vec3f(1.0f, 10.0f, 4.0f)));
+    EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(1.0f, 1.0f, 1.0f).clamp(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(4.0f, 5.0f, 6.0f)));
+    EXPECT_EQ(Vec3f(4.0f, 4.0f, 4.0f), Vec3f(4.0f, 4.0f, 4.0f).clamp(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(6.0f, 7.0f, 5.0f)));
 }
 
 TEST (Vec3f_Test, ClampSelf) {
     Vec3f v = Vec3f(2.0f, 2.0f, 2.0f);
-    v.ClampSelf(Vec3f(0.0f, 0.0f, 3.0f), Vec3f(1.0f, 10.0f, 4.0f));
+    v.clampSelf(Vec3f(0.0f, 0.0f, 3.0f), Vec3f(1.0f, 10.0f, 4.0f));
 
     EXPECT_EQ(Vec3f(1.0f, 2.0f, 3.0f), v);
 
     v = Vec3f(1.0f, 1.0f, 1.0f);
-    v.ClampSelf(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(4.0f, 5.0f, 6.0f));
+    v.clampSelf(Vec3f(2.0f, 2.0f, 2.0f), Vec3f(4.0f, 5.0f, 6.0f));
 
     EXPECT_EQ(Vec3f(2.0f, 2.0f, 2.0f), v);
 
     v = Vec3f(4.0f, 4.0f, 4.0f);
-    v.ClampSelf(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(6.0f, 7.0f, 5.0f));
+    v.clampSelf(Vec3f(1.0f, 2.0f, 3.0f), Vec3f(6.0f, 7.0f, 5.0f));
 
     EXPECT_EQ(Vec3f(4.0f, 4.0f, 4.0f), v);
 }
@@ -122,7 +122,7 @@ TEST (Vec3f_Test, Scale_Equals) {
 }
 
 TEST (Vec3f_Test, NonUniformScale) {
-    EXPECT_EQ(Vec3f(0.0f), Vec3f(2.0f) * Vec3f::ZERO);
+    EXPECT_EQ(Vec3f(0.0f), Vec3f(2.0f) * Vec3f_Zero);
     EXPECT_EQ(Vec3f(2.0f, 4.0f, 6.0f), Vec3f(2.0f) * Vec3f(1.0f, 2.0f, 3.0f));
     EXPECT_EQ(Vec3f(4.0f, 2.0f, 0.0f), Vec3f(2.0f, 4.0f, 5.0f) * Vec3f(2.0f, 0.5f, 0.0f));
 }
@@ -138,8 +138,8 @@ TEST (Vec3f_Test, NonUniformScale_Equals) {
 TEST (Vec3f_Test, Div) {
     EXPECT_EQ(Vec3f(2.0f), Vec3f(2.0f) / 1.0f);
     EXPECT_EQ(Vec3f(1.0f, 0.75f, 0.25f), Vec3f(2.0f, 1.5f, 0.5f) / 2.0f);
-    EXPECT_EQ(Vec3f(FMath::INFTY), Vec3f(3.0f, 2.0f, 1.0f) / 0.0f);
-    EXPECT_EQ(Vec3f(FMath::INFTY, -FMath::INFTY, FMath::INFTY), Vec3f(3.0f, -2.0f, 1.0f) / 0.0f);
+    EXPECT_EQ(Vec3f(math::Infinity), Vec3f(3.0f, 2.0f, 1.0f) / 0.0f);
+    EXPECT_EQ(Vec3f(math::Infinity, -math::Infinity, math::Infinity), Vec3f(3.0f, -2.0f, 1.0f) / 0.0f);
 }
 
 TEST (Vec3f_Test, Div_Equals) {
@@ -151,27 +151,27 @@ TEST (Vec3f_Test, Div_Equals) {
 }
 
 TEST (Vec3f_Test, Dot) {
-    EXPECT_EQ(32.0f, Vec3f(1.0f, 2.0f, 3.0f).Dot(Vec3f(4.0f, 5.0f, 6.0f)));
+    EXPECT_EQ(32.0f, Vec3f(1.0f, 2.0f, 3.0f).dot(Vec3f(4.0f, 5.0f, 6.0f)));
 }
 
 TEST (Vec3f_Test, Cross) {
-    EXPECT_EQ(Vec3f(-3.0f, 6.0f, -3.0f), Vec3f(1.0f, 2.0f, 3.0f).Cross(Vec3f(4.0f, 5.0f, 6.0f)));
+    EXPECT_EQ(Vec3f(-3.0f, 6.0f, -3.0f), Vec3f(1.0f, 2.0f, 3.0f).cross(Vec3f(4.0f, 5.0f, 6.0f)));
 }
 
 TEST (Vec3f_Test, Mirror) {
-    EXPECT_TRUE(Vec3f(3.0f, 2.0f, 1.0f).Compare(Vec3f(1.0f, 2.0f, 3.0f).Mirror(Vec3f(0.5f, 0.5f, 0.5f).Normalize()), 0.00001f));
+    EXPECT_TRUE(Vec3f(3.0f, 2.0f, 1.0f).compare(Vec3f(1.0f, 2.0f, 3.0f).mirror(Vec3f(0.5f, 0.5f, 0.5f).normalize()), 0.00001f));
 
-    EXPECT_EQ(Vec3f(-1.5f, 2.0f, 4.0f), Vec3f(2.0f, -1.5f, -4.0f).Mirror(Vec3f(0.5f, 0.5f, 0.0f).Normalize()));
+    EXPECT_EQ(Vec3f(-1.5f, 2.0f, 4.0f), Vec3f(2.0f, -1.5f, -4.0f).mirror(Vec3f(0.5f, 0.5f, 0.0f).normalize()));
 }
 
 TEST (Vec3f_Test, Rotate) {
     Vec3f v = Vec3f(1.0f, 0.0f, 0.0f);
 
-    EXPECT_TRUE(Vec3f(0.0f, 1.0f, 0.0f).Compare(v.Rotate(TO_RADIANS(90.0f), Vec3f(0.0f, 0.0f, 1.0f)), 0.0001f));
+    EXPECT_TRUE(Vec3f(0.0f, 1.0f, 0.0f).compare(v.rotate(math::rad(90.0f), Vec3f(0.0f, 0.0f, 1.0f)), 0.0001f));
 
-    v.RotateSelf(TO_RADIANS(90.0f), Vec3f(0.0f, 0.0f, 1.0f));
+    v.rotateSelf(math::rad(90.0f), Vec3f(0.0f, 0.0f, 1.0f));
 
-    EXPECT_TRUE(Vec3f(0.0f, 1.0f, 0.0f).Compare(v, 0.0001f));
+    EXPECT_TRUE(Vec3f(0.0f, 1.0f, 0.0f).compare(v, 0.0001f));
 }
 
 /*==========================
@@ -205,8 +205,8 @@ TEST (Vec3f_Test, Comparison) {
     EXPECT_TRUE(Vec3f(1.0f, 2.0f, 3.0f) != Vec3f(3.0f, 4.0f, 5.0f));
     EXPECT_FALSE(Vec3f(1.0f, 2.0f, 3.0f) == Vec3f(3.0f, 4.0f, 5.0f));
 
-    EXPECT_TRUE(Vec3f(1.245f, 2.345f, 4.056f).Compare(Vec3f(1.24f, 2.34f, 4.05f), 0.01f));
-    EXPECT_FALSE(Vec3f(1.245f, 2.345f, 4.056f).Compare(Vec3f(1.24f, 2.34f, 4.05f), 0.001f));
+    EXPECT_TRUE(Vec3f(1.245f, 2.345f, 4.056f).compare(Vec3f(1.24f, 2.34f, 4.05f), 0.01f));
+    EXPECT_FALSE(Vec3f(1.245f, 2.345f, 4.056f).compare(Vec3f(1.24f, 2.34f, 4.05f), 0.001f));
 }
 
 TEST (Vec3f_Test, Swizzle_Vec2f) {

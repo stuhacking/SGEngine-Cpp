@@ -43,8 +43,8 @@ static Mesh readMeshData (const json::Value &json) {
 static Mesh readPrimitiveData (const json::Value &json) {
     assert(json.HasMember("type"));
     Mesh m;
-    Vec3f size = Vec3f::ONE;
-    Vec3f position = Vec3f::ZERO;
+    Vec3f size = Vec3f_One;
+    Vec3f position = Vec3f_Zero;
 
     if (json.HasMember("size")) {
         size = json::ReadVec3f(json["size"]);
@@ -153,11 +153,11 @@ bool Game::Init () {
     view = Transform();
     view.position = Vec3f(0.0f, 3.0f, 18.0f);
 
-    lightData.lights[0] = GLSLLight(Vec3f(0.12f, 0.01f, 0.02f),  Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
-    lightData.lights[1] = GLSLLight(Vec3f(0.45f, 0.45f, 0.5f),     Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
-    lightData.lights[2] = GLSLLight(Vec3f(0.08f, 0.08f, 0.07f),     Vec3f(0.0f, -4.0f, 0.0f),   Vec3f(0.0f, 1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[0] = GLSLLight(Vec3f(0.05f, 0.001f, 0.01f),  Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[1] = GLSLLight(Vec3f(0.3f, 0.3f, 0.2f),     Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[2] = GLSLLight(Vec3f(0.02f, 0.02f, 0.08f),     Vec3f(0.0f, -4.0f, 0.0f),   Vec3f(0.0f, 1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
     lightData.lights[3] = GLSLLight(Vec3f(2.0f, 2.0f, 0.0f),     Vec3f(-3.0f, 7.0f, -5.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 10.0f);
-    lightData.lights[4] = GLSLLight(Vec3f(0.0f, 0.0f, 3.0f),     Vec3f(-10.0f, 4.0f, 0.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 10.0f);
+    lightData.lights[4] = GLSLLight(Vec3f(0.0f, 0.0f, 3.0f),     Vec3f(-10.0f, 4.0f, 0.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 20.0f);
     lightData.offsets[0] = 1;
     lightData.offsets[1] = 3;
     lightData.offsets[2] = 3;
@@ -193,16 +193,16 @@ void Game::Input () {
     }
 
     if (Input::KeyDown('a')) {
-        view.position += view.Right() * -CAM_SPEED;
+        view.position += view.right() * -CAM_SPEED;
     }
     if (Input::KeyDown('d')) {
-        view.position += view.Right() * CAM_SPEED;
+        view.position += view.right() * CAM_SPEED;
     }
     if (Input::KeyDown('w')) {
-        view.position += view.Forward() * -CAM_SPEED;
+        view.position += view.forward() * -CAM_SPEED;
     }
     if (Input::KeyDown('s')) {
-        view.position += view.Forward() * CAM_SPEED;
+        view.position += view.forward() * CAM_SPEED;
     }
 
     if (Input::MousePressed(1) && !Input::KeyDown(Input::Key::LShift)) {
@@ -222,11 +222,11 @@ void Game::Input () {
         bool rotY = deltaPos.x != 0;
 
         if (rotX) {
-            view.RotateL(Vec3f::X, -deltaPos.y * sensitivity);
+            view.rotateL(-deltaPos.y * sensitivity, Vec3f_X);
         }
 
         if (rotY) {
-            view.RotateW(Vec3f::Y, -deltaPos.x * sensitivity);
+            view.rotateW(-deltaPos.x * sensitivity, Vec3f_Y);
         }
     }
 }
@@ -234,16 +234,17 @@ void Game::Input () {
 void Game::Update (double deltaSeconds) {
     static double t;
     Entity *obj = &m_objects[1];
-    obj->transform.RotateL(Vec3f::Y, TO_RADIANS(18.0f) * deltaSeconds); // One rotation in 20 seconds
+    obj->transform.rotateL(math::rad(18.0f) * deltaSeconds, Vec3f_Y); // One rotation in 20 seconds
 
     t += deltaSeconds;
     lightData.lights[3].position.y = sinf(t) * 5.0f + 5.0f;
     lightData.lights[4].position.x += 0.02f;
+    lightData.lights[4].position.z = sinf(t) * 5.0f + 5.0f;
 }
 
 void Game::Render () {
     Mat4f viewMat = proj.GetPerspectiveProjection(m_width, m_height) *
-        view.GetViewTransformationMatrix();
+        view.viewTransformationMatrix();
 
     glBindBuffer(GL_UNIFORM_BUFFER, lightBuffer);
     GLvoid* p = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
@@ -258,9 +259,9 @@ void Game::Render () {
         // TODO [smh] Uniform buffer for transformations.
         // TODO [smh] Begin Frame...
         // Setup Matrix Data for Draw.
-        matrixData.model = e.transform.GetTransformationMatrix();
-        matrixData.view = view.GetViewTransformationMatrix();
-        matrixData.mvp = viewMat * e.transform.GetTransformationMatrix();
+        matrixData.model = e.transform.transformationMatrix();
+        matrixData.view = view.viewTransformationMatrix();
+        matrixData.mvp = viewMat * e.transform.transformationMatrix();
 
         glBindBuffer(GL_UNIFORM_BUFFER, matBuffer);
         p = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
@@ -283,9 +284,9 @@ void Game::Render () {
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     // Show World Axis
-    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 100.0f, 0.0f), Color::FromHex("#0000FF"));
-    dGraph.AddEdge(Vec3f::ZERO, Vec3f(100.0f, 0.0f, 0.0f), Color::FromHex("#FF0000"));
-    dGraph.AddEdge(Vec3f::ZERO, Vec3f(0.0f, 0.0f, 100.0f), Color::FromHex("#00FF00"));
+    dGraph.AddEdge(Vec3f_Zero, Vec3f(0.0f, 100.0f, 0.0f), Color::fromHex("#0000FF"));
+    dGraph.AddEdge(Vec3f_Zero, Vec3f(100.0f, 0.0f, 0.0f), Color::fromHex("#FF0000"));
+    dGraph.AddEdge(Vec3f_Zero, Vec3f(0.0f, 0.0f, 100.0f), Color::fromHex("#00FF00"));
 
     // Test Point Light positions
     dGraph.AddPoint(lightData.lights[3].position, 0.1f, Color(255, 255, 0));

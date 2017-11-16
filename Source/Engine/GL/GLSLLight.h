@@ -28,7 +28,7 @@ public:
     GLSLAttenuation attenuation;
     float range;
 
-    GLSLLight (const Vec3f &p_albedo = Vec3f::ZERO, const Vec3f &p_position = Vec3f::ZERO, const Vec3f &p_direction = Vec3f::Y,
+    GLSLLight (const Vec3f &p_albedo = Vec3f_Zero, const Vec3f &p_position = Vec3f_Zero, const Vec3f &p_direction = Vec3f_Y,
                         const GLSLAttenuation &p_attenuation = GLSLAttenuation(), const float p_range = 0.0f)
         : albedo{p_albedo}, position{p_position}, direction{p_direction},
           attenuation{p_attenuation}, range{p_range} {}

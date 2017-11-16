@@ -2,7 +2,7 @@
 // Mat3f Tests
 //
 #include <gtest/gtest.h>
-#include "Lib.h"
+#include "lib.h"
 
 TEST (Mat2f_Test, Constructors) {
     EXPECT_EQ(Mat2f(0.0f, 0.0f,
@@ -61,7 +61,7 @@ TEST (Mat2f_Test, scale) {
 TEST (Mat2f_Test, multiplication) {
     Mat2f M = Mat2f(1.0f, 2.0f, 2.0f, 1.0f);
     Mat2f N = Mat2f(2.0f, 3.0f, 1.0f, 1.5f);
-    EXPECT_EQ(M, M * Mat2f::IDENTITY);
+    EXPECT_EQ(M, M * Mat2f_Identity);
 
     EXPECT_EQ(Mat2f(4.0f, 6.0f, 5.0f, 7.5f), M * N);
     EXPECT_EQ(Mat2f(8.0f, 7.0f, 4.0f, 3.5f), N * M);

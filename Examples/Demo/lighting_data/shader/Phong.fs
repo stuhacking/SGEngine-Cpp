@@ -1,8 +1,8 @@
 // FRAGMENT SHADER - Phong lighting
 #version 330
 
-#define ENABLE_AMBIENT 0
-#define ENABLE_DIRECTIONAL 0
+#define ENABLE_AMBIENT 1
+#define ENABLE_DIRECTIONAL 1
 #define ENABLE_SPOT 0
 #define ENABLE_POINT 1
 

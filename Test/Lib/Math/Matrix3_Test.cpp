@@ -2,7 +2,7 @@
 // Mat3f Tests
 //
 #include <gtest/gtest.h>
-#include "Lib.h"
+#include "lib.h"
 
 TEST (Mat3f_Test, Constructors) {
     EXPECT_EQ(Mat3f(0.0f, 0.0f, 0.0f,
@@ -24,9 +24,9 @@ TEST (Mat3f_Test, Inverse) {
     EXPECT_EQ(Mat3f(-0.5f, 0.25f, 0.25f,
                     1.0f, -0.625f, 0.125f,
                     0.0f, 0.25f, -0.25f),
-              M.Inverse());
+              M.inverse());
 
-    M.InverseSelf();
+    M.inverseSelf();
 
     EXPECT_EQ(Mat3f(-0.5f, 0.25f, 0.25f,
                     1.0f, -0.625f, 0.125f,

@@ -67,27 +67,27 @@ int main (int argc, char *argv[]) {
     float clockSpeed = 1.0f;
     Clock gameClock = Clock(clockSpeed);
     while (!Input::SignalQuit() && !Input::KeyReleased(Input::Key::Escape)) {
-        gameClock.Update();
+        gameClock.update();
         Input::Update();
 
         if (Input::KeyReleased(Input::Key::Space)) {
-            gameClock.Pause(!gameClock.IsPaused());
+            gameClock.pause(!gameClock.isPaused());
         }
 
         if (Input::KeyDown(Input::Key::PageUp)) {
             clockSpeed *= 2.0f;
-            gameClock.SetScale(clockSpeed);
+            gameClock.setScale(clockSpeed);
         }
 
         if (Input::KeyDown(Input::Key::PageDown)) {
             if (clockSpeed >= 2.0f) {
                 clockSpeed /= 2.0f;
             }
-            gameClock.SetScale(clockSpeed);
+            gameClock.setScale(clockSpeed);
         }
 
         game->Input();
-        game->Update(gameClock.DeltaSeconds());
+        game->Update(gameClock.deltaSeconds());
 
         window->Clear();
 

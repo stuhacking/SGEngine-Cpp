@@ -4,9 +4,9 @@
 # Build -----------------------------------------------------------------------
 
 ### Output and Cache Directories ###
-/External/
-/Debug/
+/libs/
 /Docs/
+/Debug/
 /Release/
 /build/
 /bin/
@@ -29,8 +29,8 @@ install_manifest.txt
 *.lo
 *.o
 
-# Actually we want to allow Wavefront.obj files in.
-#*.obj
+# Comment this line if you want to version Wavefront .obj files.
+*.obj
 
 # Precompiled Headers
 *.gch
@@ -91,34 +91,43 @@ tramp
 # cask packages
 .cask/
 
-### Intellij ###
+### CLion ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/workspace.xml
-.idea/tasks.xml
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/codeStyles
+.idea/inspectionProfiles
 
 # Sensitive or high-churn files:
-.idea/dataSources/
-.idea/dataSources.ids
-.idea/dataSources.xml
-.idea/dataSources.local.xml
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
 
 # Gradle:
-.idea/gradle.xml
-.idea/libraries
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# CMake
+cmake-build-debug/
 
 # Mongo Explorer plugin:
-.idea/mongoSettings.xml
+.idea/**/mongoSettings.xml
 
 ## File-based project format:
 *.iws
 
 ## Plugin-specific files:
+
+# IntelliJ
+/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -126,22 +135,34 @@ tramp
 # JIRA plugin
 atlassian-ide-plugin.xml
 
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Ruby plugin and RubyMine
+/.rakeTasks
+
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-### Intellij Patch ###
+### CLion Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
+*.iml
+modules.xml
+.idea/codeStyleSettings.xml
+.idea/misc.xml
+.idea/vcs.xml
+*.ipr
+
+# Sonarlint plugin
+.idea/sonarlint
 
 ### Perl5 IDEA ###
 /_Deparsed_XSubs.pm
+perl5local.xml
 
 ### GNU Global ###
 TAGS

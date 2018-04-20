@@ -12,7 +12,7 @@ my @deps_ = (
 );
 
 # Directory to place external dependencies.
-my $ext_dir = "External";
+my $ext_dir = "libs";
 
 # Check target location for a dependency
 # Dependency should be a hash of {name, url, version}.

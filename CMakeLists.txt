@@ -34,14 +34,14 @@ execute_process(
 )
 
 # Library Targets
-add_subdirectory(External/googletest/googletest)
-add_subdirectory(External/rapidjson)
-add_subdirectory(External/soil)
+add_subdirectory(libs/googletest/googletest)
+add_subdirectory(libs/rapidjson)
+add_subdirectory(libs/soil)
 
 # Build Targets
-add_subdirectory(Source)
-add_subdirectory(Test)
+add_subdirectory(src)
+add_subdirectory(test)
 
 # Example Programs
-add_subdirectory(Examples/viztest)
-add_subdirectory(Examples/Demo)
+add_subdirectory(sample/viztest)
+add_subdirectory(sample/demo)

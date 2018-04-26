@@ -5,8 +5,9 @@
 
 namespace sge {
 
-// Plane -> Mesh
+static const Color kDefaultColor = Color::fromHex("#FFFFFF");
 
+// Plane -> Mesh
 Mesh Plane::toMesh () const {
     Mesh m;
 
@@ -15,16 +16,16 @@ Mesh Plane::toMesh () const {
     Vec3f v3 = Vec3f(mCenter.x + mHalfSize.x, mCenter.y, mCenter.z - mHalfSize.y);
     Vec3f v4 = Vec3f(mCenter.x - mHalfSize.x, mCenter.y, mCenter.z - mHalfSize.y);
 
-    m.autoQuad(Vertex(v1, Vec2f(0.0f, 0.0f), Vec3f_Y),
-               Vertex(v2, Vec2f(1.0f, 0.0f), Vec3f_Y),
-               Vertex(v3, Vec2f(1.0f, 1.0f), Vec3f_Y),
-               Vertex(v4, Vec2f(0.0f, 1.0f), Vec3f_Y));
+    m.autoQuad(
+            Vertex(v1, Vec3f_Y, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v2, Vec3f_Y, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v3, Vec3f_Y, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v4, Vec3f_Y, Vec2f(0.0f, 1.0f), kDefaultColor));
 
     return m;
 }
 
 // Cube -> Mesh
-
 Mesh Cube::toMesh () const {
     Mesh m;
 
@@ -48,46 +49,54 @@ Mesh Cube::toMesh () const {
     Vec3f v8 = Vec3f(mCenter.x - mHalfSize.x, mCenter.y + mHalfSize.y, mCenter.z - mHalfSize.z);
 
     // Top
-    m.autoQuad(Vertex(v5, Vec2f(0.0f, 0.0f), Vec3f_Y),
-               Vertex(v6, Vec2f(1.0f, 0.0f), Vec3f_Y),
-               Vertex(v7, Vec2f(1.0f, 1.0f), Vec3f_Y),
-               Vertex(v8, Vec2f(0.0f, 1.0f), Vec3f_Y));
-    // Bottom
-    m.autoQuad(Vertex(v4, Vec2f(0.0f, 0.0f), -Vec3f_Y),
-               Vertex(v3, Vec2f(1.0f, 0.0f), -Vec3f_Y),
-               Vertex(v2, Vec2f(1.0f, 1.0f), -Vec3f_Y),
-               Vertex(v1, Vec2f(0.0f, 1.0f), -Vec3f_Y));
+    m.autoQuad(
+            Vertex(v5, Vec3f_Y, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v6, Vec3f_Y, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v7, Vec3f_Y, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v8, Vec3f_Y, Vec2f(0.0f, 1.0f), kDefaultColor));
 
+    // Bottom
+    m.autoQuad(
+            Vertex(v4, -Vec3f_Y, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v3, -Vec3f_Y, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v2, -Vec3f_Y, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v1, -Vec3f_Y, Vec2f(0.0f, 1.0f), kDefaultColor));
 
     // Left
-    m.autoQuad(Vertex(v4, Vec2f(0.0f, 0.0f), -Vec3f_X),
-               Vertex(v1, Vec2f(1.0f, 0.0f), -Vec3f_X),
-               Vertex(v5, Vec2f(1.0f, 1.0f), -Vec3f_X),
-               Vertex(v8, Vec2f(0.0f, 1.0f), -Vec3f_X));
+    m.autoQuad(
+            Vertex(v4, -Vec3f_X, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v1, -Vec3f_X, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v5, -Vec3f_X, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v8, -Vec3f_X, Vec2f(0.0f, 1.0f), kDefaultColor));
+
     // Right
-    m.autoQuad(Vertex(v2, Vec2f(0.0f, 0.0f), Vec3f_X),
-               Vertex(v3, Vec2f(1.0f, 0.0f), Vec3f_X),
-               Vertex(v7, Vec2f(1.0f, 1.0f), Vec3f_X),
-               Vertex(v6, Vec2f(0.0f, 1.0f), Vec3f_X));
+    m.autoQuad(
+            Vertex(v2, Vec3f_X, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v3, Vec3f_X, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v7, Vec3f_X, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v6, Vec3f_X, Vec2f(0.0f, 1.0f), kDefaultColor));
 
     // Front
-    m.autoQuad(Vertex(v1, Vec2f(0.0f, 0.0f), Vec3f_Z),
-               Vertex(v2, Vec2f(1.0f, 0.0f), Vec3f_Z),
-               Vertex(v6, Vec2f(1.0f, 1.0f), Vec3f_Z),
-               Vertex(v5, Vec2f(0.0f, 1.0f), Vec3f_Z));
+    m.autoQuad(
+            Vertex(v1, Vec3f_Z, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v2, Vec3f_Z, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v6, Vec3f_Z, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v5, Vec3f_Z, Vec2f(0.0f, 1.0f), kDefaultColor));
+
     // Back
-    m.autoQuad(Vertex(v3, Vec2f(0.0f, 0.0f), -Vec3f_Z),
-               Vertex(v4, Vec2f(1.0f, 0.0f), -Vec3f_Z),
-               Vertex(v8, Vec2f(1.0f, 1.0f), -Vec3f_Z),
-               Vertex(v7, Vec2f(0.0f, 1.0f), -Vec3f_Z));
+    m.autoQuad(
+            Vertex(v3, -Vec3f_Z, Vec2f(0.0f, 0.0f), kDefaultColor),
+            Vertex(v4, -Vec3f_Z, Vec2f(1.0f, 0.0f), kDefaultColor),
+            Vertex(v8, -Vec3f_Z, Vec2f(1.0f, 1.0f), kDefaultColor),
+            Vertex(v7, -Vec3f_Z, Vec2f(0.0f, 1.0f), kDefaultColor));
 
     return m;
 }
 
 // ICOSphere -> Mesh
-
 Mesh ICOSphere::toMesh () const {
     Mesh m;
+
     Vec3f points[12];
 
     float t = (1.0f + sqrtf(5.0f)) * 0.5f;
@@ -109,10 +118,10 @@ Mesh ICOSphere::toMesh () const {
 
     // TODO Figure out how to project a texture properly, for now: Planar.
     for (auto &p : points) {
-        m.addVertex(Vertex(p * mHalfSize + mCenter,
+        m.addVertex(Vertex(p * mHalfSize + mCenter, p.normalize(),
                            Vec2f(math::toRatio(p.x, -1.0f, 1.0f),
                                  math::toRatio(p.y, -1.0f, 1.0f)),
-                           p.normalize()));
+                           kDefaultColor));
     }
 
     m.addFace(0, 11, 5);

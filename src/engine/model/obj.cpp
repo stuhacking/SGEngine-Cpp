@@ -10,8 +10,9 @@ namespace sge {
 
 static inline
 void logParseError (const std::string &file, const u32 line, const std::string &el) {
-    gConsole.errorf("Malformed %s in %s at line: %u.\n", el.c_str(),
-                   file.c_str(), line);
+    gConsole.errorf("Malformed %s in %s at line: %u.\n",
+                    el.c_str(),
+                    file.c_str(), line);
 }
 
 bool ObjDocument::readFromFile (const char * const filename) {
@@ -33,19 +34,29 @@ bool ObjDocument::readFromFile (const char * const filename) {
             if ("o" == tokens[0] && !parseName(tokens)) {
                 logParseError(filename, lineNumber, "object name");
                 return false;
-            } else if ("g" == tokens[0] && !parseGroup(tokens)) {
+            }
+
+            if ("g" == tokens[0] && !parseGroup(tokens)) {
                 logParseError(filename, lineNumber, "group name");
                 return false;
-            } else if ("v" == tokens[0] && !parsePosition(tokens)) {
+            }
+
+            if ("v" == tokens[0] && !parsePosition(tokens)) {
                 logParseError(filename, lineNumber, "vertex position");
                 return false;
-            } else if ("vn" == tokens[0] && !parseNormal(tokens)) {
+            }
+
+            if ("vn" == tokens[0] && !parseNormal(tokens)) {
                 logParseError(filename, lineNumber, "normal");
                 return false;
-            } else if ("vt" == tokens[0] && !parseTexCoord(tokens)) {
+            }
+
+            if ("vt" == tokens[0] && !parseTexCoord(tokens)) {
                 logParseError(filename, lineNumber, "texture coordinate");
                 return false;
-            } else if ("f" == tokens[0] && !parseFace(tokens)) {
+            }
+
+            if ("f" == tokens[0] && !parseFace(tokens)) {
                 logParseError(filename, lineNumber, "face");
                 return false;
             }
@@ -59,7 +70,7 @@ bool ObjDocument::readFromFile (const char * const filename) {
 
 bool ObjDocument::parseName (const std::vector<std::string> &tokens) {
 
-    if (tokens.size() >= 2) {
+    if (tokens.size() > 1) {
         name = tokens[1];
         return true;
     }
@@ -69,10 +80,10 @@ bool ObjDocument::parseName (const std::vector<std::string> &tokens) {
 
 bool ObjDocument::parseGroup (const std::vector<std::string> &tokens) {
     if (tokens.size() >= 2) {
-        groups.push_back(ObjGroup(tokens[1]));
+        groups.emplace_back(ObjGroup(tokens[1]));
         return true;
     } else {
-        groups.push_back(ObjGroup("name."));
+        groups.emplace_back(ObjGroup("name."));
         return false;
     }
 }
@@ -85,17 +96,17 @@ bool ObjDocument::parsePosition (const std::vector<std::string> &tokens) {
         float y = std::stof(tokens[2]);
         float z = std::stof(tokens[3]);
 
-        m_positions.emplace_back(x, y, z);
+        mPositions.emplace_back(x, y, z);
         return true;
     } else {
-        m_positions.emplace_back(0.0f, 0.0f, 0.0f);
+        mPositions.emplace_back(0.0f, 0.0f, 0.0f);
         return false;
     }
 }
 
 bool ObjDocument::parseNormal (const std::vector<std::string> &tokens) {
 
-    m_hasNormals = true;
+    mHasNormals = true;
 
     if (tokens.size() >= 4) {
 
@@ -103,27 +114,27 @@ bool ObjDocument::parseNormal (const std::vector<std::string> &tokens) {
         float y = std::stof(tokens[2]);
         float z = std::stof(tokens[3]);
 
-        m_normals.emplace_back(x, y, z);
+        mNormals.emplace_back(x, y, z);
         return true;
     } else {
-        m_normals.emplace_back(0.0f, 0.0f, 0.0f);
+        mNormals.emplace_back(0.0f, 0.0f, 0.0f);
         return false;
     }
 }
 
 bool ObjDocument::parseTexCoord (const std::vector<std::string> &tokens) {
 
-    m_hasTexture = true;
+    mHasTexture = true;
 
     if (tokens.size() >= 3) {
 
         float x = std::stof(tokens[1]);
         float y = std::stof(tokens[2]);
 
-        m_texCoords.emplace_back(x, y);
+        mTexCoords.emplace_back(x, y);
         return true;
     } else {
-        m_texCoords.emplace_back(0.0f, 0.0f);
+        mTexCoords.emplace_back(0.0f, 0.0f);
         return false;
     }
 }
@@ -133,7 +144,7 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
     // Make sure we have at least one group by the time we
     // start parsing faces.
     if (groups.empty()) {
-        groups.push_back(ObjGroup("default"));
+        groups.emplace_back(ObjGroup("default"));
     }
 
     if (tokens.size() < 4) {
@@ -154,13 +165,13 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
         curGroup->positionIndex.emplace_back(std::stoi(indices[1][0]) - 1);
         curGroup->positionIndex.emplace_back(std::stoi(indices[2][0]) - 1);
 
-        if (m_hasTexture) {
+        if (mHasTexture) {
             curGroup->textureIndex.emplace_back(indices[0][1].empty() ? 0 : std::stoi(indices[0][1]) - 1);
             curGroup->textureIndex.emplace_back(indices[1][1].empty() ? 0 : std::stoi(indices[1][1]) - 1);
             curGroup->textureIndex.emplace_back(indices[2][1].empty() ? 0 : std::stoi(indices[2][1]) - 1);
         }
 
-        if (m_hasNormals) {
+        if (mHasNormals) {
             curGroup->normalIndex.emplace_back(indices[0][2].empty() ? 0 : std::stoi(indices[0][2]) - 1);
             curGroup->normalIndex.emplace_back(indices[1][2].empty() ? 0 : std::stoi(indices[1][2]) - 1);
             curGroup->normalIndex.emplace_back(indices[2][2].empty() ? 0 : std::stoi(indices[2][2]) - 1);
@@ -175,28 +186,35 @@ bool ObjDocument::parseFace (const std::vector<std::string> &tokens) {
 Mesh meshFromObjDocument (const ObjDocument &doc) {
     Mesh m;
 
-    if (doc.IsValid()) {
+    if (doc.isValid()) {
 
         for (const auto &g : doc.groups) {
 
-            for (u32 k = 2, kMax = g.VertexCount(); k < kMax; k += 3) {
-                Vertex v1 = doc.Position(g.positionIndex[k - 2]);
-                Vertex v2 = doc.Position(g.positionIndex[k - 1]);
-                Vertex v3 = doc.Position(g.positionIndex[k]);
+            for (size_t k = 2, kMax = g.vertexCount(); k < kMax; k += 3) {
+                Vec3f p1, p2, p3;
+                Vec3f n1, n2, n3;
+                Vec2f t1, t2, t3;
 
-                if (doc.HasNormals()) {
-                    v1.normal = doc.Normal(g.normalIndex[k - 2]);
-                    v2.normal = doc.Normal(g.normalIndex[k - 1]);
-                    v3.normal = doc.Normal(g.normalIndex[k]);
+                p1 = doc.position(g.positionIndex[k - 2]);
+                p2 = doc.position(g.positionIndex[k - 1]);
+                p3 = doc.position(g.positionIndex[k]);
+
+                if (doc.hasNormals()) {
+                    n1 = doc.normal(g.normalIndex[k - 2]);
+                    n2 = doc.normal(g.normalIndex[k - 1]);
+                    n3 = doc.normal(g.normalIndex[k]);
                 }
 
-                if (doc.HasTextures()) {
-                    v1.texCoord = doc.TexCoord(g.textureIndex[k - 2]);
-                    v2.texCoord = doc.TexCoord(g.textureIndex[k - 1]);
-                    v3.texCoord = doc.TexCoord(g.textureIndex[k]);
+                if (doc.hasTexture()) {
+                    t1 = doc.texCoord(g.textureIndex[k - 2]);
+                    t2 = doc.texCoord(g.textureIndex[k - 1]);
+                    t3 = doc.texCoord(g.textureIndex[k]);
                 }
 
-                m.autoFace(v1, v2, v3);
+                const Color col = Color(255, 255, 255, 255);
+                m.autoFace(Vertex(p1, n1, t1, col),
+                           Vertex(p2, n2, t2, col),
+                           Vertex(p3, n3, t3, col));
             }
         }
 

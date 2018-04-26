@@ -37,10 +37,10 @@ public:
     ObjGroup (const std::string &p_name = "") : name(p_name) { }
 
     /** @return The number of vertices in this group. */
-    size_t VertexCount () const { return positionIndex.size(); }
+    size_t vertexCount () const { return positionIndex.size(); }
 
     /** @return The number of faces in the group. */
-    size_t FaceCount () const { return positionIndex.size() / 3; }
+    size_t faceCount () const { return positionIndex.size() / 3; }
 };
 
 /**
@@ -55,13 +55,13 @@ public:
     explicit ObjDocument (const char * const filename);
 
     /** @return True if this .obj document uses normals. */
-    bool HasNormals () const { return m_hasNormals; }
+    bool hasNormals () const { return mHasNormals; }
 
     /** @return True is this .obj document uses textures. */
-    bool HasTextures () const { return m_hasTexture; }
+    bool hasTexture () const { return mHasTexture; }
 
     /** @return The number of vertices in this .obj document. */
-    size_t VertexCount () const;
+    size_t vertexCount () const;
 
     /**
      * Count the faces in this .obj document as the sum of the facecounts of
@@ -69,23 +69,23 @@ public:
      *
      * @return The number of faces in this .obj document.
      */
-    size_t FaceCount () const;
+    size_t faceCount () const;
 
     /** @return True is this .obj document was parsed successfully. */
-    bool IsValid () const { return m_isValid; }
+    bool isValid () const { return mIsValid; }
 
-    Vec3f Position (const s32 index) const { return m_positions[index]; }
-    Vec3f Normal (const s32 index) const { return m_normals[index]; }
-    Vec2f TexCoord (const s32 index) const { return m_texCoords[index]; }
+    Vec3f position (const s32 index) const { return mPositions[index]; }
+    Vec3f normal (const s32 index) const { return mNormals[index]; }
+    Vec2f texCoord (const s32 index) const { return mTexCoords[index]; }
 
 private:
-    std::vector<Vec3f> m_positions;
-    std::vector<Vec3f> m_normals;
-    std::vector<Vec2f> m_texCoords;
+    std::vector<Vec3f> mPositions;
+    std::vector<Vec3f> mNormals;
+    std::vector<Vec2f> mTexCoords;
 
-    bool m_hasNormals;
-    bool m_hasTexture;
-    bool m_isValid;
+    bool mHasNormals;
+    bool mHasTexture;
+    bool mIsValid;
 
     bool readFromFile (const char * const filename);
     bool parseName (const std::vector<std::string> &tokens);
@@ -102,26 +102,26 @@ inline ObjDocument::ObjDocument (const char * const filename) {
     name = "untitled_obj";
 
     groups.reserve(DEFAULT_GROUP_SIZE);
-    m_positions.reserve(DEFAULT_MESH_SIZE);
-    m_normals.reserve(DEFAULT_MESH_SIZE);
-    m_texCoords.reserve(DEFAULT_MESH_SIZE);
+    mPositions.reserve(DEFAULT_MESH_SIZE);
+    mNormals.reserve(DEFAULT_MESH_SIZE);
+    mTexCoords.reserve(DEFAULT_MESH_SIZE);
 
-    m_hasNormals = false;
-    m_hasTexture = false;
-    m_isValid = false;
+    mHasNormals = false;
+    mHasTexture = false;
+    mIsValid = false;
 
-    m_isValid = readFromFile(filename);
+    mIsValid = readFromFile(filename);
 }
 
-inline size_t ObjDocument::VertexCount () const {
-    return m_positions.size();
+inline size_t ObjDocument::vertexCount () const {
+    return mPositions.size();
 }
 
-inline size_t ObjDocument::FaceCount () const {
+inline size_t ObjDocument::faceCount () const {
     size_t result = 0;
 
     for (const auto &group : groups) {
-        result += group.FaceCount();
+        result += group.faceCount();
     }
 
     return result;

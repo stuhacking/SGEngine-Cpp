@@ -1,24 +1,15 @@
 # SGEEngineLib - Rendering and ui library
 # Interface to lower level graphics.
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.8)
 project(SGEEngineLib)
 
 find_package(OpenGL REQUIRED)
-include_directories(${OPENGL_INCLUDE_DIRS})
+find_package(SDL2 REQUIRED)
 
 # Link GLEW on non-apple.
 if(NOT APPLE)
     find_package(GLEW REQUIRED)
-    include_directories(${GLEW_INCLUDE_DIRS})
 endif()
-
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR})
-
-include_directories(${RapidJSON_SOURCE_DIR}/include)
-include_directories(${SOIL_SOURCE_DIR}/include)
-
-include_directories(../lib)
 
 set(HEADERS
     data/jsonfile.h
@@ -53,10 +44,23 @@ set(SOURCES ${HEADERS}
 
 # Builds: SGEEngineLib
 add_library(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} SGECoreLib)
-target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
+target_include_directories(${PROJECT_NAME} PUBLIC ../lib)
+target_link_libraries(${PROJECT_NAME} PUBLIC SGECoreLib)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${OPENGL_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OPENGL_gl_LIBRARY})
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARY})
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${RapidJSON_SOURCE_DIR}/include)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${SOIL_SOURCE_DIR}/include)
+target_link_libraries(${PROJECT_NAME} PRIVATE SOIL)
+
+
 if(NOT APPLE)
-    target_link_libraries(${PROJECT_NAME} ${GLEW_LIBRARY})
+    target_include_directories(${PROJECT_NAME} PRIVATE ${GLEW_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${GLEW_LIBRARY})
 endif()
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
-target_link_libraries(${PROJECT_NAME} SOIL)
+

@@ -1,5 +1,5 @@
 # SGEngine Sub-projects
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.8)
 project(SGEngine)
 
 # Set up Compiler warnings for GCC/Clang

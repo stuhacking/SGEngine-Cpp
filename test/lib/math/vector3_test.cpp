@@ -75,7 +75,7 @@ TEST (Vec3f_Test, ClampSelf) {
 }
 
 /*==========================
-  Math Operator Tests
+  math Operator Tests
  ==========================*/
 
 TEST (Vec3f_Test, Add) {

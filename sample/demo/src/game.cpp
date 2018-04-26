@@ -182,10 +182,10 @@ bool Game::init () {
     view.position = Vec3f(0.0f, 3.0f, 18.0f);
 
     lightData.lights[0] = GLSLLight(Vec3f(0.05f, 0.001f, 0.01f),  Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(0.0f, -1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
-    lightData.lights[1] = GLSLLight(Vec3f(0.4f, 0.4f, 0.2f),     Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(1.0f, -1.0f, 0.0f).normalize(), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
+    lightData.lights[1] = GLSLLight(Vec3f(1.0f, 1.0f, 0.5f),     Vec3f(0.0f, 4.0f, 0.0f),   Vec3f(1.0f, -1.0f, 0.0f).normalize(), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
     lightData.lights[2] = GLSLLight(Vec3f(0.02f, 0.02f, 0.08f),     Vec3f(0.0f, -4.0f, 0.0f),   Vec3f(0.0f, 1.0f, 0.0f), GLSLAttenuation(1.0f, 0.5f, 0.2f), 0.0f);
-    lightData.lights[3] = GLSLLight(Vec3f(2.0f, 2.0f, 0.0f),     Vec3f(-3.0f, 7.0f, -5.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 10.0f);
-    lightData.lights[4] = GLSLLight(Vec3f(0.0f, 0.0f, 3.0f),     Vec3f(-10.0f, 4.0f, 0.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 20.0f);
+    lightData.lights[3] = GLSLLight(Vec3f(2.0f, 2.0f, 0.0f),     Vec3f(-3.0f, 7.0f, -5.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 5.0f);
+    lightData.lights[4] = GLSLLight(Vec3f(0.2f, 0.2f, 3.0f),     Vec3f(-10.0f, 4.0f, 0.0f),   Vec3f(0.0f, 0.0f, 0.0f), GLSLAttenuation(1.0f, 1.0f, 1.0f), 20.0f);
     lightData.offsets[0] = 1;
     lightData.offsets[1] = 3;
     lightData.offsets[2] = 3;
@@ -233,11 +233,11 @@ void Game::input () {
         view.position += view.forward() * camSpeed;
     }
 
-    if (Input::mbPressed(1) && !Input::keyDown(Input::Key::LShift)) {
+    if (Input::mbPressed(1)) {
         Input::lockMouse();
     }
 
-    if (Input::mbPressed(1) && Input::keyDown(Input::Key::LShift)) {
+    if (Input::mbReleased(1)) {
         Input::releaseMouse();
     }
 
@@ -266,7 +266,7 @@ void Game::update (const double deltaSeconds) {
 
     t += deltaSeconds;
     lightData.lights[3].position.y = sinf(t) * 5.0f + 5.0f;
-    lightData.lights[4].position.x += deltaSeconds * 1.0f;
+    lightData.lights[4].position.x = cosf(t / 10.0f) * 32.0f;
     lightData.lights[4].position.z = sinf(t) * 5.0f + 5.0f;
 }
 

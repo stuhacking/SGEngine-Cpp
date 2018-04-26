@@ -8,6 +8,10 @@
     "debug": [
       "data/shader/debug.vs",
       "data/shader/debug.fs"
+    ],
+    "emit": [
+      "data/shader/Emit.vs",
+      "data/shader/Emit.fs"
     ]
   },
   "objects": [
@@ -43,6 +47,17 @@
       "transform": {
         "location": [36, 5, 15]
       }
+    },
+    {
+      "name": "skybox",
+      "shader": "emit",
+      "mesh": "data/skybox.obj",
+      "texture": "data/skybox_tex.png",
+      "transform": {
+        "location": [10, 0, 10],
+        "size": [40, 40, 40]
+      }
     }
+
   ]
 }

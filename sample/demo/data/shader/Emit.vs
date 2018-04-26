@@ -22,8 +22,8 @@ layout(location = 3) in vec4 vertColor;
 // Vertex Outputs
 //*****************
 out vec3 worldPos0;
-out vec3 normal0;
 out vec2 texCoord0;
+out vec3 normal0;
 out vec4 vertColor0;
 
 /**

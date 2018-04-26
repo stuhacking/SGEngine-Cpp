@@ -21,8 +21,8 @@ void MeshRenderer::compile () {
     glBufferData(GL_ARRAY_BUFFER, mesh.vertCount() * sizeof(Vertex), mesh.vertices.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(0));        // Position
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(3));        // Texture coord
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(5));        // Normal
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(3));        // Normal
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(6));        // Texture coord
     glVertexAttribPointer(3, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), BUFFER_OFFSET(8)); // Color
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffers[1]);
@@ -40,8 +40,8 @@ void MeshRenderer::render () const {
 
     glBindVertexArray(mGlVaoId);
     glEnableVertexAttribArray(0); // Position
-    glEnableVertexAttribArray(1); // Texture coord
-    glEnableVertexAttribArray(2); // Normal
+    glEnableVertexAttribArray(1); // Normal
+    glEnableVertexAttribArray(2); // Texture coord
     glEnableVertexAttribArray(3); // Color
 
     // Debug: Line Rendering

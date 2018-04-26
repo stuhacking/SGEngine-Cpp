@@ -1,4 +1,4 @@
-/*---  Lib.h - SGE Core Library Header  ----------------------------*- C++ -*---
+/*---  lib.h - SGE Core Library Header  ----------------------------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *

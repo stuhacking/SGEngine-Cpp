@@ -76,7 +76,7 @@ TEST (Vec2f_Test, ClampSelf) {
 }
 
 /*==========================
-  Math Operator Tests
+  math Operator Tests
  ==========================*/
 
 TEST (Vec2f_Test, Negate) {

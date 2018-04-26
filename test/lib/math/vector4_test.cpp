@@ -74,7 +74,7 @@ TEST (Vec4f_Test, ClampSelf) {
     EXPECT_EQ(Vec4f(4.0f, 4.0f, 4.0f, 4.0f), v);
 }
 /*==========================
-  Math Operator Tests
+  math Operator Tests
  ==========================*/
 
 TEST (Vec4f_Test, Add) {

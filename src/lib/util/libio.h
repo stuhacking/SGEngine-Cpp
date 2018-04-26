@@ -1,4 +1,4 @@
-/*---  LibIO.h - OStream formatters for Core Lib types  -----------*- C++ -*---
+/*---  LibIO.h - OStream formatters for Core lib types  -----------*- C++ -*---
  *
  *                           Stuart's Game Engine
  *
